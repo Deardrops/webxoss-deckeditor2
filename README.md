@@ -1,25 +1,19 @@
 # new-deck
 
-To start:
+## Install
 
 ```bash
 $ npm install
 ```
 
-To develop:
+## Dev
 
 ```bash
-$ npm run dev```
+$ npm run dev
+```
 
-To build for production:
+## Build
 
 ```bash
 $ npm run build
 ```
-
-To lint you code:
-
-```bash
-$ npm run lint
-```
-

@@ -2,7 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 
 import ImageManager from '../ImageManager.js'
-import CardInfo from '../CardInfo.js'
+
+const CardInfo = require('../CardInfo')
 
 Vue.use(Vuex)
 

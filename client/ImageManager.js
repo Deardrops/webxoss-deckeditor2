@@ -1,5 +1,5 @@
 ﻿'use strict';
-import ImageFileCache from 'ImageFileCache.js'
+import ImageFileCache from './ImageFileCache.js'
 
 const manager = (function(){
 
