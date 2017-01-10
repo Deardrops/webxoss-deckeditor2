@@ -1,7 +1,7 @@
 <template>
 	<div id="Deck">
-	    <a id="link-back-to-webxoss" href="../">完成编辑</a>
-<!-- 	    <div id="div-deck">
+<!-- 	    <a id="link-back-to-webxoss" href="../">完成编辑</a>
+	    <div id="div-deck">
 	      <div>
 	        <span id="label-select-deck">选择牌组:</span>
 	        <select id="select-decks"></select>
@@ -15,38 +15,55 @@
 	        <button id="button-copy-deck">复制</button>
 	        <button id="button-import-export">导入/导出</button>
 	      </div>
-	    </div> -->
+	    </div>
 	    <div id="main-deck-text-bar">
 	      <span id="main-deck-title">主卡组</span><a target="_blank" href="http://www.takaratomy.co.jp/products/wixoss/rule/rule_mayu_room.html" id="main-deck-mayus-room">茧的房间</a><span id="main-deck-burst"><span id="main-deck-burst-title">爆发:</span><span id="main-deck-burst-count"></span><span>/20</span></span>
-	    </div>
-	    <div id="main-deck-zone"></div>
-	    <div id="lrig-deck-text-bar">
-	      <span id="lrig-deck-title">LRIG卡组</span>
-	      <!-- <img src="../images/WIXOSS_BLACK.jpg"> -->
-	    </div>
-	    <div id="lrig-deck-zone">
-	    	<p>{{deck_file}}</p>
-	    <!-- <div id="div-import-warp" style="display: none;">
-	      <div id="div-import-export">
-	        <div>
-	          <span id="label-import-from-file">从文件导入:</span>
-	          <input id="input-file" type="file">
-	        </div>
-	        <div>
-	          <span id="label-export-to-file">导出到文件:</span>
-	          <button id="button-export">导出</button>
-	        </div>
-	        <div>
-	          <textarea id="textarea-import-export"></textarea>
-	        </div>
-	        <div id="div-import-footer">
-	          <button id="button-text">显示文本</button>
-	          <button id="button-export-code">显示代码</button>
-	          <button id="button-import-code">导入代码</button>
-	          <button id="button-import-export-cancel">取消</button>
-	        </div>
-	      </div>
 	    </div> -->
+	    <div id="main-deck-zone"></div>
+	    <div id="lrig-deck">
+		    <div id="lrig-deck-text-bar" style="text-align: center;">
+		      <span id="lrig-deck-title">LRIG卡组</span>
+		    </div>
+		    <div id="lrig-deck-zone" style="width:20em;margin:0 auto">
+		    	<mt-cell v-for="item in mainDeck">
+		    		<div style="overflow: hidden; width: 170px; height: 170px; position:relative; margin:0.5em">
+						  <img :src="item.img" style="margin-top: -40px; margin-left: -40px;" />
+						</div>
+						<div>
+							<p>{{item.info.name}}</p>
+							<p>
+								<span>Lv.{{item.info.level}}</span>
+								<span>{{item.info.power}}<span>
+							</p>
+							<p>
+								<button>-</button>
+								<span>{{item.count}}</span>
+								<button>+</button>
+							</p>
+						</div>
+		    	</mt-cell>
+		    <!-- <div id="div-import-warp" style="display: none;">
+		      <div id="div-import-export">
+		        <div>
+		          <span id="label-import-from-file">从文件导入:</span>
+		          <input id="input-file" type="file">
+		        </div>
+		        <div>
+		          <span id="label-export-to-file">导出到文件:</span>
+		          <button id="button-export">导出</button>
+		        </div>
+		        <div>
+		          <textarea id="textarea-import-export"></textarea>
+		        </div>
+		        <div id="div-import-footer">
+		          <button id="button-text">显示文本</button>
+		          <button id="button-export-code">显示代码</button>
+		          <button id="button-import-code">导入代码</button>
+		          <button id="button-import-export-cancel">取消</button>
+		        </div>
+		      </div>
+		    </div> -->
+	    </div>
     </div>
 </template>
 <script>
@@ -56,9 +73,17 @@ export default {
 		this.$store.dispatch('initDeck');
 	},
   computed: {
-    deck_file() {
-    	return this.$store.state.deck_file
+    mainDeck() {
+    	return this.$store.getters.mainDeck
+    },
+    lrigDeck(){
+    	return this.$store.state.lrigData.deckObjs
     }
   }
 }
 </script>
+<style>
+.mint-cell-title{
+	flex:0 !important;
+}
+</style>

@@ -1,6 +1,7 @@
 ﻿'use strict';
+import ImageFileCache from 'ImageFileCache.js'
 
-window.ImageManager = (function () {
+const manager = (function(){
 
 function newImage (src) {
 	var img = new Image();
@@ -28,10 +29,10 @@ function ImageManager (dir) {
 }
 
 ImageManager.prototype.getUrlByPid = function (pid) {
-	var url = window.ImageFileCache.getUrlByPid(pid);
+	var url = ImageFileCache.getUrlByPid(pid);
 	if (url) return url;
 	url = this.dir + 'images/' + ('0000' + pid).slice(-4) + '.jpg';
-	window.ImageFileCache.fetchAndCache(pid,url);
+	ImageFileCache.fetchAndCache(pid,url);
 	return url;
 };
 
@@ -57,3 +58,7 @@ ImageManager.prototype.getStateImage = function (state) {
 
 return ImageManager;
 })();
+
+const ImageManager = new manager('../');
+
+export default ImageManager

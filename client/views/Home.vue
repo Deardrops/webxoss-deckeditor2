@@ -9,7 +9,7 @@
 
 <script>
 // import Counter from 'components/Counter'
-require('../ImageManager.js')
+
 import Detail from 'components/Detail'
 import Deck from 'components/Deck'
 export default {

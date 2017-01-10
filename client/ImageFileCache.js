@@ -1,6 +1,6 @@
 'use strict';
 
-window.ImageFileCache = (function () {
+const ImageFileCache = (function () {
 
 function checkIndexedDBSupport (callback) {
 	var db = null;
@@ -159,3 +159,5 @@ ImageFileCache.fetchAndCache = function (pid,url) {
 
 return ImageFileCache;
 })();
+
+export default ImageFileCache
