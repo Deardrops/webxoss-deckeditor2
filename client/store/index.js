@@ -52,6 +52,25 @@ const getters = {
       }
     }
     return Deck
+  },
+  lrigDeck: state=>{
+    let Deck = [];
+    for (let card of state.lrigData.deckObjs){
+      let flag = false;
+      for (let Zcard of Deck){
+        if (card.pid == Zcard.pid){
+          Zcard.count++;
+          flag = true;
+          break;
+        }
+      }
+      if (flag == false){
+        let Zcard = card;
+        Zcard.count = 1;
+        Deck.push(Zcard);
+      }
+    }
+    return Deck
   }
 }
 
