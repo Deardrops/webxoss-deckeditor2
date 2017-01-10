@@ -23,14 +23,14 @@
 	      <!-- <span id="main-deck-burst-count"></span><span>/20</span></span> -->
 	    </div>
 	    <div id="main-deck-zone">
-	    	<mainDeck></mainDeck>
+	    	<DeckTemplate :deck="mainDeck"></DeckTemplate>
 	    </div>
 	    <div id="lrig-deck">
-		    <div id="lrig-deck-text-bar" style="text-align: center;">
+		    <div id="lrig-deck-text-bar">
 		      <span id="lrig-deck-title">LRIG卡组</span>
 		    </div>
 	    <div id="lrig-deck-zone">
-	    <lrigDeck></lrigDeck>
+	    	<DeckTemplate :deck="lrigDeck"></DeckTemplate>
 		    <!-- <div id="div-import-warp" style="display: none;">
 		      <div id="div-import-export">
 		        <div>
@@ -56,12 +56,10 @@
     </div>
 </template>
 <script>
-import mainDeck from './mainDeck'
-import lrigDeck from './lrigDeck'
+import DeckTemplate from './DeckTemplate'
 export default {
 	components: {
-		mainDeck,
-    	lrigDeck
+		DeckTemplate,
   	},
 	created:function(){
 		this.$store.state.deck_file = {"mainDeck":[1912,1912,233,976,976,767,767,767,1590,1590,1590,1590,234,234,1591,1591,1591,1591,1913,1913,1913,235,235,1592,1592,1592,236,236,236,236,1919,1919,1919,1593,1593,1593,1918,1918,1243,966],"lrigDeck":[126,125,12,123,3,1909,1878,1908,1910,1910]};
@@ -78,10 +76,7 @@ export default {
 }
 </script>
 <style>
-.mint-cell-title{
-	flex:0 !important;
-}
-#main-deck-text-bar,#lrig-deck-text-bar{
+#main-deck-text-bar/*,#lrig-deck-text-bar*/{
 	text-align: center
 }
 #main-deck-zone,#lrig-deck-zone{

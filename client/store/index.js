@@ -10,20 +10,12 @@ const state = {
   count: 0,
   deck_filenames: [],
   deck_file: {},
-  mainData: {
-    deck: 'main',
-    limit: 50,
-    deckObjs: []
-  },
-  lrigData: {
-    deck: 'lrig',
-    limit: 20,
-    deckObjs: []
-  }
+  mainData: [],
+  lrigData: []
 }
 
 const mutations = {
-  //增加或者删除卡片
+  //TODO:增加或者删除卡片
   INCREMENT(state) {
     state.count++
   },
@@ -33,51 +25,18 @@ const mutations = {
 }
 
 const getters = {
-  mainDeck: state=>{
-    let Deck = [];
-    for (let card of state.mainData.deckObjs){
-      let flag = false;
-      for (let Zcard of Deck){
-        if (card.pid == Zcard.pid){
-          Zcard.count++;
-          flag = true;
-          break;
-        }
-      }
-      if (flag == false){
-        //首次添加
-        let Zcard = card;
-        Zcard.count = 1;
-        Deck.push(Zcard);
-      }
-    }
-    return Deck
+  mainDeck: () => {
+    return DeckWithCount('mainDeck')
   },
-  lrigDeck: state=>{
-    let Deck = [];
-    for (let card of state.lrigData.deckObjs){
-      let flag = false;
-      for (let Zcard of Deck){
-        if (card.pid == Zcard.pid){
-          Zcard.count++;
-          flag = true;
-          break;
-        }
-      }
-      if (flag == false){
-        let Zcard = card;
-        Zcard.count = 1;
-        Deck.push(Zcard);
-      }
-    }
-    return Deck
+  lrigDeck: () => {
+    return DeckWithCount('lrigDeck')
   }
 }
 
 const actions = {
   initDeck({ commit }) {
     for (let pid of state.deck_file.mainDeck) {
-      let Objs = state.mainData.deckObjs;
+      let Objs = state.mainData;
       Objs.push({
         pid: pid,
         idx: Objs.length,
@@ -86,9 +45,9 @@ const actions = {
       })
     }
     for (let pid of state.deck_file.lrigDeck) {
-      let Objs = state.lrigData.deckObjs;
+      let Objs = state.lrigData;
       Objs.push({
-        pid:pid,
+        pid: pid,
         idx: Objs.length,
         info: CardInfo[pid],
         img: ImageManager.getUrlByPid(pid)
@@ -105,3 +64,29 @@ const store = new Vuex.Store({
 })
 
 export default store
+
+function DeckWithCount(deckName) {
+  let Zdeck;
+  let Deck = [];
+  if (deckName == 'mainDeck') {
+    Zdeck = state.mainData
+  } else {
+    Zdeck = state.lrigData
+  }
+  for (let card of Zdeck) {
+    let flag = false;
+    for (let Zcard of Deck) {
+      if (card.pid == Zcard.pid) {
+        Zcard.count++;
+        flag = true;
+        break;
+      }
+    }
+    if (flag == false) {
+      let Zcard = card;
+      Zcard.count = 1;
+      Deck.push(Zcard);
+    }
+  }
+  return Deck
+}

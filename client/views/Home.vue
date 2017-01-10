@@ -1,6 +1,5 @@
 <template>
   <div class="page">
-    <!-- <counter></counter> -->
     <!-- <search></search> -->
     <detail></detail>
     <deck></deck>
@@ -8,7 +7,6 @@
 </template>
 
 <script>
-// import Counter from 'components/Counter'
 
 import Detail from 'components/Detail'
 import Deck from 'components/Deck'
