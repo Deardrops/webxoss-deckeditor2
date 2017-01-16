@@ -43,6 +43,8 @@ let babel = {
   cacheDirectory: true,
 }
 
+let lint = 'eslint-loader?configFile=eslint.config.js'
+
 let postcss = {
   plugins: [cssnext({
     browsers,
@@ -62,43 +64,63 @@ config.base = {
     filename: '[name].js',
   },
   module: {
-    rules: [{
-      test: TESTS.css,
-      use: [
-        'style-loader',
-        'css-loader?modules&sourceMap',
-        {
-          loader: 'postcss-loader',
-          options: postcss,
-        },
-      ],
-      include: PATHS.src,
-    }, {
-      test: TESTS.js,
-      loaders: [
-        'babel-loader?' + JSON.stringify(babel),
-        // 'eslint-loader?configFile=eslint.config.js',
-      ],
-      include: PATHS.src,
-      exclude: /node_modules/,
-    }, {
-      test: TESTS.vue,
-      use: [
-        {
-          loader: 'vue-loader',
-          options: {
-            postcss: postcss.plugins,
+    rules: [
+      /* preLoaders */
+      {
+        enforce: 'pre',
+        test: TESTS.vue,
+        loader: lint,
+        include: PATHS.src,
+        exclude: /node_modules/,
+      },
+      {
+        enforce: 'pre',
+        test: TESTS.js,
+        loader: lint,
+        include: PATHS.src,
+        exclude: /node_modules/,
+      },
+      /* Loaders */
+      {
+        test: TESTS.css,
+        use: [
+          'style-loader',
+          'css-loader?modules&sourceMap',
+          {
+            loader: 'postcss-loader',
+            options: postcss,
           },
-        },
-      ],
-      include: PATHS.src,
-    }, {
-      test: TESTS.image,
-      loaders: [
-        'url-loader?limit=10000'
-      ],
-      include: PATHS.src,
-    }],
+        ],
+        include: PATHS.src,
+      },
+      {
+        test: TESTS.js,
+        loaders: [
+          'babel-loader?' + JSON.stringify(babel),
+        ],
+        include: PATHS.src,
+        exclude: /node_modules/,
+      },
+      {
+        test: TESTS.vue,
+        use: [
+          {
+            loader: 'vue-loader',
+            options: {
+              postcss: postcss.plugins,
+            },
+          },
+        ],
+        include: PATHS.src,
+      },
+      {
+        test: TESTS.image,
+        loaders: [
+          'url-loader?limit=10000',
+        ],
+        include: PATHS.src,
+      },
+    ],
   },
   plugins: [
     new html({

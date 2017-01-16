@@ -4,6 +4,7 @@ node_modules
 dist
 images
 background
+.eslintcache
 
 .editorconfig
 *.sublime-*

@@ -6,8 +6,8 @@ const config = require('./webpack.config')
 const webpackDevMiddleware = require('webpack-dev-middleware')
 const webpackHotMiddleware = require('webpack-hot-middleware')
 
-var compiler = webpack(config)
-var app = new express()
+const compiler = webpack(config)
+const app = new express()
 
 app.use(webpackDevMiddleware(compiler, {
   stats: {

@@ -5,9 +5,10 @@
   "main": "client/index.js",
   "scripts": {
     "test": "echo lol",
-    "build": "webpack",
-    "dev": "node server",
-    "lint": "eslint client/* --ext .js --ext .vue"
+    "build": "npm run lint && webpack",
+    "dev": "npm run lint:node && node server",
+    "lint": "npm run lint:node",
+    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern client"
   },
   "author": "deardrops <lness@qq.com>",
   "license": "MIT",
