@@ -123,6 +123,9 @@ config.base = {
     ],
   },
   plugins: [
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'vue',
+    }),
     new html({
       title: 'test',
       filename: 'index.html',

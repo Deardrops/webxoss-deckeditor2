@@ -13,8 +13,8 @@ import Deck from 'components/Deck'
 export default {
   components: {
     Detail,
-    Deck
-  }
+    Deck,
+  },
 }
 
 </script>

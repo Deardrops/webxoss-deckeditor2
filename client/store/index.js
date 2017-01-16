@@ -10,7 +10,7 @@ const state = {
   deck_filenames: [],
   deck_file: {},
   mainData: [],
-  lrigData: []
+  lrigData: [],
 }
 
 const mutations = {
@@ -20,7 +20,7 @@ const mutations = {
   },
   DECREMENT(state) {
     state.count--
-  }
+  },
 }
 
 const getters = {
@@ -29,62 +29,62 @@ const getters = {
   },
   lrigDeck: () => {
     return DeckWithCount('lrigDeck')
-  }
+  },
 }
 
 const actions = {
-  initDeck({ commit }) {
+  initDeck() {
     for (let pid of state.deck_file.mainDeck) {
-      let Objs = state.mainData;
+      let Objs = state.mainData
       Objs.push({
         pid: pid,
         idx: Objs.length,
         info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid)
+        img: ImageManager.getUrlByPid(pid),
       })
     }
     for (let pid of state.deck_file.lrigDeck) {
-      let Objs = state.lrigData;
+      let Objs = state.lrigData
       Objs.push({
         pid: pid,
         idx: Objs.length,
         info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid)
+        img: ImageManager.getUrlByPid(pid),
       })
     }
-  }
+  },
 }
 
 const store = new Vuex.Store({
   state,
   mutations,
   getters,
-  actions
+  actions,
 })
 
 export default store
 
 function DeckWithCount(deckName) {
-  let Zdeck;
-  let Deck = [];
-  if (deckName == 'mainDeck') {
+  let Zdeck
+  let Deck = []
+  if (deckName === 'mainDeck') {
     Zdeck = state.mainData
   } else {
     Zdeck = state.lrigData
   }
   for (let card of Zdeck) {
-    let flag = false;
+    let flag = false
     for (let Zcard of Deck) {
-      if (card.pid == Zcard.pid) {
-        Zcard.count++;
-        flag = true;
-        break;
+      if (card.pid === Zcard.pid) {
+        Zcard.count++
+        flag = true
+        break
       }
     }
-    if (flag == false) {
-      let Zcard = card;
-      Zcard.count = 1;
-      Deck.push(Zcard);
+    if (flag === false) {
+      let Zcard = card
+      Zcard.count = 1
+      Deck.push(Zcard)
     }
   }
   return Deck
