@@ -3,8 +3,6 @@ import Vuex from 'vuex'
 
 import ImageManager from '../ImageManager.js'
 
-const CardInfo = require('../CardInfo')
-
 Vue.use(Vuex)
 
 const state = {

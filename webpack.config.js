@@ -16,11 +16,14 @@ const PATHS = {
   dist: toPath('dist'),
   css: toPath('dist/css'),
   components: toPath('client/components'),
+  CardInfo: toPath('client/CardInfo.json'),
 }
 const TESTS = {
   css: /\.css$/,
   js: /\.js?$/,
   vue: /\.vue$/,
+  json: /\.json$/,
+  image: /\.(webp|jpe?g|png|gif|svg)$/,
 }
 let browsers = [
   'last 2 versions',
@@ -52,7 +55,7 @@ config.base = {
   devtool: 'source-map',
   entry: {
     vue: ['vue', 'vuex', 'vue-router', 'vuex-router-sync'],
-    app: PATHS.index,
+    app: [PATHS.index],
   },
   output: {
     path: PATHS.dist,
@@ -62,8 +65,8 @@ config.base = {
     rules: [{
       test: TESTS.css,
       use: [
-        'style',
-        'css?modules&sourceMap',
+        'style-loader',
+        'css-loader?modules&sourceMap',
         {
           loader: 'postcss-loader',
           options: postcss,
@@ -87,6 +90,12 @@ config.base = {
             postcss: postcss.plugins,
           },
         },
+      ],
+      include: PATHS.src,
+    }, {
+      test: TESTS.image,
+      loaders: [
+        'url-loader?limit=10000'
       ],
       include: PATHS.src,
     }],
@@ -129,7 +138,13 @@ config.build = {
       test: TESTS.css,
       loader: extract.extract({
         fallbackLoader: 'style-loader',
-        loader: 'css-loader?modules&sourceMap!postcss',
+        loader: [
+          'css-loader?modules&sourceMap',
+          {
+            loader: 'postcss-loader',
+            options: postcss,
+          },
+        ],
       }),
     }],
   },
@@ -143,19 +158,25 @@ config.build = {
       root: process.cwd(),
     }),
     new extract('[name].[contenthash].css'),
+    new require('copy-webpack-plugin')([
+      {
+        from: 'images',
+        to: 'images',
+      },
+      {
+        from: PATHS.CardInfo,
+      },
+    ]),
   ],
 }
 
 config.dev = {
   devtool: 'eval',
-  devServer: {
-    hot: true,
-    inline: true,
-    stats: 'errors-only',
-    host: '0.0.0.0',
-  },
   performance: {
     hints: false,
+  },
+  entry: {
+    app: ['webpack-hot-middleware/client?reload=true'],
   },
   module: {
     loaders: [{
@@ -164,9 +185,7 @@ config.dev = {
     }],
   },
   plugins: [
-    new webpack.HotModuleReplacementPlugin({
-      multiStep: true,
-    }),
+    new webpack.HotModuleReplacementPlugin(),
   ],
 }
 

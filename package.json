@@ -5,8 +5,8 @@
   "main": "client/index.js",
   "scripts": {
     "test": "echo lol",
-    "build": "webpack --config build/webpack.prod.js",
-    "dev": "webpack-dev-server --progress --colors",
+    "build": "webpack",
+    "dev": "node server",
     "lint": "eslint client/* --ext .js --ext .vue"
   },
   "author": "deardrops <lness@qq.com>",
@@ -29,12 +29,15 @@
     "babel-preset-es2015": "^6.14.0",
     "babel-preset-stage-1": "^6.13.0",
     "clean-webpack-plugin": "^0.1.15",
+    "copy-webpack-plugin": "^4.0.1",
     "css-loader": "^0.23.1",
     "eslint": "^3.6.0",
     "eslint-config-vue": "latest",
     "eslint-loader": "^1.6.1",
     "eslint-plugin-vue": "latest",
+    "express": "^4.14.0",
     "extract-text-webpack-plugin": "v2.0.0-beta.4",
+    "file-loader": "^0.9.0",
     "html-webpack-plugin": "^2.22.0",
     "merge": "^1.2.0",
     "object-assign": "^4.1.0",
@@ -42,10 +45,13 @@
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "style-loader": "^0.13.1",
+    "url-loader": "^0.5.7",
+    "vue-hot-reload-api": "^2.0.7",
     "vue-loader": "^10.0.2",
     "vue-template-compiler": "^2.1.3",
     "webpack": "2.2.0-rc.3",
-    "webpack-dev-server": "^1.16.2",
+    "webpack-dev-middleware": "^1.9.0",
+    "webpack-hot-middleware": "^2.15.0",
     "webpack-merge": "^2.3.1"
   }
 }

@@ -1,8 +1,9 @@
 node_modules
 *.log
 .DS_Store
-/dist
+dist
 images
+background
 
 .editorconfig
 *.sublime-*

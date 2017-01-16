@@ -6,14 +6,16 @@ let env = process.env.npm_lifecycle_event.replace('lint:', '')
 let config = {}
 
 config.base = {
-  'env': {
+  env: {
     'es6': true,
   },
-  'globals': {
+  globals: {
     'process': true,
+    'CardInfo': true,
   },
-  'extends': 'eslint:recommended',
-  'rules': {
+  extends: 'eslint:recommended',
+  plugins: ['vue'],
+  rules: {
     'indent': [
       'error',
       2,
@@ -57,19 +59,19 @@ config.base = {
 }
 
 config.node = {
-  'env': {
+  env: {
     'node': true,
   },
-  'parserOptions': {
+  parserOptions: {
     'sourceType': 'script',
   },
 }
 
 config.src = {
-  'env': {
+  env: {
     'browser': true,
   },
-  'parserOptions': {
+  parserOptions: {
     'ecmaFeatures': {
       'experimentalObjectRestSpread': true,
       'jsx': true,
