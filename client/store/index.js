@@ -3,116 +3,36 @@ import Vuex from 'vuex'
 
 import ImageManager from '../ImageManager.js'
 
-Vue.use(Vuex)
-
-const state = {
-  count: 0,
-  deck_filenames: [],
-  deck_file: {},
-  mainData: [],
-  lrigData: [],
-}
-
-const mutations = {
-  addCard(state, card){
-    let pid = card.pid
-    let Data
-    if (card.deckName === 'mainDeck') {
-      Data = state.mainData
-    } else {
-      Data = state.lrigData
-    }
-    Data.push({
-      pid: pid,
-      info: CardInfo[pid],
-      img: ImageManager.getUrlByPid(pid),
-    })
-    defaultSort(state.mainData)
-    defaultSort(state.lrigData)
-  },
-  delCard(state, card){
-    //TODO:验证输入
-    let idx
-    if (card.deckName === 'mainDeck') {
-      idx = state.mainData.findIndex(data => data.pid === card.pid)
-      state.mainData.splice(idx, 1)
-    } else {
-      idx = state.lrigData.findIndex(data => data.pid === card.pid)
-      state.lrigData.splice(idx, 1)
-    }
-  },
-  fillDeckFile(state, payload){
-    state.deck_file = payload
-  },
-  initDeck(state) {
-    for (let pid of state.deck_file.mainDeck) {
-      let Data = state.mainData
-      Data.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
-    }
-    for (let pid of state.deck_file.lrigDeck) {
-      let Data = state.lrigData
-      Data.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
-    }
-  },
-}
-
-const getters = {
-  mainDeck: state => {
-    return DeckWithCount('mainDeck', state)
-  },
-  lrigDeck: state => {
-    return DeckWithCount('lrigDeck', state)
-  },
-}
-
-const store = new Vuex.Store({
-  state,
-  mutations,
-  getters,
-})
-
-export default store
-
-function DeckWithCount(deckName, state) {
-  let Zdeck
-  let Deck = []
-  if (deckName === 'mainDeck') {
-    Zdeck = state.mainData
-  } else {
-    Zdeck = state.lrigData
-  }
-  for (let card of Zdeck) {
+function getDeckWithCount(deckName, state) {
+  let deck = (deckName === 'mainDeck')
+    ? state.mainCards
+    : state.lrigCards
+  let deckWithCount = []
+  for (let card of deck) {
     let flag = false
-    for (let Zcard of Deck) {
-      if (card.pid === Zcard.pid) {
-        Zcard.count++
+    for (let numCard of deckWithCount) {
+      if (card.pid === numCard.pid) {
+        numCard.count++
         flag = true
         break
       }
     }
     if (flag === false) {
-      let Zcard = card
-      Zcard.count = 1
-      Deck.push(Zcard)
+      let numCard = card
+      numCard.count = 1
+      deckWithCount.push(numCard)
     }
   }
-  return Deck
+  return deckWithCount
 }
 
-function defaultSort(data){
-  data.sort(function (aObj, bObj) {
+function defaultSort(cards){
+  // 默认排序：
+  // 共鸣精灵>精灵>法术，分身>必杀
+  // 高等级>低等级，高力量>低力量
+  cards.sort((aObj, bObj) => {
     const a = aObj.info
     const b = bObj.info
-    const aIdx = aObj.idx
-    const bIdx = bObj.idx
     if (a.cardType === 'LRIG') {
       if (b.cardType !== 'LRIG') return -1
       if (b.level !== a.level) {
@@ -144,6 +64,88 @@ function defaultSort(data){
     if (a.cid !== b.cid) {
       return a.cid - b.cid
     }
-    return aIdx - bIdx
+    return aObj.idx - bObj.idx
   })
 }
+
+Vue.use(Vuex)
+
+const state = {
+  currentDeckName: 'testOnly',
+  deckFilenames: [],
+  deckIds: {},
+  mainCards: [],
+  lrigCards: [],
+}
+
+const mutations = {
+  addCard(state, card) {
+    let pid = card.pid
+    if (card.type === 'LRIG' || card.deckName === 'ARTS') {
+      state.lrigCards.push({
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
+      })
+      defaultSort(state.lrigCards)
+    } else {
+      state.mainCards.push({
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
+      })
+      defaultSort(state.mainCards)
+    }
+  },
+  delCard(state, card) {
+    let idx = ''
+    if (card.type === 'LRIG' || card.deckName === 'ARTS') {
+      idx = state.lrigCards.findIndex(item => item.pid === card.pid)
+      state.lrigCards.splice(idx, 1)
+    } else {
+      idx = state.mainCards.findIndex(item => item.pid === card.pid)
+      state.mainCards.splice(idx, 1)
+    }
+  },
+  fillDeckFile(state, payload) {
+    state.deckIds = payload
+  },
+  initDeck(state) {
+    for (let pid of state.deckIds.mainDeck) {
+      let cards = state.mainCards
+      cards.push({
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
+      })
+    }
+    for (let pid of state.deckIds.lrigDeck) {
+      let cards = state.lrigCards
+      cards.push({
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
+      })
+    }
+  },
+}
+
+const getters = {
+  mainDeck: state => {
+    return getDeckWithCount('mainDeck', state)
+  },
+  lrigDeck: state => {
+    return getDeckWithCount('lrigDeck', state)
+  },
+  DeckName: state => {
+    return state.currentDeckName
+  },
+}
+
+const store = new Vuex.Store({
+  state,
+  mutations,
+  getters,
+})
+
+export default store

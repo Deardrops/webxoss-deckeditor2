@@ -4,7 +4,7 @@ export default {
   components: {
     DeckTemplate,
   },
-  created:function(){
+  created() {
     this.$store.commit('fillDeckFile', {
       mainDeck: [
         1912,
@@ -67,8 +67,11 @@ export default {
     mainDeck() {
       return this.$store.getters.mainDeck
     },
-    lrigDeck(){
+    lrigDeck() {
       return this.$store.getters.lrigDeck
+    },
+    DeckName() {
+      return this.$store.getters.DeckName
     },
   },
 }
@@ -92,6 +95,10 @@ export default {
           <button id="button-import-export">导入/导出</button>
         </div>
       </div> -->
+      <div class="title-menu">
+        <div class="deck-name">{{ DeckName }}</div>
+        <!-- <div class="dropmenu"><button></button></div> -->
+      <div>
       <div class="main-deck-text-bar">
         <span class="main-deck-title">主卡组</span>
         <!-- <a target="_blank" href="http://www.takaratomy.co.jp/products/wixoss/rule/rule_mayu_room.html" id="main-deck-mayus-room">茧的房间</a> -->
@@ -134,12 +141,15 @@ export default {
 
 <style scoped>
 .main-deck-text-bar,
-.lrig-deck-text-bar{
+.lrig-deck-text-bar {
   text-align: center;
 }
 .main-deck-zone,
-.lrig-deck-zone{
+.lrig-deck-zone {
   width: 100%;
   margin: 0 auto;
+}
+.dropmenu button {
+
 }
 </style>

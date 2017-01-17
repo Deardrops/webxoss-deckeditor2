@@ -3,20 +3,14 @@ export default {
   props: ['deck'],
   methods: {
     add(Info) {
-      let deckName = (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL')
-        ? 'mainDeck'
-        : 'lrigDeck'
       this.$store.commit('addCard', {
-        deckName: deckName,
+        type: Info.cardType,
         pid: Info.pid,
       })
     },
     del(Info) {
-      let deckName = (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL')
-        ? 'mainDeck'
-        : 'lrigDeck'
       this.$store.commit('delCard', {
-        deckName: deckName,
+        type: Info.cardType,
         pid: Info.pid,
       })
     },
@@ -83,7 +77,7 @@ export default {
   margin-left:-25%;
   margin-top:-25%;
 }
-.card-item-count button{
+.card-item-count button {
   background-color: #ffffff;
   border: none;
   color: #555555;
