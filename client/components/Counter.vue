@@ -1,3 +1,13 @@
+<script>
+export default {
+  computed: {
+    count() {
+      return this.$store.state.count
+    }
+  }
+}
+</script>
+
 <template>
   <div class="counter-wrapper">
     <div class="counter">
@@ -9,17 +19,7 @@
   </div>
 </template>
 
-<script>
-export default {
-  computed: {
-    count() {
-      return this.$store.state.count
-    }
-  }
-}
-</script>
-
-<style>
+<style scoped>
 .counter {
   margin: 100px auto;
   border-radius: 3px;

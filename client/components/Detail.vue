@@ -1,3 +1,9 @@
+<script>
+export default {
+
+}
+</script>
+
 <template>
 	<div id="Detail">
 		<div id="detail-card-figure">
@@ -13,9 +19,3 @@
 	    </div>
     </div>
 </template>
-
-<script>
-export default {
-
-}
-</script>
