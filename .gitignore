@@ -1,5 +1,10 @@
 node_modules
 *.log
 .DS_Store
-/dist
+dist
 images
+background
+.eslintcache
+
+.editorconfig
+*.sublime-*
