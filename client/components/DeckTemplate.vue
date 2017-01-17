@@ -2,26 +2,20 @@
 export default {
   props: ['deck'],
   methods: {
-    add:function(Info) {
-      let deckName
-      if (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL') {
-        deckName = 'mainDeck'
-      } else {
-        deckName = 'lrigDeck'
-      }
-      this.$store.commit('AddCard', {
+    add(Info) {
+      let deckName = (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL')
+        ? 'mainDeck'
+        : 'lrigDeck'
+      this.$store.commit('addCard', {
         deckName: deckName,
         pid: Info.pid,
       })
     },
-    del:function(Info) {
-      let deckName
-      if (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL') {
-        deckName = 'mainDeck'
-      } else {
-        deckName = 'lrigDeck'
-      }
-      this.$store.commit('DelCard', {
+    del(Info) {
+      let deckName = (Info.cardType === 'SIGNI' || Info.cardType === 'SPELL')
+        ? 'mainDeck'
+        : 'lrigDeck'
+      this.$store.commit('delCard', {
         deckName: deckName,
         pid: Info.pid,
       })
@@ -36,35 +30,35 @@ export default {
         <img :src="card.img" class="card-img"/>
       </div>
       <div class="card-item-info">
-        <div class="card-item-title">{{card.info.name}}</div>
+        <div class="card-item-title">{{ card.info.name }}</div>
         <div 
           v-if="card.info.cardType === 'SIGNI'"
           class="card-item-subtitle">
-          <span>Lv.{{card.info.level}}</span>
-          <span>Power:{{card.info.power}}<span>
+          <span>Lv.{{ card.info.level }}</span>
+          <span>Power:{{ card.info.power }}<span>
         </div>
         <div 
           v-if="card.info.cardType === 'SPELL'"
           class="card-item-subtitle">
-          <span>{{card.info.color}}</span>
+          <span>{{ card.info.color }}</span>
           <!-- <span>{{card.info.limiting}}<span> -->
         </div>
         <div 
           v-if="card.info.cardType === 'LRIG'"
           class="card-item-subtitle">
-          <span>Lv.{{card.info.level}}</span>
-          <span>Limit:{{card.info.limit}}<span>
+          <span>Lv.{{ card.info.level }}</span>
+          <span>Limit:{{ card.info.limit }}<span>
         </div>
         <div 
           v-if="card.info.cardType === 'ARTS'"
           class="card-item-subtitle">
-          <span>{{card.info.color}}</span>
+          <span>{{ card.info.color }}</span>
           <!-- <span>{{card.info.limiting}}<span> -->
         </div>
         <div class="card-item-count">
-          <button v-on:click="del(card.info)">-</button>
+          <button @click="del(card.info)">-</button>
           <span>{{card.count}}</span>
-          <button v-on:click="add(card.info)">+</button>
+          <button @click="add(card.info)">+</button>
         </div>
       </div>
     </div>

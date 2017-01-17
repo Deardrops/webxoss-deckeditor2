@@ -133,10 +133,12 @@ export default {
 </template>
 
 <style scoped>
-.main-deck-text-bar, .lrig-deck-text-bar{
+.main-deck-text-bar,
+.lrig-deck-text-bar{
   text-align: center;
 }
-.main-deck-zone,.lrig-deck-zone{
+.main-deck-zone,
+.lrig-deck-zone{
   width: 100%;
   margin: 0 auto;
 }

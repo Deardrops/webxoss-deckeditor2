@@ -14,7 +14,7 @@ const state = {
 }
 
 const mutations = {
-  AddCard(state, card){
+  addCard(state, card){
     let pid = card.pid
     let Data
     if (card.deckName === 'mainDeck') {
@@ -30,7 +30,7 @@ const mutations = {
     defaultSort(state.mainData)
     defaultSort(state.lrigData)
   },
-  DelCard(state, card){
+  delCard(state, card){
     //TODO:验证输入
     let idx
     if (card.deckName === 'mainDeck') {
