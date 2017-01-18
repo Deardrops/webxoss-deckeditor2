@@ -22,7 +22,6 @@ const TESTS = {
   css: /\.css$/,
   js: /\.js?$/,
   vue: /\.vue$/,
-  json: /\.json$/,
   image: /\.(webp|jpe?g|png|gif|svg)$/,
 }
 let browsers = [
