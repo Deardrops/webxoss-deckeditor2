@@ -4,10 +4,10 @@
   </div>
 </template>
 
-<style scoped>
+<style>
 body {
   margin: 0;
-  font-size: 2rem;
+  font-size: 1.5rem;
   font-family: -apple-system, BlinkMacSystemFont,
                'avenir next', avenir,
                helvetica, 'helvetica neue',
