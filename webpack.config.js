@@ -10,13 +10,15 @@ const cssnext = require('postcss-cssnext')
 const toPath = relative => path.resolve(__dirname, relative)
 
 const PATHS = {
-  index: toPath('client/index.js'),
-  template: toPath('client/index.tpl'),
-  src: toPath('client'),
+  index: toPath('src/index.js'),
+  template: toPath('src/index.tpl'),
+  src: toPath('src'),
   dist: toPath('dist'),
   css: toPath('dist/css'),
-  components: toPath('client/components'),
-  CardInfo: toPath('client/CardInfo.json'),
+  js: toPath('src/js'),
+  pages: toPath('src/pages'),
+  components: toPath('src/components'),
+  CardInfo: toPath('src/CardInfo.json'),
 }
 const TESTS = {
   css: /\.css$/,
@@ -146,6 +148,8 @@ config.base = {
       '.vue',
     ],
     alias: {
+      js: PATHS.js,
+      pages: PATHS.pages,
       components: PATHS.components,
     },
   },
