@@ -3,36 +3,34 @@ import Vuex from 'vuex'
 
 import ImageManager from '../ImageManager.js'
 
-function getDeckWithCount(deckName, state) {
-  let deck = (deckName === 'mainDeck')
-    ? state.mainCards
-    : state.lrigCards
-  let deckWithCount = []
+function getUniqueCards(deck) {
+  //unique card with its count
+  let uniqueCards = []
   for (let card of deck) {
     let flag = false
-    for (let numCard of deckWithCount) {
-      if (card.pid === numCard.pid) {
-        numCard.count++
+    for (let uniqueCard of uniqueCards) {
+      if (card.pid === uniqueCard.pid) {
+        uniqueCard.count++
         flag = true
         break
       }
     }
     if (flag === false) {
-      let numCard = card
-      numCard.count = 1
-      deckWithCount.push(numCard)
+      let uniqueCard = card
+      uniqueCard.count = 1
+      uniqueCards.push(uniqueCard)
     }
   }
-  return deckWithCount
+  return uniqueCards
 }
 
 function defaultSort(cards){
-  // 默认排序：
-  // 共鸣精灵>精灵>法术，分身>必杀
-  // 高等级>低等级，高力量>低力量
-  cards.sort((aObj, bObj) => {
-    const a = aObj.info
-    const b = bObj.info
+  // default order:
+  // LRIG>ARTS>RESONA>SIGNI>SPELL
+  // level/power: hight > low
+  cards.sort((aPid, bPid) => {
+    const a = CardInfo[aPid]
+    const b = CardInfo[bPid]
     if (a.cardType === 'LRIG') {
       if (b.cardType !== 'LRIG') return -1
       if (b.level !== a.level) {
@@ -64,80 +62,92 @@ function defaultSort(cards){
     if (a.cid !== b.cid) {
       return a.cid - b.cid
     }
-    return aObj.idx - bObj.idx
+    return 1
   })
+}
+
+function isLrigCard(pid){
+  if (CardInfo[pid].cardType === 'LRIG') {
+    return true
+  } else if (CardInfo[pid].cardType === 'ARTS') {
+    return true
+  } else {
+    return false
+  }
 }
 
 Vue.use(Vuex)
 
 const state = {
-  currentDeckName: 'testOnly',
+  currentDeckName: '牌组名称（点击跳转搜索）',
   deckFilenames: [],
-  deckIds: {},
-  mainCards: [],
-  lrigCards: [],
+  deckIds: {}, //test use
+  deckCards: [],
+  deckIdList: [],
+  isDeckView: true,
+  isSearchView: false,
 }
 
 const mutations = {
-  addCard(state, card) {
-    let pid = card.pid
-    if (card.type === 'LRIG' || card.deckName === 'ARTS') {
-      state.lrigCards.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
-      defaultSort(state.lrigCards)
-    } else {
-      state.mainCards.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
-      defaultSort(state.mainCards)
-    }
+  addCard(state, pid) {
+    state.deckIdList.push(pid)
+    defaultSort(state.deckIdList)
   },
-  delCard(state, card) {
-    let idx = ''
-    if (card.type === 'LRIG' || card.deckName === 'ARTS') {
-      idx = state.lrigCards.findIndex(item => item.pid === card.pid)
-      state.lrigCards.splice(idx, 1)
-    } else {
-      idx = state.mainCards.findIndex(item => item.pid === card.pid)
-      state.mainCards.splice(idx, 1)
-    }
+  delCard(state, pid) {
+    let idx = state.deckIdList.findIndex(id => id === pid)
+    state.deckIdList.splice(idx, 1)
   },
   fillDeckFile(state, payload) {
     state.deckIds = payload
   },
   initDeck(state) {
     for (let pid of state.deckIds.mainDeck) {
-      let cards = state.mainCards
-      cards.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
+      state.deckIdList.push(pid)
     }
     for (let pid of state.deckIds.lrigDeck) {
-      let cards = state.lrigCards
-      cards.push({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      })
+      state.deckIdList.push(pid)
     }
+  },
+  changeToSearchView(state) {
+    state.isDeckView = false
+    state.isSearchView = true
   },
 }
 
 const getters = {
-  mainDeck: state => {
-    return getDeckWithCount('mainDeck', state)
+  mainCards: state => {
+    let cards = []
+    for (let pid of state.deckIdList){
+      if (!isLrigCard(pid)){
+        cards.push({
+          pid: pid,
+          info: CardInfo[pid],
+          img: ImageManager.getUrlByPid(pid),
+        })
+      }
+    }
+    return cards
   },
-  lrigDeck: state => {
-    return getDeckWithCount('lrigDeck', state)
+  lrigCards: state => {
+    let cards = []
+    for (let pid of state.deckIdList){
+      if (isLrigCard(pid)){
+        cards.push({
+          pid: pid,
+          info: CardInfo[pid],
+          img: ImageManager.getUrlByPid(pid),
+        })
+      }
+    }
+    return cards
   },
-  DeckName: state => {
+  mainDeck: (state, getters) => {
+    return getUniqueCards(getters.mainCards)
+  },
+  lrigDeck: (state, getters) => {
+    return getUniqueCards(getters.lrigCards)
+  },
+  deckName: state => {
     return state.currentDeckName
   },
 }

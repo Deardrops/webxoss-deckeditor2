@@ -2,17 +2,41 @@
 export default {
   props: ['deck'],
   methods: {
-    add(Info) {
-      this.$store.commit('addCard', {
-        type: Info.cardType,
-        pid: Info.pid,
-      })
+    add(pid) {
+      this.$store.commit('addCard', pid)
     },
-    del(Info) {
-      this.$store.commit('delCard', {
-        type: Info.cardType,
-        pid: Info.pid,
-      })
+    del(pid) {
+      this.$store.commit('delCard', pid)
+    },
+    parseInfo(card) {
+      let infoList = []
+      //TODO: design showing info
+      switch(card.info.cardType)
+      {
+      case 'RESONA':
+        infoList.push({
+          preText: '共鸣精灵',
+          text: '',
+        })
+        break
+      case 'SIGNI':
+        infoList.push({
+          preText: 'Lv.',
+          text: card.info.level,
+        })
+        infoList.push({
+          preText: 'Power:',
+          text: card.info.power,
+        })
+        break
+      case 'SPELL':
+        infoList.push({
+          preText: 'Color:',
+          text: card.info.color,
+        })
+        break
+      }
+      return infoList
     },
   },
 }
@@ -25,34 +49,17 @@ export default {
       </div>
       <div class="card-item-info">
         <div class="card-item-title">{{ card.info.name }}</div>
-        <div 
-          v-if="card.info.cardType === 'SIGNI'"
-          class="card-item-subtitle">
-          <span>Lv.{{ card.info.level }}</span>
-          <span>Power:{{ card.info.power }}<span>
-        </div>
-        <div 
-          v-if="card.info.cardType === 'SPELL'"
-          class="card-item-subtitle">
-          <span>{{ card.info.color }}</span>
-          <!-- <span>{{card.info.limiting}}<span> -->
-        </div>
-        <div 
-          v-if="card.info.cardType === 'LRIG'"
-          class="card-item-subtitle">
-          <span>Lv.{{ card.info.level }}</span>
-          <span>Limit:{{ card.info.limit }}<span>
-        </div>
-        <div 
-          v-if="card.info.cardType === 'ARTS'"
-          class="card-item-subtitle">
-          <span>{{ card.info.color }}</span>
-          <!-- <span>{{card.info.limiting}}<span> -->
+        <div class="card-item-subtitle">
+          <span
+            v-for="info in parseInfo(card)">
+            {{ info.preText }}
+            {{ info.text }}
+          </span>
         </div>
         <div class="card-item-count">
-          <button @click="del(card.info)">-</button>
+          <button @click="del(card.pid)">-</button>
           <span>{{card.count}}</span>
-          <button @click="add(card.info)">+</button>
+          <button @click="add(card.pid)">+</button>
         </div>
       </div>
     </div>
@@ -70,7 +77,7 @@ export default {
   height: 100px; 
   border: 5px solid black; 
   overflow: hidden;
-  margin: 0.5em;
+  margin: 0.2em;
 }
 .card-img {
   width:150%;

@@ -1,6 +1,6 @@
 <template>
   <div class="page">
-    <!-- <search></search> -->
+    <search></search>
     <detail></detail>
     <deck></deck>
   </div>
