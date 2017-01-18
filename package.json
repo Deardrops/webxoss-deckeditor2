@@ -2,13 +2,13 @@
   "name": "webxoss-DeckEditor2",
   "version": "0.1.0",
   "description": "none",
-  "main": "client/index.js",
+  "main": "src/index.js",
   "scripts": {
     "test": "echo lol",
     "build": "npm run lint && webpack",
     "dev": "npm run lint:node && node server",
     "lint": "npm run lint:node",
-    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern client"
+    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src"
   },
   "author": "deardrops <lness@qq.com>",
   "repository": {

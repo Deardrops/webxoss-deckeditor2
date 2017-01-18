@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import ImageManager from '../ImageManager.js'
+import ImageManager from 'js/ImageManager.js'
 
 function getUniqueCards(deck) {
   // unique card with its count

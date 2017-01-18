@@ -23,7 +23,7 @@ app.use(webpackHotMiddleware(compiler))
 
 app.use('/images', express.static('./images'))
 app.use('/background', express.static('./background'))
-app.use('/', express.static('./client'))
+app.use('/', express.static('./src'))
 app.use('/dist', express.static('./dist'))
 
 module.exports = app.listen(8080)
