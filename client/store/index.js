@@ -6,28 +6,24 @@ import ImageManager from '../ImageManager.js'
 function getUniqueCards(deck) {
   //unique card with its count
   let uniqueCards = []
-  for (let card of deck) {
-    let flag = false
+  deck.forEach(card => {
     for (let uniqueCard of uniqueCards) {
       if (card.pid === uniqueCard.pid) {
         uniqueCard.count++
-        flag = true
-        break
+        return
       }
     }
-    if (flag === false) {
-      let uniqueCard = card
-      uniqueCard.count = 1
-      uniqueCards.push(uniqueCard)
-    }
-  }
+    let uniqueCard = card
+    uniqueCard.count = 1
+    uniqueCards.push(uniqueCard)
+  })
   return uniqueCards
 }
 
 function defaultSort(cards){
   // default order:
-  // LRIG>ARTS>RESONA>SIGNI>SPELL
-  // level/power: hight > low
+  // LRIG > ARTS > RESONA > SIGNI > SPELL
+  // level / power: high > low
   cards.sort((aPid, bPid) => {
     const a = CardInfo[aPid]
     const b = CardInfo[bPid]
@@ -67,13 +63,8 @@ function defaultSort(cards){
 }
 
 function isLrigCard(pid){
-  if (CardInfo[pid].cardType === 'LRIG') {
-    return true
-  } else if (CardInfo[pid].cardType === 'ARTS') {
-    return true
-  } else {
-    return false
-  }
+  let type = CardInfo[pid].cardType
+  return (type  === 'LRIG') || (type  === 'ARTS')
 }
 
 Vue.use(Vuex)
@@ -81,8 +72,6 @@ Vue.use(Vuex)
 const state = {
   currentDeckName: '牌组名称（点击跳转搜索）',
   deckFilenames: [],
-  deckIds: {}, //test use
-  deckCards: [],
   deckIdList: [],
   isDeckView: true,
   isSearchView: false,
@@ -97,16 +86,8 @@ const mutations = {
     let idx = state.deckIdList.findIndex(id => id === pid)
     state.deckIdList.splice(idx, 1)
   },
-  fillDeckFile(state, payload) {
-    state.deckIds = payload
-  },
-  initDeck(state) {
-    for (let pid of state.deckIds.mainDeck) {
-      state.deckIdList.push(pid)
-    }
-    for (let pid of state.deckIds.lrigDeck) {
-      state.deckIdList.push(pid)
-    }
+  fillDeck(state, payload) {
+    state.deckIdList = payload
   },
   changeToSearchView(state) {
     state.isDeckView = false
@@ -116,30 +97,24 @@ const mutations = {
 
 const getters = {
   mainCards: state => {
-    let cards = []
-    for (let pid of state.deckIdList){
-      if (!isLrigCard(pid)){
-        cards.push({
-          pid: pid,
-          info: CardInfo[pid],
-          img: ImageManager.getUrlByPid(pid),
-        })
+    let mainIdList = state.deckIdList.filter(pid => !isLrigCard(pid))
+    return mainIdList.map(pid => {
+      return {
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
       }
-    }
-    return cards
+    })
   },
   lrigCards: state => {
-    let cards = []
-    for (let pid of state.deckIdList){
-      if (isLrigCard(pid)){
-        cards.push({
-          pid: pid,
-          info: CardInfo[pid],
-          img: ImageManager.getUrlByPid(pid),
-        })
+    let lrigIdList = state.deckIdList.filter(pid => isLrigCard(pid))
+    return lrigIdList.map(pid => {
+      return {
+        pid: pid,
+        info: CardInfo[pid],
+        img: ImageManager.getUrlByPid(pid),
       }
-    }
-    return cards
+    })
   },
   mainDeck: (state, getters) => {
     return getUniqueCards(getters.mainCards)

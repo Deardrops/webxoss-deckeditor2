@@ -9,34 +9,26 @@ export default {
       this.$store.commit('delCard', pid)
     },
     parseInfo(card) {
-      let infoList = []
       //TODO: design showing info
-      switch(card.info.cardType)
-      {
-      case 'RESONA':
-        infoList.push({
+      //TODO: code style optimize
+      let map = {
+        'RESONA': [{
           preText: '共鸣精灵',
           text: '',
-        })
-        break
-      case 'SIGNI':
-        infoList.push({
+        }],
+        'SIGNI': [{
           preText: 'Lv.',
           text: card.info.level,
-        })
-        infoList.push({
+        }, {
           preText: 'Power:',
           text: card.info.power,
-        })
-        break
-      case 'SPELL':
-        infoList.push({
+        }],
+        'SPELL':[{
           preText: 'Color:',
           text: card.info.color,
-        })
-        break
+        }],
       }
-      return infoList
+      return map[card.info.cardType]
     },
   },
 }
@@ -58,7 +50,7 @@ export default {
         </div>
         <div class="card-item-count">
           <button @click="del(card.pid)">-</button>
-          <span>{{card.count}}</span>
+          <span>{{ card.count }}</span>
           <button @click="add(card.pid)">+</button>
         </div>
       </div>
