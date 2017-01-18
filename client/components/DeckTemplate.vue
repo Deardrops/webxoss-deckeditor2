@@ -9,8 +9,8 @@ export default {
       this.$store.commit('delCard', pid)
     },
     parseInfo(card) {
-      //TODO: design showing info
-      //TODO: code style optimize
+      // TODO: design showing info
+      // TODO: code style optimize
       let map = {
         'RESONA': [{
           preText: '共鸣精灵',

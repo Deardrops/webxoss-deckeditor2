@@ -4,7 +4,7 @@ import Vuex from 'vuex'
 import ImageManager from '../ImageManager.js'
 
 function getUniqueCards(deck) {
-  //unique card with its count
+  // unique card with its count
   let uniqueCards = []
   deck.forEach(card => {
     for (let uniqueCard of uniqueCards) {
@@ -73,7 +73,7 @@ const state = {
   currentDeckName: '牌组名称（点击跳转搜索）',
   deckFilenames: [],
   deckIdList: [],
-  isDeckView: true,
+  isDeckView: true, // TODO: use vue-router
   isSearchView: false,
 }
 
@@ -97,24 +97,22 @@ const mutations = {
 
 const getters = {
   mainCards: state => {
-    let mainIdList = state.deckIdList.filter(pid => !isLrigCard(pid))
-    return mainIdList.map(pid => {
-      return {
+    return state.deckIdList
+      .filter(pid => !isLrigCard(pid))
+      .map(pid => ({
         pid: pid,
         info: CardInfo[pid],
         img: ImageManager.getUrlByPid(pid),
-      }
-    })
+      }))
   },
   lrigCards: state => {
-    let lrigIdList = state.deckIdList.filter(pid => isLrigCard(pid))
-    return lrigIdList.map(pid => {
-      return {
+    return state.deckIdList
+      .filter(pid => isLrigCard(pid))
+      .map(pid => ({
         pid: pid,
         info: CardInfo[pid],
         img: ImageManager.getUrlByPid(pid),
-      }
-    })
+      }))
   },
   mainDeck: (state, getters) => {
     return getUniqueCards(getters.mainCards)
