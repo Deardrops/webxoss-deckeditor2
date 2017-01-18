@@ -5,6 +5,6 @@ import { app } from './app'
 fetch('./CardInfo.json')
   .then(res => res.json())
   .then(CardInfo => {
-    window.CardInfo = CardInfo
+    window.CardInfo = Object.freeze(CardInfo)
     app.$mount('#app')
   })
