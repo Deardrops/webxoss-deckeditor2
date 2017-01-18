@@ -8,9 +8,9 @@
 
 <script>
 
-import Detail from 'components/Detail'
-import Deck from 'components/Deck'
-import Search from 'components/Search'
+import Detail from 'pages/Detail'
+import Deck from 'pages/Deck'
+import Search from 'pages/Search'
 export default {
   components: {
     Detail,

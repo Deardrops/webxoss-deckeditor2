@@ -1,6 +1,6 @@
 <script>
 import { mapGetters } from 'vuex'
-import DeckTemplate from './DeckTemplate'
+import DeckTemplate from 'components/DeckTemplate'
 export default {
   components: {
     DeckTemplate,
