@@ -73,6 +73,7 @@ const state = {
   currentDeckName: '牌组名称（点击跳转搜索）',
   deckFilenames: [],
   deckIdList: [],
+  searchIdList: ['1'],
   isDeckView: true, // TODO: use vue-router
   isSearchView: false,
 }
@@ -85,6 +86,9 @@ const mutations = {
   delCard(state, pid) {
     let idx = state.deckIdList.findIndex(id => id === pid)
     state.deckIdList.splice(idx, 1)
+  },
+  searchCards(state, idList){
+    state.searchIdList = idList
   },
   fillDeck(state, payload) {
     state.deckIdList = payload
@@ -119,6 +123,15 @@ const getters = {
   },
   lrigDeck: (state, getters) => {
     return getUniqueCards(getters.lrigCards)
+  },
+  searchCards: state => {
+    return state.searchIdList
+      .map(pid => ({
+        pid: pid,
+        info: CardInfo[pid],
+        count: 1,
+        img: ImageManager.getUrlByPid(pid),
+      }))
   },
   deckName: state => {
     return state.currentDeckName
