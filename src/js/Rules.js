@@ -592,7 +592,7 @@ NameRule.parse = function(words) {
   }
 }
 
-export {
+export default [
   ColorRule,
   CrossRule,
   TypeRule,
@@ -610,4 +610,4 @@ export {
   IllustRule,
   WxidRule,
   NameRule,
-}
+]
