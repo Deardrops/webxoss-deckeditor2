@@ -92,11 +92,14 @@ export default {
           <button id="button-import-export">导入/导出</button>
         </div>
       </div> -->
-    <div class="title-bar" @click="showSeach">
-      <div class="deck-name"><a>{{ deckName }}</a></div>
-      <div class="control"><!-- ☰ -->三</div>
+    <nav class="nav-bar" @click="showSeach">
+    <!-- <nav class="nav-bar" > -->
+      <button tabindex="0" type="button" class="nav-button"><div>
+      <svg viewBox="0 0 24 24" style="display: inline-block; color: rgb(255, 255, 255); fill: rgb(255, 255, 255); height: 24px; width: 24px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; user-select: none;"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></div>
+      </button>
+      <h1 class="deck-name"><a>{{ deckName }}</a></h1>
       <!-- <div class="dropmenu"><button></button></div> -->
-    </div>
+    </nav>
     <div class="main-deck-text-bar">
       <span class="main-deck-title">主卡组</span>
       <!-- <a target="_blank" href="http://www.takaratomy.co.jp/products/wixoss/rule/rule_mayu_room.html" id="main-deck-mayus-room">茧的房间</a> -->
@@ -147,30 +150,50 @@ export default {
   width: 100%;
   margin: 0 auto;
 }
-.dropmenu button {
 
-}
-.title-bar {
-  float: left;
-  height: auto;
+/* test use */
+.nav-bar {
+  color: rgba(0, 0, 0, 0.870588);
+  background-color: #2196f3;
+  box-sizing: border-box;
+  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
+  border-radius: 0px;
+  position: relative;
+  z-index: 1100;
   width: 100%;
-  background: #d3d3d3;
-  height: auto;
-  border-radius: 5px 5px 0 0;
+  display: flex;
+  padding-left: 24px;
+  padding-right: 24px;
+}
+.nav-button {
+  border: 10px;
+  box-sizing: border-box;
+  display: inline-block;
+  cursor: pointer;
+  text-decoration: none;
+  margin: 8px 8px 0px -16px;
+  padding: 12px;
+  outline: none;
+  font-size: 0px;
+  font-weight: inherit;
+  position: relative;
+  overflow: visible;
+  width: 48px;
+  height: 48px;
+  background: none;
 }
 .deck-name {
-  /*background-color: #c3c3c3;*/
-  position: relative;
-  float: left;
-  /*height: .9em;*/
-  text-align: center;
-  width: 90%;
-  margin: .2em 0;
-}
-.control {
-  float: right;
-  line-height: 1.7em;
-  height: 100%;
-  color: #a3a3a5;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  margin: 0px;
+  padding-top: 0px;
+  letter-spacing: 0px;
+  font-size: 24px;
+  font-weight: 400;
+  color: #ffffff;
+  height: 64px;
+  line-height: 64px;
+  flex: 1 1 0%;
 }
 </style>

@@ -13,8 +13,11 @@ export default {
       // TODO: code style optimize
       let map = {
         'RESONA': [{
-          preText: '共鸣精灵',
-          text: '',
+          preText: 'Lv.',
+          text: card.info.level,
+        }, {
+          preText: 'Power:',
+          text: card.info.power,
         }],
         'SIGNI': [{
           preText: 'Lv.',
@@ -23,7 +26,18 @@ export default {
           preText: 'Power:',
           text: card.info.power,
         }],
-        'SPELL':[{
+        'SPELL': [{
+          preText: 'Color:',
+          text: card.info.color,
+        }],
+        'LRIG': [{
+          preText: 'Lv.',
+          text: card.info.level,
+        }, {
+          preText: 'Limit:',
+          text: card.info.limit,
+        }],
+        'ARTS': [{
           preText: 'Color:',
           text: card.info.color,
         }],
@@ -39,19 +53,22 @@ export default {
       <div class="card-item-img">
         <img :src="card.img" class="card-img"/>
       </div>
-      <div class="card-item-info">
+      <div class="card-item-div">
         <div class="card-item-title">{{ card.info.name }}</div>
         <div class="card-item-subtitle">
+          <div class="card-item-info">
+          <span>{{ card.info.cardType }}</span>
           <span
             v-for="info in parseInfo(card)">
             {{ info.preText }}
             {{ info.text }}
           </span>
-        </div>
-        <div class="card-item-count">
-          <button @click="del(card.pid)">-</button>
-          <span>{{ card.count }}</span>
-          <button @click="add(card.pid)">+</button>
+          </div>
+          <div class="card-item-count">
+            <button @click="del(card.pid)">-</button>
+            <span>{{ card.count }}</span>
+            <button @click="add(card.pid)">+</button>
+          </div>
         </div>
       </div>
     </div>
@@ -65,8 +82,8 @@ export default {
 .card-item-img {
   position: relative;
   float: left;
-  width: 100px; 
-  height: 100px; 
+  width: 4em; 
+  height: 4em; 
   border: 5px solid black; 
   overflow: hidden;
   margin: 0.2em;
@@ -75,6 +92,9 @@ export default {
   width:150%;
   margin-left:-25%;
   margin-top:-25%;
+}
+.card-item-div {
+  height: 4.4em;
 }
 .card-item-count button {
   background-color: #ffffff;
@@ -85,5 +105,8 @@ export default {
   display: inline-block;
   font-size: 1.2em;
   width: 1.2em;
+}
+.card-item-subtitle {
+  display: flex;
 }
 </style>

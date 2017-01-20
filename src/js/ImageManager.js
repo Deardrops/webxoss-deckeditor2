@@ -59,6 +59,6 @@ const manager = (function(){
   return ImageManager
 })()
 
-const ImageManager = new manager('../')
+const ImageManager = new manager('')
 
 export default ImageManager
