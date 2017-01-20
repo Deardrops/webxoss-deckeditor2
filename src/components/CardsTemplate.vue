@@ -1,5 +1,9 @@
 <script>
+import Thumbnail from 'components/Thumbnail'
 export default {
+  components: {
+    Thumbnail,
+  },
   props: ['deck'],
   methods: {
     add(pid) {
@@ -50,10 +54,8 @@ export default {
 <template>
   <div>
     <div v-for="card in deck" class="card-item">
-      <div class="card-item-img">
-        <img :src="card.img" class="card-img"/>
-      </div>
-      <div class="card-item-div">
+      <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
+      <div class="card-item-info">
         <div class="card-item-title">{{ card.info.name }}</div>
         <div class="card-item-subtitle">
           <div class="card-item-info">
@@ -79,22 +81,13 @@ export default {
 .card-item {
   overflow: auto;
 }
-.card-item-img {
+.thumbnail {
   position: relative;
   float: left;
   width: 4em; 
   height: 4em; 
   border: 5px solid black; 
-  overflow: hidden;
   margin: 0.2em;
-}
-.card-img {
-  width:150%;
-  margin-left:-25%;
-  margin-top:-25%;
-}
-.card-item-div {
-  height: 4.4em;
 }
 .card-item-count button {
   background-color: #ffffff;
