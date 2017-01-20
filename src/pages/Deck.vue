@@ -1,9 +1,10 @@
 <script>
 import { mapGetters } from 'vuex'
-import CardsTemplate from 'components/CardsTemplate'
+import CardCell from 'components/CardCell'
+
 export default {
   components: {
-    CardsTemplate,
+    CardCell,
   },
   created() {
     this.$store.commit('fillDeck', [
@@ -61,8 +62,8 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'mainDeck',
-      'lrigDeck',
+      'mainCards',
+      'lrigCards',
       'deckName',
     ]),
   },
@@ -107,14 +108,14 @@ export default {
       <!-- <span id="main-deck-burst-count"></span><span>/20</span></span> -->
     </div>
     <div class="main-deck-zone">
-      <CardsTemplate :deck="mainDeck"></CardsTemplate>
+      <CardCell :cardIds="mainCards"></CardCell>
     </div>
     <div class="lrig-deck">
       <div class="lrig-deck-text-bar">
         <span class="lrig-deck-title">LRIG卡组</span>
       </div>
     <div class="lrig-deck-zone">
-      <CardsTemplate :deck="lrigDeck"></CardsTemplate>
+      <CardCell :cardIds="lrigCards"></CardCell>
       <!-- <div id="div-import-warp" style="display: none;">
         <div id="div-import-export">
           <div>

@@ -1,22 +1,16 @@
 <script>
 
-import CardsTemplate from 'components/CardsTemplate'
+import CardCell from 'components/CardCell'
 import Searcher from 'js/Searcher.js'
-import ImageManager from 'js/ImageManager.js'
 
 export default {
   components: {
-    CardsTemplate,
+    CardCell,
   },
   computed: {
     matchedCards() {
       return Searcher.search(this.$store.state.query)
-        .map(info => ({
-          pid: info.pid,
-          info,
-          count: 1,
-          img: ImageManager.getUrlByPid(info.pid),
-        }))
+        .map(info => info.pid)
     },
     shownCards() {
       return this.matchedCards.slice(0, 20)
@@ -35,7 +29,7 @@ export default {
       autocapitalize="none"
       v-model="$store.state.query">
     <div id="div-search-results">
-      <CardsTemplate :deck="shownCards"></CardsTemplate>
+      <CardCell :cardIds="shownCards"></CardCell>
       <div id="search-show-more" style="display: none;">显示更多</div>
     </div>
   </section>

@@ -1,25 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-import ImageManager from 'js/ImageManager.js'
-
-function getUniqueCards(deck) {
-  // unique card with its count
-  let uniqueCards = []
-  deck.forEach(card => {
-    for (let uniqueCard of uniqueCards) {
-      if (card.pid === uniqueCard.pid) {
-        uniqueCard.count++
-        return
-      }
-    }
-    let uniqueCard = card
-    uniqueCard.count = 1
-    uniqueCards.push(uniqueCard)
-  })
-  return uniqueCards
-}
-
 function defaultSort(cards){
   // default order:
   // LRIG > ARTS > RESONA > SIGNI > SPELL
@@ -107,26 +88,10 @@ const getters = {
   mainCards: state => {
     return state.deckIdList
       .filter(pid => !isLrigCard(pid))
-      .map(pid => ({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      }))
   },
   lrigCards: state => {
     return state.deckIdList
       .filter(pid => isLrigCard(pid))
-      .map(pid => ({
-        pid: pid,
-        info: CardInfo[pid],
-        img: ImageManager.getUrlByPid(pid),
-      }))
-  },
-  mainDeck: (state, getters) => {
-    return getUniqueCards(getters.mainCards)
-  },
-  lrigDeck: (state, getters) => {
-    return getUniqueCards(getters.lrigCards)
   },
   deckName: state => {
     return state.currentDeckName
