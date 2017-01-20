@@ -1,5 +1,9 @@
 <script>
+import Counter from 'components/Counter'
 export default {
+  components: {
+    Counter,
+  },
   props: ['deck'],
   methods: {
     add(pid) {
@@ -48,11 +52,11 @@ export default {
             {{ info.text }}
           </span>
         </div>
-        <div class="card-item-count">
-          <button @click="del(card.pid)">-</button>
-          <span>{{ card.count }}</span>
-          <button @click="add(card.pid)">+</button>
-        </div>
+        <counter
+          :count="card.count"
+          @plus="add(card.pid)"
+          @minus="del(card.pid)">
+        </counter>
       </div>
     </div>
   </div>
@@ -76,7 +80,7 @@ export default {
   margin-left:-25%;
   margin-top:-25%;
 }
-.card-item-count button {
+/*.card-item-count button {
   background-color: #ffffff;
   border: none;
   color: #555555;
@@ -85,5 +89,5 @@ export default {
   display: inline-block;
   font-size: 1.2em;
   width: 1.2em;
-}
+}*/
 </style>
