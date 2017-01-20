@@ -1,14 +1,14 @@
-﻿let concat = Array.prototype.concat.bind([])
-let toArr = function(obj) {
+﻿export const concat = Array.prototype.concat.bind([])
+export const toArr = function(obj) {
   if (!obj) return []
   if (typeof obj === 'string') return []
   return Array.prototype.slice.call(obj, 0)
 }
-let isArr = Array.isArray
-let inArr = function(item, arr) {
+export const isArr = Array.isArray
+export const inArr = function(item, arr) {
   return (toArr(arr).indexOf(item) !== -1)
 }
-let removeFromArr = function(item, arr) {
+export const removeFromArr = function(item, arr) {
   let idx = arr.indexOf(item)
   if (idx < 0) {
     return false
@@ -17,19 +17,19 @@ let removeFromArr = function(item, arr) {
     return true
   }
 }
-let isStr = function(v) {
+export const isStr = function(v) {
   return (typeof v === 'string')
 }
-let isObj = function(v) {
+export const isObj = function(v) {
   return v && (typeof v === 'object') && !isArr(v)
 }
-let isNum = function(v) {
+export const isNum = function(v) {
   return (typeof v === 'number')
 }
-let isFunc = function(v) {
+export const isFunc = function(v) {
   return (typeof v === 'function')
 }
-let pEach = function(arr, func) {
+export const pEach = function(arr, func) {
   return arr.reduce(function(chain, item) {
     return chain.then(function() {
       return func(item)
@@ -37,32 +37,18 @@ let pEach = function(arr, func) {
   }, Promise.resolve())
 }
 
-function callConstructor(constructor) {
+export function callConstructor(constructor) {
   let factoryFunction = constructor.bind.apply(constructor, arguments)
   return new factoryFunction()
 }
 
-function applyToConstructor(constructor, argArray) {
+export function applyToConstructor(constructor, argArray) {
   // let args = [null].concat(argArray)
   let args = concat(null, toArr(argArray))
   let factoryFunction = constructor.bind.apply(constructor, args)
   return new factoryFunction()
 }
 
-function nextTick(callback) {
+export function nextTick(callback) {
   setTimeout(callback, 0)
-}
-
-export {
-	toArr,
-	inArr,
-	removeFromArr,
-	isStr,
-	isObj,
-	isNum,
-	isFunc,
-	pEach,
-	callConstructor,
-	applyToConstructor,
-	nextTick,
 }

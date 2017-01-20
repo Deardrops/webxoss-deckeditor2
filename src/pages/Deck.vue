@@ -1,9 +1,9 @@
 <script>
 import { mapGetters } from 'vuex'
-import DeckTemplate from 'components/DeckTemplate'
+import CardsTemplate from 'components/CardsTemplate'
 export default {
   components: {
-    DeckTemplate,
+    CardsTemplate,
   },
   created() {
     this.$store.commit('fillDeck', [
@@ -104,14 +104,14 @@ export default {
       <!-- <span id="main-deck-burst-count"></span><span>/20</span></span> -->
     </div>
     <div class="main-deck-zone">
-      <DeckTemplate :deck="mainDeck"></DeckTemplate>
+      <CardsTemplate :deck="mainDeck"></CardsTemplate>
     </div>
     <div class="lrig-deck">
       <div class="lrig-deck-text-bar">
         <span class="lrig-deck-title">LRIG卡组</span>
       </div>
     <div class="lrig-deck-zone">
-      <DeckTemplate :deck="lrigDeck"></DeckTemplate>
+      <CardsTemplate :deck="lrigDeck"></CardsTemplate>
       <!-- <div id="div-import-warp" style="display: none;">
         <div id="div-import-export">
           <div>

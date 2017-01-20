@@ -1,12 +1,12 @@
 <script>
 
-import DeckTemplate from 'components/DeckTemplate'
+import CardsTemplate from 'components/CardsTemplate'
 import Searcher from 'js/Searcher.js'
 import ImageManager from 'js/ImageManager.js'
 
 export default {
   components: {
-    DeckTemplate,
+    CardsTemplate,
   },
   computed: {
     matchedCards() {
@@ -35,7 +35,7 @@ export default {
       autocapitalize="none"
       v-model="$store.state.query">
     <div id="div-search-results">
-      <DeckTemplate :deck="shownCards"></DeckTemplate>
+      <CardsTemplate :deck="shownCards"></CardsTemplate>
       <div id="search-show-more" style="display: none;">显示更多</div>
     </div>
   </section>
