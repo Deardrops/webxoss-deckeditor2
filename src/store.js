@@ -58,10 +58,6 @@ const state = {
   // current deck, an array of cards' pid
   deckPids: [],
 
-  // TODO: use vue-router
-  isDeckView: true,
-  isSearchView: false,
-
   // bind to search bar's user input
   query: '',
 }
@@ -95,10 +91,6 @@ const mutations = {
   },
   fillDeck(state, pids) {
     state.deckPids = pids
-  },
-  changeToSearchView(state) {
-    state.isDeckView = false
-    state.isSearchView = true
   },
   search(state, query) {
     state.query = query
