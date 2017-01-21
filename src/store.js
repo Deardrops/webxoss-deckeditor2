@@ -93,18 +93,22 @@ const mutations = {
     let idx = state.deckPids.findIndex(id => id === pid)
     state.deckPids.splice(idx, 1)
   },
-  fillDeck(state, payload) {
-    state.deckPids = payload
+  fillDeck(state, pids) {
+    state.deckPids = pids
   },
   changeToSearchView(state) {
     state.isDeckView = false
     state.isSearchView = true
+  },
+  search(state, query) {
+    state.query = query
   },
 }
 const store = new Vuex.Store({
   state,
   mutations,
   getters,
+  strict: process.env.NODE_ENV !== 'production',
 })
 
 export default store

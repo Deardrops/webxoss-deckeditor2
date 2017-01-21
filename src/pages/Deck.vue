@@ -65,13 +65,14 @@ export default {
         <span class="lrig-deck-title">LRIG卡组</span>
       </div>
     <div class="lrig-deck-zone">
-      <cell
-        v-for="card in unique(lrigDeck)"
-        :card="card"
-        :count="getCount(card, lrigDeck)"
-        @plus="add(card)"
-        @minus="del(card)">
-      </cell>
+      <li v-for="card in unique(lrigDeck)">
+        <cell
+          :card="card"
+          :count="getCount(card, lrigDeck)"
+          @plus="add(card)"
+          @minus="del(card)">
+        </cell>
+      </li>
     </div>
   </div>
 </template>

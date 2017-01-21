@@ -8,6 +8,14 @@ export default {
     Cell,
   },
   computed: {
+    query: {
+      get() {
+        return this.$store.state.query
+      },
+      set(value) {
+        this.$store.commit('search', value)
+      },
+    },
     matchedCards() {
       return Searcher.search(this.$store.state.query)
     },
@@ -25,14 +33,10 @@ export default {
       spellcheck="false"
       autocomplete="off"
       autocapitalize="none"
-      v-model="$store.state.query">
+      v-model="query">
     <ul>
       <li v-for="card in shownCards">
-        <cell
-          v-for="card in shownCards"
-          :card="card"
-          :count="0">
-        </cell>
+        <cell :card="card" :count="0"></cell>
       </li>
     </ul>
   </section>
