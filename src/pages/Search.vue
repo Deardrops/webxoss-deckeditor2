@@ -1,25 +1,44 @@
 <script>
-// import Searcher from '../Searcher.js'
-import DeckTemplate from 'components/DeckTemplate'
+
+import Cell from 'components/Cell'
+import Searcher from 'js/Searcher.js'
+
 export default {
   components: {
-    DeckTemplate,
+    Cell,
   },
   computed: {
-    searchDeck() {
-      // Searcher.search('')
+    query: {
+      get() {
+        return this.$store.state.query
+      },
+      set(value) {
+        this.$store.commit('search', value)
+      },
+    },
+    matchedCards() {
+      return Searcher.search(this.$store.state.query)
+    },
+    shownCards() {
+      return this.matchedCards.slice(0, 20)
     },
   },
 }
 </script>
 
 <template>
-  <section id="Search" v-show="this.$store.state.isSearchView">
-    <input id="search-input" placeholder="输入关键字以搜索" spellcheck="false" autocomplete="off" autocapitalize="none">
-    <div id="div-search-results">
-      <!-- <DeckTemplate :deck="SearchDeck"></DeckTemplate> -->
-      <div id="search-show-more" style="display: none;">显示更多</div>
-    </div>
+  <section>
+    <input
+      placeholder="输入关键字以搜索"
+      spellcheck="false"
+      autocomplete="off"
+      autocapitalize="none"
+      v-model="query">
+    <ul>
+      <li v-for="card in shownCards">
+        <cell :card="card" :count="0"></cell>
+      </li>
+    </ul>
   </section>
 </template>
 

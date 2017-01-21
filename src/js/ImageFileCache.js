@@ -1,6 +1,4 @@
-
-
-const ImageFileCache = (function () {
+const ImageFileCache = (() => {
 
   function checkIndexedDBSupport (callback) {
     let db = null

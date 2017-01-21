@@ -14,7 +14,7 @@ const PATHS = {
   template: toPath('src/index.tpl'),
   src: toPath('src'),
   dist: toPath('dist'),
-  css: toPath('dist/css'),
+  css: toPath('src/css'),
   js: toPath('src/js'),
   pages: toPath('src/pages'),
   components: toPath('src/components'),
@@ -149,6 +149,7 @@ config.base = {
     ],
     alias: {
       js: PATHS.js,
+      css: PATHS.css,
       pages: PATHS.pages,
       components: PATHS.components,
     },

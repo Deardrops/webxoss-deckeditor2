@@ -1,42 +1,16 @@
-const searcher = (function() {
+import rules from 'js/Rules.js'
 
-  function Searcher() {
-    this.infos = []
-    for (var pid in CardInfo) {
-      this.infos.push(CardInfo[pid])
-    }
-    this.rules = [
-      ColorRule,
-      CrossRule,
-      TypeRule,
-      RarityRule,
-      SkillRule,
-      NoBurstRule,
-      // LifeBurstRule,
-      TimmingRule,
-      LimitingRule,
-      ClassRule,
-      PowerRule,
-      LevelRule,
-      LimitRule,
-      NumberRule,
-      IllustRule,
-      WxidRule,
-      NameRule,
-    ]
-  }
-  Searcher.prototype.search = function(str) {
-    // if (!str) return [];
-    var words = str.toLowerCase().split(/\s+/)
-    var filters = this.rules.map(function(rule) {
+export default {
+  // return infos
+  search(query = '') {
+    let words = query.toLowerCase().split(/\s+/)
+    let filters = rules.map(rule => {
       return rule.parse(words)
     }, this)
-    return filters.reduce(function(results, filter) {
+
+    let infos = Object.keys(CardInfo).map(key => CardInfo[key])
+    return filters.reduce((results, filter) => {
       return results.filter(filter)
-    }, this.infos)
-  }
-})
-
-const Searcher = new searcher()
-
-export default Searcher
+    }, infos)
+  },
+}
