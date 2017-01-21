@@ -1,3 +1,10 @@
+<!--
+  props:
+    pid, origin, scale
+
+  Should set css width and height for this component.
+-->
+
 <script>
 import ImageManager from 'js/ImageManager.js'
 export default {

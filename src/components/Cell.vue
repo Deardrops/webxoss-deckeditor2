@@ -1,3 +1,10 @@
+<!--
+  props:
+    card, count
+  events:
+    plus, minus
+-->
+
 <script>
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'

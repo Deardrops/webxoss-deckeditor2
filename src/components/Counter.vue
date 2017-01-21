@@ -1,3 +1,10 @@
+<!--
+  props:
+    count
+  events:
+    plus, minus
+-->
+
 <script>
 export default {
   props: {
