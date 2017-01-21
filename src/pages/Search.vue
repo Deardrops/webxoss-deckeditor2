@@ -1,16 +1,15 @@
 <script>
 
-import CardCell from 'components/CardCell'
+import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
 
 export default {
   components: {
-    CardCell,
+    Cell,
   },
   computed: {
     matchedCards() {
       return Searcher.search(this.$store.state.query)
-        .map(info => info.pid)
     },
     shownCards() {
       return this.matchedCards.slice(0, 20)
@@ -29,7 +28,11 @@ export default {
       autocapitalize="none"
       v-model="$store.state.query">
     <div id="div-search-results">
-      <CardCell :cardIds="shownCards"></CardCell>
+      <cell
+        v-for="card in shownCards"
+        :card="card"
+        :count="0">
+      </cell>
       <div id="search-show-more" style="display: none;">显示更多</div>
     </div>
   </section>

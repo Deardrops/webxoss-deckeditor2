@@ -10,6 +10,7 @@ config.base = {
     'es6': true,
   },
   globals: {
+    'require': true,
     'process': true,
     'CardInfo': true,
   },
