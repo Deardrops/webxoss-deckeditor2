@@ -50,15 +50,16 @@ export default {
     <div class="main-deck-text-bar">
       <span class="main-deck-title">主卡组</span>
     </div>
-    <div class="main-deck-zone">
-      <cell
-        v-for="card in unique(mainDeck)"
-        :card="card"
-        :count="getCount(card, mainDeck)"
-        @plus="add(card)"
-        @minus="del(card)">
-      </cell>
-    </div>
+    <ul class="main-deck-zone">
+      <li v-for="card in unique(mainDeck)">
+        <cell
+          :card="card"
+          :count="getCount(card, mainDeck)"
+          @plus="add(card)"
+          @minus="del(card)">
+        </cell>
+      </li>
+    </ul>
     <div class="lrig-deck">
       <div class="lrig-deck-text-bar">
         <span class="lrig-deck-title">LRIG卡组</span>
