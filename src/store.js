@@ -43,9 +43,9 @@ function defaultSort(cards){
   })
 }
 
-function isLrigCard(pid){
-  let type = CardInfo[pid].cardType
-  return (type  === 'LRIG') || (type  === 'ARTS')
+function isLrigCard (card) {
+  let type = card.cardType
+  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
 }
 
 Vue.use(Vuex)
@@ -56,7 +56,7 @@ const state = {
   deckFilenames: [],
 
   // current deck, an array of cards' pid
-  deckIdList: [],
+  deckPids: [],
 
   // TODO: use vue-router
   isDeckView: true,
@@ -66,42 +66,49 @@ const state = {
   query: '',
 }
 
-const mutations = {
-  addCard(state, pid) {
-    state.deckIdList.push(pid)
-    defaultSort(state.deckIdList)
-  },
-  delCard(state, pid) {
-    let idx = state.deckIdList.findIndex(id => id === pid)
-    state.deckIdList.splice(idx, 1)
-  },
-  fillDeck(state, payload) {
-    state.deckIdList = payload
-  },
-  changeToSearchView(state) {
-    state.isDeckView = false
-    state.isSearchView = true
-  },
-}
-
 const getters = {
-  mainCards: state => {
-    return state.deckIdList
-      .filter(pid => !isLrigCard(pid))
+  // a `deck` is an array of cards
+  deck: state => {
+    return state.deckPids.map(pid => CardInfo[pid])
   },
-  lrigCards: state => {
-    return state.deckIdList
-      .filter(pid => isLrigCard(pid))
+  mainDeck: (state, getters) => {
+    return getters.deck.filter(card => !isLrigCard(card))
   },
+  lrigDeck: (state, getters) => {
+    return getters.deck.filter(card => isLrigCard(card))
+  },
+
   deckName: state => {
     return state.currentDeckName
   },
 }
 
+
+const mutations = {
+  addCard(state, pid) {
+    state.deckPids.push(pid)
+    defaultSort(state.deckPids)
+  },
+  delCard(state, pid) {
+    let idx = state.deckPids.findIndex(id => id === pid)
+    state.deckPids.splice(idx, 1)
+  },
+  fillDeck(state, pids) {
+    state.deckPids = pids
+  },
+  changeToSearchView(state) {
+    state.isDeckView = false
+    state.isSearchView = true
+  },
+  search(state, query) {
+    state.query = query
+  },
+}
 const store = new Vuex.Store({
   state,
   mutations,
   getters,
+  strict: process.env.NODE_ENV !== 'production',
 })
 
 export default store
