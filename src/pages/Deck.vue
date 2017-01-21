@@ -32,14 +32,14 @@ export default {
       this.$store.commit('delCard', card.pid)
     },
     showSeach() {
-      this.$store.commit('changeToSearchView')
+      this.$router.push('/search')
     },
   },
 }
 </script>
 
 <template>
-  <div id="Deck" v-show="this.$store.state.isDeckView">
+  <div>
     <nav class="nav-bar" @click="showSeach">
     <!-- <nav class="nav-bar" > -->
       <button tabindex="0" type="button" class="nav-button"><div>

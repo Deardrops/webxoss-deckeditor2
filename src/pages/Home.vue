@@ -1,22 +1,6 @@
 <template>
-  <div class="page">
-    <search></search>
-    <detail></detail>
-    <deck></deck>
+  <div>
+    <h1>Home</h1>
+    <router-link to="/deck">Deck Editor</router-link>
   </div>
 </template>
-
-<script>
-
-import Detail from 'pages/Detail'
-import Deck from 'pages/Deck'
-import Search from 'pages/Search'
-export default {
-  components: {
-    Detail,
-    Deck,
-    Search,
-  },
-}
-
-</script>

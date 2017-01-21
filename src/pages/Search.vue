@@ -27,7 +27,7 @@ export default {
 </script>
 
 <template>
-  <section v-show="this.$store.state.isSearchView">
+  <section>
     <input
       placeholder="输入关键字以搜索"
       spellcheck="false"
