@@ -57,9 +57,6 @@ const state = {
 
   // current deck, an array of cards' pid
   deckPids: [],
-
-  // bind to search bar's user input
-  query: '',
 }
 
 const getters = {
@@ -91,9 +88,6 @@ const mutations = {
   },
   fillDeck(state, pids) {
     state.deckPids = pids
-  },
-  search(state, query) {
-    state.query = query
   },
 }
 const store = new Vuex.Store({
