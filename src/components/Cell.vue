@@ -94,15 +94,6 @@ export default {
 .card-item {
   overflow: auto;
 }
-span {
-  padding: 0 .1em
-}
-div {
-  color: #000000;
-}
-a {
-  text-decoration: none;  
-}
 .thumbnail {
   position: relative;
   float: left;
