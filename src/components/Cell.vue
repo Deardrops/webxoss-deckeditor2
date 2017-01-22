@@ -29,7 +29,7 @@ export default {
       let card = this.card
       let level = {
         key: 'Lv.',
-        value: card.value,
+        value: card.level,
       }
       let power = {
         key: 'Power:',
