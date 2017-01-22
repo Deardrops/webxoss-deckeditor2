@@ -30,11 +30,11 @@ export default {
 
 <template>
   <div :class="$style.group">
-    <button :class="$style.minus" @click="minus">
+    <button :class="$style.minus" @click.prevent="minus">
       <icon name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
-    <button :class="$style.plus" @click="plus">
+    <button :class="$style.plus" @click.prevent="plus">
       <icon name="add"/>
     </button>
   </div>

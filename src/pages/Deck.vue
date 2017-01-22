@@ -64,7 +64,7 @@ export default {
       <div class="lrig-deck-text-bar">
         <span class="lrig-deck-title">LRIG卡组</span>
       </div>
-    <div class="lrig-deck-zone">
+    <ul class="lrig-deck-zone">
       <li v-for="card in unique(lrigDeck)">
         <cell
           :card="card"
@@ -73,7 +73,7 @@ export default {
           @minus="del(card)">
         </cell>
       </li>
-    </div>
+    </ul>
   </div>
 </template>
 

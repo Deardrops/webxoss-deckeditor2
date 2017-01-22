@@ -54,15 +54,20 @@ export default {
     },
   },
   methods: {
-    goDetail(pid) {
-      this.$router.push({path: 'detail', query: { pid: pid}})
+    detailPage(pid) {
+      return {
+        path: '/detail',
+        query: {
+          pid: pid,
+        },
+      }
     },
   },
 }
 </script>
 <template>
-  <div>
-    <div class="card-item" @click="goDetail(card.pid)">
+  <div class="card-item">
+    <router-link :to="detailPage(card.pid)">
       <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
       <div class="card-item-info">
         <div class="card-item-title">{{ card.name }}</div>
@@ -81,13 +86,22 @@ export default {
           </counter>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
 <style scoped>
 .card-item {
   overflow: auto;
+}
+span {
+  padding: 0 .1em
+}
+div {
+  color: #000000;
+}
+a {
+  text-decoration: none;  
 }
 .thumbnail {
   position: relative;
