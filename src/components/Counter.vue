@@ -6,7 +6,11 @@
 -->
 
 <script>
+import Icon from 'components/Icon'
 export default {
+  components: {
+    Icon,
+  },
   props: {
     count: {
       type: Number,
@@ -26,9 +30,13 @@ export default {
 
 <template>
   <div :class="$style.group">
-    <button :class="$style.minus" @click="minus">-</button>
+    <button :class="$style.minus" @click="minus">
+      <icon name="remove"/>
+    </button>
     <button :class="$style.count" disabled>{{ count }}</button>
-    <button :class="$style.plus" @click="plus">+</button>
+    <button :class="$style.plus" @click="plus">
+      <icon name="add"/>
+    </button>
   </div>
 </template>
 

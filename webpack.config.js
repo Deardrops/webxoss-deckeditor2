@@ -16,6 +16,7 @@ const PATHS = {
   dist: toPath('dist'),
   css: toPath('src/css'),
   js: toPath('src/js'),
+  media: toPath('src/media'),
   pages: toPath('src/pages'),
   components: toPath('src/components'),
   CardInfo: toPath('src/CardInfo.json'),
@@ -24,7 +25,8 @@ const TESTS = {
   css: /\.css$/,
   js: /\.js?$/,
   vue: /\.vue$/,
-  image: /\.(webp|jpe?g|png|gif|svg)$/,
+  svg: /\.svg$/,
+  image: /\.(webp|jpe?g|png|gif)$/,
 }
 let browsers = [
   'last 2 versions',
@@ -115,6 +117,14 @@ config.base = {
         include: PATHS.src,
       },
       {
+        test: TESTS.svg,
+        loaders: [
+          'svg-sprite-loader',
+          'svgo-loader',
+        ],
+        include: PATHS.media,
+      },
+      {
         test: TESTS.image,
         loaders: [
           'url-loader?limit=10000',
@@ -150,6 +160,7 @@ config.base = {
     alias: {
       js: PATHS.js,
       css: PATHS.css,
+      media: PATHS.media,
       pages: PATHS.pages,
       components: PATHS.components,
     },
