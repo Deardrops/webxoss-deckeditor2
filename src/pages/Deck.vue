@@ -2,15 +2,17 @@
 import { mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import Cell from 'components/Cell'
+import Icon from 'components/Icon'
 
 export default {
   components: {
     AppHeader,
     HeaderIcon,
     Cell,
+    Icon,
   },
   created() {
-    this.$store.commit('fillDeck', require('./WHITE_HOPE.json'))
+    this.$store.commit('fillDeck', require('./WHITE_HOPE.json')) // test use
   },
   computed: {
     ...mapGetters([
@@ -28,12 +30,6 @@ export default {
     getCount(target, deck) {
       return deck.filter(card => card.pid === target.pid).length
     },
-    add(card) {
-      this.$store.commit('addCard', card.pid)
-    },
-    del(card) {
-      this.$store.commit('delCard', card.pid)
-    },
     goSearch() {
       this.$router.push('/search')
     },
@@ -46,19 +42,19 @@ export default {
     <app-header title="Deck Editor">
       <header-icon slot="right" name="search" @click.native="goSearch"/>
     </app-header>
-    <div class="main-deck-text-bar">
-      <span class="main-deck-title">主卡组</span>
+    <div class="main-deck">
+      <div class="main-deck-text-bar">
+        <span class="main-deck-title">主卡组</span>
+      </div>
+      <ul class="main-deck-zone">
+        <li v-for="card in unique(mainDeck)">
+          <cell
+            :card="card"
+            :count="getCount(card, mainDeck)">
+          </cell>
+        </li>
+      </ul>
     </div>
-    <ul class="main-deck-zone">
-      <li v-for="card in unique(mainDeck)">
-        <cell
-          :card="card"
-          :count="getCount(card, mainDeck)"
-          @plus="add(card)"
-          @minus="del(card)">
-        </cell>
-      </li>
-    </ul>
     <div class="lrig-deck">
       <div class="lrig-deck-text-bar">
         <span class="lrig-deck-title">LRIG卡组</span>
@@ -67,9 +63,7 @@ export default {
       <li v-for="card in unique(lrigDeck)">
         <cell
           :card="card"
-          :count="getCount(card, lrigDeck)"
-          @plus="add(card)"
-          @minus="del(card)">
+          :count="getCount(card, lrigDeck)">
         </cell>
       </li>
     </ul>
@@ -89,34 +83,12 @@ export default {
 
 /* test use */
 .nav-bar {
-  color: rgba(0, 0, 0, 0.870588);
   background-color: #2196f3;
   box-sizing: border-box;
   box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-  border-radius: 0px;
-  position: relative;
-  z-index: 1100;
-  width: 100%;
   display: flex;
   padding-left: 24px;
   padding-right: 24px;
-}
-.nav-button {
-  border: 10px;
-  box-sizing: border-box;
-  display: inline-block;
-  cursor: pointer;
-  text-decoration: none;
-  margin: 8px 8px 0px -16px;
-  padding: 12px;
-  outline: none;
-  font-size: 0px;
-  font-weight: inherit;
-  position: relative;
-  overflow: visible;
-  width: 48px;
-  height: 48px;
-  background: none;
 }
 .deck-name {
   white-space: nowrap;

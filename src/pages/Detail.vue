@@ -9,13 +9,6 @@ export default {
     Thumbnail,
   },
   created() {
-    /*
-    LRIG: 649
-    ARTS: 1908
-    SINGI: 1801
-    RESONA: 1895
-    SPELL: 1539
-    */
     Localize.setLanguage('zh_CN') // test use
   },
   computed: {

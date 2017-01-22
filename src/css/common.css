@@ -42,6 +42,6 @@ select {
 
 a {
   outline: none;
-  color: #000000;
+  color: currentColor;
   text-decoration: none;  
 }
