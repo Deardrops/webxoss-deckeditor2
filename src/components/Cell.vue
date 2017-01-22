@@ -54,20 +54,26 @@ export default {
     },
   },
   methods: {
-    detailPage(pid) {
+    detailPage() {
       return {
         path: '/detail',
         query: {
-          pid: pid,
+          pid: this.card.pid,
         },
       }
+    },
+    add() {
+      this.$store.commit('addCard', this.card.pid)
+    },
+    del() {
+      this.$store.commit('delCard', this.card.pid)
     },
   },
 }
 </script>
 <template>
   <div class="card-item">
-    <router-link :to="detailPage(card.pid)">
+    <router-link :to="detailPage()">
       <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
       <div class="card-item-info">
         <div class="card-item-title">{{ card.name }}</div>
@@ -81,8 +87,8 @@ export default {
           </div>
           <counter
             :count="count"
-            @plus="$emit('plus')"
-            @minus="$emit('minus')">
+            @plus="add"
+            @minus="del">
           </counter>
         </div>
       </div>
