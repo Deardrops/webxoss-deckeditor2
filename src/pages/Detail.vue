@@ -20,20 +20,19 @@ export default {
   computed: {
     pid: {
       get() {
-        return Number(this.$route.query.pid)
+        return +this.$route.query.pid
       },
       set(value) {
         // TODO: check if int && <= total card count
-        if (value) {
-          this.$router.replace({
-            path: '/detail',
-            query: {
-              pid: Number(value),
-            },
-          })
-          return
+        if (!value) {
+          this.$route.replace('/detail')
         }
-        this.$route.replace('/detail')
+        this.$router.replace({
+          path: '/detail',
+          query: {
+            pid: +value,
+          },
+        })
       },
     },
     card() {
@@ -68,7 +67,7 @@ export default {
         value: Localize.cost(card),
       }
       let timming = {
-        key: 'Timming',
+        key: 'Timing',
         value: Localize.timmings(card),
       }
       let classes = {
@@ -121,7 +120,7 @@ export default {
         <span>{{ limiting }}</span>
       </div>
     </div>
-    <div class="card-table">
+    <div class="table">
       <table>
         <tbody>
           <tr v-for="row in rows">
@@ -148,12 +147,12 @@ export default {
 
 <style scoped>
 .head {
-	height: 15em;
+  height: 15em;
 }
 .title {
   font-size: 1.5em;
 }
-.card-table {
+.table {
   width: 100%;
   white-space: pre-line;
 }
