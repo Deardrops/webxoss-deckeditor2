@@ -29,7 +29,7 @@ export default {
       let card = this.card
       let level = {
         key: 'Lv.',
-        value: card.value,
+        value: card.level,
       }
       let power = {
         key: 'Power:',
@@ -53,11 +53,21 @@ export default {
       }[card.cardType] || []
     },
   },
+  methods: {
+    detailPage(pid) {
+      return {
+        path: '/detail',
+        query: {
+          pid: pid,
+        },
+      }
+    },
+  },
 }
 </script>
 <template>
-  <div>
-    <div class="card-item">
+  <div class="card-item">
+    <router-link :to="detailPage(card.pid)">
       <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
       <div class="card-item-info">
         <div class="card-item-title">{{ card.name }}</div>
@@ -76,7 +86,7 @@ export default {
           </counter>
         </div>
       </div>
-    </div>
+    </router-link>
   </div>
 </template>
 
