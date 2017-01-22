@@ -53,11 +53,16 @@ export default {
       }[card.cardType] || []
     },
   },
+  methods: {
+    goDetail(pid) {
+      this.$router.push({path: 'detail', query: { pid: pid}})
+    },
+  },
 }
 </script>
 <template>
   <div>
-    <div class="card-item">
+    <div class="card-item" @click="goDetail(card.pid)">
       <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
       <div class="card-item-info">
         <div class="card-item-title">{{ card.name }}</div>
