@@ -7,46 +7,50 @@ export default {
     Thumbnail,
   },
   created() {
-    this.query = 649 // test use
+    this.pid = '649' // test use
     /*
     LRIG: 649
     ARTS: 1908
     SINGI: 1801
     RESONA: 1895
-
+    SPELL: 1539
     */
     Localize.setLanguage('zh_CN') // test use
   },
   computed: {
-    query: {
+    pid: {
       get() {
-        return Number(this.$route.query.query)
+        return Number(this.$route.query.pid)
       },
       set(value) {
-        // TODO: check if Number && <= total card count
+        // TODO: check if int && <= total card count
         if (value) {
           this.$router.replace({
             path: '/detail',
             query: {
-              query: value,
+              pid: Number(value),
             },
           })
-        } else {
-          this.$route.replace('/detail')
+          return
         }
+        this.$route.replace('/detail')
       },
     },
-    info() {
-      return CardInfo[this.query]
+    card() {
+      // TODO: avoid return undefined
+      return CardInfo[this.pid]
     },
-    parseEffect() {
-      return Localize.effectTexts(this.info)
+    limiting() {
+      return Localize.limiting(this.card)
     },
-    parseBurst() {
-      return Localize.burstEffectTexts(this.info)
+    cardEffect() {
+      return Localize.effectTexts(this.card)
     },
-    metas() {
-      let card = this.info
+    lifeBurst() {
+      return Localize.burstEffectTexts(this.card)
+    },
+    rows() {
+      let card = this.card
       let level = {
         key: 'Lv.',
         value: card.level,
@@ -60,19 +64,19 @@ export default {
         value: (card.limit < 1024) ? card.limit : '∞',
       }
       let cost = {
-        key: 'cost',
+        key: 'Cost',
         value: Localize.cost(card),
       }
       let timming = {
-        key: 'timming',
+        key: 'Timming',
         value: Localize.timmings(card),
       }
       let classes = {
-        key: 'class',
+        key: 'Class',
         value: Localize.classes(card),
       }
       let guard = {
-        key: 'guard',
+        key: 'Guard',
         value: Localize.guard(card),
       }
       return {
@@ -89,7 +93,7 @@ export default {
         ],
         'LRIG': [
           [level, classes],
-          [limit, cost]
+          [limit, cost],
         ],
         'ARTS': [
           [cost],
@@ -103,54 +107,53 @@ export default {
 </script>
 
 <template>
-  <div id="Detail">
-  <div class="detail-head">
-    <thumbnail class="thumbnail" :pid="query"></thumbnail>
-    <div class="pre-title">
-      <span class="wxid">{{ info.wxid }}</span>
-      <span class="rarity">{{ info.rarity }}</span>
+  <div>
+    <div class="head">
+      <thumbnail class="thumbnail" :pid="pid"></thumbnail>
+      <div class="subtitle">
+        <span>{{ card.wxid }}</span>
+        <span>{{ card.rarity }}</span>
+      </div>
+      <div class="title">{{ card.name }}</div>
+      <div class="subtitle">
+        <span>{{ card.cardType }}</span>
+        <span>{{ card.color }}</span>
+        <span>{{ limiting }}</span>
+      </div>
     </div>
-    <div class="title">{{ info.name }}</div>
-    <div class="sub-title">
-      <span class="">{{ info.cardType }}</span>
-      <span class="">{{ info.color }}</span>
+    <div class="card-table">
+      <table>
+        <tbody>
+          <tr v-for="row in rows">
+          	<template v-for="meta in row">
+              <td>{{ meta.key }}</td>
+              <td>{{ meta.value }}</td>
+            </template>
+          </tr>
+          <tr>
+            <td colspan="4">
+              {{ cardEffect }}
+            </td>
+          </tr>
+          <tr>
+            <td colspan="4">
+              {{ lifeBurst }}
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
   </div>
-  <div class="detail-body">
-    <table>
-      <tbody>
-        <tr v-for="row in metas">
-        	<template v-for="meta in row">
-            <td>{{ meta.key }}</td>
-            <td>{{ meta.value }}</td>
-          </template>
-        </tr>
-        <tr>
-          <td colspan="4">
-            {{ parseEffect }}
-          </td>
-        </tr>
-        <tr>
-          <td colspan="4">
-            {{ parseBurst }}
-          </td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-</div>
-
 </template>
 
 <style scoped>
-.detail-head {
+.head {
 	height: 15em;
 }
-.pre-title,
-.sub-title {
-
+.title {
+  font-size: 1.5em;
 }
-.detail-body {
+.card-table {
   width: 100%;
   white-space: pre-line;
 }
