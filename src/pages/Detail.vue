@@ -7,7 +7,6 @@ export default {
     Thumbnail,
   },
   created() {
-    this.pid = '649' // test use
     /*
     LRIG: 649
     ARTS: 1908
