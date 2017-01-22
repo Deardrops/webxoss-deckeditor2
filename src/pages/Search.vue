@@ -10,18 +10,32 @@ export default {
   computed: {
     query: {
       get() {
-        return this.$store.state.query
+        return this.$route.query.query
       },
       set(value) {
-        this.$store.commit('search', value)
+        if (value) {
+          this.$router.replace({
+            path: '/search',
+            query: {
+              query: value,
+            },
+          })
+        } else {
+          // Ugly to be `/search?query=`,
+          // Show `/search` instead.
+          this.$router.replace('/search')
+        }
       },
     },
     matchedCards() {
-      return Searcher.search(this.$store.state.query)
+      return Searcher.search(this.query)
     },
     shownCards() {
       return this.matchedCards.slice(0, 20)
     },
+  },
+  mounted() {
+    this.$refs.input.focus()
   },
 }
 </script>
@@ -33,6 +47,7 @@ export default {
       spellcheck="false"
       autocomplete="off"
       autocapitalize="none"
+      ref="input"
       v-model="query">
     <ul>
       <li v-for="card in shownCards">
