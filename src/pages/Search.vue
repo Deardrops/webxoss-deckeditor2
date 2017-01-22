@@ -34,6 +34,9 @@ export default {
       return this.matchedCards.slice(0, 20)
     },
   },
+  mounted() {
+    this.$refs.input.focus()
+  },
 }
 </script>
 
@@ -44,6 +47,7 @@ export default {
       spellcheck="false"
       autocomplete="off"
       autocapitalize="none"
+      ref="input"
       v-model="query">
     <ul>
       <li v-for="card in shownCards">
