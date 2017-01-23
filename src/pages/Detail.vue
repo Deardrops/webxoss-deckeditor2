@@ -9,13 +9,6 @@ export default {
     Thumbnail,
   },
   created() {
-    /*
-    LRIG: 649
-    ARTS: 1908
-    SINGI: 1801
-    RESONA: 1895
-    SPELL: 1539
-    */
     Localize.setLanguage('zh_CN') // test use
   },
   computed: {
@@ -149,7 +142,7 @@ export default {
 
 <style scoped>
 .head {
-  height: 15em;
+  height: 13em;
 }
 .title {
   font-size: 1.5em;
@@ -159,7 +152,7 @@ export default {
   white-space: pre-line;
 }
 .thumbnail {
-  position: relative;
+  /*position: relative;*/
   float: left;
   width: 11em; 
   height: 11em; 
