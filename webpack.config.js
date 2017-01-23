@@ -182,8 +182,8 @@ config.base = {
 config.build = {
   devtool: false,
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[chunkhash].js',
+    filename: '[name].[chunkhash:7].js',
+    chunkFilename: '[chunkhash:7].js',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -191,7 +191,7 @@ config.build = {
         'NODE_ENV': '"production"',
       },
     }),
-    new extract('[name].[contenthash].css'),
+    new extract('[name].[contenthash:7].css'),
   ],
 }
 
