@@ -39,6 +39,7 @@ config.base = {
       'always-multiline',
     ],
     'no-console': 'off',
+    'no-debugger': 'warn',
     'no-unsafe-negation': 'error',
     'array-callback-return': 'error',
     'strict': [
