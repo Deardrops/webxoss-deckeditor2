@@ -4,9 +4,7 @@ const webpack = require('webpack')
 const path = require('path')
 const html = require('html-webpack-plugin')
 const merge = require('webpack-merge')
-const clean = require('clean-webpack-plugin')
 const extract = require('extract-text-webpack-plugin')
-const cssnext = require('postcss-cssnext')
 const toPath = relative => path.resolve(__dirname, relative)
 
 const PATHS = {
@@ -20,6 +18,13 @@ const PATHS = {
   pages: toPath('src/pages'),
   components: toPath('src/components'),
   CardInfo: toPath('src/CardInfo.json'),
+}
+const alias = {
+  js: PATHS.js,
+  css: PATHS.css,
+  media: PATHS.media,
+  pages: PATHS.pages,
+  components: PATHS.components,
 }
 const TESTS = {
   css: /\.css$/,
@@ -49,9 +54,26 @@ let babel = {
 let lint = 'eslint-loader?configFile=eslint.config.js'
 
 let postcss = {
-  plugins: [cssnext({
-    browsers,
-  })],
+  plugins: [
+    require('postcss-import')({
+      resolve: (path) => {
+        for (let key in alias) {
+          if (path.startsWith(key + '/')) {
+            return path.replace(key, alias[key])
+          }
+        }
+        return path
+      },
+    }),
+    require('postcss-cssnext')({
+      browsers,
+    }),
+  ],
+}
+if (env === 'build') {
+  postcss.plugins.push(require('cssnano')({
+    autoprefixer: false,
+  }))
 }
 
 let config = {}
@@ -85,18 +107,6 @@ config.base = {
       },
       /* Loaders */
       {
-        test: TESTS.css,
-        use: [
-          'style-loader',
-          'css-loader?modules&sourceMap',
-          {
-            loader: 'postcss-loader',
-            options: postcss,
-          },
-        ],
-        include: PATHS.src,
-      },
-      {
         test: TESTS.js,
         loaders: [
           'babel-loader?' + JSON.stringify(babel),
@@ -111,6 +121,14 @@ config.base = {
             loader: 'vue-loader',
             options: {
               postcss: postcss.plugins,
+              loaders: env === 'build'
+                ? {
+                  css: extract.extract({
+                    loader: 'css-loader',
+                    fallbackLoader: 'vue-style-loader',
+                  }),
+                }
+                : {},
             },
           },
         ],
@@ -157,36 +175,15 @@ config.base = {
       '.json',
       '.vue',
     ],
-    alias: {
-      js: PATHS.js,
-      css: PATHS.css,
-      media: PATHS.media,
-      pages: PATHS.pages,
-      components: PATHS.components,
-    },
+    alias,
   },
 }
 
 config.build = {
-  devtool: 'source-map',
+  devtool: false,
   output: {
-    filename: '[name].[chunkhash].js',
-    chunkFilename: '[chunkhash].js',
-  },
-  module: {
-    loaders: [{
-      test: TESTS.css,
-      loader: extract.extract({
-        fallbackLoader: 'style-loader',
-        loader: [
-          'css-loader?modules&sourceMap',
-          {
-            loader: 'postcss-loader',
-            options: postcss,
-          },
-        ],
-      }),
-    }],
+    filename: '[name].[chunkhash:7].js',
+    chunkFilename: '[chunkhash:7].js',
   },
   plugins: [
     new webpack.DefinePlugin({
@@ -194,19 +191,7 @@ config.build = {
         'NODE_ENV': '"production"',
       },
     }),
-    new clean([PATHS.dist], {
-      root: process.cwd(),
-    }),
-    new extract('[name].[contenthash].css'),
-    new require('copy-webpack-plugin')([
-      {
-        from: 'images',
-        to: 'images',
-      },
-      {
-        from: PATHS.CardInfo,
-      },
-    ]),
+    new extract('[name].[contenthash:7].css'),
   ],
 }
 
