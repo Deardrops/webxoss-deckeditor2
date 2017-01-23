@@ -5,7 +5,6 @@ const path = require('path')
 const html = require('html-webpack-plugin')
 const merge = require('webpack-merge')
 const extract = require('extract-text-webpack-plugin')
-const cssnext = require('postcss-cssnext')
 const toPath = relative => path.resolve(__dirname, relative)
 
 const PATHS = {
@@ -19,6 +18,13 @@ const PATHS = {
   pages: toPath('src/pages'),
   components: toPath('src/components'),
   CardInfo: toPath('src/CardInfo.json'),
+}
+const alias = {
+  js: PATHS.js,
+  css: PATHS.css,
+  media: PATHS.media,
+  pages: PATHS.pages,
+  components: PATHS.components,
 }
 const TESTS = {
   css: /\.css$/,
@@ -49,7 +55,17 @@ let lint = 'eslint-loader?configFile=eslint.config.js'
 
 let postcss = {
   plugins: [
-    cssnext({
+    require('postcss-import')({
+      resolve: (path) => {
+        for (let key in alias) {
+          if (path.startsWith(key + '/')) {
+            return path.replace(key, alias[key])
+          }
+        }
+        return path
+      },
+    }),
+    require('postcss-cssnext')({
       browsers,
     }),
   ],
@@ -159,13 +175,7 @@ config.base = {
       '.json',
       '.vue',
     ],
-    alias: {
-      js: PATHS.js,
-      css: PATHS.css,
-      media: PATHS.media,
-      pages: PATHS.pages,
-      components: PATHS.components,
-    },
+    alias,
   },
 }
 

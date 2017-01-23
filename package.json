@@ -46,6 +46,7 @@
     "merge": "^1.2.0",
     "object-assign": "^4.1.0",
     "postcss-cssnext": "^2.9.0",
+    "postcss-import": "^9.1.0",
     "postcss-loader": "^0.9.1",
     "raw-loader": "^0.5.1",
     "shelljs": "^0.7.6",
