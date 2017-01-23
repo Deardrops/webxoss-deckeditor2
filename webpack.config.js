@@ -48,9 +48,16 @@ let babel = {
 let lint = 'eslint-loader?configFile=eslint.config.js'
 
 let postcss = {
-  plugins: [cssnext({
-    browsers,
-  })],
+  plugins: [
+    cssnext({
+      browsers,
+    }),
+  ],
+}
+if (env === 'build') {
+  postcss.plugins.push(require('cssnano')({
+    autoprefixer: false,
+  }))
 }
 
 let config = {}
@@ -84,18 +91,6 @@ config.base = {
       },
       /* Loaders */
       {
-        test: TESTS.css,
-        use: [
-          'style-loader',
-          'css-loader?modules&sourceMap',
-          {
-            loader: 'postcss-loader',
-            options: postcss,
-          },
-        ],
-        include: PATHS.src,
-      },
-      {
         test: TESTS.js,
         loaders: [
           'babel-loader?' + JSON.stringify(babel),
@@ -110,6 +105,14 @@ config.base = {
             loader: 'vue-loader',
             options: {
               postcss: postcss.plugins,
+              loaders: env === 'build'
+                ? {
+                  css: extract.extract({
+                    loader: 'css-loader',
+                    fallbackLoader: 'vue-style-loader',
+                  }),
+                }
+                : {},
             },
           },
         ],
@@ -167,25 +170,10 @@ config.base = {
 }
 
 config.build = {
-  devtool: 'source-map',
+  devtool: false,
   output: {
     filename: '[name].[chunkhash].js',
     chunkFilename: '[chunkhash].js',
-  },
-  module: {
-    loaders: [{
-      test: TESTS.css,
-      loader: extract.extract({
-        fallbackLoader: 'style-loader',
-        loader: [
-          'css-loader?modules&sourceMap',
-          {
-            loader: 'postcss-loader',
-            options: postcss,
-          },
-        ],
-      }),
-    }],
   },
   plugins: [
     new webpack.DefinePlugin({
