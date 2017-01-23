@@ -8,7 +8,8 @@
     "build": "npm run lint && node build",
     "dev": "npm run lint:node && node dev",
     "lint": "npm run lint:node",
-    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src"
+    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src",
+    "serve": "npm run lint:node && node serve"
   },
   "author": "deardrops <lness@qq.com>",
   "repository": {

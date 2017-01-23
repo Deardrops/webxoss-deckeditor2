@@ -1,4 +1,4 @@
-# new-deck
+# DeckEditor for WEBXOSS
 
 ## Install
 
@@ -17,3 +17,5 @@ $ npm run dev
 ```bash
 $ npm run build
 ```
+
+PS: Run `npm run serve` to serve the built files.
