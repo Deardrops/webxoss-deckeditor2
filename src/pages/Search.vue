@@ -1,10 +1,11 @@
 <script>
-
+import AppHeader from 'components/AppHeader'
 import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
 
 export default {
   components: {
+    AppHeader,
     Cell,
   },
   computed: {
@@ -41,20 +42,23 @@ export default {
 </script>
 
 <template>
-  <section>
-    <input
-      placeholder="输入关键字以搜索"
-      spellcheck="false"
-      autocomplete="off"
-      autocapitalize="none"
-      ref="input"
-      v-model="query">
-    <ul>
-      <li v-for="card in shownCards">
-        <cell :card="card" :count="0"></cell>
-      </li>
-    </ul>
-  </section>
+  <div>
+    <app-header title="Search"></app-header>
+    <section>
+      <input
+        placeholder="输入关键字以搜索"
+        spellcheck="false"
+        autocomplete="off"
+        autocapitalize="none"
+        ref="input"
+        v-model="query">
+      <ul>
+        <li v-for="card in shownCards">
+          <cell :card="card" :count="0"></cell>
+        </li>
+      </ul>
+    </section>
+  </div>
 </template>
 
 <style scoped>

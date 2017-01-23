@@ -1,9 +1,11 @@
 <script>
+import AppHeader from 'components/AppHeader'
 import Thumbnail from 'components/Thumbnail'
 import Localize from 'js/Localize'
 
 export default {
   components: {
+    AppHeader,
     Thumbnail,
   },
   created() {
@@ -106,6 +108,7 @@ export default {
 
 <template>
   <div>
+    <app-header title="Detail"></app-header>
     <div class="head">
       <thumbnail class="thumbnail" :pid="pid"></thumbnail>
       <div class="subtitle">

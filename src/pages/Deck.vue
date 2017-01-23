@@ -1,9 +1,12 @@
 <script>
 import { mapGetters } from 'vuex'
+import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import Cell from 'components/Cell'
 
 export default {
   components: {
+    AppHeader,
+    HeaderIcon,
     Cell,
   },
   created() {
@@ -31,7 +34,7 @@ export default {
     del(card) {
       this.$store.commit('delCard', card.pid)
     },
-    showSeach() {
+    goSearch() {
       this.$router.push('/search')
     },
   },
@@ -40,13 +43,9 @@ export default {
 
 <template>
   <div>
-    <nav class="nav-bar" @click="showSeach">
-    <!-- <nav class="nav-bar" > -->
-      <button tabindex="0" type="button" class="nav-button"><div>
-      <svg viewBox="0 0 24 24" style="display: inline-block; color: rgb(255, 255, 255); fill: rgb(255, 255, 255); height: 24px; width: 24px; transition: all 450ms cubic-bezier(0.23, 1, 0.32, 1) 0ms; user-select: none;"><path d="M3 18h18v-2H3v2zm0-5h18v-2H3v2zm0-7v2h18V6H3z"></path></svg></div>
-      </button>
-      <h1 class="deck-name"><a>{{ deckName }}</a></h1>
-    </nav>
+    <app-header title="Deck Editor">
+      <header-icon slot="right" name="search" @click.native="goSearch"/>
+    </app-header>
     <div class="main-deck-text-bar">
       <span class="main-deck-title">主卡组</span>
     </div>
