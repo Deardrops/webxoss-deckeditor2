@@ -142,7 +142,7 @@ export default {
 
 <style scoped>
 .head {
-  height: 15em;
+  height: 13em;
 }
 .title {
   font-size: 1.5em;
@@ -152,7 +152,7 @@ export default {
   white-space: pre-line;
 }
 .thumbnail {
-  position: relative;
+  /*position: relative;*/
   float: left;
   width: 11em; 
   height: 11em; 

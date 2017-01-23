@@ -19,7 +19,12 @@ export default {
       'mainDeck',
       'lrigDeck',
       'deckName',
+      'deckNames',
     ]),
+    BurstCount() {
+      return this.mainDeck.filter(card =>
+        card.hasOwnProperty('burstEffectTexts')).length
+    },
   },
   methods: {
     unique(deck) {
@@ -42,6 +47,16 @@ export default {
     <app-header title="Deck Editor">
       <header-icon slot="right" name="search" @click.native="goSearch"/>
     </app-header>
+    <div class="deck-header">
+      <form>
+        <select>
+          <option v-for="name in deckNames" :value="name">{{ name }}</option>
+        </select>
+      </form>
+      <div>saved</div>
+      <div><a href="#">Mayu's room</a></div>
+      <div>LB:{{ BurstCount }}/20</div>
+    </div>
     <div class="main-deck">
       <div class="main-deck-text-bar">
         <span class="main-deck-title">主卡组</span>
@@ -71,6 +86,12 @@ export default {
 </template>
 
 <style scoped>
+.deck-header {
+  display: flex;
+}
+.deck-header div {
+  padding-right: 1em;
+}
 .main-deck-text-bar,
 .lrig-deck-text-bar {
   text-align: center;
@@ -79,29 +100,5 @@ export default {
 .lrig-deck-zone {
   width: 100%;
   margin: 0 auto;
-}
-
-/* test use */
-.nav-bar {
-  background-color: #2196f3;
-  box-sizing: border-box;
-  box-shadow: rgba(0, 0, 0, 0.117647) 0px 1px 6px, rgba(0, 0, 0, 0.117647) 0px 1px 4px;
-  display: flex;
-  padding-left: 24px;
-  padding-right: 24px;
-}
-.deck-name {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  margin: 0px;
-  padding-top: 0px;
-  letter-spacing: 0px;
-  font-size: 24px;
-  font-weight: 400;
-  color: #ffffff;
-  height: 64px;
-  line-height: 64px;
-  flex: 1 1 0%;
 }
 </style>

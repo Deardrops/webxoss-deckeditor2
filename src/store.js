@@ -53,7 +53,7 @@ Vue.use(Vuex)
 const state = {
   currentDeckName: '牌组名称（点击跳转搜索）',
 
-  deckFilenames: [],
+  deckNames: ['White Hope', 'Red Ambition', 'Blue Appli'],
 
   // current deck, an array of cards' pid
   deckPids: [],
@@ -73,6 +73,9 @@ const getters = {
 
   deckName: state => {
     return state.currentDeckName
+  },
+  deckNames: state => {
+    return state.deckNames
   },
 }
 
