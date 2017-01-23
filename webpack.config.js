@@ -4,7 +4,6 @@ const webpack = require('webpack')
 const path = require('path')
 const html = require('html-webpack-plugin')
 const merge = require('webpack-merge')
-const clean = require('clean-webpack-plugin')
 const extract = require('extract-text-webpack-plugin')
 const cssnext = require('postcss-cssnext')
 const toPath = relative => path.resolve(__dirname, relative)
@@ -194,19 +193,7 @@ config.build = {
         'NODE_ENV': '"production"',
       },
     }),
-    new clean([PATHS.dist], {
-      root: process.cwd(),
-    }),
     new extract('[name].[contenthash].css'),
-    new require('copy-webpack-plugin')([
-      {
-        from: 'images',
-        to: 'images',
-      },
-      {
-        from: PATHS.CardInfo,
-      },
-    ]),
   ],
 }
 
