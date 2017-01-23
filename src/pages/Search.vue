@@ -35,9 +35,10 @@ export default {
       return this.matchedCards.slice(0, 20)
     },
   },
-  mounted() {
-    this.$refs.input.focus()
-  },
+  // It breaks page transition. Should focus after transition.
+  // mounted() {
+  //   this.$refs.input.focus()
+  // },
 }
 </script>
 
