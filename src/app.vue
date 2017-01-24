@@ -89,6 +89,9 @@ export default {
 .forward-leave-active {
   transition: opacity .6s;
   position: fixed;
+
+  /* Android 4.3 doesn't support vw */
+  /* iOS 100% includes the transformed element width */
   width: 100%;
   width: 100vw;
 }
