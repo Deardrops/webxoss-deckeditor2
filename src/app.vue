@@ -90,6 +90,7 @@ export default {
   transition: opacity .6s;
   position: fixed;
   width: 100%;
+  width: 100vw;
 }
 .forward-leave-to {
   opacity: 0;
@@ -107,6 +108,7 @@ export default {
   transition: all .7s;
   position: fixed;
   width: 100%;
+  width: 100vw;
 }
 .backward-leave-to {
   transform: translateX(100%);
