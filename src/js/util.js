@@ -1,14 +1,14 @@
-﻿export const concat = Array.prototype.concat.bind([])
-export const toArr = function(obj) {
+export const concat = Array.prototype.concat.bind([])
+export function toArr(obj) {
   if (!obj) return []
   if (typeof obj === 'string') return []
   return Array.prototype.slice.call(obj, 0)
 }
 export const isArr = Array.isArray
-export const inArr = function(item, arr) {
+export function inArr (item, arr) {
   return (toArr(arr).indexOf(item) !== -1)
 }
-export const removeFromArr = function(item, arr) {
+export function removeFromArr(item, arr) {
   let idx = arr.indexOf(item)
   if (idx < 0) {
     return false
@@ -17,21 +17,21 @@ export const removeFromArr = function(item, arr) {
     return true
   }
 }
-export const isStr = function(v) {
+export function isStr(v) {
   return (typeof v === 'string')
 }
-export const isObj = function(v) {
+export function isObj(v) {
   return v && (typeof v === 'object') && !isArr(v)
 }
-export const isNum = function(v) {
+export function isNum(v) {
   return (typeof v === 'number')
 }
-export const isFunc = function(v) {
+export function isFunc(v) {
   return (typeof v === 'function')
 }
-export const pEach = function(arr, func) {
-  return arr.reduce(function(chain, item) {
-    return chain.then(function() {
+export function pEach(arr, func) {
+  return arr.reduce(function (chain, item) {
+    return chain.then(function () {
       return func(item)
     })
   }, Promise.resolve())
@@ -51,4 +51,15 @@ export function applyToConstructor(constructor, argArray) {
 
 export function nextTick(callback) {
   setTimeout(callback, 0)
+}
+
+export function $get (url) {
+  let xhr = new XMLHttpRequest()
+  xhr.responseType = 'json'
+  return new Promise((resolve, reject) => {
+    xhr.onload = () => resolve(xhr.response)
+    xhr.onerror = reject
+    xhr.open('GET', url, true)
+    xhr.send()
+  })
 }
