@@ -56,7 +56,7 @@ const state = {
   deckFilenames: [],
 
   // current deck, an array of cards' pid
-  deckPids: [],
+  deckPids: require('./WHITE_HOPE.json'), // test
 }
 
 const getters = {

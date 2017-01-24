@@ -9,9 +9,9 @@ export default {
     HeaderIcon,
     Cell,
   },
-  created() {
-    this.$store.commit('fillDeck', require('./WHITE_HOPE.json'))
-  },
+  // created() {
+  //   this.$store.commit('fillDeck', require('./WHITE_HOPE.json'))
+  // },
   computed: {
     ...mapGetters([
       'mainDeck',
