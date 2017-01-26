@@ -11,28 +11,46 @@ export default {
   computed: {
     query: {
       get() {
-        return this.$route.query.query
+        return this.$route.query.query || ''
       },
-      set(value) {
-        if (value) {
-          this.$router.replace({
-            path: '/search',
-            query: {
-              query: value,
-            },
-          })
-        } else {
-          // Ugly to be `/search?query=`,
-          // Show `/search` instead.
-          this.$router.replace('/search')
-        }
+      set(query) {
+        this.updateQueryPart({
+          query,
+        })
+      },
+    },
+    limit: {
+      get() {
+        return +this.$route.query.limit || 0
+      },
+      set(limit) {
+        this.updateQueryPart({
+          limit,
+        })
       },
     },
     matchedCards() {
       return Searcher.search(this.query)
     },
     shownCards() {
-      return this.matchedCards.slice(0, 20)
+      return this.matchedCards.slice(0, this.limit)
+    },
+  },
+  methods: {
+    updateQueryPart(part) {
+      let query = Object.assign({}, this.$route.query, part)
+      Object.keys(query).forEach(key => {
+        if (!query[key]) {
+          delete query[key]
+        }
+      })
+      this.$router.replace({
+        path: this.$route.path,
+        query,
+      })
+    },
+    showMore(count) {
+      this.limit = this.limit + count
     },
   },
   mounted() {
@@ -57,10 +75,19 @@ export default {
           <cell :card="card" :count="0"></cell>
         </li>
       </ul>
+      <div
+        v-if="shownCards.length < matchedCards.length"
+        :class="$style.more">
+        <button @click="showMore(20)">Show more</button>
+      </div>
     </section>
   </div>
 </template>
 
-<style scoped>
-
+<style module>
+.more {
+  text-align: center;
+  font-size: 2em;
+  padding: 1em 0;
+}
 </style>

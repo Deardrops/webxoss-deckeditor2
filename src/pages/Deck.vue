@@ -35,7 +35,12 @@ export default {
       this.$store.commit('delCard', card.pid)
     },
     goSearch() {
-      this.$router.push('/search')
+      this.$router.push({
+        path: '/search',
+        query: {
+          limit: 20,
+        },
+      })
     },
   },
 }
