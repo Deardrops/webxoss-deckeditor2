@@ -40,8 +40,20 @@ export default {
   </div>
 </template>
 
-<style module>
+<style module scoped>
 .group {
   display: inline-block;
+  font-size: 0;
+  white-space: nowrap;
+}
+button {
+  font-size: 1rem;
+  width: 2rem;
+  height: 2rem;
+  border: 1px solid #ebebeb;
+
+  &:not(:last-child) {
+    border-right: none;
+  }
 }
 </style>

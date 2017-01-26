@@ -121,6 +121,11 @@ config.base = {
             loader: 'vue-loader',
             options: {
               postcss: postcss.plugins,
+              cssModules: {
+                localIdentName: env === 'dev'
+                  ? '[local]_[hash:base64:5]'
+                  : '[hash:base64]',
+              },
               loaders: env === 'build'
                 ? {
                   css: extract.extract({

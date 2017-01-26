@@ -8,11 +8,14 @@
 <script>
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
+import Ball from 'components/ball'
+import Localize from 'js/Localize'
 
 export default {
   components: {
     Thumbnail,
     Counter,
+    Ball,
   },
   props: {
     card: {
@@ -25,81 +28,172 @@ export default {
     },
   },
   computed: {
-    metas() {
-      let card = this.card
-      let level = {
-        key: 'Lv.',
-        value: card.level,
-      }
-      let power = {
-        key: 'Power:',
-        value: card.power,
-      }
-      let color = {
-        key: 'Color:',
-        value: card.color,
-      }
-      let limit = {
-        key: 'Limit',
-        value: card.limit,
-      }
-
-      return {
-        'RESONA': [level],
-        'SIGNI': [level, power],
-        'SPELL': [color],
-        'LRIG': [level, limit],
-        'ARTS': [color],
-      }[card.cardType] || []
-    },
-  },
-  methods: {
-    detailPage(pid) {
+    detailRoute() {
       return {
         path: '/detail',
         query: {
-          pid: pid,
+          pid: this.card.pid,
         },
       }
+    },
+    name() {
+      return Localize.cardName(this.card)
+    },
+    metas() {
+      let card = this.card
+      let level = `Lv. ${card.level}`
+      let limit = `Limit: ${card.limit}`
+      let power = `${card.power}`
+      let classes = `<${Localize.classes(card)}>`
+      let type = `${card.cardType}`
+
+      return {
+        'LRIG': [level, limit],
+        'SIGNI': [level, power, classes],
+        'RESONA': [level, power, classes],
+        'SPELL': [type],
+        'ARTS': [type],
+      }[card.cardType] || []
+    },
+    costs() {
+      let card = this.card
+      let props = [
+        'costRed',
+        'costBlue',
+        'costGreen',
+        'costBlack',
+        'costWhite',
+        'costColorless',
+      ]
+
+      // [
+      //   {
+      //     color: 'red',
+      //     count: 3,
+      //   },
+      // ]
+      let costs = props.
+      filter(prop => {
+        return card[prop] > 0
+      })
+      .map(prop => {
+        return {
+          color: prop.replace(/^cost/, '').toLowerCase(),
+          count: card[prop],
+        }
+      })
+      .sort((a, b) => {
+        // colorless must be last
+        if (b.color === 'colorless') {
+          return -1
+        }
+        return b.count - a.count
+      })
+
+      // If costs of every color are less than 3, flatten them.
+      // { count: 3 } => { count: 0} x 3
+      let simple = costs.every(cost => cost.count <= 3)
+      if (simple) {
+        costs = [].concat(...costs.map(cost => {
+          return Array(cost.count).fill({
+            color: cost.color,
+            count: 0,
+          })
+        }))
+      }
+
+      return costs
     },
   },
 }
 </script>
 <template>
-  <div class="card-item">
-    <router-link :to="detailPage(card.pid)">
-      <thumbnail class="thumbnail" :pid="card.pid"></thumbnail>
-      <div class="card-item-info">
-        <div class="card-item-title">{{ card.name }}</div>
-        <div class="card-item-subtitle">
-          <div class="card-item-info">
-            <!-- <span>{{ card.cardType }}</span> -->
-            <template v-for="meta in metas">
-              <span>{{ meta.key }}</span>
-              <span>{{ meta.value }}</span>
-            </template>
+  <router-link :to="detailRoute">
+    <div :class="[$style.cell]">
+      <thumbnail :class="[$style.thumbnail, $style[card.color]]" :pid="card.pid"></thumbnail>
+      <div :class="$style.right">
+        <div :class="$style.name">{{ name }}</div>
+        <div :class="$style.foot">
+          <div>
+            <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
+            <div :class="$style.meta">
+              <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
+                <ball/><span v-if="cost.count">{{ cost.count }} </span>
+              </span>
+            </div>
           </div>
           <counter
+            :class="[$style.counter, $style[card.color]]"
             :count="count"
             @plus="$emit('plus')"
             @minus="$emit('minus')">
           </counter>
         </div>
       </div>
-    </router-link>
-  </div>
+    </div>
+  </router-link>
 </template>
 
-<style scoped>
-.card-item {
-  overflow: auto;
+<style module>
+@import 'css/vars.css';
+.cell {
+  display: flex;
+  padding: var(--padding);
+  border-bottom: 1px solid #d6d6d6;
 }
 .thumbnail {
-  position: relative;
-  float: left;
-  width: 4em; 
-  height: 4em; 
-  border: 5px solid black; 
-  margin: 0.2em;
+  min-width: 6.25rem;
+  min-height: 6.25rem;
+  border: 2px solid currentColor;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: calc(var(--padding) / 2) var(--padding);
+  overflow: hidden;
+}
+.name {
+  font-size: 1.25em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: #929292;
+}
+.meta {
+  font-size: 0.9em;
+  line-height: 1.3;
+  vertical-align: middle;
+}
+.cost {
+  font-size: 1.1em;
+  margin-right: .2em;
+  & > span {
+    vertical-align: middle;
+  }
+}
+.red {
+  color: #f04228;
+}
+.blue {
+  color: #2196F3;
+}
+.green {
+  color: #76d25b;
+}
+.black {
+  color: #673AB7;
+}
+.white {
+  color: #FFEB3B;
+}
+.colorless {
+  color: #ccc;
 }
 </style>
