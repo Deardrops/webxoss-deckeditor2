@@ -163,7 +163,7 @@ export default {
 .foot {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-end;
   color: #929292;
 }
 .meta {

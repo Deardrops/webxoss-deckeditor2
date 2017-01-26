@@ -21,9 +21,10 @@ export default {
         y: .3,
       }),
     },
+    // iamgeWidth / containerWidth
     scale: {
       type: Number,
-      default: 1,
+      default: 2.5,
     },
   },
   computed: {
@@ -33,12 +34,13 @@ export default {
     style() {
       let x = this.origin.x * 100
       let y = this.origin.y * 100
-      let scale = this.scale
+      let scale = this.scale * 100
       return {
         position: 'absolute',
         top: '50%',
         left: '50%',
-        transform: `translate(-${x}%, -${y}%) scale(${scale}, ${scale})`,
+        width: `${scale}%`,
+        transform: `translate(-${x}%, -${y}%)`,
       }
     },
   },
