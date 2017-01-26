@@ -1,11 +1,12 @@
 <script>
-import AppHeader from 'components/AppHeader'
+import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
 
 export default {
   components: {
     AppHeader,
+    HeaderIcon,
     Cell,
   },
   data: () => ({
@@ -78,16 +79,19 @@ export default {
 
 <template>
   <div>
-    <app-header title="Search"></app-header>
-    <section>
+    <app-header title="Search">
       <input
-        placeholder="输入关键字以搜索"
+        :class="$style.search"
+        placeholder="Search..."
         spellcheck="false"
         autocomplete="off"
         autocapitalize="none"
         maxlength="30"
         ref="input"
         v-model="query">
+      <header-icon name="more"/>
+    </app-header>
+    <section>
       <ul>
         <li v-for="card in shownCards">
           <cell :card="card"/>
@@ -103,6 +107,19 @@ export default {
 </template>
 
 <style module>
+@import 'css/vars.css';
+.search {
+  flex: 1;
+  color: #fff;
+  line-height: var(--header-height);
+}
+.search::placeholder {
+  color: #fffa;
+}
+.search::selection {
+  color: #333;
+  background-color: #FFFF00;
+}
 .more {
   text-align: center;
   font-size: 2em;
