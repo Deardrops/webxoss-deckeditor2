@@ -8,15 +8,32 @@ export default {
     AppHeader,
     Cell,
   },
+  data: () => ({
+    // To improve performance when user typing,
+    // block the search for a short time after input.
+    timer: -1,
+    blocking: false,
+  }),
   computed: {
     query: {
       get() {
         return this.$route.query.query || ''
       },
       set(query) {
-        this.updateQueryPart({
-          query,
-        })
+        if (this.blocking) {
+          clearTimeout(this.timer)
+          this.timer = setTimeout(() => {
+            this.updateQueryPart({ query })
+            this.blocking = false
+          }, 500)
+          return
+        }
+
+        this.updateQueryPart({ query })
+        this.blocking = true
+        this.timer = setTimeout(() => {
+          this.blocking = false
+        }, 500)
       },
     },
     limit: {
@@ -68,6 +85,7 @@ export default {
         spellcheck="false"
         autocomplete="off"
         autocapitalize="none"
+        maxlength="30"
         ref="input"
         v-model="query">
       <ul>
