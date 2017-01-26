@@ -25,9 +25,6 @@ export default {
       deck.forEach(card => map[card.pid] = card)
       return Object.keys(map).map(key => map[key])
     },
-    getCount(target, deck) {
-      return deck.filter(card => card.pid === target.pid).length
-    },
     add(card) {
       this.$store.commit('addCard', card.pid)
     },
@@ -56,12 +53,7 @@ export default {
     </div>
     <ul class="main-deck-zone">
       <li v-for="card in unique(mainDeck)">
-        <cell
-          :card="card"
-          :count="getCount(card, mainDeck)"
-          @plus="add(card)"
-          @minus="del(card)">
-        </cell>
+        <cell :card="card"/>
       </li>
     </ul>
     <div class="lrig-deck">
@@ -70,12 +62,7 @@ export default {
       </div>
     <ul class="lrig-deck-zone">
       <li v-for="card in unique(lrigDeck)">
-        <cell
-          :card="card"
-          :count="getCount(card, lrigDeck)"
-          @plus="add(card)"
-          @minus="del(card)">
-        </cell>
+        <cell :card="card"/>
       </li>
     </ul>
   </div>

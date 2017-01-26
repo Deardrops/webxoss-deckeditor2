@@ -90,7 +90,7 @@ export default {
         v-model="query">
       <ul>
         <li v-for="card in shownCards">
-          <cell :card="card" :count="0"></cell>
+          <cell :card="card"/>
         </li>
       </ul>
       <div

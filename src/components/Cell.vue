@@ -22,10 +22,6 @@ export default {
       type: Object,
       required: true,
     },
-    count: {
-      type: Number,
-      required: true,
-    },
   },
   computed: {
     detailRoute() {
@@ -35,6 +31,10 @@ export default {
           pid: this.card.pid,
         },
       }
+    },
+    count() {
+      return this.$store.state.deckPids
+        .filter(pid => pid === this.card.pid).length
     },
     name() {
       return Localize.cardName(this.card)
@@ -105,6 +105,14 @@ export default {
       return costs
     },
   },
+  methods: {
+    plus() {
+      this.$store.commit('addCard', this.card.pid)
+    },
+    minus() {
+      this.$store.commit('delCard', this.card.pid)
+    },
+  },
 }
 </script>
 <template>
@@ -125,8 +133,8 @@ export default {
           <counter
             :class="[$style.counter, $style[card.color]]"
             :count="count"
-            @plus="$emit('plus')"
-            @minus="$emit('minus')">
+            @plus="plus"
+            @minus="minus">
           </counter>
         </div>
       </div>

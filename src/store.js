@@ -83,7 +83,8 @@ const mutations = {
     defaultSort(state.deckPids)
   },
   delCard(state, pid) {
-    let idx = state.deckPids.findIndex(id => id === pid)
+    let idx = state.deckPids.indexOf(pid)
+    if (idx === -1) return
     state.deckPids.splice(idx, 1)
   },
   fillDeck(state, pids) {
