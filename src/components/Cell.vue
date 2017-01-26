@@ -8,7 +8,7 @@
 <script>
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
-import Ball from 'components/ball'
+import Ball from 'components/Ball'
 import Localize from 'js/Localize'
 
 export default {
