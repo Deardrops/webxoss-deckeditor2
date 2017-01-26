@@ -8,16 +8,6 @@ export default {
     AppHeader,
     Thumbnail,
   },
-  created() {
-    /*
-    LRIG: 649
-    ARTS: 1908
-    SINGI: 1801
-    RESONA: 1895
-    SPELL: 1539
-    */
-    Localize.setLanguage('zh_CN') // test use
-  },
   computed: {
     pid: {
       get() {
@@ -102,6 +92,16 @@ export default {
       }[card.cardType] || []
     },
   },
+  methods: {
+    goGallary() {
+      this.$router.push({
+        path: '/gallary',
+        query: {
+          pid: this.pid,
+        },
+      })
+    },
+  },
 }
 
 </script>
@@ -110,7 +110,7 @@ export default {
   <div>
     <app-header title="Detail"></app-header>
     <div class="head">
-      <thumbnail class="thumbnail" :pid="pid"></thumbnail>
+      <thumbnail class="thumbnail" :pid="pid" @click.native="goGallary"></thumbnail>
       <div class="subtitle">
         <span>{{ card.wxid }}</span>
         <span>{{ card.rarity }}</span>
