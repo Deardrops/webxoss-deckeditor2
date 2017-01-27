@@ -2,6 +2,7 @@
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
+import marked from 'marked'
 
 export default {
   components: {
@@ -14,6 +15,8 @@ export default {
     // block the search for a short time after input.
     timer: -1,
     blocking: false,
+    searchTips: require('./searchTips.md'), // test
+    emptyTips: require('./emptyTips.md'), // test
   }),
   computed: {
     query: {
@@ -55,6 +58,7 @@ export default {
     },
   },
   methods: {
+    marked,
     updateQueryPart(part) {
       let query = Object.assign({}, this.$route.query, part)
       Object.keys(query).forEach(key => {
@@ -72,7 +76,9 @@ export default {
     },
   },
   mounted() {
-    this.$refs.input.focus()
+    if (!this.query) {
+      this.$refs.input.focus()
+    }
   },
 }
 </script>
@@ -91,7 +97,7 @@ export default {
         v-model="query">
       <header-icon name="more"/>
     </app-header>
-    <section>
+    <section v-if="query && shownCards.length">
       <ul>
         <li v-for="card in shownCards">
           <cell :card="card"/>
@@ -102,6 +108,12 @@ export default {
         :class="$style.more">
         <button @click="showMore(20)">Show more</button>
       </div>
+    </section>
+    <section v-if="!query">
+      <div v-html="marked(searchTips)"></div>
+    </section>
+    <section v-if="query && !shownCards.length">
+      <div v-html="marked(emptyTips)"></div>
     </section>
   </div>
 </template>
@@ -118,7 +130,7 @@ export default {
 }
 .search::selection {
   color: #333;
-  background-color: #FFFF00;
+  background-color: #ffff00;
 }
 .more {
   text-align: center;

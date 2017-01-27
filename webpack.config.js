@@ -31,6 +31,7 @@ const TESTS = {
   js: /\.js?$/,
   vue: /\.vue$/,
   svg: /\.svg$/,
+  txt: /\.(te?xt|md|markdown)$/,
   image: /\.(webp|jpe?g|png|gif)$/,
 }
 let browsers = [
@@ -152,6 +153,11 @@ config.base = {
         loaders: [
           'url-loader?limit=10000',
         ],
+        include: PATHS.src,
+      },
+      {
+        test: TESTS.txt,
+        use: 'raw-loader',
         include: PATHS.src,
       },
     ],
