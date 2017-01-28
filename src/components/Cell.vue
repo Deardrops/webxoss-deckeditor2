@@ -6,6 +6,7 @@
 -->
 
 <script>
+import { mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
@@ -24,6 +25,9 @@ export default {
     },
   },
   computed: {
+    ...mapGetters([
+      'deckPids',
+    ]),
     detailRoute() {
       return {
         path: '/detail',
@@ -33,8 +37,7 @@ export default {
       }
     },
     count() {
-      return this.$store.state.deckPids
-        .filter(pid => pid === this.card.pid).length
+      return this.deckPids.filter(pid => pid === this.card.pid).length
     },
     name() {
       return Localize.cardName(this.card)

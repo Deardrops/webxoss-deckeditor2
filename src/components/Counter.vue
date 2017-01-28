@@ -19,9 +19,15 @@ export default {
   },
   methods: {
     plus() {
+      if (this.count >= 4) {
+        return
+      }
       this.$emit('plus')
     },
     minus() {
+      if (this.count <= 0) {
+        return
+      }
       this.$emit('minus')
     },
   },
