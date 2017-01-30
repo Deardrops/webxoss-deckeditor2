@@ -50,7 +50,7 @@ header {
   height: var(--header-height);
   line-height: var(--header-height);
   background-color: var(--main-color);
-  box-shadow: 0 0 4px #000;
+  @apply --shadow-4dp;
 }
 h1 {
   flex: 1;

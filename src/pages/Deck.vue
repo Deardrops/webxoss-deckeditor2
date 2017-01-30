@@ -1,6 +1,6 @@
 <script>
 import { mapGetters } from 'vuex'
-import { AppHeader, HeaderIcon } from 'components/AppHeader'
+import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import FloatButton from 'components/FloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
@@ -10,9 +10,40 @@ export default {
   components: {
     AppHeader,
     HeaderIcon,
+    HeaderMenu,
     FloatButton,
     Cell,
     DeckHead,
+  },
+  data() {
+    return {
+      menuItems: [
+        {
+          title: 'New Deck',
+          icon: 'add',
+        },
+        {
+          title: 'Clone',
+          icon: 'copy',
+        },
+        {
+          title: 'Rename',
+          icon: 'edit',
+        },
+        {
+          title: 'Delete',
+          icon: 'del',
+        },
+        {
+          title: 'Import',
+          icon: 'enter',
+        },
+        {
+          title: 'Export',
+          icon: 'exit',
+        },
+      ],
+    }
   },
   computed: {
     ...mapGetters([
@@ -30,6 +61,9 @@ export default {
         },
       })
     },
+    openMenu() {
+      this.$refs.menu.open()
+    },
   },
 }
 </script>
@@ -37,7 +71,7 @@ export default {
 <template>
   <div>
     <app-header title="Deck Editor">
-      <header-icon slot="right" name="more"/>
+      <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head></deck-head>
     <ul>
@@ -51,6 +85,7 @@ export default {
       </li>
     </ul>
     <float-button :class="$style.float" name="search" @click.native="goSearch"/>
+    <header-menu ref="menu" :items="menuItems"/>
   </div>
 </template>
 
