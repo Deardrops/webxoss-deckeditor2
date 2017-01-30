@@ -3,7 +3,6 @@ import { mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
-import DeckButtons from 'components/DeckButtons'
 import _ from 'lodash'
 
 export default {
@@ -12,7 +11,6 @@ export default {
     HeaderIcon,
     Cell,
     DeckHead,
-    DeckButtons,
   },
   computed: {
     ...mapGetters([
@@ -56,9 +54,6 @@ export default {
         <cell :card="card"/>
       </li>
     </ul>
-    <deck-buttons>
-      <icon
-    </deck-buttons>
   </div>
 </template>
 
