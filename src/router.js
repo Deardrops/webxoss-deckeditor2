@@ -22,5 +22,9 @@ export default new Router({
       path: '/detail',
       component: require('pages/Detail'),
     },
+    {
+      path: '/gallary',
+      component: require('pages/Gallary'),
+    },
   ],
 })

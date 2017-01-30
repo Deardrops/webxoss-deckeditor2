@@ -2,6 +2,7 @@
 
 const express = require('express')
 const app = new express()
+app.use(require('compression')())
 app.use(express.static('dist'))
 
 let port = +process.argv[1] || 8888

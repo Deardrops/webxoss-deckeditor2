@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import _ from 'lodash'
 
 function defaultSort(cards){
   // default order:
@@ -50,19 +51,40 @@ function isLrigCard (card) {
 
 Vue.use(Vuex)
 
+/*
+  ## Name Explaination:
+
+  * Pid: the unique numerical id of a physical card
+  * Card: the card information object
+      {
+        pid: 1234,
+        name: 'card name',
+        ...
+      }
+  * Deck: an array of cards
+  * DeckFile:
+      {
+        name: 'deck name',
+        pids: [],
+      }
+*/
 const state = {
-  currentDeckName: '牌组名称（点击跳转搜索）',
+  deckFiles: [],
 
-  deckFilenames: [],
-
-  // current deck, an array of cards' pid
-  deckPids: [],
+  // current selected deck name
+  deckName: '',
 }
 
 const getters = {
-  // a `deck` is an array of cards
-  deck: state => {
-    return state.deckPids.map(pid => CardInfo[pid])
+  deckPids: ({ deckFiles, deckName }) => {
+    return _.chain(deckFiles)
+      .find({ name: deckName })
+      .get('pids', [])
+      .value()
+  },
+
+  deck: (state, getters) => {
+    return getters.deckPids.map(pid => CardInfo[pid])
   },
   mainDeck: (state, getters) => {
     return getters.deck.filter(card => !isLrigCard(card))
@@ -71,23 +93,32 @@ const getters = {
     return getters.deck.filter(card => isLrigCard(card))
   },
 
-  deckName: state => {
-    return state.currentDeckName
+  deckNames: (state) => {
+    return state.deckFiles.map(file => file.name)
   },
 }
 
 
 const mutations = {
   addCard(state, pid) {
-    state.deckPids.push(pid)
-    defaultSort(state.deckPids)
+    let pids = getters.deckPids(state)
+    pids.push(pid)
+    defaultSort(pids)
   },
   delCard(state, pid) {
-    let idx = state.deckPids.findIndex(id => id === pid)
-    state.deckPids.splice(idx, 1)
+    let pids = getters.deckPids(state)
+    let idx = pids.indexOf(pid)
+    if (idx === -1) {
+      // 404 not found
+      return
+    }
+    pids.splice(idx, 1)
   },
-  fillDeck(state, pids) {
-    state.deckPids = pids
+  putDeckFile(state, file) {
+    state.deckFiles.push(file)
+  },
+  switchDeck(state, name) {
+    state.deckName = name
   },
 }
 const store = new Vuex.Store({

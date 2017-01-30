@@ -1,3 +1,8 @@
+:root {
+  font-size: 14px;
+  font-family: PingFangSC-Regular, 'Helvetica Neue', Tahoma, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+}
+
 html,
 body,
 ol,
@@ -30,7 +35,7 @@ input,
 button,
 textarea,
 select {
-  -webkit-appearance: none;
+  appearance: none;
   background-color: transparent;
   margin: 0;
   padding: 0;
