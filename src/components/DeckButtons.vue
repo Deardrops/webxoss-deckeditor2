@@ -36,7 +36,7 @@ export default {
       this.$router.push({
         path: this.$route.path,
         query: {
-          menu: '1',
+          menu: 'true',
         },
       })
     },
@@ -58,14 +58,16 @@ export default {
       <icon :class="$style.cross" name="add"/>
     </float-button>
     <ul :class="$style.subButtons">
-      <li
-        v-for="(button, index) in buttons"
-        :class="$style.item">
-        <label :class="$style.label">{{ button.title }}</label>
-        <float-button
-          :class="$style.subButton"
-          :name="button.icon"/>
-      </li>
+      <transition name="zoom" v-for="(button, index) in buttons">
+        <li
+          v-show="opened"
+          :class="$style.item">
+          <label :class="$style.label">{{ button.title }}</label>
+          <float-button
+            :class="$style.subButton"
+            :name="button.icon"/>
+        </li>
+      </transition>
     </ul>
   </div>
 </template>
@@ -108,15 +110,18 @@ export default {
   justify-content: flex-end;
   align-items: center;
 
-  transition: transform .2s;
   /* set origin to icon center   */
   /* Android 4.3 fallback to 80% */
   transform-origin: 80% bottom;
   transform-origin: calc(100% - 2rem) bottom;
+}
+.item:global(.zoom-enter-active),
+.item:global(.zoom-leave-active) {
+  transition: transform .2s;
+}
+.item:global(.zoom-enter),
+.item:global(.zoom-leave-to) {
   transform: scale(0, 0);
-  @nest .opened & {
-    transform: scale(1, 1);
-  }
 }
 .label,
 .subButton {
