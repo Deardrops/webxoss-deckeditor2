@@ -35,9 +35,9 @@ export default {
 </script>
 
 <template>
-  <div v-show="opened" :class="$style.wrapper" @click.self="close">
+  <div :class="[$style.wrapper, opened ? $style.opened : '']" @click.self="close">
     <transition name="pop">
-      <ul v-if="opened" :class="$style.menu">
+      <ul v-show="opened" :class="$style.menu">
         <li v-for="item in items">
           <icon :class="$style.icon" :name="item.icon"/>
           <label>{{ item.title }}</label>
@@ -49,12 +49,13 @@ export default {
 
 <style module>
 @import 'css/vars.css';
-.wrapper {
+.wrapper.opened {
   position: fixed;
   top: 0;
   left: 0;
   right: 0;
   bottom: 0;
+  z-index: var(--z-header-menu);
 }
 .menu {
   position: fixed;
@@ -64,6 +65,7 @@ export default {
   @apply --shadow-8dp;
 
   will-change: transform;
+  transform-origin: right top;
 
   & > li {
     padding: var(--padding);
@@ -82,8 +84,7 @@ export default {
 }
 .menu:global(.pop-enter-active),
 .menu:global(.pop-leave-active) {
-  transition: transform .15s ease-out;
-  transform-origin: right top;
+  transition: transform .2s ease-out;
 }
 .menu:global(.pop-enter),
 .menu:global(.pop-leave-to) {
