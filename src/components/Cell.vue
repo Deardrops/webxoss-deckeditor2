@@ -1,8 +1,6 @@
 <!--
   props:
-    card, count
-  events:
-    plus, minus
+    card: item in CardInfo
 -->
 
 <script>
@@ -48,12 +46,16 @@ export default {
       let limit = `Limit: ${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
-      let type = `${card.cardType}`
+      let type = `${Localize.cardType(card)}`
+
+      let levelLimit = level + '  ' + limit
+      let levelPower = level + '  ' + power
+      let typeClasses = type + '  ' + classes
 
       return {
-        'LRIG': [level, limit],
-        'SIGNI': [level, power, classes],
-        'RESONA': [level, power, classes],
+        'LRIG': [levelLimit, typeClasses],
+        'SIGNI': [levelPower, typeClasses],
+        'RESONA': [levelPower, typeClasses],
         'SPELL': [type],
         'ARTS': [type],
       }[card.cardType] || []
@@ -107,6 +109,15 @@ export default {
 
       return costs
     },
+    hasNoCost() {
+      let type = this.card.cardType
+      if (type === 'SIGNI' || type === 'RESONA') {
+        return false // SIGNI / RESONA do not show " 0 cost"
+      }
+      if (!this.costs.length){
+        return true
+      }
+    },
   },
   methods: {
     plus() {
@@ -131,6 +142,7 @@ export default {
               <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
                 <ball/><span v-if="cost.count">{{ cost.count }} </span>
               </span>
+              <span v-if="hasNoCost">0费用</span>
             </div>
           </div>
           <counter
@@ -153,8 +165,8 @@ export default {
   border-bottom: 1px solid #d6d6d6;
 }
 .thumbnail {
-  min-width: 6.25rem;
-  min-height: 6.25rem;
+  width: 6.25rem; /* avoid stretch */
+  height: 6.25rem;
   border: 2px solid currentColor;
 }
 .right {
