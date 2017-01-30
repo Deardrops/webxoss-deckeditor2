@@ -25,7 +25,7 @@ export default {
 
 <template>
   <div :class="$style.page">
-    <app-header title="Gallary"></app-header>
+    <app-header title="Gallery"></app-header>
     <div :class="$style.body" @click="goBack">
       <img :class="$style.image" :src="src">
     </div>

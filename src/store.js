@@ -44,7 +44,7 @@ function defaultSort(cards){
   })
 }
 
-function isLrigCard (card) {
+function isLrigCard(card) {
   let type = card.cardType
   return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
 }

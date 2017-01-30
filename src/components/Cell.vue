@@ -48,9 +48,9 @@ export default {
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = level + '  ' + limit
-      let levelPower = level + '  ' + power
-      let typeClasses = type + '  ' + classes
+      let levelLimit = `${level}  ${limit}`
+      let levelPower = `${level}  ${power}`
+      let typeClasses = `${type}  ${classes}`
 
       return {
         'LRIG': [levelLimit, typeClasses],
@@ -97,7 +97,7 @@ export default {
 
       return costs
     },
-    hasNoCost() {
+    noCost() {
       let type = this.card.cardType
       if (type === 'SIGNI' || type === 'RESONA') {
         return false // SIGNI / RESONA do not show " 0 cost"
@@ -130,7 +130,7 @@ export default {
               <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
-              <span v-if="hasNoCost">0费用</span>
+              <span v-if="noCost">0费用</span>
             </div>
           </div>
           <counter
@@ -147,6 +147,7 @@ export default {
 
 <style module>
 @import 'css/vars.css';
+@import 'css/colors.css';
 .cell {
   display: flex;
   padding: var(--padding);
@@ -189,22 +190,5 @@ export default {
     vertical-align: middle;
   }
 }
-.red {
-  color: #f04228;
-}
-.blue {
-  color: #2196f3;
-}
-.green {
-  color: #76d25b;
-}
-.black {
-  color: #673ab7;
-}
-.white {
-  color: #ffeb3b;
-}
-.colorless {
-  color: #ccc;
-}
+
 </style>

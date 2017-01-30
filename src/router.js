@@ -23,8 +23,8 @@ export default new Router({
       component: require('pages/Detail'),
     },
     {
-      path: '/gallary',
-      component: require('pages/Gallary'),
+      path: '/gallery',
+      component: require('pages/Gallery'),
     },
   ],
 })
