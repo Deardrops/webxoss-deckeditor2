@@ -95,18 +95,6 @@ export default {
         return b.count - a.count
       })
 
-      // If costs of every color are less than 3, flatten them.
-      // { count: 3 } => { count: 0} x 3
-      let simple = costs.every(cost => cost.count <= 3)
-      if (simple) {
-        costs = [].concat(...costs.map(cost => {
-          return Array(cost.count).fill({
-            color: cost.color,
-            count: 0,
-          })
-        }))
-      }
-
       return costs
     },
     hasNoCost() {
@@ -140,7 +128,7 @@ export default {
             <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
             <div :class="$style.meta">
               <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
-                <ball/><span v-if="cost.count">{{ cost.count }} </span>
+                <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
               <span v-if="hasNoCost">0费用</span>
             </div>
