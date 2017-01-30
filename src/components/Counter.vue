@@ -19,15 +19,9 @@ export default {
   },
   methods: {
     plus() {
-      if (this.count >= 4) {
-        return
-      }
       this.$emit('plus')
     },
     minus() {
-      if (this.count <= 0) {
-        return
-      }
       this.$emit('minus')
     },
   },
@@ -35,12 +29,12 @@ export default {
 </script>
 
 <template>
-  <div :class="$style.group">
-    <button :class="$style.minus" @click.prevent="minus">
+  <div :class="$style.group" @click.prevent>
+    <button :class="$style.minus" @click="minus" :disabled="count <= 0">
       <icon name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
-    <button :class="$style.plus" @click.prevent="plus">
+    <button :class="$style.plus" @click="plus" :disabled="count >= 4">
       <icon name="add"/>
     </button>
   </div>

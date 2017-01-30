@@ -193,16 +193,16 @@ export default {
   color: #f04228;
 }
 .blue {
-  color: #2196F3;
+  color: #2196f3;
 }
 .green {
   color: #76d25b;
 }
 .black {
-  color: #673AB7;
+  color: #673ab7;
 }
 .white {
-  color: #FFEB3B;
+  color: #ffeb3b;
 }
 .colorless {
   color: #ccc;

@@ -1,4 +1,4 @@
-import inArr from 'js/util.js'
+import { inArr } from 'js/util.js'
 import Localize from 'js/Localize.js'
 function TextualRule(prop, map, exact) {
   this.prop = prop
