@@ -1,22 +1,13 @@
 <script>
 export default {
-  data: () => ({
-    shown: false,
-    input: '',
+  props: {
     config: {
-      type: '',
-      title: '',
-      content: '',
-      defaultInput: '',
-      ok: {
-        text: '',
-        action: () => {},
-      },
-      cancle: {
-        text: '',
-        action: () => {},
-      },
+      type: Object,
+      required: true,
     },
+  },
+  data: () => ({
+    input: '',
   }),
   computed: {
     okDisabled() {
@@ -26,41 +17,28 @@ export default {
       return this.config.type !== 'alert'
     },
     okText() {
-      return (this.config.ok || {}).text || 'OK'
+      return this.config.okText || 'OK'
     },
     cancleText() {
-      return (this.config.cancle || {}).text || 'CANCLE'
+      return this.config.cancleText || 'CANCLE'
     },
   },
   methods: {
-    open(config) {
-      this.config = config
-      this.input = config.defaultInput || ''
-      this.shown = true
-      this.$nextTick(() => {
-        if (this.$refs.input) {
-          this.$refs.input.select()
-        } else if (this.$refs.wrapper) {
-          this.$refs.wrapper.focus()
-        }
-      })
+    setInputValue(value) {
+      this.input = value || ''
+    },
+    focus() {
+      if (this.$refs.input) {
+        this.$refs.input.select()
+      } else if (this.$refs.wrapper) {
+        this.$refs.wrapper.focus()
+      }
     },
     cancle() {
-      let action = (this.config.cancle || {}).action
-      if (!action || action() !== false) {
-        return this.shown = false
-      }
+      this.$emit('cancle')
     },
     ok() {
-      let action = (this.config.ok || {}).action
-      if (!action || action(this.input) !== false) {
-        return this.shown = false
-      }
-    },
-    esc() {
-      if (this.cancleShown) {
-        this.cancle()
-      }
+      this.$emit('ok', this.input)
     },
   },
 }
@@ -68,11 +46,10 @@ export default {
 
 <template>
   <div
-    v-if="shown"
     ref="wrapper"
     :class="$style.wrapper"
     tabindex="0"
-    @keyup.esc="esc">
+    @keyup.esc="cancle">
     <form :class="$style.dialog" @submit.prevent="ok">
       <h3 :class="$style.title" v-if="config.title">{{ config.title }}</h3>
       <div :class="$style.content">{{ config.content }}</div>

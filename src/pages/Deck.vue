@@ -1,7 +1,7 @@
 <script>
-import { mapGetters, mapState } from 'vuex'
+import { mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
-import Modal from 'components/Modal'
+import DeckModals from 'components/DeckModals'
 import FloatButton from 'components/FloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
@@ -12,7 +12,7 @@ export default {
     AppHeader,
     HeaderIcon,
     HeaderMenu,
-    Modal,
+    DeckModals,
     FloatButton,
     Cell,
     DeckHead,
@@ -24,133 +24,39 @@ export default {
           title: 'New Deck',
           icon: 'add',
           action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'prompt',
-              content: 'New deck name:',
-              ok: {
-                text: 'CREATE',
-                action: name => {
-                  if (this.deckNames.includes(name)) {
-                    console.log(`"${name}" already exists.`)
-                    return false
-                  }
-                  this.$store.commit('putDeckFile', {
-                    name,
-                    pids: [],
-                  })
-                  this.$store.commit('switchDeck', name)
-                },
-              },
-              cancle: {
-                text: 'CANCLE',
-              },
-            })
+            this.openModal('add')
           },
         },
         {
           title: 'Clone',
           icon: 'copy',
           action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'prompt',
-              content: 'New deck name:',
-              ok: {
-                text: 'CLONE',
-                action: name => {
-                  if (this.deckNames.includes(name)) {
-                    console.log(`"${name}" already exists.`)
-                    return false
-                  }
-                  this.$store.commit('putDeckFile', {
-                    name,
-                    pids: this.deckPids.slice(),
-                  })
-                  this.$store.commit('switchDeck', name)
-                },
-              },
-              cancle: {
-                text: 'CANCLE',
-              },
-            })
+            this.openModal('clone')
           },
         },
         {
           title: 'Rename',
           icon: 'edit',
           action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'prompt',
-              content: 'New deck name:',
-              defaultInput: this.deckName,
-              ok: {
-                text: 'RENAME',
-                action: name => {
-                  if (this.deckNames.includes(name)) {
-                    console.log(`"${name}" already exists.`)
-                    return false
-                  }
-                  this.$store.commit('renameDeck', {
-                    origin: this.deckName,
-                    name,
-                  })
-                },
-              },
-              cancle: {
-                text: 'CANCLE',
-              },
-            })
+            this.openModal('rename')
           },
         },
         {
           title: 'Delete',
           icon: 'del',
           action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'confirm',
-              content: `Are you sure to delete "${this.deckName}" ?`,
-              ok: {
-                text: 'DELETE',
-                action: () => {
-                  this.$store.commit('deleteDeck', this.deckName)
-                },
-              },
-              cancle: {
-                text: 'RESERVE',
-              },
-            })
+            this.openModal('delete')
           },
         },
         {
           title: 'Import',
           icon: 'download',
-          action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'alert',
-              content: '喵喵?',
-              ok: {
-                text: '🐱',
-              },
-            })
-          },
+          action: () => {},
         },
         {
           title: 'Export',
           icon: 'upload',
-          action: () => {
-            this.closeMenu()
-            this.$refs.modal.open({
-              type: 'alert',
-              content: '喵喵?',
-              ok: {
-                text: '🐱',
-              },
-            })
-          },
+          action: () => {},
         },
       ],
     }
@@ -159,11 +65,6 @@ export default {
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
-      'deckPids',
-      'deckNames',
-    ]),
-    ...mapState([
-      'deckName',
     ]),
   },
   methods: {
@@ -181,6 +82,12 @@ export default {
     },
     closeMenu() {
       this.$refs.menu.close()
+    },
+    openModal(type) {
+      this.$refs.modals.open(type)
+    },
+    closeModal() {
+      this.$refs.modals.close()
     },
   },
 }
@@ -204,7 +111,7 @@ export default {
     </ul>
     <float-button :class="$style.float" name="search" @click.native="goSearch"/>
     <header-menu ref="menu" :items="menuItems"/>
-    <modal ref="modal"/>
+    <deck-modals ref="modals"/>
   </div>
 </template>
 
