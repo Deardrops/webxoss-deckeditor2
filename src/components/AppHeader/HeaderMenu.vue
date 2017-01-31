@@ -31,14 +31,22 @@ export default {
       this.opened ? this.close() : this.open()
     },
   },
+  watch: {
+    opened(opened) {
+      document.body.style.overflow = opened ? 'hidden' : 'auto'
+    },
+  },
 }
 </script>
 
 <template>
   <div :class="[$style.wrapper, opened ? $style.opened : '']" @click.self="close">
     <transition name="pop">
-      <ul v-show="opened" :class="$style.menu">
-        <li v-for="item in items">
+      <ul :class="$style.menu" v-show="opened">
+        <li
+          :class="$style.item"
+          v-for="item in items"
+          @click="item.action">
           <icon :class="$style.icon" :name="item.icon"/>
           <label>{{ item.title }}</label>
         </li>
@@ -66,22 +74,26 @@ export default {
 
   will-change: transform;
   transform-origin: right top;
+}
+.item {
+  padding: var(--padding);
+  padding-right: calc(2 * var(--padding));
+  font-size: 1.2rem;
+  color: #666;
 
-  & > li {
-    padding: var(--padding);
-    padding-right: calc(2 * var(--padding));
-    font-size: 1.2rem;
-    color: #666;
+  &:hover {
+    background-color: #eee;
+  }
 
-    & > * {
-      vertical-align: middle;
-    }
+  & > * {
+    vertical-align: middle;
   }
 }
 .icon {
   margin-right: var(--padding);
   font-size: 1.2em;
 }
+/* tansition */
 .menu:global(.pop-enter-active),
 .menu:global(.pop-leave-active) {
   transition: transform .2s ease-out;
