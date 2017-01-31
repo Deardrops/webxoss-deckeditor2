@@ -38,7 +38,8 @@ export default {
       <icon :class="$style.arrow" name="arrow"/>
     </div>
     <div :class="$style.right">
-      <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
+      <span :class="[$style.warn]">Mayu's Room</span>
+      <span :class="[$style.confirm]">LRIG卡组</span>
       <span>
         <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </span>
@@ -70,9 +71,21 @@ export default {
   font-size: .8em;
 }
 .warn {
-  color: #ff0000;
-}
-.mayu {
   margin-right: .8em;
+  padding: 0 .2em;
+  color: #ffffff;
+  background-color: #ff0000;
+  border-radius: .3em;
+}
+.warn:before {
+  content: "✘";
+}
+.confirm {
+  margin-right: .8em;
+  padding: 0 .2em;
+  color: #008000;
+}
+.confirm:before {
+  content: "✔";
 }
 </style>
