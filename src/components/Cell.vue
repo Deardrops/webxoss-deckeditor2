@@ -100,11 +100,10 @@ export default {
     noCost() {
       let type = this.card.cardType
       if (type === 'SIGNI' || type === 'RESONA') {
-        return false // SIGNI / RESONA do not show " 0 cost"
+        // SIGNI / RESONA do not show " 0 cost"
+        return false
       }
-      if (!this.costs.length){
-        return true
-      }
+      return !!this.costs.length
     },
   },
   methods: {
@@ -143,11 +142,13 @@ export default {
       </div>
     </div>
   </router-link>
+
 </template>
 
+<style src="css/colors.css" module="$color"></style>
 <style module>
 @import 'css/vars.css';
-@import 'css/colors.css';
+
 .cell {
   display: flex;
   padding: var(--padding);

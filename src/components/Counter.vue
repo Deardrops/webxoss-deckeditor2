@@ -37,7 +37,6 @@ export default {
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
       <icon name="add"/>
     </button>
-
   </div>
 </template>
 
