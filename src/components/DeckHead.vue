@@ -51,7 +51,7 @@ export default {
 .head {
   display: flex;
   justify-content: space-between;
-  line-height: var(--header-height);
+  line-height: calc(0.8 * var(--header-height));
   padding: 0 var(--padding);
   border-bottom: 1px solid #d6d6d6;
 }
