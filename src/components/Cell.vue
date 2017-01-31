@@ -103,7 +103,7 @@ export default {
         // SIGNI / RESONA do not show " 0 cost"
         return false
       }
-      return !!this.costs.length
+      return !this.costs.length
     },
   },
   methods: {
@@ -119,14 +119,14 @@ export default {
 <template>
   <router-link :to="detailRoute">
     <div :class="[$style.cell]">
-      <thumbnail :class="[$style.thumbnail, $style[card.color]]" :pid="card.pid"></thumbnail>
+      <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
           <div>
             <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
             <div :class="$style.meta">
-              <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
+              <span v-for="cost in costs" :class="[$style.cost, $color[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
               <span v-if="noCost">0费用</span>
