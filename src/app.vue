@@ -10,6 +10,10 @@ export default {
       name: 'RED_FISH',
       pids: require('./RED_FISH.json'),
     })
+    this.$store.commit('putDeckFile', {
+      name: 'TEST_DECK',
+      pids: require('./TEST_DECK.json'),
+    })
     this.$store.commit('switchDeck', 'WHITE_HOPE')
   },
 }

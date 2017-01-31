@@ -5,8 +5,8 @@
 <style module>
 .ball {
   display: inline-block;
-  width: .6em;
-  height: .6em;
+  width: .8em;
+  height: .8em;
   border-radius: 50%;
   background-color: currentColor;
 }

@@ -1,8 +1,6 @@
 <!--
   props:
-    card, count
-  events:
-    plus, minus
+    card: item in CardInfo
 -->
 
 <script>
@@ -48,12 +46,16 @@ export default {
       let limit = `Limit: ${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
-      let type = `${card.cardType}`
+      let type = `${Localize.cardType(card)}`
+
+      let levelLimit = `${level}  ${limit}`
+      let levelPower = `${level}  ${power}`
+      let typeClasses = `${type}  ${classes}`
 
       return {
-        'LRIG': [level, limit],
-        'SIGNI': [level, power, classes],
-        'RESONA': [level, power, classes],
+        'LRIG': [levelLimit, typeClasses],
+        'SIGNI': [levelPower, typeClasses],
+        'RESONA': [levelPower, typeClasses],
         'SPELL': [type],
         'ARTS': [type],
       }[card.cardType] || []
@@ -93,19 +95,15 @@ export default {
         return b.count - a.count
       })
 
-      // If costs of every color are less than 3, flatten them.
-      // { count: 3 } => { count: 0} x 3
-      let simple = costs.every(cost => cost.count <= 3)
-      if (simple) {
-        costs = [].concat(...costs.map(cost => {
-          return Array(cost.count).fill({
-            color: cost.color,
-            count: 0,
-          })
-        }))
-      }
-
       return costs
+    },
+    noCost() {
+      let type = this.card.cardType
+      if (type === 'SIGNI' || type === 'RESONA') {
+        // SIGNI / RESONA do not show " 0 cost"
+        return false
+      }
+      return !!this.costs.length
     },
   },
   methods: {
@@ -129,8 +127,9 @@ export default {
             <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
             <div :class="$style.meta">
               <span v-for="cost in costs" :class="[$style.cost, $style[cost.color]]">
-                <ball/><span v-if="cost.count">{{ cost.count }} </span>
+                <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
+              <span v-if="noCost">0费用</span>
             </div>
           </div>
           <counter
@@ -143,18 +142,21 @@ export default {
       </div>
     </div>
   </router-link>
+
 </template>
 
+<style src="css/colors.css" module="$color"></style>
 <style module>
 @import 'css/vars.css';
+
 .cell {
   display: flex;
   padding: var(--padding);
   border-bottom: 1px solid #d6d6d6;
 }
 .thumbnail {
-  min-width: 6.25rem;
-  min-height: 6.25rem;
+  width: 6.25rem; /* avoid stretch */
+  height: 6.25rem;
   border: 2px solid currentColor;
 }
 .right {
@@ -189,22 +191,5 @@ export default {
     vertical-align: middle;
   }
 }
-.red {
-  color: #f04228;
-}
-.blue {
-  color: #2196f3;
-}
-.green {
-  color: #76d25b;
-}
-.black {
-  color: #673ab7;
-}
-.white {
-  color: #ffeb3b;
-}
-.colorless {
-  color: #ccc;
-}
+
 </style>

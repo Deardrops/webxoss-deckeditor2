@@ -20,12 +20,6 @@ export default {
   },
   methods: {
     unique: deck => _.uniqBy(deck, 'pid'),
-    add(card) {
-      this.$store.commit('addCard', card.pid)
-    },
-    del(card) {
-      this.$store.commit('delCard', card.pid)
-    },
     goSearch() {
       this.$router.push({
         path: '/search',

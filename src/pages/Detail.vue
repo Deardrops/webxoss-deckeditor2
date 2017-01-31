@@ -93,9 +93,9 @@ export default {
     },
   },
   methods: {
-    goGallary() {
+    goGallery() {
       this.$router.push({
-        path: '/gallary',
+        path: '/gallery',
         query: {
           pid: this.pid,
         },
@@ -110,7 +110,7 @@ export default {
   <div>
     <app-header title="Detail"></app-header>
     <div class="head">
-      <thumbnail class="thumbnail" :pid="pid" @click.native="goGallary"></thumbnail>
+      <thumbnail class="thumbnail" :pid="pid" @click.native="goGallery"></thumbnail>
       <div class="subtitle">
         <span>{{ card.wxid }}</span>
         <span>{{ card.rarity }}</span>
