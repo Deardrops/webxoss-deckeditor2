@@ -109,10 +109,10 @@ export default {
         <button @click="showMore(20)">Show more</button>
       </div>
     </section>
-    <section v-if="!query">
+    <section :class="$style.tips" v-if="!query">
       <div v-html="marked(searchTips)"></div>
     </section>
-    <section v-if="query && !shownCards.length">
+    <section :class="$style.tips" v-if="query && !shownCards.length">
       <div v-html="marked(emptyTips)"></div>
     </section>
   </div>
@@ -136,5 +136,31 @@ export default {
   text-align: center;
   font-size: 2em;
   padding: 1em 0;
+}
+.tips {
+  padding: 2rem 2rem 0 2rem;
+  color: #666;
+  line-height: 1.5;
+
+  & h3 {
+    font-size: 1.5em;
+  }
+
+  & p,
+  & ul {
+    margin: .8em 0; 
+  }
+
+  & ul {
+    list-style-type: disc;
+    padding-left: 2em;
+  }
+
+  & code {
+    margin: 0 .2em;
+    font-family: monospace;
+    white-space: nowrap;
+    border-bottom: 1px dashed #666;
+  }
 }
 </style>

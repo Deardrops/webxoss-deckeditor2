@@ -15,7 +15,7 @@ dd {
 
 ol,
 ul {
-  list-style: none;
+  list-style-type: none;
 }
 
 p,
