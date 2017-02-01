@@ -7,6 +7,8 @@ import App from './app'
 import Localize from 'js/Localize'
 Localize.setLanguage('zh_CN') // test
 
+history.scrollRestoration = 'manual'
+
 import { $get } from 'js/util'
 
 sync(store, router)

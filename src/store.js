@@ -114,11 +114,69 @@ const mutations = {
     }
     pids.splice(idx, 1)
   },
-  putDeckFile(state, file) {
-    state.deckFiles.push(file)
+  // put === create + update
+  putDeckFile(state, { name, pids }) {
+    let file = state.deckFiles.find(file => file.name === name)
+    if (file) {
+      // Already exist, update
+      file.pids = pids
+    } else {
+      // New file, create
+      state.deckFiles.push({
+        name,
+        pids,
+      })
+    }
   },
   switchDeck(state, name) {
     state.deckName = name
+  },
+  deleteDeck(state, name) {
+    let idx = state.deckFiles.findIndex(file => file.name === name)
+    if (idx === -1) {
+      // 404 not found
+      return
+    }
+
+    // No deck after deleting, put WHITE_HOPE
+    if (state.deckFiles.length <= 1) {
+      state.deckFiles = [{
+        name: 'WHITE_HOPE',
+        pids: require('./WHITE_HOPE').slice(),
+      }]
+      state.deckName = 'WHITE_HOPE'
+      return
+    }
+
+    state.deckFiles.splice(idx, 1)
+
+    // Deleting current deck, switch to the next one
+    // (or the previous one if it's the last)
+    if (name === state.deckName) {
+      if (idx >= state.deckFiles.length) {
+        idx--
+      }
+      state.deckName = state.deckFiles[idx].name
+    }
+  },
+  renameDeck(state, { origin, name }) {
+    // New name already exist
+    if (state.deckFiles.some(file => file.name === name)) {
+      return
+    }
+
+    let file = state.deckFiles.find(file => file.name === origin)
+    if (!file) {
+      // 404 not found
+      return
+    }
+
+    file.name = name
+
+    // Renaming current deck, switch to new name
+    if (state.deckName === origin) {
+      state.deckName = name
+    }
   },
 }
 const store = new Vuex.Store({
