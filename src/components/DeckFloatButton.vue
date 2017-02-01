@@ -24,8 +24,13 @@ export default {
       let currentScrollTop = window.scrollY
       let delta = currentScrollTop - this.lastScrollTop
       if (delta >= 10) {
+        // Scroll down
         this.hidden = true
       } else if (delta <= -10) {
+        // Scroll up
+        this.hidden = false
+      } else if (document.body.scrollHeight <= window.innerHeight) {
+        // Can not scroll
         this.hidden = false
       }
       this.lastScrollTop = currentScrollTop
