@@ -19,20 +19,30 @@ export default {
 </script>
 
 <template>
-  <header>
-    <slot name="left">
-      <header-icon name="arrow" :class="$style.arrow" @click.native="goBack"/>
-    </slot>
-    <slot>
-      <h1>{{ title }}</h1>
-    </slot>
-    <slot name="right"></slot>
-  </header>
+  <div :class="$style.wrapper">
+    <header>
+      <slot name="left">
+        <header-icon name="arrow" :class="$style.arrow" @click.native="goBack"/>
+      </slot>
+      <slot>
+        <h1>{{ title }}</h1>
+      </slot>
+      <slot name="right"></slot>
+    </header>
+  </div>
 </template>
 
 <style module scoped>
 @import 'css/vars.css';
+.wrapper {
+  height: var(--header-height);
+}
 header {
+  position: fixed;
+  z-index: var(--z-header);
+  top: 0;
+  left: 0;
+  right: 0;
   display: flex;
   align-items: center;
   color: #fff;
