@@ -48,5 +48,6 @@ select {
 a {
   outline: none;
   color: #000000;
-  text-decoration: none;  
+  text-decoration: none;
+  -webkit-tap-highlight-color: transparent;
 }
