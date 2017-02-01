@@ -4,10 +4,10 @@ import router from './router'
 import store from './store'
 import App from './app'
 
+import 'js/global'
+
 import Localize from 'js/Localize'
 Localize.setLanguage('zh_CN') // test
-
-history.scrollRestoration = 'manual'
 
 import { $get } from 'js/util'
 
