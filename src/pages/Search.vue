@@ -148,11 +148,12 @@ export default {
 
   & p,
   & ul {
-    margin: .8em 0; 
+    margin: .5em 0; 
   }
 
   & ul {
     list-style-type: disc;
+    list-style-position: outside;
     padding-left: 2em;
   }
 
@@ -160,7 +161,7 @@ export default {
     margin: 0 .2em;
     font-family: monospace;
     white-space: nowrap;
-    border-bottom: 1px dashed #666;
+    border-bottom: 1px dotted #333;
   }
 }
 </style>
