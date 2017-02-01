@@ -8,6 +8,7 @@ import { mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
+import Icon from 'components/Icon'
 import Localize from 'js/Localize'
 
 export default {
@@ -15,6 +16,7 @@ export default {
     Thumbnail,
     Counter,
     Ball,
+    Icon,
   },
   props: {
     card: {
@@ -120,6 +122,7 @@ export default {
   <router-link :to="detailRoute">
     <div :class="[$style.cell]">
       <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
+      <icon :class="$style.burst" name="burst"/>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
