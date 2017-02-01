@@ -105,6 +105,9 @@ export default {
       }
       return !this.costs.length
     },
+    isRemaining() {
+      return this.$store.state.remainingPids.includes(this.card.pid)
+    },
   },
   methods: {
     plus() {
@@ -135,6 +138,7 @@ export default {
           <counter
             :class="[$style.counter, $style[card.color]]"
             :count="count"
+            :isRemaining="isRemaining"
             @plus="plus"
             @minus="minus">
           </counter>

@@ -16,6 +16,7 @@ export default {
       type: Number,
       required: true,
     },
+    isRemaining: Boolean,
   },
   methods: {
     plus() {
@@ -32,7 +33,8 @@ export default {
   <div :class="$style.group" @click.prevent>
     <!-- <button :class="$style.minus" @click="minus" :disabled="count <= 0"> -->
     <button :class="$style.minus" @click="minus" >
-      <icon name="remove"/>
+      <icon v-if="isRemaining" :class="$style.fork" name="add"/>
+      <icon v-else name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
@@ -56,5 +58,9 @@ button {
   &:not(:last-child) {
     border-right: none;
   }
+}
+.fork {
+  transform: rotate(45deg);
+  color: #f04228;
 }
 </style>

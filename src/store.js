@@ -42,9 +42,8 @@ const getters = {
   },
   shownCards: (state, getters) => {
     return _.uniq(_.concat(getters.deckPids
-      .filter(pid => !state.remainingPids.find(target => target === pid)),
+      .filter(pid => !state.remainingPids.includes(pid)),
         state.remainingPids)).map(pid => CardInfo[pid])
-    // 这里的断句交给团子了
   },
 
   deckNames: (state) => {
@@ -70,9 +69,9 @@ const mutations = {
       pids.splice(idx, 1)
     }
 
-    if (!pids.filter(target => target === pid).length) {
+    if (!pids.includes(pids)) {
       let remainingPids = state.remainingPids
-      if (remainingPids.find(target => target === pid)){
+      if (remainingPids.includes(pid)){
         let idx = remainingPids.indexOf(pid)
         remainingPids.splice(idx, 1)
       } else {

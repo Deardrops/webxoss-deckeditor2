@@ -5,7 +5,6 @@ import DeckModals from 'components/DeckModals'
 import FloatButton from 'components/FloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
-import _ from 'lodash'
 import { defaultSort, isLrigCard } from 'js/util'
 
 export default {
@@ -78,7 +77,6 @@ export default {
     },
   },
   methods: {
-    unique: deck => _.uniqBy(deck, 'pid'),
     goSearch() {
       this.$router.push({
         path: '/search',
