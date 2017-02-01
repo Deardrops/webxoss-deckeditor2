@@ -2,4 +2,7 @@
   --main-color: #2196f3;
   --header-height: 64px;
   --padding: .8rem;
+
+  /* z-index */
+  --z-header: 1;
 }
