@@ -11,7 +11,8 @@ export default {
   }),
   computed: {
     okDisabled() {
-      return this.config.type === 'prompt' && !this.input
+      return this.config.type === 'prompt' &&
+        (this.config.validate && !this.config.validate(this.input))
     },
     cancleShown() {
       return this.config.type !== 'alert'

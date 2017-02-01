@@ -21,12 +21,9 @@ export default {
         'add': {
           type: 'prompt',
           content: 'New deck name:',
+          validate: name => name && !this.deckNames.includes(name),
           okText: 'CREATE',
           ok: name => {
-            if (this.deckNames.includes(name)) {
-              console.log(`"${name}" already exists.`)
-              return false
-            }
             this.$store.commit('putDeckFile', {
               name,
               pids: [],
@@ -37,12 +34,9 @@ export default {
         'clone': {
           type: 'prompt',
           content: 'New deck name:',
+          validate: name => name && !this.deckNames.includes(name),
           okText: 'CLONE',
           ok: name => {
-            if (this.deckNames.includes(name)) {
-              console.log(`"${name}" already exists.`)
-              return false
-            }
             this.$store.commit('putDeckFile', {
               name,
               pids: this.deckPids.slice(),
@@ -54,12 +48,9 @@ export default {
           type: 'prompt',
           content: 'New deck name:',
           defaultInput: this.deckName,
+          validate: name => name && !this.deckNames.includes(name),
           okText: 'RENAME',
           ok: name => {
-            if (this.deckNames.includes(name)) {
-              console.log(`"${name}" already exists.`)
-              return false
-            }
             this.$store.commit('renameDeck', {
               origin: this.deckName,
               name,
