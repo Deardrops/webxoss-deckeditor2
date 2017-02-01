@@ -14,18 +14,14 @@ export default {
       type: String,
       required: false,
     },
-    href: {
-      type: String,
-      required: false,
-    },
   },
 }
 </script>
 
 <template>
-  <a :class="$style.float" :href="href || 'javascript:;'">
+  <button :class="$style.float">
     <slot><icon :name="name"/></slot>
-  </a>
+  </button>
 </template>
 
 <style module>

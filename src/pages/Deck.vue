@@ -66,17 +66,17 @@ export default {
       'mainDeck',
       'lrigDeck',
     ]),
-  },
-  methods: {
-    unique: deck => _.uniqBy(deck, 'pid'),
-    goSearch() {
-      this.$router.push({
+    searchRoute() {
+      return {
         path: '/search',
         query: {
           limit: 20,
         },
-      })
+      }
     },
+  },
+  methods: {
+    unique: deck => _.uniqBy(deck, 'pid'),
     openMenu() {
       this.$refs.menu.open()
     },
@@ -109,7 +109,9 @@ export default {
         <cell :card="card"/>
       </li>
     </ul>
-    <float-button :class="$style.float" name="search" @click.native="goSearch"/>
+    <router-link :to="searchRoute">
+      <float-button :class="$style.float" name="search"/>
+    </router-link>
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
   </div>
@@ -126,9 +128,5 @@ export default {
   color: #fff;
   background-color: #ff5722;
   box-shadow: 0 2px 5px #666;
-  transition: background-color .1s;
-  &:active {
-    background-color: color(#ff5722 whiteness(50%));
-  }
 }
 </style>
