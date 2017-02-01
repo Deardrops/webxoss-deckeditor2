@@ -1,8 +1,8 @@
 <script>
-import FloatButton from 'components/FloatButton'
+import Icon from 'components/Icon'
 export default {
   components: {
-    FloatButton,
+    Icon,
   },
   data: () => ({
     request: -1,
@@ -39,13 +39,14 @@ export default {
 
 <template>
   <router-link :to="searchRoute">
-    <float-button
-      :class="[$style.button, hidden ? $style.hidden : '']"
-      name="search"/>
+    <button :class="[$style.button, hidden ? $style.hidden : '']">
+      <icon name="search"/>
+    </button>
   </router-link>
 </template>
 
 <style module>
+@import 'css/vars.css';
 .button {
   position: fixed;
   bottom: 2rem;
@@ -55,7 +56,8 @@ export default {
   font-size: 1.5em;
   color: #fff;
   background-color: #ff5722;
-  box-shadow: 0 2px 5px #666;
+  border-radius: 50%;
+  @apply --shadow-6dp;
 
   will-change: transform;
   transition: transform .3s;
