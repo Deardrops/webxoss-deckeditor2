@@ -30,7 +30,8 @@ export default {
 
 <template>
   <div :class="$style.group" @click.prevent>
-    <button :class="$style.minus" @click="minus" :disabled="count <= 0">
+    <!-- <button :class="$style.minus" @click="minus" :disabled="count <= 0"> -->
+    <button :class="$style.minus" @click="minus" >
       <icon name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>

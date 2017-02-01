@@ -6,6 +6,7 @@ import FloatButton from 'components/FloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
 import _ from 'lodash'
+import { defaultSort, isLrigCard } from 'js/util'
 
 export default {
   components: {
@@ -63,9 +64,18 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'mainDeck',
-      'lrigDeck',
+      'shownCards',
     ]),
+    mainDeck() {
+      let deck = this.shownCards.filter(card => !isLrigCard(card))
+      defaultSort(deck)
+      return deck
+    },
+    lrigDeck() {
+      let deck = this.shownCards.filter(card => isLrigCard(card))
+      defaultSort(deck)
+      return deck
+    },
   },
   methods: {
     unique: deck => _.uniqBy(deck, 'pid'),
@@ -100,12 +110,12 @@ export default {
     </app-header>
     <deck-head></deck-head>
     <ul>
-      <li v-for="card in unique(mainDeck)">
+      <li v-for="card in mainDeck">
         <cell :card="card"/>
       </li>
     </ul>
     <ul>
-      <li v-for="card in unique(lrigDeck)">
+      <li v-for="card in lrigDeck">
         <cell :card="card"/>
       </li>
     </ul>
