@@ -1,5 +1,9 @@
 <script>
 import Icon from 'components/Icon'
+
+let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
+let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
+
 export default {
   components: {
     Icon,
@@ -25,14 +29,14 @@ export default {
         this.hidden = false
       }
       this.lastScrollTop = currentScrollTop
-      this.request = window.requestAnimationFrame(this.updateFloatButton)
+      this.request = requestFrame(this.updateFloatButton)
     },
   },
   mounted() {
     this.updateFloatButton()
   },
   destroyed() {
-    window.cancelAnimationFrame(this.request)
+    cancelRequest(this.request)
   },
 }
 </script>
