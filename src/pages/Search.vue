@@ -100,7 +100,7 @@ export default {
     <section v-if="query && shownCards.length">
       <ul>
         <li v-for="card in shownCards">
-          <cell :card="card"/>
+          <cell :card="card" :isSearchPage="true"/>
         </li>
       </ul>
       <div

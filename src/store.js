@@ -37,13 +37,12 @@ const getters = {
       .value()
   },
 
-  deck: (state, getters) => {
-    return getters.deckPids.map(pid => CardInfo[pid])
-  },
   shownCards: (state, getters) => {
-    return _.uniq(_.concat(getters.deckPids
-      .filter(pid => !state.remainingPids.includes(pid)),
-        state.remainingPids)).map(pid => CardInfo[pid])
+    return _.uniq(
+      getters.deckPids
+        .filter(pid => !state.remainingPids.includes(pid))
+        .concat(state.remainingPids)
+      ).map(pid => CardInfo[pid])
   },
 
   deckNames: (state) => {
@@ -69,7 +68,7 @@ const mutations = {
       pids.splice(idx, 1)
     }
 
-    if (!pids.includes(pids)) {
+    if (!pids.includes(pid)) {
       let remainingPids = state.remainingPids
       if (remainingPids.includes(pid)){
         let idx = remainingPids.indexOf(pid)

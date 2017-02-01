@@ -17,8 +17,8 @@ export default {
       },
     },
     burstCount() {
-      return this.$store.getters.deck
-        .map(card => CardInfo[card.cid]) // TODO: utils
+      return this.$store.getters.deckPids
+        .map(pid => CardInfo[CardInfo[pid].cid]) // TODO: utils
         .filter(card => card.burstEffectTexts)
         .length
     },

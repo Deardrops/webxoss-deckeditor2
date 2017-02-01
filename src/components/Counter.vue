@@ -31,9 +31,11 @@ export default {
 
 <template>
   <div :class="$style.group" @click.prevent>
-    <!-- <button :class="$style.minus" @click="minus" :disabled="count <= 0"> -->
-    <button :class="$style.minus" @click="minus" >
-      <icon v-if="isRemaining" :class="$style.fork" name="add"/>
+    <button 
+      :class="$style.minus" 
+      @click="minus" 
+      :disabled="!isRemaining && count <= 0">
+      <icon v-if="isRemaining" :class="$style.cross" name="add"/>
       <icon v-else name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
@@ -59,7 +61,7 @@ button {
     border-right: none;
   }
 }
-.fork {
+.cross {
   transform: rotate(45deg);
   color: #f04228;
 }
