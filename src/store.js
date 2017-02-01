@@ -79,8 +79,12 @@ const mutations = {
       }
     }
   },
+  clearRemainingPids(state) {
+    state.remainingPids = [] // clearRemainingPids
+  },
   // put === create + update
   putDeckFile(state, { name, pids }) {
+    state.remainingPids = [] // clearRemainingPids
     let file = state.deckFiles.find(file => file.name === name)
     if (file) {
       // Already exist, update
@@ -94,9 +98,11 @@ const mutations = {
     }
   },
   switchDeck(state, name) {
+    state.remainingPids = [] // clearRemainingPids
     state.deckName = name
   },
   deleteDeck(state, name) {
+    state.remainingPids = [] // clearRemainingPids
     let idx = state.deckFiles.findIndex(file => file.name === name)
     if (idx === -1) {
       // 404 not found
