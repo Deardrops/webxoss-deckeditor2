@@ -116,11 +116,16 @@ export default {
   methods: {
     plus() {
       this.$store.commit('addCard', this.card.pid)
+      if (this.protectionEnabled) {
+        // remove this card from state.remainingPids
+        this.$store.commit('doNotRemaining', this.card.pid)
+      }
     },
     minus() {
       this.$store.commit('delCard', this.card.pid)
-      if (!this.protectionEnabled) {
-        this.$store.commit('delRemainingPids', this.card.pid)
+      if (this.protectionEnabled) {
+        // handle 2-step delete card
+        this.$store.commit('delCardProtection', this.card.pid)
       }
     },
   },

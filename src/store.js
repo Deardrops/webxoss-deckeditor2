@@ -69,7 +69,12 @@ const mutations = {
     if (idx !== -1) {
       pids.splice(idx, 1)
     }
-
+  },
+  clearRemainingPids(state) {
+    state.remainingPids = [] // clearRemainingPids
+  },
+  delCardProtection(state, pid) {
+    let pids = getters.deckPids(state)
     // 2-step remove a card in Deck component
     // when we try to completely remove a card
     if (!pids.includes(pid)) {
@@ -85,10 +90,7 @@ const mutations = {
       }
     }
   },
-  clearRemainingPids(state) {
-    state.remainingPids = [] // clearRemainingPids
-  },
-  delRemainingPids(state, pid) {
+  doNotRemaining(state, pid) {
     let idx = state.remainingPids.indexOf(pid)
     if (idx !== -1) {
       state.remainingPids.splice(idx, 1)
