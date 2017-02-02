@@ -1,11 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
-
-function isLrigCard(card) {
-  let type = card.cardType
-  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
-}
+import { isLrigCard } from 'js/util'
 
 Vue.use(Vuex)
 
@@ -74,18 +70,29 @@ const mutations = {
       pids.splice(idx, 1)
     }
 
+    // 2-step remove a card in Deck component
+    // when we try to completely remove a card
     if (!pids.includes(pid)) {
+      // this card has been remove from deckPids
       let remainingPids = state.remainingPids
-      if (remainingPids.includes(pid)){
+      if (!remainingPids.includes(pid)){
+        // 1st step: keep this pid in remainingPids
+        state.remainingPids.push(pid)
+      } else {
+        // 2nd step: remove it from remainingPids
         let idx = remainingPids.indexOf(pid)
         remainingPids.splice(idx, 1)
-      } else {
-        state.remainingPids.push(pid)
       }
     }
   },
   clearRemainingPids(state) {
     state.remainingPids = [] // clearRemainingPids
+  },
+  delRemainingPids(state, pid) {
+    let idx = state.remainingPids.indexOf(pid)
+    if (idx !== -1) {
+      state.remainingPids.splice(idx, 1)
+    }
   },
   // put === create + update
   putDeckFile(state, { name, pids }) {

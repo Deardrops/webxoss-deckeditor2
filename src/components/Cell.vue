@@ -4,7 +4,7 @@
 -->
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
@@ -24,6 +24,9 @@ export default {
     protectionEnabled: Boolean,
   },
   computed: {
+    ...mapState([
+      'remainingPids',
+    ]),
     ...mapGetters([
       'deckPids',
     ]),
@@ -107,10 +110,7 @@ export default {
       return !this.costs.length
     },
     isRemaining() {
-      if (this.protectionEnabled){
-        return this.$store.state.remainingPids.includes(this.card.pid)
-      }
-      return false
+      return this.protectionEnabled && this.remainingPids.includes(this.card.pid)
     },
   },
   methods: {
@@ -119,6 +119,9 @@ export default {
     },
     minus() {
       this.$store.commit('delCard', this.card.pid)
+      if (!this.protectionEnabled) {
+        this.$store.commit('delRemainingPids', this.card.pid)
+      }
     },
   },
 }
