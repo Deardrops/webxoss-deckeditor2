@@ -19,6 +19,9 @@ export default {
     DeckHead,
   },
   computed: {
+    ...mapState([
+      'remainingPids',
+    ]),
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
@@ -63,17 +66,8 @@ export default {
           icon: 'upload',
           action: () => {},
         },
-      ],
-    }
-  },
-  computed: {
-    ...mapState([
-      'remainingPids',
-    ]),
-    ...mapGetters([
-      'mainDeck',
-      'lrigDeck',
-    ]),
+      ]
+    },
     shownMainDeck() {
       let mainDeck = _.uniqBy(this.mainDeck, 'pid')
       let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
