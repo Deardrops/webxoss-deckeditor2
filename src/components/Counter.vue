@@ -21,7 +21,10 @@ export default {
     },
   },
   data: () => ({
-    protecting: false,
+    // protecting operation mistakes when click [-] button 
+    // effect: delay 0.5s while count === 0
+    protecting: false, // if true, disable [-] button
+    timer: -1,
   }),
   methods: {
     plus() {

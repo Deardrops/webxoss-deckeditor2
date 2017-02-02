@@ -119,7 +119,7 @@ export default {
     plus() {
       let pid = this.card.pid
 
-      // card count === 0 && click <plus> button
+      // card count === 0 && click [+] button
       if (this.protectionEnabled && !this.deckPids.includes(pid)) {
         // remove this card from state.remainingPids
         this.$store.commit('delRemainingCard', pid)
