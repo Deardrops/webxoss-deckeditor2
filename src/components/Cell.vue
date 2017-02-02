@@ -115,18 +115,32 @@ export default {
   },
   methods: {
     plus() {
-      this.$store.commit('addCard', this.card.pid)
-      if (this.protectionEnabled) {
+      let pid = this.card.pid
+
+      // card count === 0 && click <plus> button
+      if (this.protectionEnabled && !this.deckPids.includes(pid)) {
         // remove this card from state.remainingPids
-        this.$store.commit('doNotRemaining', this.card.pid)
+        this.$store.commit('delRemainingCard', pid)
       }
+
+      this.$store.commit('addCard', pid)
     },
     minus() {
-      this.$store.commit('delCard', this.card.pid)
+      let pid = this.card.pid
+
+      // 2-step removing for preventing from operation mistakes
       if (this.protectionEnabled) {
-        // handle 2-step delete card
-        this.$store.commit('delCardProtection', this.card.pid)
+        if (this.count === 1) {
+          // 1st step: keep this pid in remainingPids
+          this.$store.commit('addRemainingCard', pid)
+        }
+        if (this.count === 0) {
+          // 2nd step: remove it from remainingPids
+          this.$store.commit('delRemainingCard', pid)
+        }
       }
+
+      this.$store.commit('delCard', pid)
     },
   },
 }
