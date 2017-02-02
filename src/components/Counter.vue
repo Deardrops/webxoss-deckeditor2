@@ -16,7 +16,9 @@ export default {
       type: Number,
       required: true,
     },
-    isRemaining: Boolean,
+    isRemaining: {
+      require: false,
+    },
   },
   data: () => ({
     protecting: false,
@@ -27,15 +29,17 @@ export default {
     },
     minus() {
       if (this.count === 1) {
-        let self = this
         this.protecting = true
-        setTimeout(() => {
-          self.protecting = false
+        this.timer = setTimeout(() => {
+          this.protecting = false
         }, 500)
       }
       this.$emit('minus')
     },
-  }
+  },
+  destroyed() {
+    clearTimeout(this.timer)
+  },
 }
 </script>
 

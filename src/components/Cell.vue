@@ -21,7 +21,9 @@ export default {
       type: Object,
       required: true,
     },
-    protectionEnabled: Boolean,
+    protectionEnabled: {
+      require: false,
+    },
   },
   computed: {
     ...mapState([
@@ -133,8 +135,7 @@ export default {
         if (this.count === 1) {
           // 1st step: keep this pid in remainingPids
           this.$store.commit('addRemainingCard', pid)
-        }
-        if (this.count === 0) {
+        } else if (this.count === 0) {
           // 2nd step: remove it from remainingPids
           this.$store.commit('delRemainingCard', pid)
         }

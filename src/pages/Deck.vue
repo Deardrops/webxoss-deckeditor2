@@ -69,29 +69,19 @@ export default {
       ]
     },
     shownMainDeck() {
-      let mainDeck = _.uniqBy(this.mainDeck, 'pid')
       let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
         .filter(card => !isLrigCard(card))
-      let deck = _.unionBy(mainDeck, remainingDeck, 'pid')
+      let deck = _.unionBy(this.mainDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
     shownLrigDeck() {
-      let lrigDeck = _.uniqBy(this.lrigDeck, 'pid')
       let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
         .filter(card => isLrigCard(card))
-      let deck = _.unionBy(lrigDeck, remainingDeck, 'pid')
+      let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
   },
   methods: {
-    goSearch() {
-      this.$router.push({
-        path: '/search',
-        query: {
-          limit: 20,
-        },
-      })
-    },
     openMenu() {
       this.$refs.menu.open()
     },
