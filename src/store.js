@@ -2,6 +2,11 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 
+function isLrigCard(card) {
+  let type = card.cardType
+  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
+}
+
 Vue.use(Vuex)
 
 /*
@@ -36,13 +41,14 @@ const getters = {
       .get('pids', [])
       .value()
   },
-
-  shownCards: (state, getters) => {
-    return _.uniq(
-      getters.deckPids
-        .filter(pid => !state.remainingPids.includes(pid))
-        .concat(state.remainingPids)
-      ).map(pid => CardInfo[pid])
+  deck: (state, getters) => {
+    return getters.deckPids.map(pid => CardInfo[pid])
+  },
+  mainDeck: (state, getters) => {
+    return getters.deck.filter(card => !isLrigCard(card))
+  },
+  lrigDeck: (state, getters) => {
+    return getters.deck.filter(card => isLrigCard(card))
   },
 
   deckNames: (state) => {

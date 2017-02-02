@@ -21,7 +21,7 @@ export default {
       type: Object,
       required: true,
     },
-    isSearchPage: Boolean,
+    protectionEnabled: Boolean,
   },
   computed: {
     ...mapGetters([
@@ -107,10 +107,10 @@ export default {
       return !this.costs.length
     },
     isRemaining() {
-      if (this.isSearchPage){
-        return false
+      if (this.protectionEnabled){
+        return this.$store.state.remainingPids.includes(this.card.pid)
       }
-      return this.$store.state.remainingPids.includes(this.card.pid)
+      return false
     },
   },
   methods: {

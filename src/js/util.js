@@ -103,8 +103,3 @@ export function defaultSort(cards){
     return 1
   })
 }
-
-export function isLrigCard(card) {
-  let type = card.cardType
-  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
-}

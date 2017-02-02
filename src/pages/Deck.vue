@@ -5,7 +5,8 @@ import DeckModals from 'components/DeckModals'
 import FloatButton from 'components/FloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
-import { defaultSort, isLrigCard } from 'js/util'
+import { defaultSort } from 'js/util'
+import _ from 'lodash'
 
 export default {
   components: {
@@ -63,15 +64,22 @@ export default {
   },
   computed: {
     ...mapGetters([
-      'shownCards',
+      'mainDeck',
+      'lrigDeck',
     ]),
-    mainDeck() {
-      let deck = this.shownCards.filter(card => !isLrigCard(card))
+    mainCards() {
+      let remainingPids = this.$store.state.remainingPids
+      let deck = _.uniqBy(this.mainDeck, 'pid')
+        .filter(card => !remainingPids.includes(card.pid))
+        .concat(remainingPids.map(pid => CardInfo[pid]))
       defaultSort(deck)
       return deck
     },
-    lrigDeck() {
-      let deck = this.shownCards.filter(card => isLrigCard(card))
+    lrigCards() {
+      let remainingPids = this.$store.state.remainingPids
+      let deck = _.uniqBy(this.lrigDeck, 'pid')
+        .filter(card => !remainingPids.includes(card.pid))
+        .concat(remainingPids.map(pid => CardInfo[pid]))
       defaultSort(deck)
       return deck
     },
@@ -108,13 +116,13 @@ export default {
     </app-header>
     <deck-head></deck-head>
     <ul>
-      <li v-for="card in mainDeck">
-        <cell :card="card"/>
+      <li v-for="card in mainCards">
+        <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
     <ul>
-      <li v-for="card in lrigDeck">
-        <cell :card="card"/>
+      <li v-for="card in lrigCards">
+        <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
     <float-button :class="$style.float" name="search" @click.native="goSearch"/>
