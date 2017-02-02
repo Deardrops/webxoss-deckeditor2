@@ -68,7 +68,8 @@ export function defaultSort(cards){
   // default order:
   // LRIG > ARTS > RESONA > SIGNI > SPELL
   // level / power: high > low
-  cards.sort((a, b) => {
+  let sortedCards = cards.slice()
+  sortedCards.sort((a, b) => {
     if (a.cardType === 'LRIG') {
       if (b.cardType !== 'LRIG') return -1
       if (b.level !== a.level) {
@@ -102,6 +103,7 @@ export function defaultSort(cards){
     }
     return 1
   })
+  return sortedCards
 }
 
 export function isLrigCard(card) {

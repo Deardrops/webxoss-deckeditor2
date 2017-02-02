@@ -73,16 +73,14 @@ export default {
       let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
         .filter(card => !isLrigCard(card))
       let deck = _.unionBy(mainDeck, remainingDeck, 'pid')
-      defaultSort(deck)
-      return deck
+      return defaultSort(deck)
     },
     shownLrigDeck() {
       let lrigDeck = _.uniqBy(this.lrigDeck, 'pid')
       let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
         .filter(card => isLrigCard(card))
       let deck = _.unionBy(lrigDeck, remainingDeck, 'pid')
-      defaultSort(deck)
-      return deck
+      return defaultSort(deck)
     },
   },
   methods: {
