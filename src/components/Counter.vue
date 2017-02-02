@@ -19,27 +19,23 @@ export default {
     isRemaining: Boolean,
   },
   data: () => ({
-    isProtection: false,
+    protecting: false,
   }),
   methods: {
     plus() {
       this.$emit('plus')
     },
     minus() {
+      if (this.count === 1) {
+        let self = this
+        this.protecting = true
+        setTimeout(() => {
+          self.protecting = false
+        }, 500)
+      }
       this.$emit('minus')
     },
-  },
-  watch: {
-    count(newCount) {
-      let self = this
-      if (newCount === 0) {
-        this.isProtection = true
-        setTimeout(() => {
-          self.isProtection = false
-        }, 2000)
-      }
-    },
-  },
+  }
 }
 </script>
 
@@ -48,7 +44,7 @@ export default {
     <button 
       :class="$style.minus" 
       @click="minus" 
-      :disabled="(!isRemaining && count <= 0) || isProtection">
+      :disabled="(!isRemaining && count <= 0) || protecting">
       <icon v-if="isRemaining" :class="$style.cross" name="add"/>
       <icon v-else name="remove"/>
     </button>
