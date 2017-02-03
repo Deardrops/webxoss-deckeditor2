@@ -30,6 +30,12 @@ export default {
       // TODO: avoid return undefined
       return CardInfo[this.pid]
     },
+    type() {
+      return Localize.cardType(this.card)
+    },
+    color() {
+      return Localize.color(this.card.color)
+    },
     limiting() {
       return Localize.limiting(this.card)
     },
@@ -42,31 +48,31 @@ export default {
     rows() {
       let card = this.card
       let level = {
-        key: 'Lv.',
+        key: Localize.propToKey('level'),
         value: card.level,
       }
       let power = {
-        key: 'Power',
+        key: Localize.propToKey('power'),
         value: card.power,
       }
       let limit = {
-        key: 'Limit',
+        key: Localize.propToKey('limit'),
         value: (card.limit < 1024) ? card.limit : '∞',
       }
       let cost = {
-        key: 'Cost',
+        key: Localize.propToKey('cost'),
         value: Localize.cost(card),
       }
       let timming = {
-        key: 'Timing',
+        key: Localize.propToKey('timmings'),
         value: Localize.timmings(card),
       }
       let classes = {
-        key: 'Class',
+        key: Localize.propToKey('classes'),
         value: Localize.classes(card),
       }
       let guard = {
-        key: 'Guard',
+        key: Localize.propToKey('guard'),
         value: Localize.guard(card),
       }
       return {
@@ -117,8 +123,8 @@ export default {
       </div>
       <div class="title">{{ card.name }}</div>
       <div class="subtitle">
-        <span>{{ card.cardType }}</span>
-        <span>{{ card.color }}</span>
+        <span>{{ type }}</span>
+        <span>{{ color }}</span>
         <span>{{ limiting }}</span>
       </div>
     </div>
