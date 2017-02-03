@@ -21,7 +21,7 @@ export default {
     },
   },
   data: () => ({
-    // protecting operation mistakes when click [-] button 
+    // protecting operation mistakes when click [-] button
     // effect: delay 0.5s while count === 0
     protecting: false, // if true, disable [-] button
     timer: -1,
