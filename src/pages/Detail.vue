@@ -118,25 +118,24 @@ export default {
 <template>
   <div>
     <app-header title="Detail"></app-header>
-    <div :class="$style.head">
-      <thumbnail :class="$style.thumbnail" :pid="pid" @click.native="goGallery"></thumbnail>
-      <div :class="$style.right">
-        <div>
+    <div :class="$style.body">
+      <div :class="$style.header">
+        <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="pid" @click.native="goGallery"></thumbnail>
+        <div :class="$style.right">
           <div>
-            <span>{{ card.wxid }}</span>
-            <span :class="$style.align">{{ card.rarity }}</span>
+            <div>
+              <span>{{ card.wxid }}</span>
+              <span :class="$style.align">{{ card.rarity }}</span>
+            </div>
+            <div :class="$style.title">{{ name }}</div>
           </div>
-          <div :class="$style.title">{{ name }}</div>
-        </div>
-        <div>
-          <span>{{ type }}</span>
-          <span>{{ color }}</span>
-          <span :class="$style.align">{{ limiting }}</span>
+          <div>
+            <span>{{ type }}</span>
+            <span :class="$style.align">{{ limiting }}</span>
+          </div>
         </div>
       </div>
-    </div>
-    <div :class="$style.table">
-      <table>
+      <table :class="$style.table">
         <tbody>
           <tr v-for="row in rows" :class="$style.rows">
           	<template v-for="meta in row">
@@ -160,11 +159,15 @@ export default {
   </div>
 </template>
 
+<style src="css/colors.css" module="$color"></style>
 <style module>
 @import 'css/vars.css';
-.head {
+.body {
+  margin: 0.5em;
+}
+.header {
   display: flex;
-  /*padding: var(--padding);*/
+  margin-bottom: 0.5em;
 }
 .title {
   font-size: 1.5em;
@@ -172,26 +175,32 @@ export default {
 .table {
   width: 100%;
   white-space: pre-line;
+  table-layout:fixed;
+  border: 1px solid #cbcbcb;
+  border-collapse: collapse;
+}
+td {
+  border-left: 1px solid #cbcbcb;
+  border-bottom: 1px solid #cbcbcb;
 }
 .rows>td:nth-child(odd) {
+  width: 15%;
   text-align: center;
-  color: #fff;
-  background-color: var(--main-color);
+  /*color: #fff;*/
+  /*background-color: var(--main-color);*/
 }
 .thumbnail {
   width: 11em; 
   height: 11em; 
-  border: 5px solid black;
-  margin: .5em;
+  border: 3px solid currentColor;
 }
 .right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-  padding: calc(var(--padding) / 2) var(--padding);
   overflow: hidden;
-  padding: .5em 0;
+  padding: .5em;
 }
 .align {
   float: right;
