@@ -30,6 +30,9 @@ export default {
       // TODO: avoid return undefined
       return CardInfo[this.pid]
     },
+    name() {
+      return Localize.cardName(this.card)
+    },
     type() {
       return Localize.cardType(this.card)
     },
@@ -115,23 +118,27 @@ export default {
 <template>
   <div>
     <app-header title="Detail"></app-header>
-    <div class="head">
-      <thumbnail class="thumbnail" :pid="pid" @click.native="goGallery"></thumbnail>
-      <div class="subtitle">
-        <span>{{ card.wxid }}</span>
-        <span>{{ card.rarity }}</span>
-      </div>
-      <div class="title">{{ card.name }}</div>
-      <div class="subtitle">
-        <span>{{ type }}</span>
-        <span>{{ color }}</span>
-        <span>{{ limiting }}</span>
+    <div :class="$style.head">
+      <thumbnail :class="$style.thumbnail" :pid="pid" @click.native="goGallery"></thumbnail>
+      <div :class="$style.right">
+        <div>
+          <div>
+            <span>{{ card.wxid }}</span>
+            <span :class="$style.align">{{ card.rarity }}</span>
+          </div>
+          <div :class="$style.title">{{ name }}</div>
+        </div>
+        <div>
+          <span>{{ type }}</span>
+          <span>{{ color }}</span>
+          <span :class="$style.align">{{ limiting }}</span>
+        </div>
       </div>
     </div>
-    <div class="table">
+    <div :class="$style.table">
       <table>
         <tbody>
-          <tr v-for="row in rows">
+          <tr v-for="row in rows" :class="$style.rows">
           	<template v-for="meta in row">
               <td>{{ meta.key }}</td>
               <td>{{ meta.value }}</td>
@@ -153,9 +160,11 @@ export default {
   </div>
 </template>
 
-<style scoped>
+<style module>
+@import 'css/vars.css';
 .head {
-  height: 15em;
+  display: flex;
+  /*padding: var(--padding);*/
 }
 .title {
   font-size: 1.5em;
@@ -164,12 +173,27 @@ export default {
   width: 100%;
   white-space: pre-line;
 }
+.rows>td:nth-child(odd) {
+  text-align: center;
+  color: #fff;
+  background-color: var(--main-color);
+}
 .thumbnail {
-  position: relative;
-  float: left;
   width: 11em; 
   height: 11em; 
-  border: 5px solid black; 
-  margin: 0.2em;
+  border: 5px solid black;
+  margin: .5em;
+}
+.right {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  flex: 1;
+  padding: calc(var(--padding) / 2) var(--padding);
+  overflow: hidden;
+  padding: .5em 0;
+}
+.align {
+  float: right;
 }
 </style>

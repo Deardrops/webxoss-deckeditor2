@@ -7,7 +7,7 @@ import App from './app'
 import 'js/global'
 
 import Localize from 'js/Localize'
-Localize.setLanguage('zh_CN') // test
+Localize.setLanguage('en') // test
 
 import { $get } from 'js/util'
 
