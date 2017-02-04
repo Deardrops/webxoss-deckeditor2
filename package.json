@@ -4,12 +4,12 @@
   "description": "none",
   "main": "src/index.js",
   "scripts": {
-    "test": "echo lol",
     "build": "npm run lint && node build",
     "dev": "npm run lint:node && node dev",
     "lint": "npm run lint:node",
     "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src",
-    "serve": "npm run lint:node && node serve"
+    "serve": "npm run lint:node && node serve",
+    "test": "npm run lint && node test"
   },
   "author": "deardrops <lness@qq.com>",
   "repository": {
@@ -49,6 +49,7 @@
     "html-webpack-plugin": "^2.22.0",
     "lodash": "^4.17.4",
     "marked": "^0.3.6",
+    "memory-fs": "^0.4.1",
     "merge": "^1.2.0",
     "object-assign": "^4.1.0",
     "postcss-cssnext": "^2.9.0",
