@@ -107,6 +107,10 @@ export default {
       }
       return !this.costs.length
     },
+    hasBurst() {
+      let card = CardInfo[this.card.cid]
+      return !!card.burstEffectTexts
+    },
   },
   methods: {
     plus() {
@@ -121,8 +125,15 @@ export default {
 <template>
   <router-link :to="detailRoute">
     <div :class="[$style.cell]">
-      <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
-      <icon :class="$style.burst" name="burst"/>
+      <div>
+        <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
+        <div v-if="hasBurst" :class="$style.wrapper">
+          <div :class="[$style.hexagon, $color[card.color]]">
+            <icon name="hexagon"/>
+            <icon :class="$style.burst" name="burst"/>
+          </div>
+        </div>
+      </div>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
@@ -136,7 +147,7 @@ export default {
             </div>
           </div>
           <counter
-            :class="[$style.counter, $style[card.color]]"
+            :class="$style.counter"
             :count="count"
             @plus="plus"
             @minus="minus">
@@ -152,6 +163,26 @@ export default {
 <style module>
 @import 'css/vars.css';
 
+.wrapper {
+  position: relative;
+  height: 0;
+}
+.burst {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: scale(0.8);
+  color: #fff;
+}
+.hexagon {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 1em;
+  height: 1em;
+  font-size: 1.5em;
+}
 .cell {
   display: flex;
   padding: var(--padding);
@@ -194,5 +225,4 @@ export default {
     vertical-align: middle;
   }
 }
-
 </style>
