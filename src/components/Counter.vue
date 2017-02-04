@@ -16,7 +16,16 @@ export default {
       type: Number,
       required: true,
     },
+    isRemaining: {
+      require: false,
+    },
   },
+  data: () => ({
+    // 删除到0张卡时会禁用Button一会儿 (0.5s)
+    // 防止快速操作时误删卡片
+    protecting: false,
+    timer: -1,
+  }),
   methods: {
     plus() {
       this.$emit('plus')
@@ -25,13 +34,30 @@ export default {
       this.$emit('minus')
     },
   },
+  destroyed() {
+    clearTimeout(this.timer)
+  },
+  watch: {
+    isRemaining(isRemaining) {
+      if (isRemaining) {
+        this.protecting = true
+        this.timer = setTimeout(() => {
+          this.protecting = false
+        }, 500)
+      }
+    },
+  },
 }
 </script>
 
 <template>
   <div :class="$style.group" @click.prevent>
-    <button :class="$style.minus" @click="minus" :disabled="count <= 0">
-      <icon name="remove"/>
+    <button 
+      :class="$style.minus" 
+      @click="minus" 
+      :disabled="(!isRemaining && count <= 0) || protecting">
+      <icon v-if="isRemaining" :class="$style.cross" name="add"/>
+      <icon v-else name="remove"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
@@ -55,5 +81,9 @@ button {
   &:not(:last-child) {
     border-right: none;
   }
+}
+.cross {
+  transform: rotate(45deg);
+  color: #f04228;
 }
 </style>

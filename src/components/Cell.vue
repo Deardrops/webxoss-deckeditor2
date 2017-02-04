@@ -4,7 +4,7 @@
 -->
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
@@ -21,8 +21,14 @@ export default {
       type: Object,
       required: true,
     },
+    protectionEnabled: {
+      require: false,
+    },
   },
   computed: {
+    ...mapState([
+      'remainingPids',
+    ]),
     ...mapGetters([
       'deckPids',
     ]),
@@ -105,20 +111,44 @@ export default {
       }
       return !this.costs.length
     },
+    isRemaining() {
+      return this.protectionEnabled && this.remainingPids.includes(this.card.pid)
+    },
   },
   methods: {
     plus() {
-      this.$store.commit('addCard', this.card.pid)
+      let pid = this.card.pid
+
+      // card count === 0 && click [+] button
+      if (this.protectionEnabled && !this.deckPids.includes(pid)) {
+        // remove this card from state.remainingPids
+        this.$store.commit('delRemainingCard', pid)
+      }
+
+      this.$store.commit('addCard', pid)
     },
     minus() {
-      this.$store.commit('delCard', this.card.pid)
+      let pid = this.card.pid
+
+      // 2-step removing for preventing from operation mistakes
+      if (this.protectionEnabled) {
+        if (this.count === 1) {
+          // 1st step: keep this pid in remainingPids
+          this.$store.commit('addRemainingCard', pid)
+        } else if (this.count === 0) {
+          // 2nd step: remove it from remainingPids
+          this.$store.commit('delRemainingCard', pid)
+        }
+      }
+
+      this.$store.commit('delCard', pid)
     },
   },
 }
 </script>
 <template>
   <router-link :to="detailRoute">
-    <div :class="[$style.cell]">
+    <div :class="[$style.cell, isRemaining ? $style.translucent : '']">
       <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
@@ -135,6 +165,7 @@ export default {
           <counter
             :class="[$style.counter, $style[card.color]]"
             :count="count"
+            :isRemaining="isRemaining"
             @plus="plus"
             @minus="minus">
           </counter>
@@ -149,6 +180,9 @@ export default {
 <style module>
 @import 'css/vars.css';
 
+.translucent {
+  opacity: 0.7;
+}
 .cell {
   display: flex;
   padding: var(--padding);

@@ -63,3 +63,50 @@ export function $get (url) {
     xhr.send()
   })
 }
+
+export function defaultSort(cards){
+  // default order:
+  // LRIG > ARTS > RESONA > SIGNI > SPELL
+  // level / power: high > low
+  let sortedCards = cards.slice()
+  sortedCards.sort((a, b) => {
+    if (a.cardType === 'LRIG') {
+      if (b.cardType !== 'LRIG') return -1
+      if (b.level !== a.level) {
+        return a.level - b.level
+      }
+    }
+    if (a.cardType === 'ARTS') {
+      if (b.cardType !== 'ARTS') return 1
+    }
+    if (a.cardType === 'RESONA') {
+      if (b.cardType === 'LRIG') return 1
+      if (b.cardType === 'ARTS') return -1
+      if (b.level !== a.level) {
+        return a.level - b.level
+      }
+    }
+    if (a.cardType === 'SIGNI') {
+      if (b.cardType !== 'SIGNI') return -1
+      if (a.level !== b.level) {
+        return b.level - a.level
+      }
+      if (a.power !== b.power) {
+        return a.power - b.power
+      }
+    }
+    if (a.cardType === 'SPELL') {
+      if (b.cardType !== 'SPELL') return 1
+    }
+    if (a.cid !== b.cid) {
+      return a.cid - b.cid
+    }
+    return 1
+  })
+  return sortedCards
+}
+
+export function isLrigCard(card) {
+  let type = card.cardType
+  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
+}

@@ -1,53 +1,7 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
-
-function defaultSort(cards){
-  // default order:
-  // LRIG > ARTS > RESONA > SIGNI > SPELL
-  // level / power: high > low
-  cards.sort((aPid, bPid) => {
-    const a = CardInfo[aPid]
-    const b = CardInfo[bPid]
-    if (a.cardType === 'LRIG') {
-      if (b.cardType !== 'LRIG') return -1
-      if (b.level !== a.level) {
-        return a.level - b.level
-      }
-    }
-    if (a.cardType === 'ARTS') {
-      if (b.cardType !== 'ARTS') return 1
-    }
-    if (a.cardType === 'RESONA') {
-      if (b.cardType === 'LRIG') return 1
-      if (b.cardType === 'ARTS') return -1
-      if (b.level !== a.level) {
-        return a.level - b.level
-      }
-    }
-    if (a.cardType === 'SIGNI') {
-      if (b.cardType !== 'SIGNI') return -1
-      if (a.level !== b.level) {
-        return b.level - a.level
-      }
-      if (a.power !== b.power) {
-        return a.power - b.power
-      }
-    }
-    if (a.cardType === 'SPELL') {
-      if (b.cardType !== 'SPELL') return 1
-    }
-    if (a.cid !== b.cid) {
-      return a.cid - b.cid
-    }
-    return 1
-  })
-}
-
-function isLrigCard(card) {
-  let type = card.cardType
-  return (type === 'LRIG') || (type === 'ARTS') || (type === 'RESONA')
-}
+import { isLrigCard } from 'js/util'
 
 Vue.use(Vuex)
 
@@ -70,6 +24,7 @@ Vue.use(Vuex)
 */
 const state = {
   deckFiles: [],
+  remainingPids: [],
 
   // current selected deck name
   deckName: '',
@@ -82,7 +37,6 @@ const getters = {
       .get('pids', [])
       .value()
   },
-
   deck: (state, getters) => {
     return getters.deckPids.map(pid => CardInfo[pid])
   },
@@ -98,24 +52,32 @@ const getters = {
   },
 }
 
-
 const mutations = {
   addCard(state, pid) {
     let pids = getters.deckPids(state)
     pids.push(pid)
-    defaultSort(pids)
   },
   delCard(state, pid) {
     let pids = getters.deckPids(state)
     let idx = pids.indexOf(pid)
-    if (idx === -1) {
-      // 404 not found
-      return
+    if (idx !== -1) {
+      pids.splice(idx, 1)
     }
-    pids.splice(idx, 1)
+  },
+  addRemainingCard(state, pid) {
+    if (!state.remainingPids.includes(pid)) {
+      state.remainingPids.push(pid)
+    }
+  },
+  delRemainingCard(state, pid) {
+    let idx = state.remainingPids.indexOf(pid)
+    if (idx !== -1) {
+      state.remainingPids.splice(idx, 1)
+    }
   },
   // put === create + update
   putDeckFile(state, { name, pids }) {
+    state.remainingPids = []
     let file = state.deckFiles.find(file => file.name === name)
     if (file) {
       // Already exist, update
@@ -129,9 +91,11 @@ const mutations = {
     }
   },
   switchDeck(state, name) {
+    state.remainingPids = []
     state.deckName = name
   },
   deleteDeck(state, name) {
+    state.remainingPids = []
     let idx = state.deckFiles.findIndex(file => file.name === name)
     if (idx === -1) {
       // 404 not found

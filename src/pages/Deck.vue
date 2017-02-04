@@ -1,10 +1,11 @@
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
 import Cell from 'components/Cell'
 import DeckHead from 'components/DeckHead'
+import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
 
 export default {
@@ -18,6 +19,9 @@ export default {
     DeckHead,
   },
   computed: {
+    ...mapState([
+      'remainingPids',
+    ]),
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
@@ -64,9 +68,20 @@ export default {
         },
       ]
     },
+    shownMainDeck() {
+      let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
+        .filter(card => !isLrigCard(card))
+      let deck = _.unionBy(this.mainDeck, remainingDeck, 'pid')
+      return defaultSort(deck)
+    },
+    shownLrigDeck() {
+      let remainingDeck = this.remainingPids.map(pid => CardInfo[pid])
+        .filter(card => isLrigCard(card))
+      let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
+      return defaultSort(deck)
+    },
   },
   methods: {
-    unique: deck => _.uniqBy(deck, 'pid'),
     openMenu() {
       this.$refs.menu.open()
     },
@@ -90,13 +105,13 @@ export default {
     </app-header>
     <deck-head></deck-head>
     <ul>
-      <li v-for="card in unique(mainDeck)">
-        <cell :card="card"/>
+      <li v-for="card in shownMainDeck">
+        <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
     <ul>
-      <li v-for="card in unique(lrigDeck)">
-        <cell :card="card"/>
+      <li v-for="card in shownLrigDeck">
+        <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
     <deck-float-button />
