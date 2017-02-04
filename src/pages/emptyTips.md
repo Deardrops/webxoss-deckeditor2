@@ -1,4 +1,5 @@
 ### No matched cards :(
 
-* Any typo?
-* Try a different key word?
+* Check your spelling
+* Try anthor keyword
+* Use card id (WX01-123)
