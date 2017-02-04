@@ -148,7 +148,7 @@ export default {
 </script>
 <template>
   <router-link :to="detailRoute">
-    <div :class="[$style.cell]">
+    <div :class="[$style.cell, isRemaining ? $style.translucent : '']">
       <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
@@ -180,6 +180,9 @@ export default {
 <style module>
 @import 'css/vars.css';
 
+.translucent {
+  opacity: 0.7;
+}
 .cell {
   display: flex;
   padding: var(--padding);

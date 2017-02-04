@@ -21,9 +21,9 @@ export default {
     },
   },
   data: () => ({
-    // protecting operation mistakes when click [-] button
-    // effect: delay 0.5s while count === 0
-    protecting: false, // if true, disable [-] button
+    // 删除到0张卡时会禁用Button一会儿 (0.5s)
+    // 防止快速操作时误删卡片
+    protecting: false,
     timer: -1,
   }),
   methods: {
@@ -31,17 +31,21 @@ export default {
       this.$emit('plus')
     },
     minus() {
-      if (this.count === 1) {
-        this.protecting = true
-        this.timer = setTimeout(() => {
-          this.protecting = false
-        }, 500)
-      }
       this.$emit('minus')
     },
   },
   destroyed() {
     clearTimeout(this.timer)
+  },
+  watch: {
+    isRemaining(isRemaining) {
+      if (isRemaining) {
+        this.protecting = true
+        this.timer = setTimeout(() => {
+          this.protecting = false
+        }, 500)
+      }
+    },
   },
 }
 </script>
