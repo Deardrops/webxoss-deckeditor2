@@ -54,16 +54,16 @@ export default {
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      // let levelLimit = `${level}  ${limit}`
-      // let levelPower = `${level}  ${power}`
+      let levelLimit = `${level}  ${limit}`
+      let levelPower = `${level}  ${power}`
       // let typeClasses = `${type}  ${classes}`
 
       return {
-        'LRIG': [[level, limit], [type, classes]],
-        'SIGNI': [[level, power], [type, classes]],
-        'RESONA': [[level, power], [type, classes]],
-        'SPELL': [[type]],
-        'ARTS': [[type]],
+        'LRIG': [levelLimit, classes, type],
+        'SIGNI': [levelLimit, classes, type],
+        'RESONA': [levelPower, classes, type],
+        'SPELL': [type],
+        'ARTS': [type],
       }[card.cardType] || []
     },
     costs() {
@@ -157,9 +157,7 @@ export default {
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
           <div>
-            <div v-for="rows in metas" :class="$style.meta">
-              <span v-for="meta in rows">{{ meta }}</span>
-            </div>
+            <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
             <div :class="$style.meta">
               <span v-for="cost in costs" :class="[$style.cost, $color[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
@@ -168,7 +166,7 @@ export default {
             </div>
           </div>
           <counter
-            :class="[$style.counter, $style[card.color]]"
+            :class="$style.counter"
             :count="count"
             :isRemaining="isRemaining"
             @plus="plus"
@@ -220,17 +218,14 @@ export default {
 }
 .meta {
   font-size: 0.9em;
-  line-height: 1.3;
-  vertical-align: middle;
-  & > span {
-    display: inline-block;
-    margin-right: .3em;
-    vertical-align: middle;
-  }
+  line-height: 1.3em;
 }
 .cost {
   font-size: 1.1em;
   margin-right: .2em;
+  & > span {
+    vertical-align: middle;
+  }
 }
 
 </style>
