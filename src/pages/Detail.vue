@@ -140,7 +140,7 @@ export default {
           <tr v-for="row in rows" :class="$style.rows">
           	<template v-for="meta in row">
               <td :class="$style.key">{{ meta.key }}</td>
-              <td>{{ meta.value }}</td>
+              <td :colspan="row.length === 1 ? 3 : 1">{{ meta.value }}</td>
             </template>
           </tr>
           <tr>
@@ -170,13 +170,14 @@ export default {
 }
 .table {
   width: 100%;
-  line-height: 1.3em;
+  line-height: 1.5;
   white-space: pre-line;
   table-layout: fixed;
   border-collapse: collapse;
 }
 td {
   border: 1px solid #cbcbcb;
+  padding: .5em .2em;
 }
 .key {
   width: 15%;
