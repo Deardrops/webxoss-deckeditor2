@@ -195,6 +195,7 @@ export default {
   width: 6.25rem; /* avoid stretch */
   height: 6.25rem;
   border: 2px solid currentColor;
+  margin: auto 0;
 }
 .right {
   display: flex;
