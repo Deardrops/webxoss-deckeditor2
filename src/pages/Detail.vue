@@ -156,7 +156,7 @@ export default {
 </template>
 
 <style src="css/colors.css" module="$color"></style>
-<style module>
+<style module scoped>
 @import 'css/vars.css';
 .body {
   margin: 0.5em;
