@@ -49,19 +49,18 @@ export default {
     metas() {
       let card = this.card
       let level = `Lv.${card.level}`
-      let limit = `Limit: ${card.limit}`
+      let limit = `Limit:${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = `${level} ${limit}`
+      let levelLimit = `${level} | ${limit}`
       let levelPower = `${level} | ${power}`
-      // let typeClasses = `${type}  ${classes}`
 
       return {
-        'LRIG': [levelLimit, classes, type],
-        'SIGNI': [levelPower, classes, type],
-        'RESONA': [levelPower, classes, type],
+        'LRIG': [type, levelLimit],
+        'SIGNI': [type, levelPower, classes],
+        'RESONA': [type, levelPower, classes],
         'SPELL': [type],
         'ARTS': [type],
       }[card.cardType] || []
@@ -225,6 +224,7 @@ export default {
   font-size: 1.1em;
   margin-right: .2em;
   & > span {
+    display: inline-block;
     vertical-align: middle;
   }
 }
