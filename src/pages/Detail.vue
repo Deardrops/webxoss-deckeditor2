@@ -170,13 +170,14 @@ export default {
 }
 .table {
   width: 100%;
-  line-height: 1.3em;
+  line-height: 1.5;
   white-space: pre-line;
   table-layout: fixed;
   border-collapse: collapse;
 }
 td {
   border: 1px solid #cbcbcb;
+  padding: .5em .2em;
 }
 .key {
   width: 15%;
