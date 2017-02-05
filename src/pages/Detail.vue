@@ -11,10 +11,11 @@ export default {
   computed: {
     pid: {
       get() {
-        return +this.$route.query.pid
+        // Return <大器晚成>(pid23) if invalid
+        let pid = +this.$route.query.pid
+        return CardInfo[pid] ? pid : 23
       },
       set(value) {
-        // TODO: check if int && <= total card count
         if (!value) {
           this.$route.replace('/detail')
         }
@@ -27,7 +28,6 @@ export default {
       },
     },
     card() {
-      // TODO: avoid return undefined
       return CardInfo[this.pid]
     },
     name() {
