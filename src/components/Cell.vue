@@ -54,13 +54,13 @@ export default {
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = `${level}  ${limit}`
-      let levelPower = `${level}  ${power}`
+      let levelLimit = `${level} ${limit}`
+      let levelPower = `${level} ${power}`
       // let typeClasses = `${type}  ${classes}`
 
       return {
         'LRIG': [levelLimit, classes, type],
-        'SIGNI': [levelLimit, classes, type],
+        'SIGNI': [levelPower, classes, type],
         'RESONA': [levelPower, classes, type],
         'SPELL': [type],
         'ARTS': [type],
