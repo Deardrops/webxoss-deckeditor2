@@ -1,5 +1,5 @@
 <script>
-import ImageManager from 'js/ImageManager.js'
+import { getUrlByPid } from 'js/ImageManager'
 import AppHeader from 'components/AppHeader'
 
 export default {
@@ -13,7 +13,7 @@ export default {
       return CardInfo[pid] ? pid : 23
     },
     src() {
-      return ImageManager.getUrlByPid(this.pid)
+      return getUrlByPid(this.pid)
     },
   },
   methods: {
