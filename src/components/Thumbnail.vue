@@ -6,7 +6,7 @@
 -->
 
 <script>
-import ImageManager from 'js/ImageManager.js'
+import { getUrlByPid } from 'js/ImageManager'
 export default {
   props: {
     pid: {
@@ -29,7 +29,7 @@ export default {
   },
   computed: {
     src() {
-      return ImageManager.getUrlByPid(this.pid)
+      return getUrlByPid(this.pid)
     },
     style() {
       let x = this.origin.x * 100
