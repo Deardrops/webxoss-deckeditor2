@@ -54,16 +54,16 @@ export default {
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = `${level}  ${limit}`
-      let levelPower = `${level}  ${power}`
-      let typeClasses = `${type}  ${classes}`
+      // let levelLimit = `${level}  ${limit}`
+      // let levelPower = `${level}  ${power}`
+      // let typeClasses = `${type}  ${classes}`
 
       return {
-        'LRIG': [levelLimit, typeClasses],
-        'SIGNI': [levelPower, typeClasses],
-        'RESONA': [levelPower, typeClasses],
-        'SPELL': [type],
-        'ARTS': [type],
+        'LRIG': [[level, limit], [type, classes]],
+        'SIGNI': [[level, power], [type, classes]],
+        'RESONA': [[level, power], [type, classes]],
+        'SPELL': [[type]],
+        'ARTS': [[type]],
       }[card.cardType] || []
     },
     costs() {
@@ -111,6 +111,9 @@ export default {
       }
       return !this.costs.length
     },
+    noCostText() {
+      return `0 ${Localize.propToKey('cost')}`
+    },
     isRemaining() {
       return this.protectionEnabled && this.remainingPids.includes(this.card.pid)
     },
@@ -154,12 +157,14 @@ export default {
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
           <div>
-            <div v-for="meta in metas" :class="$style.meta">{{ meta }}</div>
+            <div v-for="rows in metas" :class="$style.meta">
+              <span v-for="meta in rows">{{ meta }}</span>
+            </div>
             <div :class="$style.meta">
               <span v-for="cost in costs" :class="[$style.cost, $color[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
-              <span v-if="noCost">0费用</span>
+              <span v-if="noCost">{{ noCostText }}</span>
             </div>
           </div>
           <counter
@@ -217,13 +222,15 @@ export default {
   font-size: 0.9em;
   line-height: 1.3;
   vertical-align: middle;
+  & > span {
+    display: inline-block;
+    margin-right: .3em;
+    vertical-align: middle;
+  }
 }
 .cost {
   font-size: 1.1em;
   margin-right: .2em;
-  & > span {
-    vertical-align: middle;
-  }
 }
 
 </style>
