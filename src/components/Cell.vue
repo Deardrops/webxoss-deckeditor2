@@ -48,20 +48,19 @@ export default {
     },
     metas() {
       let card = this.card
-      let level = `Lv. ${card.level}`
-      let limit = `Limit: ${card.limit}`
+      let level = `Lv.${card.level}`
+      let limit = `Limit:${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = `${level}  ${limit}`
-      let levelPower = `${level}  ${power}`
-      let typeClasses = `${type}  ${classes}`
+      let levelLimit = `${level} | ${limit}`
+      let levelPower = `${level} | ${power}`
 
       return {
-        'LRIG': [levelLimit, typeClasses],
-        'SIGNI': [levelPower, typeClasses],
-        'RESONA': [levelPower, typeClasses],
+        'LRIG': [type, levelLimit],
+        'SIGNI': [type, levelPower, classes],
+        'RESONA': [type, levelPower, classes],
         'SPELL': [type],
         'ARTS': [type],
       }[card.cardType] || []
@@ -111,6 +110,9 @@ export default {
       }
       return !this.costs.length
     },
+    noCostText() {
+      return `0 ${Localize.propToKey('cost')}`
+    },
     isRemaining() {
       return this.protectionEnabled && this.remainingPids.includes(this.card.pid)
     },
@@ -159,11 +161,11 @@ export default {
               <span v-for="cost in costs" :class="[$style.cost, $color[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
-              <span v-if="noCost">0费用</span>
+              <span v-if="noCost">{{ noCostText }}</span>
             </div>
           </div>
           <counter
-            :class="[$style.counter, $style[card.color]]"
+            :class="$style.counter"
             :count="count"
             :isRemaining="isRemaining"
             @plus="plus"
@@ -192,6 +194,7 @@ export default {
   width: 6.25rem; /* avoid stretch */
   height: 6.25rem;
   border: 2px solid currentColor;
+  margin: auto 0;
 }
 .right {
   display: flex;
@@ -215,13 +218,13 @@ export default {
 }
 .meta {
   font-size: 0.9em;
-  line-height: 1.3;
-  vertical-align: middle;
+  line-height: 1.3em;
 }
 .cost {
   font-size: 1.1em;
   margin-right: .2em;
   & > span {
+    display: inline-block;
     vertical-align: middle;
   }
 }
