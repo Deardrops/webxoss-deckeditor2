@@ -1,4 +1,5 @@
 <script>
+let scrollTopMap = {}
 export default {
   created() {
     // test
@@ -16,12 +17,25 @@ export default {
     })
     this.$store.commit('switchDeck', 'WHITE_HOPE')
   },
+  watch: {
+    $route(to, from) {
+      if (to.path === from.path) {
+        return
+      }
+      scrollTopMap[from.path] = window.scrollY
+      this.$nextTick(() => {
+        window.scrollTo(0, scrollTopMap[to.path])
+      })
+    },
+  },
 }
 </script>
 
 <template>
   <div id="app">
-    <router-view></router-view>
+    <keep-alive>
+      <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
