@@ -9,6 +9,8 @@ import 'js/global'
 import Localize from 'js/Localize'
 Localize.setLanguage('en') // test
 
+import ImageFileCache from 'js/ImageFileCache'
+
 import { $get } from 'js/util'
 
 sync(store, router)
@@ -17,10 +19,12 @@ sync(store, router)
 $get('./CardInfo.json')
   .then(CardInfo => {
     window.CardInfo = Object.freeze(CardInfo)
-    new Vue({
-      el: '#app',
-      router,
-      store,
-      ...App,
-    })
+    ImageFileCache.init(() => {
+      new Vue({
+        el: '#app',
+        router,
+        store,
+        ...App,
+      })
+    }, 1000)
   })
