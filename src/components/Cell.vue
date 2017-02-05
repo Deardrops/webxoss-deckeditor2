@@ -48,14 +48,14 @@ export default {
     },
     metas() {
       let card = this.card
-      let level = `Lv. ${card.level}`
+      let level = `Lv.${card.level}`
       let limit = `Limit: ${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
       let levelLimit = `${level} ${limit}`
-      let levelPower = `${level} ${power}`
+      let levelPower = `${level} | ${power}`
       // let typeClasses = `${type}  ${classes}`
 
       return {
