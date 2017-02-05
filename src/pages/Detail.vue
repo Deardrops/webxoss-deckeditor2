@@ -121,17 +121,17 @@ export default {
     <div :class="$style.body">
       <div :class="$style.header">
         <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="pid" @click.native="goGallery"></thumbnail>
-        <div :class="$style.right">
+        <div :class="$style.main">
           <div>
             <div>
               <span>{{ card.wxid }}</span>
-              <span :class="$style.align">{{ card.rarity }}</span>
+              <span :class="$style.right">{{ card.rarity }}</span>
             </div>
             <div :class="$style.title">{{ name }}</div>
           </div>
           <div>
             <span>{{ type }}</span>
-            <span :class="$style.align">{{ limiting }}</span>
+            <span :class="$style.right">{{ limiting }}</span>
           </div>
         </div>
       </div>
@@ -139,19 +139,15 @@ export default {
         <tbody>
           <tr v-for="row in rows" :class="$style.rows">
           	<template v-for="meta in row">
-              <td>{{ meta.key }}</td>
+              <td :class="$style.key">{{ meta.key }}</td>
               <td>{{ meta.value }}</td>
             </template>
           </tr>
           <tr>
-            <td colspan="4">
-              {{ cardEffect }}
-            </td>
+            <td colspan="4">{{ cardEffect }}</td>
           </tr>
           <tr>
-            <td colspan="4">
-              {{ lifeBurst }}
-            </td>
+            <td colspan="4">{{ lifeBurst }}</td>
           </tr>
         </tbody>
       </table>
@@ -174,27 +170,24 @@ export default {
 }
 .table {
   width: 100%;
+  line-height: 1.3em;
   white-space: pre-line;
-  table-layout:fixed;
-  border: 1px solid #cbcbcb;
+  table-layout: fixed;
   border-collapse: collapse;
 }
 td {
-  border-left: 1px solid #cbcbcb;
-  border-bottom: 1px solid #cbcbcb;
+  border: 1px solid #cbcbcb;
 }
-.rows>td:nth-child(odd) {
+.key {
   width: 15%;
   text-align: center;
-  /*color: #fff;*/
-  /*background-color: var(--main-color);*/
 }
 .thumbnail {
   width: 11em; 
   height: 11em; 
   border: 3px solid currentColor;
 }
-.right {
+.main {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -202,7 +195,7 @@ td {
   overflow: hidden;
   padding: .5em;
 }
-.align {
+.right {
   float: right;
 }
 </style>
