@@ -140,7 +140,7 @@ export default {
           <tr v-for="row in rows" :class="$style.rows">
           	<template v-for="meta in row">
               <td :class="$style.key">{{ meta.key }}</td>
-              <td>{{ meta.value }}</td>
+              <td :colspan="row.length === 1 ? 3 : 1">{{ meta.value }}</td>
             </template>
           </tr>
           <tr>
