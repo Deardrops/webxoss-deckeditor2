@@ -22,7 +22,7 @@ export default {
         y: .3,
       }),
     },
-    // iamgeWidth / containerWidth
+    // imageWidth / containerWidth
     scale: {
       type: Number,
       default: 2.5,
