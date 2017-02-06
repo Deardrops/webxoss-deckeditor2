@@ -1,6 +1,7 @@
 <script>
 import { getUrlByPid } from 'js/ImageManager'
 import AppHeader from 'components/AppHeader'
+import Localize from 'js/Localize'
 
 export default {
   components: {
@@ -14,6 +15,9 @@ export default {
     },
     src() {
       return getUrlByPid(this.pid)
+    },
+    alt() {
+      return Localize.cardName(CardInfo[this.pid])
     },
   },
   methods: {
@@ -29,7 +33,7 @@ export default {
   <div :class="$style.page">
     <app-header title="Gallery"></app-header>
     <div :class="$style.body" @click="goBack">
-      <img :class="$style.image" :src="src">
+      <img :class="$style.image" :src="src" :alt="alt">
     </div>
   </div>
 </template>
