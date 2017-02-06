@@ -8,6 +8,7 @@ import { mapState, mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
+import Icon from 'components/Icon'
 import Localize from 'js/Localize'
 
 export default {
@@ -15,6 +16,7 @@ export default {
     Thumbnail,
     Counter,
     Ball,
+    Icon,
   },
   props: {
     card: {
@@ -110,6 +112,10 @@ export default {
       }
       return !this.costs.length
     },
+    hasBurst() {
+      let card = CardInfo[this.card.cid]
+      return !!card.burstEffectTexts
+    },
     noCostText() {
       return `0 ${Localize.propToKey('cost')}`
     },
@@ -151,7 +157,15 @@ export default {
 <template>
   <router-link :to="detailRoute">
     <div :class="[$style.cell, isRemaining ? $style.translucent : '']">
-      <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
+      <div>
+        <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
+        <div v-if="hasBurst" :class="$style.wrapper">
+          <div :class="[$style.hexagon, $color[card.color]]">
+            <icon name="hexagon"/>
+            <icon :class="$style.burst" name="burst"/>
+          </div>
+        </div>
+      </div>
       <div :class="$style.right">
         <div :class="$style.name">{{ name }}</div>
         <div :class="$style.foot">
@@ -184,6 +198,28 @@ export default {
 
 .translucent {
   opacity: 0.7;
+}
+.wrapper {
+  position: relative;
+  height: 0;
+}
+.burst {
+  transform: scale(0.8);
+  color: #fff;
+}
+.hexagon {
+  position: absolute;
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%,-50%);
+  width: 1em;
+  height: 1em;
+  font-size: 1.5em;
+  & > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 .cell {
   display: flex;
@@ -228,5 +264,4 @@ export default {
     vertical-align: middle;
   }
 }
-
 </style>
