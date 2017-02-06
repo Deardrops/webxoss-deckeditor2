@@ -4,7 +4,7 @@
 -->
 
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Counter from 'components/Counter'
 import Ball from 'components/Ball'
@@ -23,8 +23,14 @@ export default {
       type: Object,
       required: true,
     },
+    protectionEnabled: {
+      require: false,
+    },
   },
   computed: {
+    ...mapState([
+      'remainingPids',
+    ]),
     ...mapGetters([
       'deckPids',
     ]),
@@ -44,20 +50,19 @@ export default {
     },
     metas() {
       let card = this.card
-      let level = `Lv. ${card.level}`
-      let limit = `Limit: ${card.limit}`
+      let level = `Lv.${card.level}`
+      let limit = `Limit:${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
       let type = `${Localize.cardType(card)}`
 
-      let levelLimit = `${level}  ${limit}`
-      let levelPower = `${level}  ${power}`
-      let typeClasses = `${type}  ${classes}`
+      let levelLimit = `${level} | ${limit}`
+      let levelPower = `${level} | ${power}`
 
       return {
-        'LRIG': [levelLimit, typeClasses],
-        'SIGNI': [levelPower, typeClasses],
-        'RESONA': [levelPower, typeClasses],
+        'LRIG': [type, levelLimit],
+        'SIGNI': [type, levelPower, classes],
+        'RESONA': [type, levelPower, classes],
         'SPELL': [type],
         'ARTS': [type],
       }[card.cardType] || []
@@ -111,20 +116,47 @@ export default {
       let card = CardInfo[this.card.cid]
       return !!card.burstEffectTexts
     },
+    noCostText() {
+      return `0 ${Localize.propToKey('cost')}`
+    },
+    isRemaining() {
+      return this.protectionEnabled && this.remainingPids.includes(this.card.pid)
+    },
   },
   methods: {
     plus() {
-      this.$store.commit('addCard', this.card.pid)
+      let pid = this.card.pid
+
+      // card count === 0 && click [+] button
+      if (this.protectionEnabled && !this.deckPids.includes(pid)) {
+        // remove this card from state.remainingPids
+        this.$store.commit('delRemainingCard', pid)
+      }
+
+      this.$store.commit('addCard', pid)
     },
     minus() {
-      this.$store.commit('delCard', this.card.pid)
+      let pid = this.card.pid
+
+      // 2-step removing for preventing from operation mistakes
+      if (this.protectionEnabled) {
+        if (this.count === 1) {
+          // 1st step: keep this pid in remainingPids
+          this.$store.commit('addRemainingCard', pid)
+        } else if (this.count === 0) {
+          // 2nd step: remove it from remainingPids
+          this.$store.commit('delRemainingCard', pid)
+        }
+      }
+
+      this.$store.commit('delCard', pid)
     },
   },
 }
 </script>
 <template>
   <router-link :to="detailRoute">
-    <div :class="[$style.cell]">
+    <div :class="[$style.cell, isRemaining ? $style.translucent : '']">
       <div>
         <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
         <div v-if="hasBurst" :class="$style.wrapper">
@@ -143,12 +175,13 @@ export default {
               <span v-for="cost in costs" :class="[$style.cost, $color[cost.color]]">
                 <ball/><span v-if="cost.count">×{{ cost.count }} </span>
               </span>
-              <span v-if="noCost">0费用</span>
+              <span v-if="noCost">{{ noCostText }}</span>
             </div>
           </div>
           <counter
             :class="$style.counter"
             :count="count"
+            :isRemaining="isRemaining"
             @plus="plus"
             @minus="minus">
           </counter>
@@ -163,14 +196,14 @@ export default {
 <style module>
 @import 'css/vars.css';
 
+.translucent {
+  opacity: 0.7;
+}
 .wrapper {
   position: relative;
   height: 0;
 }
 .burst {
-  position: absolute;
-  top: 0;
-  left: 0;
   transform: scale(0.8);
   color: #fff;
 }
@@ -182,6 +215,11 @@ export default {
   width: 1em;
   height: 1em;
   font-size: 1.5em;
+  & > svg {
+    position: absolute;
+    top: 0;
+    left: 0;
+  }
 }
 .cell {
   display: flex;
@@ -192,6 +230,7 @@ export default {
   width: 6.25rem; /* avoid stretch */
   height: 6.25rem;
   border: 2px solid currentColor;
+  margin: auto 0;
 }
 .right {
   display: flex;
@@ -215,13 +254,13 @@ export default {
 }
 .meta {
   font-size: 0.9em;
-  line-height: 1.3;
-  vertical-align: middle;
+  line-height: 1.3em;
 }
 .cost {
   font-size: 1.1em;
   margin-right: .2em;
   & > span {
+    display: inline-block;
     vertical-align: middle;
   }
 }

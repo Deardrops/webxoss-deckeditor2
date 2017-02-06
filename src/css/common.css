@@ -1,6 +1,32 @@
 :root {
   font-size: 14px;
   font-family: PingFangSC-Regular, 'Helvetica Neue', Tahoma, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
+  color: #333;
+
+  /* small mobile (iPhone5) */
+  @media (width <= 320px) {
+    font-size: 12px;
+  }
+
+  /* middle mobile (iPhone6) */
+  @media (width > 375px) {
+    font-size: 16px;
+  }
+
+  /* large mobile (iPhone6 Plus) */
+  @media (width > 425px) {
+    font-size: 18px;
+  }
+
+  /* larger mobile */
+  @media (width >= 667px) {
+    font-size: 20px;
+  }
+
+  /* tablet */
+  @media (width >= 768px) {
+    font-size: 24px;
+  }
 }
 
 html,
@@ -15,7 +41,7 @@ dd {
 
 ol,
 ul {
-  list-style: none;
+  list-style-type: none;
 }
 
 p,
@@ -47,7 +73,7 @@ select {
 
 a {
   outline: none;
-  color: #000000;
+  color: inherit;
   text-decoration: none;
   -webkit-tap-highlight-color: transparent;
 }

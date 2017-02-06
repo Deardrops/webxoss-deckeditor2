@@ -1,5 +1,5 @@
 <script>
-import ImageManager from 'js/ImageManager.js'
+import { getUrlByPid } from 'js/ImageManager'
 import AppHeader from 'components/AppHeader'
 
 export default {
@@ -8,10 +8,12 @@ export default {
   },
   computed: {
     pid() {
-      return +this.$route.query.pid
+      // Return <大器晚成>(pid23) if invalid
+      let pid = +this.$route.query.pid
+      return CardInfo[pid] ? pid : 23
     },
     src() {
-      return ImageManager.getUrlByPid(this.pid)
+      return getUrlByPid(this.pid)
     },
   },
   methods: {
