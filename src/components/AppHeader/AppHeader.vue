@@ -22,7 +22,11 @@ export default {
   <div :class="$style.wrapper">
     <header>
       <slot name="left">
-        <header-icon name="arrow" :class="$style.arrow" @click.native="goBack"/>
+        <header-icon
+          :class="$style.arrow"
+          name="arrow"
+          label="back"
+          @click.native="goBack"/>
       </slot>
       <slot>
         <h1>{{ title }}</h1>

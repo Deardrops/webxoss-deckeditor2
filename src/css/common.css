@@ -69,6 +69,7 @@ select {
   outline: none;
   font-size: inherit;
   font-family: inherit;
+  color: inherit;
 }
 
 a {
