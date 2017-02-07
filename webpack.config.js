@@ -171,6 +171,11 @@ config.base = {
       filename: 'index.html',
       template: PATHS.template,
     }),
+    new (require('appcache-webpack-plugin'))({
+      cache: ['CardInfo.json'],
+      exclude: ['index.html'],
+      output: 'webxoss.appcache',
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,

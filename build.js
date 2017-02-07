@@ -5,7 +5,9 @@ const shell = require('shelljs')
 shell.rm('-rf', 'dist')
 
 require('webpack')(require('./webpack.config.js'), (err, stats) => {
-  if (err) throw err
+  if (err) {
+    throw err
+  }
   process.stdout.write(stats.toString({
     colors: true,
     modules: false,
