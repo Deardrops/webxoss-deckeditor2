@@ -80,6 +80,12 @@ export default {
       let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
+    mainDeckCount() {
+      return this.mainDeck.length
+    },
+    lrigDeckCount() {
+      return this.lrigDeck.length
+    },
   },
   methods: {
     openMenu() {
@@ -104,11 +110,19 @@ export default {
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head></deck-head>
+<!--     <div :class="$style.subHeader">
+      <span>Main Deck</span>
+      <span :class="$style.right">{{ mainDeckCount }}/40</span>
+    </div> -->
     <ul>
       <li v-for="card in shownMainDeck">
         <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
+<!--     <div :class="$style.subHeader">
+      <span>Lrig Deck</span>
+      <span :class="$style.right">{{ lrigDeckCount }}/10</span>
+    </div> -->
     <ul>
       <li v-for="card in shownLrigDeck">
         <cell :card="card" :protectionEnabled="true"/>
@@ -119,3 +133,23 @@ export default {
     <deck-modals ref="modals"/>
   </div>
 </template>
+
+<style module>
+@import 'css/vars.css';
+.subHeader {
+  position:sticky;
+  top: 4rem;
+  z-index: 1;
+  background-color: #fff;
+  border-top: 1px solid #d6d6d6;
+  border-bottom: 1px solid #d6d6d6;
+  padding: .2em var(--padding);
+  color: #929292;
+  & > span {
+    font-size: 1.1em;
+  }
+}
+.right {
+  float: right;
+}
+</style>

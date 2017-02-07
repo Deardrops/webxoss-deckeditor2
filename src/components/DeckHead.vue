@@ -25,23 +25,33 @@ export default {
     burstClass() {
       return this.burstCount === 20 ? '' : this.$style.warn
     },
+    mainDeckCount() {
+      return this.$store.getters.mainDeck.length
+    },
+    lrigDeckCount() {
+      return this.$store.getters.lrigDeck.length
+    },
   },
 }
 </script>
 
 <template>
-  <div :class="$style.head">
-    <div>
-      <select :class="$style.select" v-model="deckName">
-        <option v-for="name in deckNames" :value="name">{{ name }}</option>
-      </select>
-      <icon :class="$style.arrow" name="arrow"/>
-    </div>
-    <div :class="$style.right">
-      <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
-      <span>
-        <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
-      </span>
+  <div :class="$style.sticky">
+    <div :class="$style.head">
+      <div>
+<!--         <select :class="$style.select" v-model="deckName">
+          <option v-for="name in deckNames" :value="name">{{ name }}</option>
+        </select>
+        <icon :class="$style.arrow" name="arrow"/> -->
+        <span>Main Deck</span>
+        <span :class="$style.right">{{ mainDeckCount }}/40</span>
+      </div>
+      <div :class="$style.right">
+        <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
+        <span>
+          <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
+        </span>
+      </div>
     </div>
   </div>
 </template>
@@ -74,5 +84,12 @@ export default {
 }
 .mayu {
   margin-right: .8em;
+}
+.sticky {
+  position:sticky;
+  top: 4rem;
+  z-index: 1;
+  background-color: #fff;
+  /*border-bottom: 1px solid #d6d6d6;*/
 }
 </style>

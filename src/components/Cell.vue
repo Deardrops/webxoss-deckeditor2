@@ -188,6 +188,7 @@ export default {
         </div>
       </div>
     </div>
+    <!-- <div :class="$style.divide"/> -->
   </router-link>
 
 </template>
@@ -224,6 +225,9 @@ export default {
 .cell {
   display: flex;
   padding: var(--padding);
+  /*padding: 0 var(--padding);*/
+  /*margin-top: var(--padding);*/
+  /*margin: 0 var(--padding);*/
   border-bottom: 1px solid #d6d6d6;
 }
 .thumbnail {
@@ -263,5 +267,10 @@ export default {
     display: inline-block;
     vertical-align: middle;
   }
+}
+.divide {
+  margin-left: 8rem;
+  margin-right: 0.8rem;
+  border-bottom: 1px solid #d6d6d6;
 }
 </style>
