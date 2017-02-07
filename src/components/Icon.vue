@@ -1,14 +1,21 @@
 <!--
   props:
     name
+    label, for accessibility
 -->
 
 <script>
 import * as Icon from 'js/Icon'
 export default {
   props: {
-    name: String,
-    required: true,
+    name: {
+      type: String,
+      required: true,
+    },
+    label: {
+      type: String,
+      required: false,
+    },
   },
   computed: {
     href() {
@@ -19,7 +26,7 @@ export default {
 </script>
 
 <template>
-  <svg><use :xlink:href="href"/></svg>
+  <svg :aria-label="label || name"><use :xlink:href="href"/></svg>
 </template>
 
 <style scoped>
