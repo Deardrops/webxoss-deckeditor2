@@ -8,6 +8,9 @@ import DeckHead from 'components/DeckHead'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
 
+let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
+let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
+
 export default {
   components: {
     AppHeader,
@@ -18,6 +21,10 @@ export default {
     Cell,
     DeckHead,
   },
+  data: () => ({
+    request: -1,
+    isScrollToLrig: false,
+  }),
   computed: {
     ...mapState([
       'remainingPids',
@@ -31,9 +38,7 @@ export default {
         {
           title: 'New Deck',
           icon: 'add',
-          action: () => {
-            this.openModal('add')
-          },
+          action: () => {},
         },
         {
           title: 'Clone',
@@ -80,12 +85,6 @@ export default {
       let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
-    mainDeckCount() {
-      return this.mainDeck.length
-    },
-    lrigDeckCount() {
-      return this.lrigDeck.length
-    },
   },
   methods: {
     openMenu() {
@@ -100,6 +99,27 @@ export default {
     closeModal() {
       this.$refs.modals.close()
     },
+    updateDeckHeader() {
+      let headHeight = 130 // TODO: computed deckHead's botton position
+      let lrigDOM = this.$refs.lrigDOM
+      if (!lrigDOM) {
+        return
+      }
+      requestFrame(() => {
+        if (lrigDOM.getBoundingClientRect().top < headHeight) {
+          this.isScrollToLrig = true
+        } else {
+          this.isScrollToLrig = false
+        }
+      })
+      this.request = requestFrame(this.updateDeckHeader)
+    },
+  },
+  mounted() {
+    this.updateDeckHeader()
+  },
+  destroyed() {
+    cancelRequest(this.request)
   },
 }
 </script>
@@ -109,21 +129,13 @@ export default {
     <app-header title="Deck Editor">
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head></deck-head>
-<!--     <div :class="$style.subHeader">
-      <span>Main Deck</span>
-      <span :class="$style.right">{{ mainDeckCount }}/40</span>
-    </div> -->
+    <deck-head :isScrollToLrig="isScrollToLrig" ref="deckHead"></deck-head>
     <ul>
       <li v-for="card in shownMainDeck">
         <cell :card="card" :protectionEnabled="true"/>
       </li>
     </ul>
-<!--     <div :class="$style.subHeader">
-      <span>Lrig Deck</span>
-      <span :class="$style.right">{{ lrigDeckCount }}/10</span>
-    </div> -->
-    <ul>
+    <ul ref="lrigDOM">
       <li v-for="card in shownLrigDeck">
         <cell :card="card" :protectionEnabled="true"/>
       </li>
@@ -133,23 +145,3 @@ export default {
     <deck-modals ref="modals"/>
   </div>
 </template>
-
-<style module>
-@import 'css/vars.css';
-.subHeader {
-  position:sticky;
-  top: 4rem;
-  z-index: 1;
-  background-color: #fff;
-  border-top: 1px solid #d6d6d6;
-  border-bottom: 1px solid #d6d6d6;
-  padding: .2em var(--padding);
-  color: #929292;
-  & > span {
-    font-size: 1.1em;
-  }
-}
-.right {
-  float: right;
-}
-</style>
