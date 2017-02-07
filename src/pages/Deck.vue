@@ -85,6 +85,13 @@ export default {
       let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
+    headHeight() {
+      if (this.$refs.appHead && this.$refs.deckHead){
+        return this.$refs.appHead.$el.clientHeight +
+          this.$refs.deckHead.$el.clientHeight
+      }
+      return 0
+    },
   },
   methods: {
     openMenu() {
@@ -100,18 +107,15 @@ export default {
       this.$refs.modals.close()
     },
     updateDeckHeader() {
-      let headHeight = 130 // TODO: computed deckHead's botton position
       let lrigDOM = this.$refs.lrigDOM
       if (!lrigDOM) {
         return
       }
-      requestFrame(() => {
-        if (lrigDOM.getBoundingClientRect().top < headHeight) {
-          this.isScrollToLrig = true
-        } else {
-          this.isScrollToLrig = false
-        }
-      })
+      if (lrigDOM.getBoundingClientRect().top < this.headHeight) {
+        this.isScrollToLrig = true
+      } else {
+        this.isScrollToLrig = false
+      }
       this.request = requestFrame(this.updateDeckHeader)
     },
   },
@@ -126,7 +130,7 @@ export default {
 
 <template>
   <div>
-    <app-header title="Deck Editor">
+    <app-header title="Deck Editor" ref="appHead">
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head :isScrollToLrig="isScrollToLrig" ref="deckHead"></deck-head>

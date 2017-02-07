@@ -36,11 +36,11 @@ export default {
     mainClass() {
       return this.mainCount === 40 ? '' : this.$style.warn
     },
-    lrigClass() {
-      return this.lrigCount === 10 ? '' : this.$style.warn
-    },
     lrigCount() {
       return this.$store.getters.lrigDeck.length
+    },
+    lrigClass() {
+      return this.lrigCount === 10 ? '' : this.$style.warn
     },
   },
 }
