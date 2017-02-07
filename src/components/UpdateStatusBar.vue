@@ -47,7 +47,7 @@ export default {
 </script>
 
 <template>
-  <div :class="$style.bar" v-if="status">
+  <div :class="[$style.bar, status ? '' : $style.hidden]">
     <span :class="$style.text">{{ text }}</span>
     <button
       :class="$style.button"
@@ -69,6 +69,11 @@ export default {
   display: flex;
   align-items: center;
   justify-content: space-between;
+
+  transition: height .2s ease-out;
+  &.hidden {
+    height: 0;
+  }
 }
 .button {
   color: #4caf50;
