@@ -3,6 +3,7 @@ import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
+import UpdateStatusBar from 'components/UpdateStatusBar'
 import Cell from 'components/Cell'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
@@ -20,6 +21,7 @@ export default {
     HeaderMenu,
     DeckModals,
     DeckFloatButton,
+    UpdateStatusBar,
     Cell,
     Block,
     DeckHead,
@@ -203,9 +205,25 @@ export default {
       </div>
     </div>
 
-    <deck-float-button />
+    <!-- Bottom -->
+    <!--
+      Bottom layer is fixed to screen bottom.
+      Its `div` children are `position: relative`.
+      So, floating buttons won't get blocked.
+    -->
+    <div :class="$style.bottom">
+      <div>
+        <deck-float-button/>
+      </div>
+      <div>
+        <update-status-bar/>
+      </div>
+    </div>
+
+    <!-- Full screen wrappers -->
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
+
   </div>
 </template>
 
@@ -224,5 +242,15 @@ export default {
 }
 .block {
   width: 20%;
+}
+.bottom {
+  position: fixed;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  & > div {
+    position: relative;
+  }
 }
 </style>
