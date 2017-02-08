@@ -45,13 +45,39 @@ self.addEventListener('activate', event => {
   console.log('Activating...')
   // Remove old caches
   event.waitUntil(
+    // Remove outdated dynamic assets
     caches.keys()
     .then(keys => {
+      console.group('Delete outdated dynamic cache')
       return Promise.all(keys.map(key => {
         if (key.startsWith('dynamic ') && key !== `dynamic ${hash}`) {
+          console.log(hash)
           return caches.delete(key)
         }
       }))
+      .then(() => {
+        console.groupEnd()
+      })
+    })
+    .then(() => {
+      // Remove no longer used static assets
+      let absoluteUrls = staticAssets.map(relatedUrl => {
+        return (new URL(relatedUrl, self.location)).href
+      })
+      return caches.open('static').then(cache => {
+        return cache.keys().then(requests => {
+          console.group('Delete unused static assets')
+          return Promise.all(requests.map(request => {
+            if (!absoluteUrls.includes(request.url)) {
+              console.log(request.url)
+              return cache.delete(request)
+            }
+          }))
+          .then(() => {
+            console.groupEnd()
+          })
+        })
+      })
     })
     .then(() => {
       if (self.clients.claim) {

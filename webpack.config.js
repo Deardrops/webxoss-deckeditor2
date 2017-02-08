@@ -179,7 +179,7 @@ config.base = {
     new (require('serviceworker-webpack-plugin'))({
       entry: './src/service-worker.js',
       filename: 'service-worker.js',
-      excludes: ['**/*.', '**/*.map', '**/*.appcache', '**/*.hot-update.json'],
+      excludes: ['**/*.', '**/*.map', '**/*.appcache', '**/*.hot-update.*'],
       template: option => {
         // add hash
         let hash = require('crypto').createHash('sha256')
