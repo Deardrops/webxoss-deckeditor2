@@ -92,6 +92,17 @@ export default {
       }
       return 0
     },
+    deckNames() {
+      return this.$store.getters.deckNames
+    },
+    deckName: {
+      get() {
+        return this.$store.state.deckName
+      },
+      set(name) {
+        this.$store.commit('switchDeck', name)
+      },
+    },
   },
   methods: {
     openMenu() {
@@ -131,6 +142,9 @@ export default {
 <template>
   <div>
     <app-header title="Deck Editor" ref="appHead">
+      <select slot="middle" :class="$style.select" v-model="deckName">
+        <option v-for="name in deckNames" :value="name">{{ name }}</option>
+      </select>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head :isScrollToLrig="isScrollToLrig" ref="deckHead"></deck-head>
@@ -149,3 +163,15 @@ export default {
     <deck-modals ref="modals"/>
   </div>
 </template>
+
+<style module>
+.select {
+  flex: 1;
+  max-width: 70%;
+  vertical-align: middle;
+  color: #fff;
+  & > option {
+    color: #000;
+  }
+}
+</style>
