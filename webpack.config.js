@@ -166,6 +166,10 @@ config.base = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vue',
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'meta',
+      chunks: ['vue'],
+    }),
     new html({
       title: 'test',
       filename: 'index.html',
