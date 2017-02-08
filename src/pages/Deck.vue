@@ -145,7 +145,7 @@ export default {
 <template>
   <div>
     <app-header title="Deck Editor" ref="appHead">
-      <select slot="middle" :class="$style.select" v-model="deckName">
+      <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
       </select>
       <header-icon slot="right" name="more" @click.native="openMenu"/>

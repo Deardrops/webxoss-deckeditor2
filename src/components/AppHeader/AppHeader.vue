@@ -24,7 +24,7 @@ export default {
       <slot name="left">
         <header-icon name="arrow" :class="$style.arrow" @click.native="goBack"/>
       </slot>
-      <slot name="middle">
+      <slot>
         <h1>{{ title }}</h1>
       </slot>
       <slot name="right"></slot>
