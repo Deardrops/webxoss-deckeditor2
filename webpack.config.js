@@ -176,6 +176,18 @@ config.base = {
       exclude: ['index.html'],
       output: 'webxoss.appcache',
     }),
+    new (require('serviceworker-webpack-plugin'))({
+      entry: './src/service-worker.js',
+      filename: 'service-worker.js',
+      excludes: ['**/*.', '**/*.map', '**/*.appcache', '**/*.hot-update.json'],
+      template: option => {
+        // add hash
+        let hash = require('crypto').createHash('sha256')
+        hash.update(JSON.stringify(option))
+        option.hash = hash.digest('base64').slice(0, 7)
+        return Promise.resolve('')
+      },
+    }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
         warnings: false,
