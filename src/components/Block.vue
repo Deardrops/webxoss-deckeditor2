@@ -40,7 +40,6 @@ export default {
       :pid="card.pid"/>
     <div :class="$style.wrapper">
       <div :class="$style.dimmer">
-        <!-- <span>{{ card.cardType }}</span> -->
         <span :class="$style.count">×{{ count }}</span>
       </div>
     </div>
@@ -51,7 +50,6 @@ export default {
 <style module>
 .thumbnail {
   width: 100%;
-  border: 2px solid currentColor;
   margin: auto 0;
 }
 .thumbnail:before {
@@ -66,8 +64,7 @@ export default {
 }
 .dimmer {
   position: absolute;
-  top: -1.2em;
-  left: 2px; /* thumbnail's border */
+  bottom: 0;
   width: 100%;
   height: 1.2em;
   background-color: rgba(0, 0, 0, 0.5);

@@ -5,7 +5,7 @@ export default {
     Icon,
   },
   props: {
-    isScrollToLrig: {
+    scrolledToLrig: {
       require: false,
     },
   },
@@ -39,18 +39,19 @@ export default {
   <div :class="$style.wrapper">
     <div :class="$style.head">
       <div>
-      <template v-if="!isScrollToLrig">
+      <template v-if="!scrolledToLrig">
         <span>Main Deck</span>
         <span :class="$style.right">
           <span :class="mainClass">{{ mainCount }}</span>/40
         </span>
       </template>
-      <template v-else>
+      <template v-if="scrolledToLrig">
         <span>Lrig Deck</span>
         <span :class="$style.right">
           <span :class="lrigClass">{{ lrigCount }}</span>/10
         </span>
       </template>
+      <slot></slot>
       </div>
       <div :class="$style.right">
         <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>

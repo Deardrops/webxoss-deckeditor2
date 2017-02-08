@@ -6,6 +6,7 @@ import DeckFloatButton from 'components/DeckFloatButton'
 import Cell from 'components/Cell'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
+import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
 
@@ -22,11 +23,11 @@ export default {
     Cell,
     Block,
     DeckHead,
+    Icon,
   },
   data: () => ({
     request: -1,
-    isScrollToLrig: false,
-    isPreviewing: true,
+    scrolledToLrig: false,
   }),
   computed: {
     ...mapState([
@@ -106,6 +107,9 @@ export default {
         this.$store.commit('switchDeck', name)
       },
     },
+    previewing() {
+      return !!this.$route.query.previewing
+    },
   },
   methods: {
     openMenu() {
@@ -126,11 +130,27 @@ export default {
         return
       }
       if (lrigDOM.getBoundingClientRect().top < this.headHeight) {
-        this.isScrollToLrig = true
+        this.scrolledToLrig = true
       } else {
-        this.isScrollToLrig = false
+        this.scrolledToLrig = false
       }
       this.request = requestFrame(this.updateDeckHeader)
+    },
+    preview() {
+      this.$router.push({
+        path: '/deck',
+        query: {
+          previewing: 'true',
+        },
+      })
+    },
+    deckView() {
+      this.$router.push({
+        path: 'deck',
+      })
+    },
+    TogglePreview() {
+      this.previewing ? this.deckView() : this.preview()
     },
   },
   mounted() {
@@ -150,8 +170,10 @@ export default {
       </select>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head :isScrollToLrig="isScrollToLrig" ref="deckHead"></deck-head>
-    <template v-if="!isPreviewing">
+    <deck-head :scrolledToLrig="scrolledToLrig" ref="deckHead">
+      <button @click="TogglePreview">Click To Preview</button>
+    </deck-head>
+    <template v-if="!previewing">
       <ul>
         <li v-for="card in shownMainDeck">
           <cell :card="card" :protectionEnabled="true"/>
@@ -163,14 +185,18 @@ export default {
         </li>
       </ul>
     </template>
-    <template v-else>
-      <div :class="$style.row">
-      <div :class="$style.col" v-for="card in shownMainDeck">
+    <template v-if="previewing">
+      <div :class="$style.container">
+      <div
+        :class="$style.child"
+        v-for="card in shownMainDeck">
         <block :card="card"/>
       </div>
       </div>
-      <div :class="$style.row">
-      <div :class="$style.col" v-for="card in shownLrigDeck">
+      <div :class="$style.container">
+      <div 
+        :class="$style.child" 
+        v-for="card in shownLrigDeck">
         <block :card="card"/>
       </div>
       </div>
@@ -184,19 +210,21 @@ export default {
 <style module>
 .select {
   flex: 1;
-  max-width: 70%;
+  max-width: 80%;
   vertical-align: middle;
   color: #fff;
   & > option {
     color: #000;
   }
 }
-.row {
-  clear: both;
+.container {
+  display: flex;
+  flex-flow: row wrap;
+  justify-content: space-between;
+  padding: 0 .2em;
 }
-.col {
-  float: left;
-  margin: 1%;
-  width: 23%;
+.child {
+  width: 19%;
+  padding: .2em 0;
 }
 </style>
