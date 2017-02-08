@@ -10,17 +10,6 @@ export default {
     },
   },
   computed: {
-    deckNames() {
-      return this.$store.getters.deckNames
-    },
-    deckName: {
-      get() {
-        return this.$store.state.deckName
-      },
-      set(name) {
-        this.$store.commit('switchDeck', name)
-      },
-    },
     burstCount() {
       return this.$store.getters.deck
         .map(card => CardInfo[card.cid]) // TODO: utils

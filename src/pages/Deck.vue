@@ -4,6 +4,7 @@ import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
 import Cell from 'components/Cell'
+import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
@@ -19,11 +20,13 @@ export default {
     DeckModals,
     DeckFloatButton,
     Cell,
+    Block,
     DeckHead,
   },
   data: () => ({
     request: -1,
     isScrollToLrig: false,
+    isPreviewing: true,
   }),
   computed: {
     ...mapState([
@@ -148,16 +151,30 @@ export default {
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head :isScrollToLrig="isScrollToLrig" ref="deckHead"></deck-head>
-    <ul>
-      <li v-for="card in shownMainDeck">
-        <cell :card="card" :protectionEnabled="true"/>
-      </li>
-    </ul>
-    <ul ref="lrigDOM">
-      <li v-for="card in shownLrigDeck">
-        <cell :card="card" :protectionEnabled="true"/>
-      </li>
-    </ul>
+    <template v-if="!isPreviewing">
+      <ul>
+        <li v-for="card in shownMainDeck">
+          <cell :card="card" :protectionEnabled="true"/>
+        </li>
+      </ul>
+      <ul ref="lrigDOM">
+        <li v-for="card in shownLrigDeck">
+          <cell :card="card" :protectionEnabled="true"/>
+        </li>
+      </ul>
+    </template>
+    <template v-else>
+      <div :class="$style.row">
+      <div :class="$style.col" v-for="card in shownMainDeck">
+        <block :card="card"/>
+      </div>
+      </div>
+      <div :class="$style.row">
+      <div :class="$style.col" v-for="card in shownLrigDeck">
+        <block :card="card"/>
+      </div>
+      </div>
+    </template>
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
@@ -173,5 +190,13 @@ export default {
   & > option {
     color: #000;
   }
+}
+.row {
+  clear: both;
+}
+.col {
+  float: left;
+  margin: 1%;
+  width: 23%;
 }
 </style>
