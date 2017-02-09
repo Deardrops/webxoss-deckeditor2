@@ -6,7 +6,7 @@ export default {
   },
   props: {
     scrolledToLrig: {
-      require: false,
+      require: true,
     },
   },
   computed: {
@@ -39,19 +39,19 @@ export default {
   <div :class="$style.wrapper">
     <div :class="$style.head">
       <div>
-      <template v-if="!scrolledToLrig">
-        <span>Main Deck</span>
-        <span :class="$style.right">
-          <span :class="mainClass">{{ mainCount }}</span>/40
-        </span>
-      </template>
-      <template v-if="scrolledToLrig">
-        <span>Lrig Deck</span>
-        <span :class="$style.right">
-          <span :class="lrigClass">{{ lrigCount }}</span>/10
-        </span>
-      </template>
-      <slot></slot>
+        <slot></slot>
+        <template v-if="!scrolledToLrig">
+          <span>Main Deck</span>
+          <span :class="$style.right">
+            <span :class="mainClass">{{ mainCount }}</span>/40
+          </span>
+        </template>
+        <template v-if="scrolledToLrig">
+          <span>Lrig Deck</span>
+          <span :class="$style.right">
+            <span :class="lrigClass">{{ lrigCount }}</span>/10
+          </span>
+        </template>
       </div>
       <div :class="$style.right">
         <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>

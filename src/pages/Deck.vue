@@ -108,7 +108,7 @@ export default {
       },
     },
     previewing() {
-      return !!this.$route.query.previewing
+      return this.$route.query.mode === 'preview'
     },
   },
   methods: {
@@ -136,21 +136,21 @@ export default {
       }
       this.request = requestFrame(this.updateDeckHeader)
     },
-    preview() {
+    goListView() {
+      this.$router.push({
+        path: '/deck',
+        // query: {
+        //   mode: 'list',
+        // },
+      })
+    },
+    goBlockView() {
       this.$router.push({
         path: '/deck',
         query: {
-          previewing: 'true',
+          mode: 'preview',
         },
       })
-    },
-    deckView() {
-      this.$router.push({
-        path: 'deck',
-      })
-    },
-    TogglePreview() {
-      this.previewing ? this.deckView() : this.preview()
     },
   },
   mounted() {
@@ -171,7 +171,8 @@ export default {
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head :scrolledToLrig="scrolledToLrig" ref="deckHead">
-      <button @click="TogglePreview">Click To Preview</button>
+      <icon name="list" @click.native="goListView"/>
+      <icon name="block" @click.native="goBlockView"/>
     </deck-head>
     <template v-if="!previewing">
       <ul>
@@ -187,18 +188,18 @@ export default {
     </template>
     <template v-if="previewing">
       <div :class="$style.container">
-      <div
-        :class="$style.child"
-        v-for="card in shownMainDeck">
-        <block :card="card"/>
-      </div>
-      </div>
+        <div
+          :class="$style.child"
+          v-for="card in shownMainDeck">
+          <block :card="card"/>
+        </div>
+        </div>
       <div :class="$style.container">
-      <div 
-        :class="$style.child" 
-        v-for="card in shownLrigDeck">
-        <block :card="card"/>
-      </div>
+        <div 
+          :class="$style.child" 
+          v-for="card in shownLrigDeck">
+          <block :card="card"/>
+        </div>
       </div>
     </template>
     <deck-float-button />
@@ -210,7 +211,6 @@ export default {
 <style module>
 .select {
   flex: 1;
-  max-width: 80%;
   vertical-align: middle;
   color: #fff;
   & > option {
@@ -220,11 +220,10 @@ export default {
 .container {
   display: flex;
   flex-flow: row wrap;
-  justify-content: space-between;
-  padding: 0 .2em;
+  justify-content: space-around;
 }
 .child {
   width: 19%;
-  padding: .2em 0;
+  padding-top: .2em;
 }
 </style>
