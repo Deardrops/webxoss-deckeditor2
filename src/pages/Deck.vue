@@ -171,8 +171,8 @@ export default {
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head :scrolledToLrig="scrolledToLrig" ref="deckHead">
-      <icon name="list" @click.native="goListView"/>
-      <icon name="block" @click.native="goBlockView"/>
+      <icon name="list" label="list view" @click.native="goListView"/>
+      <icon name="blocks" label="preview" @click.native="goBlockView"/>
     </deck-head>
     <template v-if="!previewing">
       <ul>
