@@ -136,6 +136,9 @@ export default {
       }
       this.request = requestFrame(this.updateDeckHeader)
     },
+    switchView(mode) {
+      (mode === 'preview') ? this.goBlockView() : this.goListView()
+    },
     goListView() {
       this.$router.push({
         path: '/deck',
@@ -170,9 +173,11 @@ export default {
       </select>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head :scrolledToLrig="scrolledToLrig" ref="deckHead">
-      <icon name="list" label="list view" @click.native="goListView"/>
-      <icon name="blocks" label="preview" @click.native="goBlockView"/>
+    <deck-head
+      :scrolledToLrig="scrolledToLrig"
+      :previewing="previewing"
+      @switchView="switchView"
+      ref="deckHead">
     </deck-head>
     <template v-if="!previewing">
       <ul>

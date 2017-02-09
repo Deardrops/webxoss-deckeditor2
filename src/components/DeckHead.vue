@@ -8,6 +8,9 @@ export default {
     scrolledToLrig: {
       require: true,
     },
+    previewing: {
+      require: true,
+    },
   },
   computed: {
     burstCount() {
@@ -39,13 +42,24 @@ export default {
   <div :class="$style.wrapper">
     <div :class="$style.head">
       <div>
-        <slot></slot>
+        <icon
+          v-if="previewing"
+          name="list"
+          label="list view"
+          @click.native="$emit('switchView', 'list')"/>
+        <icon
+          v-if="!previewing"
+          name="blocks"
+          label="preview"
+          @click.native="$emit('switchView', 'preview')"/>
+
         <template v-if="!scrolledToLrig">
           <span>Main Deck</span>
           <span :class="$style.right">
             <span :class="mainClass">{{ mainCount }}</span>/40
           </span>
         </template>
+
         <template v-if="scrolledToLrig">
           <span>Lrig Deck</span>
           <span :class="$style.right">
