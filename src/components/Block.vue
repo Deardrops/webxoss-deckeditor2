@@ -52,7 +52,7 @@ export default {
   width: 100%;
   margin: auto 0;
 }
-.thumbnail:before {
+.thumbnail::before {
   content: ""; /* 长宽固定の黑科技 */
   display: inline-block;
   padding-bottom: 100%;
@@ -67,7 +67,7 @@ export default {
   bottom: 0;
   width: 100%;
   height: 1.2em;
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: color(#000 a(.5));
   color: #fff;
 }
 .count {
