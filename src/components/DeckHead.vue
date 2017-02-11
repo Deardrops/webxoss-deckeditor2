@@ -101,7 +101,7 @@ export default {
   height: var(--height);
 
   background-color: #fff;
-  border-bottom: 1px solid #d6d6d6;
+  border-bottom: 1px solid var(--cell-border-color);
 }
 .shadow {
   @apply --shadow-2dp;

@@ -67,6 +67,7 @@ export default {
 </template>
 
 <style module scoped>
+@import 'css/vars.css';
 .group {
   display: inline-block;
   font-size: 0;
@@ -76,11 +77,11 @@ button {
   font-size: 1rem;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--cell-border-color);
 
   color: #333;
   &:disabled {
-    color: #ebebeb;
+    color: var(--cell-border-color);
   }
 
   &:not(:last-child) {
