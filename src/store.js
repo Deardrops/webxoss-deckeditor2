@@ -153,14 +153,18 @@ const store = new Vuex.Store({
 
 // watch deck change && save to localStorage immediately
 store.watch((state, getters) => {
-  if (getters.deckNames.length === 0) return
+  if (!getters.deckNames || !getters.deckNames.length) {
+    return
+  }
   localStorage.setItem('deck_filenames', JSON.stringify(getters.deckNames))
 
   let file = {
     mainDeck: getters.mainDeck.map(card => card.pid),
     lrigDeck: getters.lrigDeck.map(card => card.pid),
   }
-  if (state.deckName.length === 0) return
+  if (!state.deckName || !state.deckName.length) {
+    return
+  }
   let deckName = `deck_file_${state.deckName}`
   localStorage.setItem(deckName, JSON.stringify(file))
 })
