@@ -9,14 +9,14 @@ export default {
 </script>
 
 <template>
-  <button>
+  <span role="button">
     <icon :name="name" :label="label"></icon>
-  </button>
+  </span>
 </template>
 
 <style module scoped>
 @import 'css/vars.css';
-button {
+span {
   display: flex;
   justify-content: center;
   align-items: center;
