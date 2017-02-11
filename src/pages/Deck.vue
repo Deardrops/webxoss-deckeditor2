@@ -68,12 +68,16 @@ export default {
         {
           title: 'Import',
           icon: 'download',
-          action: () => {},
+          action: () => {
+            alert('Not yet implemented.')
+          },
         },
         {
           title: 'Export',
           icon: 'upload',
-          action: () => {},
+          action: () => {
+            alert('Not yet implemented.')
+          },
         },
       ]
     },
