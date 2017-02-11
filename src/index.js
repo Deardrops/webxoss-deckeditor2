@@ -28,3 +28,5 @@ $get('./CardInfo.json')
       })
     }, 1000)
   })
+
+console.log(require('./test.hjson'))

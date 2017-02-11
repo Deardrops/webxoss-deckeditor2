@@ -32,7 +32,8 @@ const TESTS = {
   vue: /\.vue$/,
   svg: /\.svg$/,
   txt: /\.(te?xt|md|markdown)$/,
-  image: /\.(webp|jpe?g|png|gif)$/,
+  asset: /\.(webp|jpe?g|png|gif)$/,
+  hjson: /\.hjson$/,
 }
 let browsers = [
   'last 2 versions',
@@ -149,15 +150,26 @@ config.base = {
         include: PATHS.media,
       },
       {
-        test: TESTS.image,
-        loaders: [
-          'url-loader?limit=10000',
+        test: TESTS.asset,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              name: 'assets/[name].[hash:7].[ext]',
+              limit: '10000',
+            },
+          },
         ],
         include: PATHS.src,
       },
       {
         test: TESTS.txt,
         use: 'raw-loader',
+        include: PATHS.src,
+      },
+      {
+        test: TESTS.hjson,
+        loader: 'hjson-loader',
         include: PATHS.src,
       },
     ],
