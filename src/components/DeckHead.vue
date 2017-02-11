@@ -51,12 +51,16 @@ export default {
         label="preview"
         @click.native="$emit('switchView', 'preview')"/>
 
-      <template v-if="!scrolledToLrig">
+      <template v-if="previewing">
+        <span>Overview</span>
+      </template>
+
+      <template v-if="!previewing && !scrolledToLrig">
         <span :class="$style.deckName">MainDeck </span>
         (<span :class="mainClass">{{ mainCount }}</span>/40)
       </template>
 
-      <template v-if="scrolledToLrig">
+      <template v-if="!previewing && scrolledToLrig">
         <span :class="$style.deckName">LrigDeck </span>
         ({{ lrigCount }}/10)
       </template>
