@@ -71,6 +71,8 @@ export default {
   position: fixed;
   top: var(--padding);
   right: var(--padding);
+  z-index: var(--z-header-menu);
+
   background-color: #fff;
   @apply --shadow-8dp;
 
