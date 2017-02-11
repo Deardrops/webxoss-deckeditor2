@@ -34,6 +34,9 @@ export default {
     lrigCount() {
       return this.$store.getters.lrigDeck.length
     },
+    lrigClass() {
+      return this.lrigCount === 10 ? '' : this.$style.warn
+    },
   },
 }
 </script>
@@ -65,7 +68,7 @@ export default {
 
       <template v-if="!previewing && scrolledToLrig">
         <span :class="$style.deckName">LrigDeck </span>
-        ({{ lrigCount }}/10)
+        (<span :class="lrigClass">{{ lrigCount }}</span>/10)
       </template>
 
       <div :class="$style.right">
