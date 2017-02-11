@@ -137,7 +137,7 @@ export default {
       (mode === 'preview') ? this.goBlockView() : this.goListView()
     },
     goListView() {
-      this.$router.push({
+      this.$router.replace({
         path: '/deck',
         // query: {
         //   mode: 'list',
@@ -145,7 +145,7 @@ export default {
       })
     },
     goBlockView() {
-      this.$router.push({
+      this.$router.replace({
         path: '/deck',
         query: {
           mode: 'preview',
