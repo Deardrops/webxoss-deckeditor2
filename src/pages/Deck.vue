@@ -28,6 +28,7 @@ export default {
   data: () => ({
     request: -1,
     scrolledToLrig: false,
+    scrolledToTop: true,
   }),
   computed: {
     ...mapState([
@@ -125,6 +126,7 @@ export default {
       let $lrigDeck = this.$refs.lrigDeck
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
+      this.scrolledToTop = window.scrollY <= 0
       this.request = requestFrame(this.updateDeckHeader)
     },
     switchView(mode) {
@@ -167,8 +169,8 @@ export default {
     <deck-head
       :scrolledToLrig="scrolledToLrig"
       :previewing="previewing"
-      @switchView="switchView"
-      ref="deckHead">
+      :shadow="!scrolledToTop"
+      @switchView="switchView">
     </deck-head>
 
     <!-- List view -->

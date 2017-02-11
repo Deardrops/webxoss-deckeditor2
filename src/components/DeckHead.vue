@@ -11,6 +11,9 @@ export default {
     previewing: {
       require: true,
     },
+    shadow: {
+      require: true,
+    },
   },
   computed: {
     burstCount() {
@@ -37,7 +40,7 @@ export default {
 
 <template>
   <div :class="$style.wrapper">
-    <div :class="$style.head">
+    <div :class="[$style.head, shadow ? $style.shadow : '']">
       <icon
         :class="$style.icon"
         v-if="previewing"
@@ -96,6 +99,9 @@ export default {
 
   background-color: #fff;
   border-bottom: 1px solid #d6d6d6;
+}
+.shadow {
+  @apply --shadow-2dp;
 }
 .right {
   flex: 1;
