@@ -1,10 +1,10 @@
 <script>
 import { mapGetters } from 'vuex'
-import Thumbnail from 'components/Thumbnail'
+import CardImage from 'components/CardImage'
 
 export default {
   components: {
-    Thumbnail,
+    CardImage,
   },
   props: {
     card: {
@@ -33,11 +33,7 @@ export default {
 
 <template>
   <router-link :to="detailRoute" :class="$style.block">
-    <Thumbnail 
-      :class="[$style.thumbnail, $color[card.color]]"
-      :origin="{ x: .5, y: .37 }"
-      :scale="1.06"
-      :pid="card.pid"/>
+    <card-image :pid="card.pid" :class="$style.image"/>
     <div :class="$style.dimmer">×{{ count }}</div>
   </router-link>
 </template>
@@ -50,15 +46,9 @@ export default {
   box-sizing: border-box;
   padding: .2em;
 }
-.thumbnail {
+.image {
   width: 100%;
-}
-.thumbnail::before {
-  /* 长宽固定の黑科技 */
-  content: "";
-  display: inline-block;
-  padding-bottom: 100%;
-  vertical-align: middle;
+  vertical-align: bottom;
 }
 .dimmer {
   position: absolute;
