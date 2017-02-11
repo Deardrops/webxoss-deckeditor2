@@ -59,7 +59,7 @@ export default {
       <icon v-if="isRemaining" :class="$style.cross" name="add" label="delete"/>
       <icon v-else name="remove" label="minus"/>
     </button>
-    <button :class="$style.count" disabled>{{ count }}</button>
+    <button :class="$style.count">{{ count }}</button>
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
       <icon name="add" label="plus"/>
     </button>
@@ -77,6 +77,11 @@ button {
   width: 2.5rem;
   height: 2.5rem;
   border: 1px solid #ebebeb;
+
+  color: #333;
+  &:disabled {
+    color: #ebebeb;
+  }
 
   &:not(:last-child) {
     border-right: none;
