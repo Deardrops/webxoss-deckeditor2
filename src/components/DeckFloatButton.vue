@@ -48,9 +48,9 @@ export default {
 
 <template>
   <router-link :to="searchRoute">
-    <button :class="[$style.button, hidden ? $style.hidden : '']">
+    <span role="button" :class="[$style.button, hidden ? $style.hidden : '']">
       <icon name="search"/>
-    </button>
+    </span>
   </router-link>
 </template>
 
@@ -62,6 +62,11 @@ export default {
   right: 2rem;
   width: 4rem;
   height: 4rem;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
+
   font-size: 1.5em;
   color: #fff;
   background-color: #ff5722;
