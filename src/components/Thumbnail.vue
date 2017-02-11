@@ -6,9 +6,11 @@
 -->
 
 <script>
-import { getUrlByPid } from 'js/ImageManager'
-import Localize from 'js/Localize'
+import CardImage from 'components/CardImage'
 export default {
+  components: {
+    CardImage,
+  },
   props: {
     pid: {
       type: Number,
@@ -29,12 +31,6 @@ export default {
     },
   },
   computed: {
-    src() {
-      return getUrlByPid(this.pid)
-    },
-    alt() {
-      return Localize.cardName(CardInfo[this.pid])
-    },
     style() {
       let x = this.origin.x * 100
       let y = this.origin.y * 100
@@ -53,7 +49,7 @@ export default {
 
 <template>
   <div :class="$style.frame">
-    <img :src="src" :alt="alt" :style="style">
+    <card-image :pid="pid" :style="style">
   </div>
 </template>
 

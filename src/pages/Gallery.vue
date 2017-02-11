@@ -1,23 +1,17 @@
 <script>
-import { getUrlByPid } from 'js/ImageManager'
 import AppHeader from 'components/AppHeader'
-import Localize from 'js/Localize'
+import CardImage from 'components/CardImage'
 
 export default {
   components: {
     AppHeader,
+    CardImage,
   },
   computed: {
     pid() {
-      // Return <大器晚成>(pid23) if invalid
+      // Return <大器晚成>(pid: 23) if invalid
       let pid = +this.$route.query.pid
       return CardInfo[pid] ? pid : 23
-    },
-    src() {
-      return getUrlByPid(this.pid)
-    },
-    alt() {
-      return Localize.cardName(CardInfo[this.pid])
     },
   },
   methods: {
@@ -33,7 +27,7 @@ export default {
   <div :class="$style.page">
     <app-header title="Gallery"></app-header>
     <div :class="$style.body" @click="goBack">
-      <img :class="$style.image" :src="src" :alt="alt">
+      <card-image :class="$style.image" :pid="pid">
     </div>
   </div>
 </template>
