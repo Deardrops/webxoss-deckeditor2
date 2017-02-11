@@ -35,7 +35,7 @@ export default {
       return this.$store.getters.lrigDeck.length
     },
     lrigClass() {
-      return this.lrigCount === 10 ? '' : this.$style.warn
+      return this.lrigCount <= 10 ? '' : this.$style.warn
     },
   },
 }
