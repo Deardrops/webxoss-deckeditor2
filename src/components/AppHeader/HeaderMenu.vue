@@ -12,7 +12,7 @@ export default {
   },
   computed: {
     opened() {
-      return !!this.$route.query.menu
+      return !!this.$route.query.menu && !this.$route.query.modal
     },
   },
   methods: {

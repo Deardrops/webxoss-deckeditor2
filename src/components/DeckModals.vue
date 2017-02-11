@@ -73,9 +73,9 @@ export default {
     open(type) {
       this.$router.replace({
         path: this.$route.path,
-        query: {
+        query: Object.assign({}, this.$route.query, {
           modal: type,
-        },
+        }),
       })
     },
     close() {
