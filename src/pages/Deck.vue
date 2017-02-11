@@ -43,7 +43,9 @@ export default {
         {
           title: 'New Deck',
           icon: 'add',
-          action: () => {},
+          action: () => {
+            this.openModal('add')
+          },
         },
         {
           title: 'Clone',
