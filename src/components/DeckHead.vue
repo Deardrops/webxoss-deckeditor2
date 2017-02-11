@@ -41,37 +41,32 @@ export default {
 <template>
   <div :class="$style.wrapper">
     <div :class="$style.head">
-      <div>
-        <icon
-          v-if="previewing"
-          name="list"
-          label="list view"
-          @click.native="$emit('switchView', 'list')"/>
-        <icon
-          v-if="!previewing"
-          name="blocks"
-          label="preview"
-          @click.native="$emit('switchView', 'preview')"/>
+      <icon
+        :class="$style.icon"
+        v-if="previewing"
+        name="list"
+        label="list view"
+        @click.native="$emit('switchView', 'list')"/>
+      <icon
+        :class="$style.icon"
+        v-if="!previewing"
+        name="blocks"
+        label="preview"
+        @click.native="$emit('switchView', 'preview')"/>
 
-        <template v-if="!scrolledToLrig">
-          <span>Main Deck</span>
-          <span :class="$style.right">
-            <span :class="mainClass">{{ mainCount }}</span>/40
-          </span>
-        </template>
+      <template v-if="!scrolledToLrig">
+        <span :class="$style.deckName">MainDeck </span>
+        (<span :class="mainClass">{{ mainCount }}</span>/40)
+      </template>
 
-        <template v-if="scrolledToLrig">
-          <span>Lrig Deck</span>
-          <span :class="$style.right">
-            <span :class="lrigClass">{{ lrigCount }}</span>/10
-          </span>
-        </template>
-      </div>
+      <template v-if="scrolledToLrig">
+        <span :class="$style.deckName">LrigDeck </span>
+        (<span :class="lrigClass">{{ lrigCount }}</span>/10)
+      </template>
+
       <div :class="$style.right">
         <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
-        <span>
-          <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
-        </span>
+        <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>
   </div>
@@ -79,29 +74,39 @@ export default {
 
 <style module>
 @import 'css/vars.css';
+:root {
+  --height: calc(0.8 * var(--header-height));
+}
 .wrapper {
-  height: calc(0.8 * var(--header-height));
+  height: var(--height)
 }
 .head {
   position: fixed;
-  z-index: var(--z-header);
   top: var(--header-height);
   left: 0;
   right: 0;
+  z-index: var(--z-header);
+
   display: flex;
-  justify-content: space-between;
-  line-height: calc(0.8 * var(--header-height));
+  align-items: center;
+
   padding: 0 var(--padding);
+  height: var(--height);
+
   background-color: #fff;
   border-bottom: 1px solid #d6d6d6;
 }
 .right {
-  margin-left: .8em
+  flex: 1;
+  text-align: right;
 }
 .warn {
   color: #ff0000;
 }
 .mayu {
-  margin-right: .8em;
+  margin-right: .5em;
+}
+.icon {
+  font-size: 1.8em;
 }
 </style>

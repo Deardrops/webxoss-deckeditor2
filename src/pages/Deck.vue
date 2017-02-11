@@ -126,11 +126,8 @@ export default {
     },
     updateDeckHeader() {
       let lrigDOM = this.$refs.lrigDOM
-      if (!lrigDOM) {
-        return
-      }
-      if (lrigDOM.getBoundingClientRect().top < this.headHeight) {
-        this.scrolledToLrig = true
+      if (lrigDOM) {
+        this.scrolledToLrig = lrigDOM.getBoundingClientRect().top < this.headHeight
       } else {
         this.scrolledToLrig = false
       }
@@ -179,6 +176,8 @@ export default {
       @switchView="switchView"
       ref="deckHead">
     </deck-head>
+
+    <!-- List view -->
     <template v-if="!previewing">
       <ul>
         <li v-for="card in shownMainDeck">
@@ -191,22 +190,17 @@ export default {
         </li>
       </ul>
     </template>
-    <template v-if="previewing">
-      <div :class="$style.container">
-        <div
-          :class="$style.child"
-          v-for="card in shownMainDeck">
-          <block :card="card"/>
-        </div>
-        </div>
-      <div :class="$style.container">
-        <div 
-          :class="$style.child" 
-          v-for="card in shownLrigDeck">
-          <block :card="card"/>
-        </div>
+
+    <!-- Block view -->
+    <div :class="$style.blocks" v-if="previewing">
+      <div>
+        <block v-for="card in shownMainDeck" :class="$style.block" :card="card"/>
       </div>
-    </template>
+      <div>
+        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card"/>
+      </div>
+    </div>
+
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
@@ -214,6 +208,7 @@ export default {
 </template>
 
 <style module>
+@import "css/vars.css";
 .select {
   flex: 1;
   vertical-align: middle;
@@ -222,13 +217,10 @@ export default {
     color: #000;
   }
 }
-.container {
-  display: flex;
-  flex-flow: row wrap;
-  justify-content: space-around;
+.blocks {
+  padding: var(--padding);
 }
-.child {
-  width: 19%;
-  padding-top: .2em;
+.block {
+  width: 20%;
 }
 </style>

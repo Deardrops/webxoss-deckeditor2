@@ -32,46 +32,40 @@ export default {
 </script>
 
 <template>
-  <router-link :to="detailRoute">
+  <router-link :to="detailRoute" :class="$style.block">
     <Thumbnail 
       :class="[$style.thumbnail, $color[card.color]]"
       :origin="{ x: .5, y: .37 }"
       :scale="1.06"
       :pid="card.pid"/>
-    <div :class="$style.wrapper">
-      <div :class="$style.dimmer">
-        <span :class="$style.count">×{{ count }}</span>
-      </div>
-    </div>
+    <div :class="$style.dimmer">×{{ count }}</div>
   </router-link>
 </template>
 
 <style src="css/colors.css" module="$color"></style>
 <style module>
+.block {
+  position: relative;
+  display: inline-block;
+  box-sizing: border-box;
+  padding: .2em;
+}
 .thumbnail {
   width: 100%;
-  margin: auto 0;
 }
 .thumbnail::before {
-  content: ""; /* 长宽固定の黑科技 */
+  /* 长宽固定の黑科技 */
+  content: "";
   display: inline-block;
   padding-bottom: 100%;
   vertical-align: middle;
 }
-.wrapper {
-  position: relative;
-  height: 0;
-}
 .dimmer {
   position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 1.2em;
-  background-color: color(#000 a(.5));
+  right: .2em;
+  bottom: .2em;
+  padding: 0 .2em;
   color: #fff;
-}
-.count {
-  float: right;
-  padding-right: 0.2em;
+  background-color: color(#000 a(.7));
 }
 </style>
