@@ -47,7 +47,9 @@ export default {
           :class="$style.item"
           v-for="item in items"
           @click="item.action">
-          <icon :class="$style.icon" :name="item.icon"/>
+          <button>
+            <icon :class="$style.icon" :name="item.icon" :label="item.title"/>
+          </button>
           <label>{{ item.title }}</label>
         </li>
       </ul>

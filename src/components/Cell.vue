@@ -161,8 +161,8 @@ export default {
         <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
         <div v-if="hasBurst" :class="$style.wrapper">
           <div :class="[$style.hexagon, $color[card.color]]">
-            <icon name="hexagon"/>
-            <icon :class="$style.burst" name="burst"/>
+            <icon name="hexagon" aria-hidden="true"/>
+            <icon :class="$style.burst" name="burst" label="burst"/>
           </div>
         </div>
       </div>

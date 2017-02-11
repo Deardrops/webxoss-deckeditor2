@@ -4,19 +4,19 @@ export default {
   components: {
     Icon,
   },
-  props: ['name'],
+  props: ['name', 'label'],
 }
 </script>
 
 <template>
-  <div>
-    <icon :name="name"></icon>
-  </div>
+  <button>
+    <icon :name="name" :label="label"></icon>
+  </button>
 </template>
 
 <style module scoped>
 @import 'css/vars.css';
-div {
+button {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -7,6 +7,7 @@
 
 <script>
 import { getUrlByPid } from 'js/ImageManager'
+import Localize from 'js/Localize'
 export default {
   props: {
     pid: {
@@ -21,7 +22,7 @@ export default {
         y: .3,
       }),
     },
-    // iamgeWidth / containerWidth
+    // imageWidth / containerWidth
     scale: {
       type: Number,
       default: 2.5,
@@ -30,6 +31,9 @@ export default {
   computed: {
     src() {
       return getUrlByPid(this.pid)
+    },
+    alt() {
+      return Localize.cardName(CardInfo[this.pid])
     },
     style() {
       let x = this.origin.x * 100
@@ -49,7 +53,7 @@ export default {
 
 <template>
   <div :class="$style.frame">
-    <img :src="src" :style="style">
+    <img :src="src" :alt="alt" :style="style">
   </div>
 </template>
 

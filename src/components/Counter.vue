@@ -56,12 +56,12 @@ export default {
       :class="$style.minus" 
       @click="minus" 
       :disabled="(!isRemaining && count <= 0) || protecting">
-      <icon v-if="isRemaining" :class="$style.cross" name="add"/>
-      <icon v-else name="remove"/>
+      <icon v-if="isRemaining" :class="$style.cross" name="add" label="delete"/>
+      <icon v-else name="remove" label="minus"/>
     </button>
     <button :class="$style.count" disabled>{{ count }}</button>
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
-      <icon name="add"/>
+      <icon name="add" label="plus"/>
     </button>
   </div>
 </template>
