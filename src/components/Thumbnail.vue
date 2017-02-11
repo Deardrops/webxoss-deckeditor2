@@ -21,13 +21,13 @@ export default {
       type: Object,
       default: () => ({
         x: .5,
-        y: .3,
+        y: .4,
       }),
     },
     // imageWidth / containerWidth
     scale: {
       type: Number,
-      default: 2.5,
+      default: 1.35,
     },
   },
   computed: {
