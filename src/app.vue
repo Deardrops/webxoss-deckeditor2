@@ -2,20 +2,29 @@
 let scrollTopMap = {}
 export default {
   created() {
-    // test
-    this.$store.commit('putDeckFile', {
-      name: 'WHITE_HOPE',
-      pids: require('./WHITE_HOPE.json'),
-    })
-    this.$store.commit('putDeckFile', {
-      name: 'RED_FISH',
-      pids: require('./RED_FISH.json'),
-    })
-    this.$store.commit('putDeckFile', {
-      name: 'TEST_DECK',
-      pids: require('./TEST_DECK.json'),
-    })
-    this.$store.commit('switchDeck', 'WHITE_HOPE')
+    // init Deck from localStorage
+    let deck_filenames = localStorage.getItem('deck_filenames')
+    if (deck_filenames) {
+      let FileNames = JSON.parse(deck_filenames)
+      FileNames.forEach(name => {
+        let deckFile = localStorage.getItem('deck_file_'+name)
+        if (deckFile) {
+          let deck = JSON.parse(deckFile)
+          let deckPids = deck.mainDeck.concat(deck.lrigDeck)
+          this.$store.commit('putDeckFile', {
+            name: name,
+            pids: deckPids,
+          })
+        }
+      })
+      this.$store.commit('switchDeck', FileNames[0])
+    } else {
+      this.$store.commit('putDeckFile', {
+        name: 'WHITE_HOPE',
+        pids: require('./WHITE_HOPE.json'),
+      })
+      this.$store.commit('switchDeck', 'WHITE_HOPE')
+    }
   },
   watch: {
     $route(to, from) {
