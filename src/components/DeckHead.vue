@@ -111,7 +111,7 @@ export default {
   text-align: right;
 }
 .warn {
-  color: #ff0000;
+  color: #ff5722;
 }
 .mayu {
   margin-right: .5em;
