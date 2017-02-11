@@ -19,9 +19,9 @@ export default {
     open() {
       this.$router.push({
         path: this.$route.path,
-        query: {
+        query: Object.assign({}, this.$route.query, {
           menu: 'true',
-        },
+        }),
       })
     },
     close() {

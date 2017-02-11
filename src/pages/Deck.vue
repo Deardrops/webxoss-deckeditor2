@@ -4,9 +4,14 @@ import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
 import Cell from 'components/Cell'
+import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
+import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
+
+let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
+let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
 
 export default {
   components: {
@@ -16,8 +21,14 @@ export default {
     DeckModals,
     DeckFloatButton,
     Cell,
+    Block,
     DeckHead,
+    Icon,
   },
+  data: () => ({
+    request: -1,
+    scrolledToLrig: false,
+  }),
   computed: {
     ...mapState([
       'remainingPids',
@@ -31,9 +42,7 @@ export default {
         {
           title: 'New Deck',
           icon: 'add',
-          action: () => {
-            this.openModal('add')
-          },
+          action: () => {},
         },
         {
           title: 'Clone',
@@ -80,6 +89,27 @@ export default {
       let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
     },
+    headHeight() {
+      if (this.$refs.appHead && this.$refs.deckHead){
+        return this.$refs.appHead.$el.clientHeight +
+          this.$refs.deckHead.$el.clientHeight
+      }
+      return 0
+    },
+    deckNames() {
+      return this.$store.getters.deckNames
+    },
+    deckName: {
+      get() {
+        return this.$store.state.deckName
+      },
+      set(name) {
+        this.$store.commit('switchDeck', name)
+      },
+    },
+    previewing() {
+      return this.$route.query.mode === 'preview'
+    },
   },
   methods: {
     openMenu() {
@@ -94,28 +124,103 @@ export default {
     closeModal() {
       this.$refs.modals.close()
     },
+    updateDeckHeader() {
+      let lrigDOM = this.$refs.lrigDOM
+      if (lrigDOM) {
+        this.scrolledToLrig = lrigDOM.getBoundingClientRect().top < this.headHeight
+      } else {
+        this.scrolledToLrig = false
+      }
+      this.request = requestFrame(this.updateDeckHeader)
+    },
+    switchView(mode) {
+      (mode === 'preview') ? this.goBlockView() : this.goListView()
+    },
+    goListView() {
+      this.$router.replace({
+        path: '/deck',
+        // query: {
+        //   mode: 'list',
+        // },
+      })
+    },
+    goBlockView() {
+      this.$router.replace({
+        path: '/deck',
+        query: {
+          mode: 'preview',
+        },
+      })
+    },
+  },
+  mounted() {
+    this.updateDeckHeader()
+  },
+  destroyed() {
+    cancelRequest(this.request)
   },
 }
 </script>
 
 <template>
   <div>
-    <app-header title="Deck Editor">
+    <app-header title="Deck Editor" ref="appHead">
+      <select :class="$style.select" v-model="deckName">
+        <option v-for="name in deckNames" :value="name">{{ name }}</option>
+      </select>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head></deck-head>
-    <ul>
-      <li v-for="card in shownMainDeck">
-        <cell :card="card" :protectionEnabled="true"/>
-      </li>
-    </ul>
-    <ul>
-      <li v-for="card in shownLrigDeck">
-        <cell :card="card" :protectionEnabled="true"/>
-      </li>
-    </ul>
+    <deck-head
+      :scrolledToLrig="scrolledToLrig"
+      :previewing="previewing"
+      @switchView="switchView"
+      ref="deckHead">
+    </deck-head>
+
+    <!-- List view -->
+    <template v-if="!previewing">
+      <ul>
+        <li v-for="card in shownMainDeck">
+          <cell :card="card" :protectionEnabled="true"/>
+        </li>
+      </ul>
+      <ul ref="lrigDOM">
+        <li v-for="card in shownLrigDeck">
+          <cell :card="card" :protectionEnabled="true"/>
+        </li>
+      </ul>
+    </template>
+
+    <!-- Block view -->
+    <div :class="$style.blocks" v-if="previewing">
+      <div>
+        <block v-for="card in shownMainDeck" :class="$style.block" :card="card"/>
+      </div>
+      <div>
+        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card"/>
+      </div>
+    </div>
+
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
   </div>
 </template>
+
+<style module>
+@import "css/vars.css";
+.select {
+  flex: 1;
+  vertical-align: middle;
+  color: #fff;
+  & > option {
+    color: #000;
+  }
+}
+.blocks {
+  padding: var(--padding);
+}
+.block {
+  width: 20%;
+}
+</style>

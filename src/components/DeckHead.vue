@@ -4,18 +4,15 @@ export default {
   components: {
     Icon,
   },
+  props: {
+    scrolledToLrig: {
+      require: true,
+    },
+    previewing: {
+      require: true,
+    },
+  },
   computed: {
-    deckNames() {
-      return this.$store.getters.deckNames
-    },
-    deckName: {
-      get() {
-        return this.$store.state.deckName
-      },
-      set(name) {
-        this.$store.commit('switchDeck', name)
-      },
-    },
     burstCount() {
       return this.$store.getters.deck
         .map(card => CardInfo[card.cid]) // TODO: utils
@@ -25,54 +22,91 @@ export default {
     burstClass() {
       return this.burstCount === 20 ? '' : this.$style.warn
     },
+    mainCount() {
+      return this.$store.getters.mainDeck.length
+    },
+    mainClass() {
+      return this.mainCount === 40 ? '' : this.$style.warn
+    },
+    lrigCount() {
+      return this.$store.getters.lrigDeck.length
+    },
+    lrigClass() {
+      return this.lrigCount === 10 ? '' : this.$style.warn
+    },
   },
 }
 </script>
 
 <template>
-  <div :class="$style.head">
-    <div>
-      <select :class="$style.select" v-model="deckName">
-        <option v-for="name in deckNames" :value="name">{{ name }}</option>
-      </select>
-      <icon :class="$style.arrow" name="arrow"/>
-    </div>
-    <div :class="$style.right">
-      <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
-      <span>
+  <div :class="$style.wrapper">
+    <div :class="$style.head">
+      <icon
+        :class="$style.icon"
+        v-if="previewing"
+        name="list"
+        label="list view"
+        @click.native="$emit('switchView', 'list')"/>
+      <icon
+        :class="$style.icon"
+        v-if="!previewing"
+        name="blocks"
+        label="preview"
+        @click.native="$emit('switchView', 'preview')"/>
+
+      <template v-if="!scrolledToLrig">
+        <span :class="$style.deckName">MainDeck </span>
+        (<span :class="mainClass">{{ mainCount }}</span>/40)
+      </template>
+
+      <template v-if="scrolledToLrig">
+        <span :class="$style.deckName">LrigDeck </span>
+        (<span :class="lrigClass">{{ lrigCount }}</span>/10)
+      </template>
+
+      <div :class="$style.right">
+        <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
         <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
-      </span>
+      </div>
     </div>
   </div>
 </template>
 
 <style module>
 @import 'css/vars.css';
+:root {
+  --height: calc(0.8 * var(--header-height));
+}
+.wrapper {
+  height: var(--height)
+}
 .head {
+  position: fixed;
+  top: var(--header-height);
+  left: 0;
+  right: 0;
+  z-index: var(--z-header);
+
   display: flex;
-  justify-content: space-between;
-  line-height: calc(0.8 * var(--header-height));
+  align-items: center;
+
   padding: 0 var(--padding);
+  height: var(--height);
+
+  background-color: #fff;
   border-bottom: 1px solid #d6d6d6;
 }
-.select {
-  vertical-align: middle;
-  color: var(--main-color);
-  font-weight: bold;
-}
-.arrow {
-  transform: rotate(90deg);
-  font-size: 1.7em;
-  vertical-align: middle;
-  color: var(--main-color);
-}
 .right {
-  font-size: .8em;
+  flex: 1;
+  text-align: right;
 }
 .warn {
   color: #ff0000;
 }
 .mayu {
-  margin-right: .8em;
+  margin-right: .5em;
+}
+.icon {
+  font-size: 1.8em;
 }
 </style>

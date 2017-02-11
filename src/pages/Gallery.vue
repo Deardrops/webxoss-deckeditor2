@@ -44,12 +44,11 @@ export default {
   flex-direction: column;
   height: 100vh;
   background-color: #333;
+  justify-content: center;
 }
 .body {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
+  display: table-cell;
+  overflow-y: auto;
 }
 .image {
   width: 100%;
