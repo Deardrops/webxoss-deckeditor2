@@ -28,6 +28,7 @@ export default {
   data: () => ({
     request: -1,
     scrolledToLrig: false,
+    scrolledToTop: true,
   }),
   computed: {
     ...mapState([
@@ -42,7 +43,9 @@ export default {
         {
           title: 'New Deck',
           icon: 'add',
-          action: () => {},
+          action: () => {
+            this.openModal('add')
+          },
         },
         {
           title: 'Clone',
@@ -68,12 +71,16 @@ export default {
         {
           title: 'Import',
           icon: 'download',
-          action: () => {},
+          action: () => {
+            alert('Not yet implemented.')
+          },
         },
         {
           title: 'Export',
           icon: 'upload',
-          action: () => {},
+          action: () => {
+            alert('Not yet implemented.')
+          },
         },
       ]
     },
@@ -88,13 +95,6 @@ export default {
         .filter(card => isLrigCard(card))
       let deck = _.unionBy(this.lrigDeck, remainingDeck, 'pid')
       return defaultSort(deck)
-    },
-    headHeight() {
-      if (this.$refs.appHead && this.$refs.deckHead){
-        return this.$refs.appHead.$el.clientHeight +
-          this.$refs.deckHead.$el.clientHeight
-      }
-      return 0
     },
     deckNames() {
       return this.$store.getters.deckNames
@@ -125,12 +125,10 @@ export default {
       this.$refs.modals.close()
     },
     updateDeckHeader() {
-      let lrigDOM = this.$refs.lrigDOM
-      if (lrigDOM) {
-        this.scrolledToLrig = lrigDOM.getBoundingClientRect().top < this.headHeight
-      } else {
-        this.scrolledToLrig = false
-      }
+      let $lrigDeck = this.$refs.lrigDeck
+      let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
+      this.scrolledToLrig = top <= window.innerHeight / 2
+      this.scrolledToTop = window.scrollY <= 0
       this.request = requestFrame(this.updateDeckHeader)
     },
     switchView(mode) {
@@ -164,7 +162,7 @@ export default {
 
 <template>
   <div>
-    <app-header title="Deck Editor" ref="appHead">
+    <app-header title="Deck Editor">
       <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
       </select>
@@ -173,8 +171,8 @@ export default {
     <deck-head
       :scrolledToLrig="scrolledToLrig"
       :previewing="previewing"
-      @switchView="switchView"
-      ref="deckHead">
+      :shadow="!scrolledToTop"
+      @switchView="switchView">
     </deck-head>
 
     <!-- List view -->
@@ -184,7 +182,7 @@ export default {
           <cell :card="card" :protectionEnabled="true"/>
         </li>
       </ul>
-      <ul ref="lrigDOM">
+      <ul ref="lrigDeck">
         <li v-for="card in shownLrigDeck">
           <cell :card="card" :protectionEnabled="true"/>
         </li>

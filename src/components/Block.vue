@@ -56,6 +56,6 @@ export default {
   bottom: .2em;
   padding: 0 .2em;
   color: #fff;
-  background-color: color(#000 a(.7));
+  background-color: color(#000 a(.6));
 }
 </style>

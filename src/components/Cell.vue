@@ -224,7 +224,7 @@ export default {
 .cell {
   display: flex;
   padding: var(--padding);
-  border-bottom: 1px solid #d6d6d6;
+  border-bottom: 1px solid var(--cell-border-color);
 }
 .thumbnail {
   width: 6.25rem; /* avoid stretch */

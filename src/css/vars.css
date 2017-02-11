@@ -2,6 +2,7 @@
   --main-color: #2196f3;
   --header-height: 4rem;
   --padding: .8rem;
+  --cell-border-color: #d6d6d6;
 
   /* z-indexes */
   --z-header: 1;

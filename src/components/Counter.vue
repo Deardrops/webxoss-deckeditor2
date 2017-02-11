@@ -59,7 +59,7 @@ export default {
       <icon v-if="isRemaining" :class="$style.cross" name="add" label="delete"/>
       <icon v-else name="remove" label="minus"/>
     </button>
-    <button :class="$style.count" disabled>{{ count }}</button>
+    <button :class="$style.count">{{ count }}</button>
     <button :class="$style.plus" @click="plus" :disabled="count >= 4">
       <icon name="add" label="plus"/>
     </button>
@@ -67,6 +67,7 @@ export default {
 </template>
 
 <style module scoped>
+@import 'css/vars.css';
 .group {
   display: inline-block;
   font-size: 0;
@@ -76,7 +77,12 @@ button {
   font-size: 1rem;
   width: 2.5rem;
   height: 2.5rem;
-  border: 1px solid #ebebeb;
+  border: 1px solid var(--cell-border-color);
+
+  color: #333;
+  &:disabled {
+    color: var(--cell-border-color);
+  }
 
   &:not(:last-child) {
     border-right: none;

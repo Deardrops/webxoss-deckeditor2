@@ -11,6 +11,9 @@ export default {
     previewing: {
       require: true,
     },
+    shadow: {
+      require: true,
+    },
   },
   computed: {
     burstCount() {
@@ -32,7 +35,7 @@ export default {
       return this.$store.getters.lrigDeck.length
     },
     lrigClass() {
-      return this.lrigCount === 10 ? '' : this.$style.warn
+      return this.lrigCount <= 10 ? '' : this.$style.warn
     },
   },
 }
@@ -40,7 +43,7 @@ export default {
 
 <template>
   <div :class="$style.wrapper">
-    <div :class="$style.head">
+    <div :class="[$style.head, shadow ? $style.shadow : '']">
       <icon
         :class="$style.icon"
         v-if="previewing"
@@ -54,12 +57,16 @@ export default {
         label="preview"
         @click.native="$emit('switchView', 'preview')"/>
 
-      <template v-if="!scrolledToLrig">
+      <template v-if="previewing">
+        <span>Overview</span>
+      </template>
+
+      <template v-if="!previewing && !scrolledToLrig">
         <span :class="$style.deckName">MainDeck </span>
         (<span :class="mainClass">{{ mainCount }}</span>/40)
       </template>
 
-      <template v-if="scrolledToLrig">
+      <template v-if="!previewing && scrolledToLrig">
         <span :class="$style.deckName">LrigDeck </span>
         (<span :class="lrigClass">{{ lrigCount }}</span>/10)
       </template>
@@ -94,14 +101,17 @@ export default {
   height: var(--height);
 
   background-color: #fff;
-  border-bottom: 1px solid #d6d6d6;
+  border-bottom: 1px solid var(--cell-border-color);
+}
+.shadow {
+  @apply --shadow-2dp;
 }
 .right {
   flex: 1;
   text-align: right;
 }
 .warn {
-  color: #ff0000;
+  color: #ff5722;
 }
 .mayu {
   margin-right: .5em;
