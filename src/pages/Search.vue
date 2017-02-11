@@ -123,7 +123,9 @@ export default {
 .search {
   flex: 1;
   color: #fff;
-  line-height: var(--header-height);
+  padding: .3em .5em;
+  background-color: color(var(--main-color) l(+10%));
+  border-radius: 3px;
 }
 .search::placeholder {
   color: #fffa;
