@@ -131,11 +131,11 @@ export default {
       this.scrolledToTop = window.scrollY <= 0
       this.request = requestFrame(this.updateDeckHeader)
     },
-    switchView(mode) {
-      (mode === 'preview') ? this.goBlockView() : this.goListView()
+    toggleView() {
+      this.previewing ? this.goListView() : this.goBlockView()
     },
     goListView() {
-      this.$router.replace({
+      this.$router.push({
         path: '/deck',
         // query: {
         //   mode: 'list',
@@ -143,7 +143,7 @@ export default {
       })
     },
     goBlockView() {
-      this.$router.replace({
+      this.$router.push({
         path: '/deck',
         query: {
           mode: 'preview',
@@ -166,13 +166,17 @@ export default {
       <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
       </select>
+      <header-icon
+        slot="right"
+        :style="{ width: 'initial' }"
+        :name="previewing ? 'list' : 'blocks'"
+        @click.native="toggleView"/>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head
       :scrolledToLrig="scrolledToLrig"
       :previewing="previewing"
-      :shadow="!scrolledToTop"
-      @switchView="switchView">
+      :shadow="!scrolledToTop">
     </deck-head>
 
     <!-- List view -->
