@@ -91,13 +91,15 @@ self.addEventListener('activate', event => {
 self.addEventListener('fetch', event => {
   let request = event.request
 
-  return caches.match(request)
+  return event.respondWith(
+    caches.match(request)
     .then(response => {
       if (response) {
         console.log(`From cache: ${request.url}`)
         return response
       }
-      console.log(`From network: ${request.url}`)
+      // console.log(`From network: ${request.url}`)
       return fetch(request)
     })
+  )
 })
