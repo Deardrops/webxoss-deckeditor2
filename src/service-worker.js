@@ -1,7 +1,5 @@
 'use strict'
 
-console.log('Service worker startup.')
-
 let hash = self.serviceWorkerOption.hash
 let assets = self.serviceWorkerOption.assets
 let staticAssets = assets.filter(asset => !asset.endsWith('html'))
@@ -51,7 +49,7 @@ self.addEventListener('activate', event => {
       console.group('Delete outdated dynamic cache')
       return Promise.all(keys.map(key => {
         if (key.startsWith('dynamic ') && key !== `dynamic ${hash}`) {
-          console.log(hash)
+          console.log(key)
           return caches.delete(key)
         }
       }))

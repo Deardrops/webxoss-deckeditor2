@@ -188,6 +188,7 @@ config.base = {
         // add hash
         let hash = require('crypto').createHash('sha256')
         hash.update(JSON.stringify(option))
+        hash.update(require('fs').readFileSync('./src/service-worker.js'))
         option.hash = hash.digest('base64').slice(0, 7)
         return Promise.resolve('')
       },
