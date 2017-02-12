@@ -82,7 +82,7 @@ let config = {}
 config.base = {
   devtool: 'source-map',
   entry: {
-    vue: ['vue', 'vuex', 'vue-router', 'vuex-router-sync'],
+    vue: ['babel-polyfill', 'vue', 'vuex', 'vue-router', 'vuex-router-sync'],
     app: [PATHS.index],
   },
   output: {
