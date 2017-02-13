@@ -1,0 +1,382 @@
+{
+  suffix: ""
+  common: {
+    OK: OK
+    CANCEL: キャンセル
+    NO_CARDS: カードはありません
+    or: または
+  }
+  _misc: {
+    DIALOG_TITLE_EFFECTS: 複数の効果が同時に発動しています。\n先に処理するのを一つ選びなさい。
+    // NO_TARGET: 目標はありません
+    NO_OPTIONS: %sできません
+    // GIVE_UP_TARGET: 選びません
+    GIVE_UP: %sしない
+    GUARD_TRUE: 有
+    GUARD_FALSE: "-"
+    LIMITING: %s限定
+    WAIT: 対戦相手は考え中
+    CLASS_SEPARATOR: ":"
+    CROSS_NAME_QUOTE_LEFT: 《
+    CROSS_NAME_QUOTE_RIGHT: 》
+    CROSS_LEFT: 【クロス】%sの左
+    CROSS_RIGHT: 【クロス】%sの右
+    CROSS_AND: 【クロス】%sの左 かつ %sの右
+    CROSS_OR: か
+    GUARD_DESCRIPTION: 【ガード】（このカードを手札から捨てることで、ルリグの攻撃を一度無効にする）
+    MULTI_ENER_DESCRIPTION: 【常時能力】：【マルチエナ】（コストを支払う際に、このカードは全ての色を持つかのように扱う）
+  }
+  buttonTitle: {
+    OK: OK
+    CANCEL: キャンセル
+    LEVEL0_LRIG: ルリグセット
+    DISCARD_AND_REDRAW: 引き直す
+    CHARGE: チャージ
+    GROW: グロウ
+    SUMMON_SIGNI: 場に出す
+    SUMMON_SIGNI_ZONE: シグニゾーン
+    BANISH: バニッシュ
+    BOUNCE: 手札に戻る
+    // TRASH: トラッシュに置く
+    TRASH: トラッシュ
+    // TRASH_SIGNI: トラッシュに置く
+    TRASH_SIGNI: トラッシュ
+    USE_SPELL: 使用
+    SPELL_EFFECT: 効果を選び
+    USE_ARTS: アーツ使用
+    ARTS_EFFECT: 効果を選び
+    // SPELL_CUT_IN: スペルカットイン
+    SPELL_CUT_IN: カットイン
+    USE_ACTION_EFFECT: 起動能力
+    SEEK: 探す
+    SET_ORDER: 順番を決める
+    SIGNI_ATTACK: アタック
+    LRIG_ATTACK: アタック
+    GUARD: ガード
+    DISCARD: 捨てる
+    DECLARE: 宣言
+    PAY: 支払う
+    PAY_EXCEED: エクシード
+    DOWN: ダウン
+    UP: アップ
+    TARGET: 目標
+    PAY_ENER: エナを支払う
+    LAUNCH: 発動
+    EFFECTS: 先に処理
+    CONFIRM: 確認
+    END_SELECT: 選択完成
+    END_ENER_PHASE: エナフェイズ終了
+    END_GROW_PHASE: グロウフェイズ終了
+    END_MAIN_PHASE: メインフェイズ終了
+    END_ARTS_STEP: アーツステップ終了
+    // END_SIGNI_ATTACK_STEP: シグニアタックステップ終了
+    END_SIGNI_ATTACK_STEP: ステップ終了
+    // END_LRIG_ATTACK_STEP: ルリグアタックステップ終了
+    END_LRIG_ATTACK_STEP: ステップ終了
+    VIEW: 見る
+    ADD_TO_HAND: 手札に加える
+    COLOR: 色
+    CHOOSE_EFFECT: 効果を選び
+    CHOOSE_ZONE: Choose Zone
+    RESET_SIGNI_ZONE: 配置
+    CHARM_CARD: チャーム
+    TRASH_CHARM: TRASH_CHARM
+    REVEAL: 公開
+    PUT_TO_TOP: 上に置く
+    PUT_TO_BOTTOM: 下に置く
+    REVEAL_MORE: 多くのカードを公開ます
+    PROTECT: 守る
+    _SHIRONAKUJI: -6000
+    CLASS: クラス
+    PAY_WHITE_INSTEAD: 白を代わりに支払う
+    TRASH_OSAKI: オサキ
+    RESONA: レゾナ
+    CRASH: クラッシュ
+    PLAYER: プレイヤー
+    PUT_TO_CHECK_ZONE: チェックゾーンに置く
+    PUT_TO_ENER_ZONE: エナゾーンに置く
+    CONFIRM_REFRESH_SELF: リフレッシュ\nあなたのトラッシュを確認
+    CONFIRM_REFRESH_OPPONENT: リフレッシュ\n相手のトラッシュを確認
+  }
+  noOptions: {
+    // SPELL_CUT_IN: カットインできません
+    // GUARD: ガードできません
+    // 発動できません: 発動できません
+    TARGET: 目標はありません
+  }
+  giveUp: {
+    // SPELL_CUT_IN: カットインしない
+    // GUARD: ガードしない
+    // TARGET: 選択しない
+    // LAUNCH: 発動しない
+    // EFFECTS: 処理しない
+    TARGET: 選ばない
+    SUMMON_SIGNI_ZONE: キャンセル
+    DISCARD_AND_REDRAW: 引き直さない
+    SEEK: 探さない
+  }
+  gameText: {
+    white: 白
+    black: 黒
+    red: 赤
+    blue: 青
+    green: 緑
+    colorless: 無
+    ADD_TO_HAND: 手札に加える
+    SUMMON: 場に出す
+    DOWN: ダウン
+    UP: アップ
+    SHOW_EFFECTS_DIALOG_TITLE: 効果
+    PUT_TO_TOP: 上に置く
+    PUT_TO_BOTTOM: 下に置く
+    SELF: 自分
+    OPPONENT: 対戦相手
+    PUT_TO_ENER_ZONE: エナゾーンに置く
+    CONFIRM_ENCORE: アンコールを使用しますか？
+    MAIN_DECK: デッキ
+    HAND: 手札
+    SIGNI_ZONE: シグニゾーン
+    TRASH_ZONE: トラッシュ
+    LIFE_CLOTH: ライフクロス
+    SELECT_DONE: 選択完成
+  }
+  prop: {
+    cardType: 種類
+    classes: タイプ
+    level: レベル
+    color: 色
+    limit: リミット
+    power: パワー
+    limting: 限定条件
+    guard: ガード
+    cost: コスト
+    timmings: タイミング
+    effects: 効果
+    burst: ライフバースト
+  }
+  cardType: {
+    LRIG: ルリグ
+    SIGNI: シグニ
+    SPELL: スペル
+    ARTS: アーツ
+    RESONA: レゾナ
+  }
+  color: {
+    white: 白
+    black: 黒
+    red: 赤
+    blue: 青
+    green: 緑
+    colorless: 無
+  }
+  costColor: {
+    costWhite: 白
+    costBlack: 黒
+    costRed: 赤
+    costBlue: 青
+    costGreen: 緑
+    costColorless: 無
+  }
+  timming: {
+    mainPhase: 【メインフェイズ】
+    attackPhase: 【アタックフェイズ】
+    spellCutIn: 【スペルカットイン】
+  }
+  class: {
+    タマ: タマ
+    花代: 花代
+    ユヅキ: ユヅキ
+    ピルルク: ピルルク
+    エルドラ: エルドラ
+    ミルルン: ミルルン
+    緑子: 緑子
+    アン: アン
+    ウリス: ウリス
+    イオナ: イオナ
+    ウムル: ウムル
+    リメンバ: リメンバ
+    タウィル: タウィル
+    サシェ: サシェ
+    ミュウ: ミュウ
+    アイヤイ: アイヤイ
+    アルフォウ: アルフォウ
+    ハナレ: ハナレ
+    精像: 精像
+    天使: 天使
+    悪魔: 悪魔
+    美巧: 美巧
+    精武: 精武
+    アーム: アーム
+    ウェポン: ウェポン
+    遊具: 遊具
+    毒牙: 毒牙
+    精羅: 精羅
+    鉱石: 鉱石
+    宝石: 宝石
+    植物: 植物
+    原子: 原子
+    宇宙: 宇宙
+    精械: 精械
+    電機: 電機
+    古代兵器: 古代兵器
+    迷宮: 迷宮
+    精生: 精生
+    水獣: 水獣
+    空獣: 空獣
+    地獣: 地獣
+    龍獣: 龍獣
+    凶蟲: 凶蟲
+    精元: 精元
+  }
+  DOM: {
+    index: {
+      // link-support-webxoss: {
+      //  textContent: WEBXOSS NEEDS YOUR HELP!
+      //  href: about_en.html#support
+      // }
+      link-version: <紡ぐ者>
+      // label-nickname: あなたのニックネーム:
+      label-nickname: ニックネーム:
+      input-nickame: {
+        placeholder: ニックネーム
+      }
+      link-edit-deck: デッキ構築
+      label-bgm: BGM
+      label-sound-effect: SE
+      label-room-list: 部屋リスト:
+      span-play-replay: リプレイ再生
+      label-create-room-password: パスワード:
+      label-mayus-room: 繭の部屋
+      label-create-room: 部屋を作る:
+      input-room-name: {
+        placeholder: 部屋の名前
+      }
+      button-create-room: 完成
+      link-about: {
+        // textContent: このサイトについて
+        textContent: About
+        href: about_en.html
+      }
+      // link-service: サービスについて
+      link-service: {
+        textContent: Terms
+        href: service_en.html
+      }
+      // link-disclaimer: 責任取りについて
+      link-disclaimer: {
+        textContent: Disclaimer
+        href: service_en.html#disclaimer
+      }
+      link-supporters: {
+        // textContent: サポーターリスト
+        textContent: Supporters
+        href: supporters_en.html
+      }
+      span-leave-room: <<戻る
+      label-live: LIVE
+      // label-room: 部屋:
+      // label-host: ホスト:
+      // label-guest: ゲスト:
+      label-ready: 準備
+      // label-deck: デッキ:
+      button-replay-step: STEP
+      button-replay-auto: AUTO
+      span-surrender: 投了する
+      span-leave-game: 戻る
+      chat-input: {
+        placeholder: ここでチャットする
+      }
+      label-replay-list: リプレイリスト:
+      label-replay-file: ファイル:
+      button-replay-return: 戻る
+      reconnect-title: リンクが切断されました。
+      reconnect-retry: 再接続中…
+      wait-for-reconnect-title: 対戦相手が切断されました。
+      wait-for-reconnect-retry: 再接続を待っています...
+      wait-for-reconnect-button-drop: 待たない
+      span-set-proxy: Set Proxy
+      proxy-title: Proxy
+      proxy-description: If your connection to WEBXOSS server is not stable you can try a proxy.
+      proxy-noproxy: No Proxy
+      proxy-cloudflare: CloudFlare
+      proxy-incapsula: Incapsula
+      proxy-provide: Provide a server...
+      proxy-button-ok: OK
+      msgbox-button-ok: OK
+      msgbox-button-cancel: キャンセル
+    }
+    DeckEditor: {
+      link-back-to-webxoss: 構築完成
+      label-select-deck: デッキを選ぶ:
+      button-delete-deck: デリート
+      button-rename: リネーム
+      label-new-deck: 新しいデッキ:
+      input-new-deck-name: {
+        placeholder: デッキ名
+      }
+      button-new-deck: 新築
+      button-copy-deck: 複製
+      button-import-export: インポート/エクスポート
+      main-deck-title: メインデッキ
+      main-deck-mayus-room: 繭の部屋
+      main-deck-burst-title: ライフバースト:
+      lrig-deck-title: ルリグデッキ
+      label-import-from-file: ファイルからインポート:
+      label-export-to-file: ファイルにエクスポート:
+      button-export: エクスポート
+      button-text: テキストを表示
+      button-export-code: コードを表示
+      button-import-code: コードをインポート
+      button-import-export-cancel: キャンセル
+      search-input: {
+        placeholder: キーワードで検索
+      }
+      link-search-tips: {
+        textContent: ヒント
+        href: SearchTips_en.html
+      }
+      search-show-more: もっと表す…
+    }
+  }
+  index: {
+    REQUIRE_UPDATE: 新しいバージョンが必要です。\nクライアントを更新してください。
+    UPDATING: 更新中…
+    // UPDATE_READY: アップデート終了しました。ここでクリックと完成する。
+    UPDATE_READY: 更新完了しました。ここでクリックと完成する。
+    NET_WORK_ERROR: ネットワークにエラーがあります。
+    DISCONNECTED: リンク切断されました。
+    NO_VALID_DECK: まずデッキを作りなさい。
+    OPPONENT_DISCONNECTED: 対戦相手が切断されました。
+    SELF_DISCONNECTED: 対戦者が切断されました。
+    PLEASE_INPUT_A_NICKNAME: ニックネームを入力して下さい。
+    PLEASE_INPUT_A_ROOM_NAME: 部屋名を入力して下さい。
+    FAILED_TO_READ_DECK: デッキローディングは失敗しました。
+    NEW_GUEST: %s部屋に入りました
+    GUEST_LEFT: %s部屋を出ました
+    READY: 対戦相手は準備ができています。
+    UNREADY: Unready
+    INPUT_PASSWORD: パスワード
+    WRONG_PASSWORD: パスワードが正しくありません。
+    NOT_CONNECTED: まだサーバに接続されていません。\n後でもう一度お試しください。
+    SUPPORT_URL: about_en.html#support
+    CONFIRM_SURRENDER: 投了てもよろしいですか？
+    SURRENDERED: あなたは投了しました。
+    OPPONENT_SURRENDERED: 対戦相手は投了しました。
+    CONFIRM_CLOSE: ゲームを離れてもよろしいですか?
+    DROPPED: 対戦相手は、もうゲームから離れた。
+    SAVE_REPLAY: リプレイを保存
+    FAILED_TO_PARSE_REPLAY: ファイル解析は失敗しました。
+    UNSUPPORTED_REPLAY_VERSION: Unsupported replay version!\nPlease update your client!
+    PROVIDE_PROXY_SERVER: Would you like to provide us a proxy server?\nPlease contact webxoss@gmail.com !\nWEBXOSS will be more awesome with your help!
+    FETCHING_DATA: Fetching data...\nClick "OK" to cancel.
+    FAILED_TO_FETCH_DATA: Failed to fetch data!
+  }
+  editor: {
+    PLEASE_INPUT_A_DECK_NAME: デッキ名を入力して下さい。
+    DECK_NAME: デッキ名
+    DECK_NAME_ALREADY_EXISTS: デッキ"%s"は既に存在しました。
+    FAILED_TO_PARSE_FILE: ファイル解析は失敗しました。
+    FAILED_TO_PARSE_CODE: コード解析は失敗しました。
+    CONFIRM_DELETE_DECK: Are you sure to delete "%s"?
+  }
+}

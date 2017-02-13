@@ -7,7 +7,7 @@ import App from './app'
 import 'js/global'
 
 import Localize from 'js/Localize'
-Localize.setLanguage('en') // test
+Localize.init() // test
 
 import ImageFileCache from 'js/ImageFileCache'
 
@@ -28,5 +28,3 @@ $get('./CardInfo.json')
       })
     }, 1000)
   })
-
-console.log(require('./test.hjson'))

@@ -1,0 +1,363 @@
+{
+  suffix: _ru
+  common: {
+    OK: OK
+    CANCEL: Отмена
+    NO_CARDS: Нет карт
+    or: or
+  }
+  _misc: {
+    DIALOG_TITLE_EFFECTS: Сработало несколько способностей.\nВыберите какую выполнить.
+    // NO_TARGET: No targets
+    NO_OPTIONS: Не могу %s
+    // GIVE_UP_TARGET: Don\t select
+    GIVE_UP: Не %s
+    GUARD_TRUE: Да
+    GUARD_FALSE: Нет
+    LIMITING: Лишь для %s
+    WAIT: Ожидание...
+    CLASS_SEPARATOR: ":\n"
+    CROSS_NAME_QUOTE_LEFT: "\""
+    CROSS_NAME_QUOTE_RIGHT: "\""
+    CROSS_LEFT: >Связь< слева от %s
+    CROSS_RIGHT: >Связь< справа от %s
+    CROSS_AND: >Cross< %s Right and %s Left
+    CROSS_OR:  или 
+    // CROSS_LEFT: >Связь< слева от "%s"
+    // CROSS_RIGHT: >Связь< справа от "%s"
+    GUARD_DESCRIPTION: "[Защита] (Сбросив эту карту со своей руки, отмените атаку одной ИДЕЛ.)"
+    MULTI_ENER_DESCRIPTION: "[Постоянно]: [Мульти-энер] (Когда Вы платите цену, считается, что эта карта относится ко всем цветам.)"
+  }
+  buttonTitle: {
+    OK: OK
+    CANCEL: Отмена
+    LEVEL0_LRIG: Выбрать ИДЕЛ
+    DISCARD_AND_REDRAW: Заменить
+    CHARGE: Зарядить
+    GROW: Рост
+    SUMMON_SIGNI: призвать
+    SUMMON_SIGNI_ZONE: Зона
+    BANISH: стереть
+    BOUNCE: Вернуть
+    TRASH: убрать
+    TRASH_SIGNI: Убрать
+    USE_SPELL: Использовать Магию
+    SPELL_EFFECT: Выберите эффект Магии
+    USE_ARTS: Использовать Умения
+    ARTS_EFFECT: Выберите эффект Умения
+    SPELL_CUT_IN: Ответить
+    USE_ACTION_EFFECT: Действие
+    SEEK: Искать
+    SET_ORDER: Порядок
+    SIGNI_ATTACK: Атаковать
+    LRIG_ATTACK: Атаковать
+    GUARD: защититься
+    DISCARD: сбросить
+    DECLARE: Назвать
+    PAY: Заплатить
+    PAY_EXCEED: Выход за грань
+    DOWN: Положить
+    UP: Поднять
+    TARGET: выбрать
+    PAY_ENER: заплатить энер
+    LAUNCH: использовать
+    EFFECTS: Эффекты
+    CONFIRM: Подтвердить
+    END_SELECT: Завершить выбор
+    END_ENER_PHASE: Конец энер-фазы
+    END_GROW_PHASE: Конец фазы роста
+    END_MAIN_PHASE: Конец основной фазы
+    END_ARTS_STEP: Конец шага Умений
+    END_SIGNI_ATTACK_STEP: Конец шага атаки Записей
+    END_LRIG_ATTACK_STEP: Конец шага атаки ИДЕЛ
+    VIEW: Посмотреть
+    ADD_TO_HAND: Взять в руку
+    COLOR: Цвет
+    CHOOSE_EFFECT: Выберите эффект
+    CHOOSE_ZONE: Выберите зону
+    RESET_SIGNI_ZONE: Заменить
+    CHARM_CARD: Чары
+    TRASH_CHARM: Убрать Чары
+    REVEAL: Показать
+    PUT_TO_TOP: Поместить наверх
+    PUT_TO_BOTTOM: Поместить вниз
+    REVEAL_MORE: Показать больше карт
+    PROTECT: Защитить
+    _SHIRONAKUJI: -6000
+    CLASS: класс
+    PAY_WHITE_INSTEAD: Заплатить [Белую] взамен
+    TRASH_OSAKI: Убрать Osaki
+    RESONA: Отглас
+    CRASH: Разрушить
+    PLAYER: Игрок
+    PUT_TO_CHECK_ZONE: Поместить в зону проверки
+    PUT_TO_ENER_ZONE: Поместить в энер-зону
+    CONFIRM_REFRESH_SELF: Обновление колоды\nОзнакомьтесь со сбросом
+    CONFIRM_REFRESH_OPPONENT: Обновление колоды\nОзнакомьтесь со сбросом
+  }
+  noOptions: {
+    TARGET: Нет целей
+  }
+  giveUp: {
+    TARGET: Не выбирать
+    SUMMON_SIGNI_ZONE: Отмена
+  }
+  gameText: {
+    white: белая
+    black: чёрная
+    red: красная
+    blue: синяя
+    green: зелёная
+    colorless: бесцветная
+    ADD_TO_HAND: Взять в руку
+    SUMMON: Призвать
+    DOWN: Положить
+    UP: Поднять
+    SHOW_EFFECTS_DIALOG_TITLE: Эффект
+    PUT_TO_TOP: Поместить наверх
+    PUT_TO_BOTTOM: Поместить вниз
+    SELF: Я
+    OPPONENT: Противник
+    PUT_TO_ENER_ZONE: Поместить в энер-зону
+    CONFIRM_ENCORE: Заплатить за Продление?
+    MAIN_DECK: Основная колода
+    HAND: руку
+    SIGNI_ZONE: Зону Записей
+    TRASH_ZONE: сброс
+    LIFE_CLOTH: Жизненная материя
+    SELECT_DONE: Завершить
+  }
+  prop: {
+    cardType: Тип
+    classes: Класс
+    level: Уровень
+    color: Цвет
+    limit: Лимит
+    power: Сила
+    limting: Ограничения
+    guard: Защита
+    cost: Цена
+    timmings: Момент
+    effects: Способности
+    burst: вспышка
+  }
+  cardType: {
+    LRIG: ИДЕЛ
+    SIGNI: Запись
+    SPELL: Магия
+    ARTS: Умение
+    RESONA: Отголосок
+  }
+  color: {
+    white: Белая
+    black: Чёрная
+    red: Красная
+    blue: Синяя
+    green: Зелёная
+    colorless: Бесцветная
+  }
+  costColor: {
+    costWhite: Белая
+    costBlack: Чёрная
+    costRed: Красная
+    costBlue: Синяя
+    costGreen: Зелёная
+    costColorless: Бесцветная
+  }
+  timming: {
+    mainPhase: "[Основная фаза]"
+    attackPhase: "[Фаза атаки]"
+    spellCutIn: "[Ответ на магию]"
+  }
+  class: {
+    タマ: Tama
+    花代: Hanayo
+    ユヅキ: Yuzuki
+    ピルルク: Piruluk
+    エルドラ: Eldora
+    ミルルン: Mirurun
+    緑子: Midoriko
+    アン: Anne
+    ウリス: Ulith
+    イオナ: Iona
+    ウムル: Umr
+    リメンバ: Remember
+    タウィル: Tawil
+    サシェ: Sashe
+    ミュウ: Myuu
+    アイヤイ: Aiyai
+    アルフォウ: Alfou
+    ハナレ: Hanare
+    精像: Миф
+    天使: Ангел
+    悪魔: Демон
+    美巧: Прекрасный навык
+    精武: Война
+    アーム: Вооружение
+    ウェポン: Снаряд
+    遊具: Игровой предмет
+    毒牙: Ядовитый клык
+    精羅: Естество
+    鉱石: Руда
+    宝石: Драгоценность
+    植物: Растение
+    原子: Атом
+    宇宙: Космос
+    精械: Механика
+    電機: Электромашина
+    古代兵器: Древнее оружие
+    迷宮: Лабиринт
+    精生: Существо
+    水獣: Водный зверь
+    空獣: Небесный зверь
+    地獣: Земной зверь
+    龍獣: Драконоподобный зверь
+    凶蟲: Злобное насекомое
+    精元: Первородный
+  }
+  DOM: {
+    index: {
+      // link-support-webxoss: {
+      //  textContent: WEBXOSS НУЖДАЕТСЯ В ПОМОЩИ!
+      //  href: supporters_en.html
+      // }
+      link-version: <The Spinner>
+      label-nickname: Никнейм:
+      input-nickame: {
+        placeholder: никнейм
+      }
+      link-edit-deck: РедакторКолоды
+      label-bgm: BGM
+      label-sound-effect: SE
+      label-room-list: Список комнат
+      span-play-replay: Посмотреть повтор
+      label-create-room-password: Пароль:
+      label-mayus-room: 繭の部屋
+      label-create-room: Создать комнату:
+      input-room-name: {
+        placeholder: имя комнаты
+      }
+      button-create-room: создать
+      link-about: {
+        textContent: О клиенте
+        href: about_en.html
+      }
+      link-service: {
+        textContent: Положения
+        href: service_en.html
+      }
+      link-disclaimer: {
+        textContent: Дисклеймер
+        href: service_en.html#disclaimer
+      }
+      link-supporters: {
+        textContent: Пожертвования
+        href: supporters_en.html
+      }
+      span-leave-room: <<Вернуться
+      label-live: LIVE
+      // label-room: Комната:
+      // label-host: Хост:
+      // label-guest: Гость:
+      label-ready: Готов
+      // label-deck: Колода:
+      button-replay-step: ДАЛЕЕ
+      button-replay-auto: АВТО
+      span-surrender: Сдаться
+      span-leave-game: Выйти
+      chat-input: {
+        placeholder: Сообщение...
+      }
+      label-replay-list: Список повторов:
+      label-replay-file: Файл повтора:
+      button-replay-return: Вернуться
+      reconnect-title: Соединение потеряно!
+      reconnect-retry: Переподключение...
+      wait-for-reconnect-title: Оппонент потерял соединение!
+      wait-for-reconnect-retry: Ожидание переподключения...
+      wait-for-reconnect-button-drop: Уйти
+      span-set-proxy: Установить Proxy
+      proxy-title: Proxy
+      proxy-description: Если Ваше соединение с WEBXOSS нестабильно, можете использовать Proxy.
+      proxy-noproxy: Без Proxy
+      proxy-cloudflare: CloudFlare
+      proxy-incapsula: Incapsula
+      proxy-provide: Свой сервер...
+      proxy-button-ok: OK
+      msgbox-button-ok: OK
+      msgbox-button-cancel: Отмена
+    }
+    DeckEditor: {
+      link-back-to-webxoss: Готово
+      label-select-deck: Выберите колоду:
+      button-delete-deck: Удалить
+      button-rename: Переименовать
+      label-new-deck: Новая колода:
+      input-new-deck-name: {
+        placeholder: имя колоды
+      }
+      button-new-deck: Добавить
+      button-copy-deck: Дублировать
+      button-import-export: Загрузить/Выгрузить
+      main-deck-title: Основная колода
+      main-deck-mayus-room: Комната Маю
+      main-deck-burst-title: Вспышки: 
+      lrig-deck-title: ИДЕЛ-колода
+      label-import-from-file: Загрузить файл:
+      label-export-to-file: Выгрузить файл:
+      button-export: Выгрузить
+      button-text: Показать текстом
+      button-export-code: Показать код
+      button-import-code: Импортировать код
+      button-import-export-cancel: Отмена
+      search-input: {
+        placeholder: Искать...
+      }
+      link-search-tips: {
+        textContent: Памятка по поиску
+        href: SearchTips_en.html
+      }
+      search-show-more: Показать ещё
+    }
+  }
+  index: {
+    REQUIRE_UPDATE: Нужна новая версия!\nЧтобы начать игру, необходимо обновить клиент!
+    UPDATING: Обновляю...
+    UPDATE_READY: Обновлено, нажмите для применения!
+    NET_WORK_ERROR: Ошибка сети.
+    DISCONNECTED: Потеря соединения
+    NO_VALID_DECK: Нет доступной колоды!\nОтредактируйте свою колоду!
+    OPPONENT_DISCONNECTED: Противник потерял соединение!
+    SELF_DISCONNECTED: Игрок потерял соединение!
+    PLEASE_INPUT_A_NICKNAME: Введите свой никнейм!
+    PLEASE_INPUT_A_ROOM_NAME: Введите имя комнаты!
+    FAILED_TO_READ_DECK: Не удалось прочитать колоду!
+    NEW_GUEST: %s вошёл в комнату.
+    GUEST_LEFT: %s покинул комнату.
+    READY: Готов открывать!
+    UNREADY: Не готов
+    INPUT_PASSWORD: Введите пароль
+    WRONG_PASSWORD: Неверный пароль!
+    NOT_CONNECTED: Нет соединения с сервером!\nПожалуйста, попробуйте позже!
+    SUPPORT_URL: about_en.html#support
+    CONFIRM_SURRENDER: Вы точно хотите сдаться?
+    SURRENDERED: Вы сдались!
+    OPPONENT_SURRENDERED: Противник сдался!
+    CONFIRM_CLOSE: Вы точно хотите уйти?
+    DROPPED: Противник ушёл.
+    SAVE_REPLAY: Сохранить повтор
+    FAILED_TO_PARSE_REPLAY: Не удалось разобрать повтор!
+    UNSUPPORTED_REPLAY_VERSION: Неподдерживаемая версия повтора!\nОбновите клиент!
+    PROVIDE_PROXY_SERVER: Желаете предоставить свой Proxy-сервер?\nСвяжитесь с webxoss@gmail.com !\nWEBXOSS с Вашей помощью станет лучше!
+    FETCHING_DATA: Загрузка данных...\nНажмите "OK" для отмены.
+    FAILED_TO_FETCH_DATA: Не удалось загрузить!
+  }
+  editor: {
+    PLEASE_INPUT_A_DECK_NAME: Введите имя колоды!
+    DECK_NAME: Имя колоды:
+    DECK_NAME_ALREADY_EXISTS: Колода с именем "%s" уже существует!
+    FAILED_TO_PARSE_FILE: Не удалось разобрать файл!
+    FAILED_TO_PARSE_CODE: Не удалось разобрать код!
+    CONFIRM_DELETE_DECK: Вы точно хотите удалить "%s"?
+  }
+}

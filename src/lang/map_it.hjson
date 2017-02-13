@@ -1,0 +1,361 @@
+{
+  suffix: _en
+  common: {
+    OK: OK
+    CANCEL: CANCEL
+    NO_CARDS: No cards
+    or: or
+  }
+  _misc: {
+    DIALOG_TITLE_EFFECTS: Piu effetti sono stati attivati\nScegline uno da risolvere.
+    // NO_TARGET: Nessun bersaglio
+    NO_OPTIONS: Non hai %s
+    // GIVE_UP_TARGET: Non selezionare
+    GIVE_UP: Non %s
+    GUARD_TRUE: Si
+    GUARD_FALSE: No
+    LIMITING: %s Only
+    WAIT: In attesa...
+    CLASS_SEPARATOR: ":\n"
+    CROSS_NAME_QUOTE_LEFT: "\""
+    CROSS_NAME_QUOTE_RIGHT: "\""
+    CROSS_LEFT: >Cross< %s Sinistra
+    CROSS_RIGHT: >Cross< %s Destra
+    CROSS_AND: >Cross< %s Right and %s Left
+    CROSS_OR:  o 
+    GUARD_DESCRIPTION: "[Guard] (Scartando questa carta dalla tua mano annulla un attacco di una LRIG)"
+    MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (Mentre paghi un costo tratta questa carta come se fosse di un qualsiasi colore)"
+  }
+  buttonTitle: {
+    OK: OK
+    CANCEL: Annulla
+    LEVEL0_LRIG: Seleziona LRIG
+    DISCARD_AND_REDRAW: Mulligan
+    CHARGE: Carica
+    GROW: Grow
+    SUMMON_SIGNI: Evoca
+    SUMMON_SIGNI_ZONE: Zona
+    BANISH: Bandisci
+    BOUNCE: Rimbalza
+    TRASH: Scarti
+    TRASH_SIGNI: Scarta
+    USE_SPELL: Usa SPELL
+    SPELL_EFFECT: Scegli che effetto attilete
+    USE_ARTS: Usa ARTS
+    ARTS_EFFECT: Scegli che effetto attilete
+    SPELL_CUT_IN: Spell cut-in
+    USE_ACTION_EFFECT: Azione
+    SEEK: Cerca
+    SET_ORDER: Ordina
+    SIGNI_ATTACK: Attacca
+    LRIG_ATTACK: Attacca
+    GUARD: Guard
+    DISCARD: Scarta
+    DECLARE: Dichiara
+    PAY: Paga
+    PAY_EXCEED: Exceed
+    DOWN: Down
+    UP: Up
+    TARGET: Bersaglia
+    PAY_ENER: Paga Ener
+    LAUNCH: Lancia
+    EFFECTS: Effetti
+    CONFIRM: Conferma
+    END_SELECT: Termina
+    END_ENER_PHASE: Fine Ener Phase
+    END_GROW_PHASE: Fine Grow Phase
+    END_MAIN_PHASE: Fine Main Phase
+    END_ARTS_STEP: Fine ARTS Step
+    END_SIGNI_ATTACK_STEP: Fine SIGNI Attack Step
+    END_LRIG_ATTACK_STEP: Fine LRIG Attack Step
+    VIEW: Dettagli
+    ADD_TO_HAND: Aggiungi alla mano
+    COLOR: Colore
+    CHOOSE_EFFECT: Seleziona effetto
+    CHOOSE_ZONE: Seleziona Zona
+    RESET_SIGNI_ZONE: Sostituisci
+    CHARM_CARD: Charm
+    TRASH_CHARM: Scarta Charm
+    REVEAL: Rivela
+    PUT_TO_TOP: Metti in cima
+    PUT_TO_BOTTOM: Metti in fondo
+    REVEAL_MORE: Rivela altre carte
+    PROTECT: Protect
+    _SHIRONAKUJI: -6000
+    CLASS: classe
+    PAY_WHITE_INSTEAD: Paga [White] invece
+    TRASH_OSAKI: Scarta Osaki
+    RESONA: Resona
+    CRASH: Crash
+    PLAYER: Player
+    PUT_TO_CHECK_ZONE: Sposta nella Check Zone
+    PUT_TO_ENER_ZONE: Sposta nella Ener Zone
+    CONFIRM_REFRESH_SELF: Deck refresh\nConferma
+    CONFIRM_REFRESH_OPPONENT: Deck refresh avversario\nConferma
+  }
+  noOptions: {
+    TARGET: Nessun bersaglio
+  }
+  giveUp: {
+    TARGET: Non selezionare
+    SUMMON_SIGNI_ZONE: Cancella
+  }
+  gameText: {
+    white: white
+    black: black
+    red: red
+    blue: blue
+    green: green
+    colorless: colorless
+    ADD_TO_HAND: Aggiungi alla mano
+    SUMMON: Evoca
+    DOWN: Down
+    UP: Up
+    SHOW_EFFECTS_DIALOG_TITLE: Effetto
+    PUT_TO_TOP: Metti in cima
+    PUT_TO_BOTTOM: Metti in fondo
+    SELF: Giocatore
+    OPPONENT: Avversario
+    PUT_TO_ENER_ZONE: Metti nella Ener Zone
+    CONFIRM_ENCORE: Vuoi pagare il costo di Encore?
+    MAIN_DECK: Main Deck
+    HAND: Hand
+    SIGNI_ZONE: SIGNI Zone
+    TRASH_ZONE: Trash Zone
+    LIFE_CLOTH: Life Cloth
+    SELECT_DONE: Termina
+  }
+  prop: {
+    cardType: Tipo
+    classes: Classe
+    level: Livello
+    color: Colore
+    limit: Limite
+    power: Power
+    limting: Limitazione
+    guard: Guard
+    cost: Costo
+    timmings: Timing
+    effects: Abilita
+    burst: Life Burst
+  }
+  cardType: {
+    LRIG: LRIG
+    SIGNI: SIGNI
+    SPELL: SPELL
+    ARTS: ARTS
+    RESONA: RESONA
+  }
+  color: {
+    white: White
+    black: Black
+    red: Red
+    blue: Blue
+    green: Green
+    colorless: Colorless
+  }
+  costColor: {
+    costWhite: White
+    costBlack: Black
+    costRed: Red
+    costBlue: Blue
+    costGreen: Green
+    costColorless: Colorless
+  }
+  timming: {
+    mainPhase: "[Main Phase]"
+    attackPhase: "[Attack Phase]"
+    spellCutIn: "[Spell Cut-In]"
+  }
+  class: {
+    タマ: Tama
+    花代: Hanayo
+    ユヅキ: Yuzuki
+    ピルルク: Piruluk
+    エルドラ: Eldora
+    ミルルン: Mirurun
+    緑子: Midoriko
+    アン: Anne
+    ウリス: Ulith
+    イオナ: Iona
+    ウムル: Umuru
+    リメンバ: Remember
+    タウィル: Tawil
+    サシェ: Sashe
+    ミュウ: Myuu
+    アイヤイ: Aiyai
+    アルフォウ: Alfou
+    ハナレ: Hanare
+    精像: Image
+    天使: Angel
+    悪魔: Devil
+    美巧: Beautiful Technique
+    精武: War
+    アーム: Arm
+    ウェポン: Weapon
+    遊具: Playground Equipment
+    毒牙: Poison Fang
+    精羅: Nature
+    鉱石: Ore
+    宝石: Gem
+    植物: Plant
+    原子: Atom
+    宇宙: Space
+    精械: Machine
+    電機: Electric
+    古代兵器: Ancient Weapon
+    迷宮: Labyrinth
+    精生: Living
+    水獣: Water Beast
+    空獣: Sky Beast
+    地獣: Earth Beast
+    龍獣: Dragon Beast
+    凶蟲: Misfortune Insect
+    精元: Origin
+  }
+  DOM: {
+    index: {
+      // link-support-webxoss: {
+      //  textContent: WEBXOSS HA BISOGNO DEL TUO AIUTO!
+      //  href: about_en.html#support
+      // }
+      link-version: <The Spinner>
+      label-nickname: Nickname:
+      input-nickame: {
+        placeholder: nickname
+      }
+      link-edit-deck: Deck Editor
+      label-bgm: BGM
+      label-sound-effect: SE
+      label-room-list: Stanze:
+      span-play-replay: Guarda Replay
+      label-create-room-password: Password:
+      label-mayus-room: Stanza di mayu
+      label-create-room: Crea Stanza:
+      input-room-name: {
+        placeholder: room name
+      }
+      button-create-room: crea
+      link-about: {
+        textContent: About
+        href: about_en.html
+      }
+      link-service: {
+        textContent: Termini
+        href: service_en.html
+      }
+      link-disclaimer: {
+        textContent: Disclaimer
+        href: service_en.html#disclaimer
+      }
+      link-supporters: {
+        textContent: Supporters
+        href: supporters_en.html
+      }
+      span-leave-room: << Torna
+      label-live: LIVE
+      // label-room: Stanza:
+      // label-host: Host:
+      // label-guest: Ospite:
+      label-ready: Pronto
+      // label-deck: Deck:
+      button-replay-step: STEP
+      button-replay-auto: AUTO
+      span-surrender: Resa
+      span-leave-game: Abbandona
+      chat-input: {
+        placeholder: Chatta qui...
+      }
+      label-replay-list: Lista replay:
+      label-replay-file: File replay:
+      button-replay-return: Torna
+      reconnect-title: Ti sei disconnesso!
+      reconnect-retry: Riconnessione...
+      wait-for-reconnect-title: Il tuo avversario si è disconnesso!
+      wait-for-reconnect-retry: In attesa di riconnessione...
+      wait-for-reconnect-button-drop: Drop
+      span-set-proxy: Imposta Proxy
+      proxy-title: Proxy
+      proxy-description: Se la tua connessione a WEBXOSS non è stabile puoi prolete con l\uso di un proxy.
+      proxy-noproxy: No Proxy
+      proxy-cloudflare: CloudFlare
+      proxy-incapsula: Incapsula
+      proxy-provide: Configura server...
+      proxy-button-ok: OK
+      msgbox-button-ok: OK
+      msgbox-button-cancel: Annulla
+    }
+    DeckEditor: {
+      link-back-to-webxoss: Fine
+      label-select-deck: Seleziona deck:
+      button-delete-deck: Cancella
+      button-rename: Rinomina
+      label-new-deck: Nuovo deck:
+      input-new-deck-name: {
+        placeholder: nome deck
+      }
+      button-new-deck: Aggiungi
+      button-copy-deck: Duplica
+      button-import-export: Importa/Esporta
+      main-deck-title: Main Deck
+      main-deck-mayus-room: Stanza di mayu
+      main-deck-burst-title: Burst: 
+      lrig-deck-title: LRIG Deck
+      label-import-from-file: Importa file:
+      label-export-to-file: Esporta file:
+      button-export: Esporta
+      button-text: Mostra testo
+      button-export-code: Mostra codice
+      button-import-code: Importa codice
+      button-import-export-cancel: Annulla
+      search-input: {
+        placeholder: Cerca qui...
+      }
+      link-search-tips: {
+        textContent: Spiegazione filtri
+        href: SearchTips_it.html
+      }
+      search-show-more: Altro
+    }
+  }
+  index: {
+    REQUIRE_UPDATE: Una nuova versione è richiesta! Aggiorna il client!
+    UPDATING: Aggiornamento...
+    UPDATE_READY: Aggiornato, conferma per applicare!
+    NET_WORK_ERROR: Errore di rete.
+    DISCONNECTED: Disconnesso
+    NO_VALID_DECK: Nessun deck valido! Modifica il tuo deck!
+    OPPONENT_DISCONNECTED: Il tuo avversario si è disconnesso!
+    SELF_DISCONNECTED: Il giocatore si è disconnesso!
+    PLEASE_INPUT_A_NICKNAME: Inserisci un nickname!
+    PLEASE_INPUT_A_ROOM_NAME: Inserisci il nome della stanza!
+    FAILED_TO_READ_DECK: Lettura del deck fallita!
+    NEW_GUEST: %s è entrato nella stanza.
+    GUEST_LEFT: %s ha lasciato la stanza.
+    READY: Pronto!
+    UNREADY: Non pronto
+    INPUT_PASSWORD: Inserisci password
+    WRONG_PASSWORD: Password errata!
+    NOT_CONNECTED: Non connesso, riprova piu tardi!
+    SUPPORT_URL: about_en.html#support
+    CONFIRM_SURRENDER: Sicuro di volerti arrendere?
+    SURRENDERED: Ti sei arreso!
+    OPPONENT_SURRENDERED: Il tuo avversario si è arreso!
+    CONFIRM_CLOSE: Sicuro di voler abbandonare?
+    DROPPED: You are dropped.
+    SAVE_REPLAY: Salva replay
+    FAILED_TO_PARSE_REPLAY: File replay non valido!
+    UNSUPPORTED_REPLAY_VERSION: Versione del replay non supportata, aggiorna il tuo client!
+    PROVIDE_PROXY_SERVER: Vuoi donare un server proxy?\nPer piacere contattaci a webxoss@gmail.com !\nWEBXOSS sara ancora migliore grazie a te!
+    FETCHING_DATA: Lettura dati...\nPremi "OK" per annullare.
+    FAILED_TO_FETCH_DATA: Lettura dati fallita!
+  }
+  editor: {
+    PLEASE_INPUT_A_DECK_NAME: Inserisci nome del deck!
+    DECK_NAME: Nome Deck:
+    DECK_NAME_ALREADY_EXISTS: il Deck "%s" esiste gia!
+    FAILED_TO_PARSE_FILE: Lettura file fallita!
+    FAILED_TO_PARSE_CODE: Lettura codice fallita!
+    CONFIRM_DELETE_DECK: Sicuro di voler cancellare "%s"?
+  }
+}
