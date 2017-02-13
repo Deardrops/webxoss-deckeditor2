@@ -84,7 +84,8 @@ export default {
   padding-right: calc(2 * var(--padding));
   font-size: 1.2rem;
   color: #666;
-
+  text-transform: capitalize;
+  
   &:hover {
     background-color: #eee;
   }

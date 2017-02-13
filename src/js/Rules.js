@@ -210,33 +210,33 @@ CrossRule.map = {
 ///////////////////////////////////////////////////////////////
 //
 //  时点规则:
-//    TimmingRule
+//    TimingRule
 //  匹配例子:
 //    "【主要阶段】","主要阶段"
 //    "【魔法切入】","魔法切入"
 //
 ///////////////////////////////////////////////////////////////
-let TimmingRule = {}
-TimmingRule.parse = function(words) {
-  let timmings = []
+let TimingRule = {}
+TimingRule.parse = function(words) {
+  let timings = []
   for (let i = 0; i < words.length; i++) {
     let word = words[i]
-    let timming = this.parseWord(word)
-    if (!timming) continue
-    timmings.push(timming)
+    let timing = this.parseWord(word)
+    if (!timing) continue
+    timings.push(timing)
     words.splice(i, 1)
     i--
   }
   return function filter(info) {
-    if (!timmings.length) return true
-    return timmings.some(function(timming) {
+    if (!timings.length) return true
+    return timings.some(function(timing) {
       if (!info.timmings) return false
-      return inArr(timming, info.timmings)
+      return inArr(timing, info.timmings)
     })
   }
 }
-TimmingRule.parseWord = TextualRule.prototype.parseWord
-TimmingRule.map = {
+TimingRule.parseWord = TextualRule.prototype.parseWord
+TimingRule.map = {
   'mainPhase': [
     '主要阶段', '【主要阶段】', '主要',
     'メインフェイズ', '【メインフェイズ】',
@@ -283,7 +283,7 @@ LimitingRule.parse = function(words) {
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
       let matched = false
-      let localizedClass = Localize('class', cls).toLowerCase()
+      let localizedClass = Localize(cls).toLowerCase()
       if (word === localizedClass) {
         matched = true
       } else if (word === localizedClass + '+') {
@@ -332,7 +332,7 @@ ClassRule.parse = function(words) {
     ]
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
-      if (word === Localize('class', cls).toLowerCase().replace(' ', '')) {
+      if (word === Localize(cls).toLowerCase().replace(' ', '')) {
         matchedClasses.push(cls)
         words.splice(i, 1)
         i--
@@ -600,7 +600,7 @@ export default [
   SkillRule,
   NoBurstRule,
   // LifeBurstRule,
-  TimmingRule,
+  TimingRule,
   LimitingRule,
   ClassRule,
   PowerRule,

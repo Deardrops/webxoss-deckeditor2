@@ -1,0 +1,132 @@
+suffix: _zh_CN
+
+// common
+ok: 确定
+cancel: 取消
+add: 新建
+create: 创建
+reserve: 保留
+
+// deck head
+main_deck: 主卡组
+lrig_deck: 分身卡组
+mayu_room: 萤的房间
+life_burst_short: 爆发
+overview: 总览
+
+// header menu list
+new_deck: 新建卡组
+clone: 复制
+rename: 重命名
+delete: 删除
+import: 导入
+export: 导出
+
+// modal content text
+input_new_deck_name: 新的卡组名字：
+confirm_delete: 确定删除卡组 %s ？
+
+// cell component
+no_cost: 无费用
+
+// prop
+cardType: 种类
+classes: 类别
+level: 等级
+color: 颜色
+limit: 界限
+power: 力量
+limting: 限定
+guard: 防御
+cost: 费用
+timings: 时点
+effects: 效果
+burst: 爆发
+
+// card type
+LRIG: 分身
+SIGNI: 精灵
+SPELL: 魔法
+ARTS: 必杀
+RESONA: 共鸣
+
+// color
+white: 白
+black: 黑
+red: 红
+blue: 蓝
+green: 绿
+colorless: 无
+
+// cost
+costWhite: 白
+costBlack: 黑
+costRed: 红
+costBlue: 蓝
+costGreen: 绿
+costColorless: 无
+
+// timing
+mainPhase: 【主要阶段】
+attackPhase: 【攻击阶段】
+spellCutIn: 【魔法切入】
+
+// classes
+タマ: 小玉
+花代: 花代
+ユヅキ: 游月
+ピルルク: 皮璐璐可
+エルドラ: 艾尔德拉
+ミルルン: 米璐璐恩
+緑子: 绿子
+アン: 安
+ウリス: 乌莉丝
+イオナ: 伊绪奈
+ウムル: 乌姆尔
+リメンバ: 小忆
+タウィル: 塔维尔
+サシェ: 莎榭
+ミュウ: 缪
+アイヤイ: 艾娅伊
+アルフォウ: 阿尔芙
+ハナレ: 离
+精像: 精像
+天使: 天使
+悪魔: 恶魔
+美巧: 美巧
+精武: 精武
+アーム: 武装
+ウェポン: 武器
+遊具: 游具
+毒牙: 毒牙
+精羅: 精罗
+鉱石: 矿石
+宝石: 宝石
+植物: 植物
+原子: 原子
+宇宙: 宇宙
+精械: 精械
+電機: 电机
+古代兵器: 古代兵器
+迷宮: 迷宫
+精生: 精生
+水獣: 水兽
+空獣: 空兽
+地獣: 地兽
+龍獣: 龙兽
+凶蟲: 凶虫
+精元: 精元
+
+// misc
+GUARD_TRUE: 有
+GUARD_FALSE: 无
+LIMITING: %s限定
+CLASS_SEPARATOR: ":"
+CROSS_NAME_QUOTE_LEFT: 《
+CROSS_NAME_QUOTE_RIGHT: 》
+CROSS_LEFT: 【CROSS】%s的左侧
+CROSS_RIGHT: 【CROSS】%s的右侧
+CROSS_AND: 【CROSS】%s的左侧 和 %s的右侧
+CROSS_OR: 或
+GUARD_DESCRIPTION: 【防御】（从手牌舍弃此牌，将分身的1次攻击无效化）
+MULTI_ENER_DESCRIPTION: 【常】：【万花色】（支付费用时，这张牌视为持有所有颜色）

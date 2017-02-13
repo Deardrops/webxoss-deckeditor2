@@ -34,10 +34,10 @@ export default {
       return Localize.cardName(this.card)
     },
     type() {
-      return Localize.cardType(this.card)
+      return Localize(this.card.cardType)
     },
     color() {
-      return Localize.color(this.card.color)
+      return Localize(this.card.color)
     },
     limiting() {
       return Localize.limiting(this.card)
@@ -51,31 +51,31 @@ export default {
     rows() {
       let card = this.card
       let level = {
-        key: Localize.propToKey('level'),
+        key: Localize('level'),
         value: card.level,
       }
       let power = {
-        key: Localize.propToKey('power'),
+        key: Localize('power'),
         value: card.power,
       }
       let limit = {
-        key: Localize.propToKey('limit'),
+        key: Localize('limit'),
         value: (card.limit < 1024) ? card.limit : '∞',
       }
       let cost = {
-        key: Localize.propToKey('cost'),
+        key: Localize('cost'),
         value: Localize.cost(card),
       }
-      let timming = {
-        key: Localize.propToKey('timmings'),
-        value: Localize.timmings(card),
+      let timing = {
+        key: Localize('timings'),
+        value: Localize.timings(card),
       }
       let classes = {
-        key: Localize.propToKey('classes'),
+        key: Localize('classes'),
         value: Localize.classes(card),
       }
       let guard = {
-        key: Localize.propToKey('guard'),
+        key: Localize('guard'),
         value: Localize.guard(card),
       }
       return {
@@ -96,7 +96,7 @@ export default {
         ],
         'ARTS': [
           [cost],
-          [timming],
+          [timing],
         ],
       }[card.cardType] || []
     },

@@ -1,6 +1,8 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
+import L from 'js/Localize'
+
 export default {
   components: {
     Modal,
@@ -20,9 +22,9 @@ export default {
       return {
         'add': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'CREATE',
+          okText: L('add'),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -33,9 +35,9 @@ export default {
         },
         'clone': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'CLONE',
+          okText: L('clone'),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -46,10 +48,10 @@ export default {
         },
         'rename': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: L('input_new_deck_name'),
           defaultInput: this.deckName,
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'RENAME',
+          okText: L('rename'),
           ok: name => {
             this.$store.commit('renameDeck', {
               origin: this.deckName,
@@ -59,12 +61,12 @@ export default {
         },
         'delete': {
           type: 'confirm',
-          content: `Are you sure to delete "${this.deckName}" ?`,
-          okText: 'DELETE',
+          content: L('confirm_delete', this.deckName),
+          okText: L('delete'),
           ok: () => {
             this.$store.commit('deleteDeck', this.deckName)
           },
-          cancleText: 'RESERVE',
+          cancelText: L('reserve'),
         },
       }[this.$route.query.modal] || {}
     },
@@ -106,5 +108,5 @@ export default {
     v-show="shown"
     :config="config"
     @ok="ok"
-    @cancle="close"/>
+    @cancel="close"/>
 </template>
