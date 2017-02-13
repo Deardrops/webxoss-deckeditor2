@@ -1,360 +1,370 @@
-{
-  suffix: _en
-  common: 
-    OK: OK
-    CANCEL: CANCEL
-    NO_CARDS: No cards
-    or: or
-  _misc: {
-    DIALOG_TITLE_EFFECTS: Multiple effects have been triggered\nChoose one to resolve.
-    // NO_TARGET: No targets
-    NO_OPTIONS: Unable to %s
-    // GIVE_UP_TARGET: Don\'t select
-    GIVE_UP: Don\'t %s
-    GUARD_TRUE: Yes
-    GUARD_FALSE: No
-    LIMITING: %s Only
-    WAIT: Waiting...
-    CLASS_SEPARATOR: ":\n"
-    CROSS_NAME_QUOTE_LEFT: "\""
-    CROSS_NAME_QUOTE_RIGHT: "\""
-    CROSS_LEFT: >Cross< %s Left
-    CROSS_RIGHT: >Cross< %s Right
-    CROSS_AND: >Cross< %s Right and %s Left
-    CROSS_OR:  or 
-    GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
-    MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
-  }
-  buttonTitle: {
-    OK: OK
-    CANCEL: CANCEL
-    LEVEL0_LRIG: Set up LRIG
-    DISCARD_AND_REDRAW: Mulligan
-    CHARGE: Charge
-    GROW: Grow
-    SUMMON_SIGNI: Summon
-    SUMMON_SIGNI_ZONE: Zone
-    BANISH: Banish
-    BOUNCE: Bounce
-    TRASH: Trash
-    TRASH_SIGNI: Trash
-    USE_SPELL: Use SPEL
-    SPELL_EFFECT: Select SPELL effect
-    USE_ARTS: Use ARTS
-    ARTS_EFFECT: Select ARTS effect
-    SPELL_CUT_IN: Spell cut-in
-    USE_ACTION_EFFECT: Action effect
-    SEEK: Search
-    SET_ORDER: Set order
-    SIGNI_ATTACK: Attack
-    LRIG_ATTACK: Attack
-    GUARD: Guard
-    DISCARD: Discard
-    DECLARE: Declare
-    PAY: Pay
-    PAY_EXCEED: Exceed
-    DOWN: Down
-    UP: Up
-    TARGET: Target
-    PAY_ENER: Pay ener
-    LAUNCH: Launch
-    EFFECTS: Effects
-    CONFIRM: Confirm
-    END_SELECT: End select
-    END_ENER_PHASE: End Ener Phase
-    END_GROW_PHASE: End Grow Phase
-    END_MAIN_PHASE: End Main Phase
-    END_ARTS_STEP: End ARTS Step
-    END_SIGNI_ATTACK_STEP: End SIGNI Attack Step
-    END_LRIG_ATTACK_STEP: End LRIG Attack Step
-    VIEW: View
-    ADD_TO_HAND: Add to hand
-    COLOR: Color
-    CHOOSE_EFFECT: Choose Effect
-    CHOOSE_ZONE: Choose Zone
-    RESET_SIGNI_ZONE: Replace
-    CHARM_CARD: Charm
-    TRASH_CHARM: Trash Charm
-    REVEAL: Reveal
-    PUT_TO_TOP: Put to top
-    PUT_TO_BOTTOM: Put to bottom
-    REVEAL_MORE: Reveal more cards
-    PROTECT: Protect
-    _SHIRONAKUJI: -6000
-    CLASS: class
-    PAY_WHITE_INSTEAD: Pay [White] instead
-    TRASH_OSAKI: Trash Osaki
-    RESONA: Resona
-    CRASH: Crash
-    PLAYER: Player
-    PUT_TO_CHECK_ZONE: Put to Check Zone
-    PUT_TO_ENER_ZONE: Put to Ener Zone
-    CONFIRM_REFRESH_SELF: Deck refesh\nConfirm your trash
-    CONFIRM_REFRESH_OPPONENT: Deck refesh\nConfirm opponent\'s trash
-  }
-  noOptions: {
-    TARGET: No targets
-  }
-  giveUp: {
-    TARGET: Don\'t select
-    SUMMON_SIGNI_ZONE: Cancel
-  }
-  gameText: {
-    white: white
-    black: black
-    red: red
-    blue: blue
-    green: green
-    colorless: colorless
-    ADD_TO_HAND: Add to hand
-    SUMMON: Summon
-    DOWN: Down
-    UP: Up
-    SHOW_EFFECTS_DIALOG_TITLE: Effect
-    PUT_TO_TOP: Put to top
-    PUT_TO_BOTTOM: Put to bottom
-    SELF: Me
-    OPPONENT: Opponent
-    PUT_TO_ENER_ZONE: Put to Ener Zone
-    CONFIRM_ENCORE: Do you want to pay for Encore?
-    MAIN_DECK: Main Deck
-    HAND: Hand
-    SIGNI_ZONE: SIGNI Zone
-    TRASH_ZONE: Trash Zone
-    LIFE_CLOTH: Life Cloth
-    SELECT_DONE: End select
-  }
-  prop: {
-    cardType: Type
-    classes: Class
-    level: Level
-    color: Color
-    limit: Limit
-    power: Power
-    limting: Limiting
-    guard: Guard
-    cost: Cost
-    timmings: Timing
-    effects: Abilities
-    burst: Life Burst
-  }
-  cardType: {
-    LRIG: LRIG
-    SIGNI: SIGNI
-    SPELL: SPELL
-    ARTS: ARTS
-    RESONA: RESONA
-  }
-  color: {
-    white: White
-    black: Black
-    red: Red
-    blue: Blue
-    green: Green
-    colorless: Colorless
-  }
-  costColor: {
-    costWhite: White
-    costBlack: Black
-    costRed: Red
-    costBlue: Blue
-    costGreen: Green
-    costColorless: Colorless
-  }
-  timming: {
-    mainPhase: "[Main Phase]"
-    attackPhase: "[Attack Phase]"
-    spellCutIn: "[Spell Cut-In]"
-  }
-  class: {
-    タマ: Tama
-    花代: Hanayo
-    ユヅキ: Yuzuki
-    ピルルク: Piruluk
-    エルドラ: Eldora
-    ミルルン: Mirurun
-    緑子: Midoriko
-    アン: Anne
-    ウリス: Ulith
-    イオナ: Iona
-    ウムル: Umuru
-    リメンバ: Remember
-    タウィル: Tawil
-    サシェ: Sashe
-    ミュウ: Myuu
-    アイヤイ: Aiyai
-    アルフォウ: Alfou
-    ハナレ: Hanare
-    精像: Image
-    天使: Angel
-    悪魔: Devil
-    美巧: Beautiful Technique
-    精武: War
-    アーム: Arm
-    ウェポン: Weapon
-    遊具: Playground Equipment
-    毒牙: Poison Fang
-    精羅: Nature
-    鉱石: Ore
-    宝石: Gem
-    植物: Plant
-    原子: Atom
-    宇宙: Space
-    精械: Machine
-    電機: Electric
-    古代兵器: Ancient Weapon
-    迷宮: Labyrinth
-    精生: Living
-    水獣: Water Beast
-    空獣: Sky Beast
-    地獣: Earth Beast
-    龍獣: Dragon Beast
-    凶蟲: Misfortune Insect
-    精元: Origin
-  }
-  DOM: {
-    index: {
-      // link-support-webxoss: {
-      //  textContent: WEBXOSS NEEDS YOUR HELP!
-      //  href: about_en.html#support
-      // }
-      link-version: <The Spinner>
-      label-nickname: Nickname:
-      input-nickame: {
-        placeholder: nickname
-      }
-      link-edit-deck: DeckEditor
-      label-bgm: BGM
-      label-sound-effect: SE
-      label-room-list: Room list:
-      span-play-replay: Watch Replay
-      label-create-room-password: Password:
-      label-mayus-room: Mayu\'s Room
-      label-create-room: Create Room:
-      input-room-name: {
-        placeholder: room name
-      }
-      button-create-room: create
-      link-about: {
-        textContent: About
-        href: about_en.html
-      }
-      link-service: {
-        textContent: Terms
-        href: service_en.html
-      }
-      link-disclaimer: {
-        textContent: Disclaimer
-        href: service_en.html#disclaimer
-      }
-      link-supporters: {
-        textContent: Supporters
-        href: supporters_en.html
-      }
-      span-leave-room: <<Return
-      label-live: LIVE
-      // label-room: Room:
-      // label-host: Host:
-      // label-guest: Guest:
-      label-ready: Ready
-      // label-deck: Deck:
-      button-replay-step: STEP
-      button-replay-auto: AUTO
-      span-surrender: Surrender
-      span-leave-game: Leave
-      chat-input: {
-        placeholder: Chat here...
-      }
-      label-replay-list: Replay list:
-      label-replay-file: Replay file:
-      button-replay-return: Return
-      reconnect-title: You are disconnected!
-      reconnect-retry: Reconnecting...
-      wait-for-reconnect-title: Your opponent is disconnected!
-      wait-for-reconnect-retry: Waiting for reconnection...
-      wait-for-reconnect-button-drop: Drop
-      span-set-proxy: Set Proxy
-      proxy-title: Proxy
-      proxy-description: If your connection to WEBXOSS server is not stable, you can try a proxy.
-      proxy-noproxy: No Proxy
-      proxy-cloudflare: CloudFlare
-      proxy-incapsula: Incapsula
-      proxy-provide: Provide a server...
-      proxy-button-ok: OK
-      msgbox-button-ok: OK
-      msgbox-button-cancel: Cancel
-    }
-    DeckEditor: {
-      link-back-to-webxoss: Done
-      label-select-deck: Select deck:
-      button-delete-deck: Delete
-      button-rename: Rename
-      label-new-deck: New deck:
-      input-new-deck-name: {
-        placeholder: deck name
-      }
-      button-new-deck: Add
-      button-copy-deck: Duplicate
-      button-import-export: Import/Export
-      main-deck-title: Main Deck
-      main-deck-mayus-room: Mayu\'s Room
-      main-deck-burst-title: Burst: 
-      lrig-deck-title: LRIG Deck
-      label-import-from-file: Import file:
-      label-export-to-file: Export file:
-      button-export: Export
-      button-text: Show text
-      button-export-code: Show code
-      button-import-code: Import code
-      button-import-export-cancel: Cancel
-      search-input: {
-        placeholder: Search here...
-      }
-      link-search-tips: {
-        textContent: Search tips
-        href: SearchTips_en.html
-      }
-      search-show-more: Show more
-    }
-  }
+
+suffix: _en
+common: 
+  OK: OK
+  CANCEL: CANCEL
+  NO_CARDS: No cards
+  or: or
+_misc: {
+  DIALOG_TITLE_EFFECTS: Multiple effects have been triggered\nChoose one to resolve.
+  // NO_TARGET: No targets
+  NO_OPTIONS: Unable to %s
+  // GIVE_UP_TARGET: Don\'t select
+  GIVE_UP: Don\'t %s
+  GUARD_TRUE: Yes
+  GUARD_FALSE: No
+  LIMITING: %s Only
+  WAIT: Waiting...
+  CLASS_SEPARATOR: ":\n"
+  CROSS_NAME_QUOTE_LEFT: "\""
+  CROSS_NAME_QUOTE_RIGHT: "\""
+  CROSS_LEFT: >Cross< %s Left
+  CROSS_RIGHT: >Cross< %s Right
+  CROSS_AND: >Cross< %s Right and %s Left
+  CROSS_OR:  or 
+  GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
+  MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
+}
+buttonTitle: {
+  OK: OK
+  CANCEL: CANCEL
+  LEVEL0_LRIG: Set up LRIG
+  DISCARD_AND_REDRAW: Mulligan
+  CHARGE: Charge
+  GROW: Grow
+  SUMMON_SIGNI: Summon
+  SUMMON_SIGNI_ZONE: Zone
+  BANISH: Banish
+  BOUNCE: Bounce
+  TRASH: Trash
+  TRASH_SIGNI: Trash
+  USE_SPELL: Use SPEL
+  SPELL_EFFECT: Select SPELL effect
+  USE_ARTS: Use ARTS
+  ARTS_EFFECT: Select ARTS effect
+  SPELL_CUT_IN: Spell cut-in
+  USE_ACTION_EFFECT: Action effect
+  SEEK: Search
+  SET_ORDER: Set order
+  SIGNI_ATTACK: Attack
+  LRIG_ATTACK: Attack
+  GUARD: Guard
+  DISCARD: Discard
+  DECLARE: Declare
+  PAY: Pay
+  PAY_EXCEED: Exceed
+  DOWN: Down
+  UP: Up
+  TARGET: Target
+  PAY_ENER: Pay ener
+  LAUNCH: Launch
+  EFFECTS: Effects
+  CONFIRM: Confirm
+  END_SELECT: End select
+  END_ENER_PHASE: End Ener Phase
+  END_GROW_PHASE: End Grow Phase
+  END_MAIN_PHASE: End Main Phase
+  END_ARTS_STEP: End ARTS Step
+  END_SIGNI_ATTACK_STEP: End SIGNI Attack Step
+  END_LRIG_ATTACK_STEP: End LRIG Attack Step
+  VIEW: View
+  ADD_TO_HAND: Add to hand
+  COLOR: Color
+  CHOOSE_EFFECT: Choose Effect
+  CHOOSE_ZONE: Choose Zone
+  RESET_SIGNI_ZONE: Replace
+  CHARM_CARD: Charm
+  TRASH_CHARM: Trash Charm
+  REVEAL: Reveal
+  PUT_TO_TOP: Put to top
+  PUT_TO_BOTTOM: Put to bottom
+  REVEAL_MORE: Reveal more cards
+  PROTECT: Protect
+  _SHIRONAKUJI: -6000
+  CLASS: class
+  PAY_WHITE_INSTEAD: Pay [White] instead
+  TRASH_OSAKI: Trash Osaki
+  RESONA: Resona
+  CRASH: Crash
+  PLAYER: Player
+  PUT_TO_CHECK_ZONE: Put to Check Zone
+  PUT_TO_ENER_ZONE: Put to Ener Zone
+  CONFIRM_REFRESH_SELF: Deck refesh\nConfirm your trash
+  CONFIRM_REFRESH_OPPONENT: Deck refesh\nConfirm opponent\'s trash
+}
+noOptions: {
+  TARGET: No targets
+}
+giveUp: {
+  TARGET: Don\'t select
+  SUMMON_SIGNI_ZONE: Cancel
+}
+gameText: {
+  white: white
+  black: black
+  red: red
+  blue: blue
+  green: green
+  colorless: colorless
+  ADD_TO_HAND: Add to hand
+  SUMMON: Summon
+  DOWN: Down
+  UP: Up
+  SHOW_EFFECTS_DIALOG_TITLE: Effect
+  PUT_TO_TOP: Put to top
+  PUT_TO_BOTTOM: Put to bottom
+  SELF: Me
+  OPPONENT: Opponent
+  PUT_TO_ENER_ZONE: Put to Ener Zone
+  CONFIRM_ENCORE: Do you want to pay for Encore?
+  MAIN_DECK: Main Deck
+  HAND: Hand
+  SIGNI_ZONE: SIGNI Zone
+  TRASH_ZONE: Trash Zone
+  LIFE_CLOTH: Life Cloth
+  SELECT_DONE: End select
+}
+prop: {
+  cardType: Type
+  classes: Class
+  level: Level
+  color: Color
+  limit: Limit
+  power: Power
+  limting: Limiting
+  guard: Guard
+  cost: Cost
+  timmings: Timing
+  effects: Abilities
+  burst: Life Burst
+}
+cardType: {
+  LRIG: LRIG
+  SIGNI: SIGNI
+  SPELL: SPELL
+  ARTS: ARTS
+  RESONA: RESONA
+}
+color: {
+  white: White
+  black: Black
+  red: Red
+  blue: Blue
+  green: Green
+  colorless: Colorless
+}
+costColor: {
+  costWhite: White
+  costBlack: Black
+  costRed: Red
+  costBlue: Blue
+  costGreen: Green
+  costColorless: Colorless
+}
+timming: {
+  mainPhase: "[Main Phase]"
+  attackPhase: "[Attack Phase]"
+  spellCutIn: "[Spell Cut-In]"
+}
+class: {
+  タマ: Tama
+  花代: Hanayo
+  ユヅキ: Yuzuki
+  ピルルク: Piruluk
+  エルドラ: Eldora
+  ミルルン: Mirurun
+  緑子: Midoriko
+  アン: Anne
+  ウリス: Ulith
+  イオナ: Iona
+  ウムル: Umuru
+  リメンバ: Remember
+  タウィル: Tawil
+  サシェ: Sashe
+  ミュウ: Myuu
+  アイヤイ: Aiyai
+  アルフォウ: Alfou
+  ハナレ: Hanare
+  精像: Image
+  天使: Angel
+  悪魔: Devil
+  美巧: Beautiful Technique
+  精武: War
+  アーム: Arm
+  ウェポン: Weapon
+  遊具: Playground Equipment
+  毒牙: Poison Fang
+  精羅: Nature
+  鉱石: Ore
+  宝石: Gem
+  植物: Plant
+  原子: Atom
+  宇宙: Space
+  精械: Machine
+  電機: Electric
+  古代兵器: Ancient Weapon
+  迷宮: Labyrinth
+  精生: Living
+  水獣: Water Beast
+  空獣: Sky Beast
+  地獣: Earth Beast
+  龍獣: Dragon Beast
+  凶蟲: Misfortune Insect
+  精元: Origin
+}
+// TODO: remove DOM
+DOM: {
   index: {
-    REQUIRE_UPDATE: A new version is required!\nTo start a game, you must update the client!
-    UPDATING: Updating...
-    UPDATE_READY: Updated, click here to apply!
-    NET_WORK_ERROR: Network error.
-    DISCONNECTED: Disconnected
-    NO_VALID_DECK: No valid deck!\nPlease edit your deck!
-    OPPONENT_DISCONNECTED: Your opponent is disconnected!
-    SELF_DISCONNECTED: The player is disconnected!
-    PLEASE_INPUT_A_NICKNAME: Please enter a nickname!
-    PLEASE_INPUT_A_ROOM_NAME: Please enter a room name!
-    FAILED_TO_READ_DECK: Failed to read deck!
-    NEW_GUEST: %s joins the room.
-    GUEST_LEFT: %s left the room.
-    READY: Ready to open!
-    UNREADY: Unready
-    INPUT_PASSWORD: Enter the password
-    WRONG_PASSWORD: Wrong password!
-    NOT_CONNECTED: Not connected to server yet!\nPlease retry later!
-    SUPPORT_URL: about_en.html#support
-    CONFIRM_SURRENDER: Are you sure to surrender?
-    SURRENDERED: You have surrendered!
-    OPPONENT_SURRENDERED: Your opponent surrendered!
-    CONFIRM_CLOSE: Are you sure to leave?
-    DROPPED: You are dropped.
-    SAVE_REPLAY: Save replay
-    FAILED_TO_PARSE_REPLAY: Failed to parse replay file!
-    UNSUPPORTED_REPLAY_VERSION: Unsupported replay version!\nPlease update your client!
-    PROVIDE_PROXY_SERVER: Would you like to provide us a proxy server?\nPlease contact webxoss@gmail.com !\nWEBXOSS will be more awesome with your help!
-    FETCHING_DATA: Fetching data...\nClick "OK" to cancel.
-    FAILED_TO_FETCH_DATA: Failed to fetch data!
+    // link-support-webxoss: {
+    //  textContent: WEBXOSS NEEDS YOUR HELP!
+    //  href: about_en.html#support
+    // }
+    link-version: <The Spinner>
+    label-nickname: Nickname:
+    input-nickame: {
+      placeholder: nickname
+    }
+    link-edit-deck: DeckEditor
+    label-bgm: BGM
+    label-sound-effect: SE
+    label-room-list: Room list:
+    span-play-replay: Watch Replay
+    label-create-room-password: Password:
+    label-mayus-room: Mayu\'s Room
+    label-create-room: Create Room:
+    input-room-name: {
+      placeholder: room name
+    }
+    button-create-room: create
+    link-about: {
+      textContent: About
+      href: about_en.html
+    }
+    link-service: {
+      textContent: Terms
+      href: service_en.html
+    }
+    link-disclaimer: {
+      textContent: Disclaimer
+      href: service_en.html#disclaimer
+    }
+    link-supporters: {
+      textContent: Supporters
+      href: supporters_en.html
+    }
+    span-leave-room: <<Return
+    label-live: LIVE
+    // label-room: Room:
+    // label-host: Host:
+    // label-guest: Guest:
+    label-ready: Ready
+    // label-deck: Deck:
+    button-replay-step: STEP
+    button-replay-auto: AUTO
+    span-surrender: Surrender
+    span-leave-game: Leave
+    chat-input: {
+      placeholder: Chat here...
+    }
+    label-replay-list: Replay list:
+    label-replay-file: Replay file:
+    button-replay-return: Return
+    reconnect-title: You are disconnected!
+    reconnect-retry: Reconnecting...
+    wait-for-reconnect-title: Your opponent is disconnected!
+    wait-for-reconnect-retry: Waiting for reconnection...
+    wait-for-reconnect-button-drop: Drop
+    span-set-proxy: Set Proxy
+    proxy-title: Proxy
+    proxy-description: If your connection to WEBXOSS server is not stable, you can try a proxy.
+    proxy-noproxy: No Proxy
+    proxy-cloudflare: CloudFlare
+    proxy-incapsula: Incapsula
+    proxy-provide: Provide a server...
+    proxy-button-ok: OK
+    msgbox-button-ok: OK
+    msgbox-button-cancel: Cancel
   }
-  editor: {
-    PLEASE_INPUT_A_DECK_NAME: Please enter a deck name!
-    DECK_NAME: Deck name:
-    DECK_NAME_ALREADY_EXISTS: Deck "%s" already exists!
-    FAILED_TO_PARSE_FILE: Failed to parse file!
-    FAILED_TO_PARSE_CODE: Failed to parse code!
-    CONFIRM_DELETE_DECK: Are you sure to delete "%s"?
+  DeckEditor: {
+    link-back-to-webxoss: Done
+    label-select-deck: Select deck:
+    button-delete-deck: Delete
+    button-rename: Rename
+    label-new-deck: New deck:
+    input-new-deck-name: {
+      placeholder: deck name
+    }
+    button-new-deck: Add
+    button-copy-deck: Duplicate
+    button-import-export: Import/Export
+    main-deck-title: Main Deck
+    main-deck-mayus-room: Mayu\'s Room
+    main-deck-burst-title: Burst: 
+    lrig-deck-title: LRIG Deck
+    label-import-from-file: Import file:
+    label-export-to-file: Export file:
+    button-export: Export
+    button-text: Show text
+    button-export-code: Show code
+    button-import-code: Import code
+    button-import-export-cancel: Cancel
+    search-input: {
+      placeholder: Search here...
+    }
+    link-search-tips: {
+      textContent: Search tips
+      href: SearchTips_en.html
+    }
+    search-show-more: Show more
   }
+}
+index: {
+  REQUIRE_UPDATE: A new version is required!\nTo start a game, you must update the client!
+  UPDATING: Updating...
+  UPDATE_READY: Updated, click here to apply!
+  NET_WORK_ERROR: Network error.
+  DISCONNECTED: Disconnected
+  NO_VALID_DECK: No valid deck!\nPlease edit your deck!
+  OPPONENT_DISCONNECTED: Your opponent is disconnected!
+  SELF_DISCONNECTED: The player is disconnected!
+  PLEASE_INPUT_A_NICKNAME: Please enter a nickname!
+  PLEASE_INPUT_A_ROOM_NAME: Please enter a room name!
+  FAILED_TO_READ_DECK: Failed to read deck!
+  NEW_GUEST: %s joins the room.
+  GUEST_LEFT: %s left the room.
+  READY: Ready to open!
+  UNREADY: Unready
+  INPUT_PASSWORD: Enter the password
+  WRONG_PASSWORD: Wrong password!
+  NOT_CONNECTED: Not connected to server yet!\nPlease retry later!
+  SUPPORT_URL: about_en.html#support
+  CONFIRM_SURRENDER: Are you sure to surrender?
+  SURRENDERED: You have surrendered!
+  OPPONENT_SURRENDERED: Your opponent surrendered!
+  CONFIRM_CLOSE: Are you sure to leave?
+  DROPPED: You are dropped.
+  SAVE_REPLAY: Save replay
+  FAILED_TO_PARSE_REPLAY: Failed to parse replay file!
+  UNSUPPORTED_REPLAY_VERSION: Unsupported replay version!\nPlease update your client!
+  PROVIDE_PROXY_SERVER: Would you like to provide us a proxy server?\nPlease contact webxoss@gmail.com !\nWEBXOSS will be more awesome with your help!
+  FETCHING_DATA: Fetching data...\nClick "OK" to cancel.
+  FAILED_TO_FETCH_DATA: Failed to fetch data!
+}
+editor: {
+  PLEASE_INPUT_A_DECK_NAME: Please enter a deck name!
+  DECK_NAME: Deck name:
+  DECK_NAME_ALREADY_EXISTS: Deck "%s" already exists!
+  FAILED_TO_PARSE_FILE: Failed to parse file!
+  FAILED_TO_PARSE_CODE: Failed to parse code!
+  CONFIRM_DELETE_DECK: Are you sure to delete "%s"?
+}
+DeckPage: {
+  new_deck: New Deck
+  clone: Clone
+  rename: Rename
+  delete: Delete
+  import: Import
+  export: Export
+  CONFIRM_DELETE: Are you sure to delete?
+  DECK_NAME_INPUT: New deck name:
 }

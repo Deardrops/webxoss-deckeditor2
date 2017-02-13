@@ -1,362 +1,371 @@
-{
-  suffix: _zh_CN
-  common: {
-    OK: 确定
-    CANCEL: 取消
-    NO_CARDS: 没有卡牌
-    OR: 或
-  }
-  _misc: {
-    DIALOG_TITLE_EFFECTS: 多个效果发动选择一个优先处理
-    // NO_TARGET: 没有目标
-    NO_OPTIONS: 无法%s
-    // GIVE_UP_TARGET: 不选择目标
-    GIVE_UP: 不%s
-    GUARD_TRUE: 有
-    GUARD_FALSE: 无
-    LIMITING: %s限定
-    WAIT: 等待对方操作
-    CLASS_SEPARATOR: ":"
-    CROSS_NAME_QUOTE_LEFT: 《
-    CROSS_NAME_QUOTE_RIGHT: 》
-    CROSS_LEFT: 【CROSS】%s的左侧
-    CROSS_RIGHT: 【CROSS】%s的右侧
-    CROSS_AND: 【CROSS】%s的左侧 和 %s的右侧
-    CROSS_OR: 或
-    GUARD_DESCRIPTION: 【防御】（从手牌舍弃此牌，将分身的1次攻击无效化）
-    MULTI_ENER_DESCRIPTION: 【常】：【万花色】（支付费用时，这张牌视为持有所有颜色）
-  }
-  buttonTitle: {
-    OK: 确定
-    CANCEL: 取消
-    LEVEL0_LRIG: 设置分身
-    DISCARD_AND_REDRAW: 换牌
-    CHARGE: 充能
-    GROW: 成长
-    SUMMON_SIGNI: 召唤
-    SUMMON_SIGNI_ZONE: 召唤区
-    BANISH: 破坏
-    BOUNCE: 返回手牌
-    TRASH: 废弃
-    TRASH_SIGNI: 废弃
-    USE_SPELL: 使用
-    SPELL_EFFECT: 选择魔法效果
-    USE_ARTS: 使用必杀
-    ARTS_EFFECT: 选择必杀效果
-    SPELL_CUT_IN: 使用魔法切入
-    USE_ACTION_EFFECT: 起动效果
-    SEEK: 探寻
-    SET_ORDER: 设置顺序
-    SIGNI_ATTACK: 攻击
-    LRIG_ATTACK: 攻击
-    GUARD: 防御
-    DISCARD: 舍弃
-    DECLARE: 宣言
-    PAY: 支付
-    PAY_EXCEED: 超越
-    DOWN: 横置
-    UP: 竖置
-    TARGET: 目标
-    PAY_ENER: 支付能量
-    LAUNCH: 发动
-    EFFECTS: 优先处理
-    CONFIRM: 确认
-    END_SELECT: 完成选择
-    END_ENER_PHASE: 结束充能阶段
-    END_GROW_PHASE: 结束成长阶段
-    END_MAIN_PHASE: 结束主要阶段
-    END_ARTS_STEP: 结束必杀使用步骤
-    END_SIGNI_ATTACK_STEP: 结束精灵攻击步骤
-    END_LRIG_ATTACK_STEP: 结束分身攻击步骤
-    VIEW: 查看
-    ADD_TO_HAND: 加入手牌
-    COLOR: 颜色
-    CHOOSE_EFFECT: 选择效果
-    CHOOSE_ZONE: 选择区域
-    RESET_SIGNI_ZONE: 重新配置
-    CHARM_CARD: 魅饰卡
-    TRASH_CHARM: 废弃魅饰
-    REVEAL: 公开
-    PUT_TO_TOP: 放置到卡组顶
-    PUT_TO_BOTTOM: 放置到卡组底
-    REVEAL_MORE: 多公开几张卡
-    PROTECT: 保护
-    _SHIRONAKUJI: -6000
-    CLASS: 类别
-    PAY_WHITE_INSTEAD: 代替白色费用
-    TRASH_OSAKI: 废弃御先狐
-    RESONA: 共鸣
-    CRASH: 击溃
-    PLAYER: 玩家
-    PUT_TO_CHECK_ZONE: 放置到检查区
-    PUT_TO_ENER_ZONE: 放置到能量区
-    CONFIRM_REFRESH_SELF: 我方卡组重构\n请确认废弃区
-    CONFIRM_REFRESH_OPPONENT: 对方卡组重构\n请确认废弃区
-  }
-  noOptions: {
-    TARGET: 没有目标
-  }
-  giveUp: {
-    TARGET: 不选择目标
-    SUMMON_SIGNI_ZONE: 取消
-  }
-  gameText: {
-    white: 白色
-    black: 黑色
-    red: 红色
-    blue: 蓝色
-    green: 绿色
-    colorless: 无色
-    ADD_TO_HAND: 加入手牌
-    SUMMON: 出场
-    DOWN: 横置
-    UP: 竖置
-    SHOW_EFFECTS_DIALOG_TITLE: 效果
-    PUT_TO_TOP: 放置到卡组顶
-    PUT_TO_BOTTOM: 放置到卡组底
-    SELF: 自己
-    OPPONENT: 对战对手
-    PUT_TO_ENER_ZONE: 放置到能量区
-    CONFIRM_ENCORE: 要支付回响费用吗？
-    MAIN_DECK: 卡组
-    HAND: 手牌
-    SIGNI_ZONE: 精灵区
-    TRASH_ZONE: 废弃区
-    LIFE_CLOTH: 生命护甲
-    SELECT_DONE: 完成选择
-  }
-  prop: {
-    cardType: 种类
-    classes: 类别
-    level: 等级
-    color: 颜色
-    limit: 界限
-    power: 力量
-    limting: 限定
-    guard: 防御
-    cost: 费用
-    timmings: 时点
-    effects: 效果
-    burst: 爆发
-  }
-  cardType: {
-    LRIG: 分身
-    SIGNI: 精灵
-    SPELL: 魔法
-    ARTS: 必杀
-    RESONA: 共鸣
-  }
-  color: {
-    white: 白
-    black: 黑
-    red: 红
-    blue: 蓝
-    green: 绿
-    colorless: 无
-  }
-  costColor: {
-    costWhite: 白
-    costBlack: 黑
-    costRed: 红
-    costBlue: 蓝
-    costGreen: 绿
-    costColorless: 无
-  }
-  timming: {
-    mainPhase: 【主要阶段】
-    attackPhase: 【攻击阶段】
-    spellCutIn: 【魔法切入】
-  }
-  class: {
-    タマ: 小玉
-    花代: 花代
-    ユヅキ: 游月
-    ピルルク: 皮璐璐可
-    エルドラ: 艾尔德拉
-    ミルルン: 米璐璐恩
-    緑子: 绿子
-    アン: 安
-    ウリス: 乌莉丝
-    イオナ: 伊绪奈
-    ウムル: 乌姆尔
-    // TODO: 甲壳虫化
-    リメンバ: 小忆
-    タウィル: 塔维尔
-    サシェ: 莎榭
-    ミュウ: 缪
-    アイヤイ: 艾娅伊
-    アルフォウ: 阿尔芙
-    ハナレ: 离
-    精像: 精像
-    天使: 天使
-    悪魔: 恶魔
-    美巧: 美巧
-    精武: 精武
-    アーム: 武装
-    ウェポン: 武器
-    遊具: 游具
-    毒牙: 毒牙
-    精羅: 精罗
-    鉱石: 矿石
-    宝石: 宝石
-    植物: 植物
-    原子: 原子
-    宇宙: 宇宙
-    精械: 精械
-    電機: 电机
-    古代兵器: 古代兵器
-    迷宮: 迷宫
-    精生: 精生
-    水獣: 水兽
-    空獣: 空兽
-    地獣: 地兽
-    龍獣: 龙兽
-    凶蟲: 凶虫
-    精元: 精元
-  }
-  DOM: {
-    index: {
-      // link-support-webxoss: {
-      //  textContent: WEBXOSS需要您的帮助!
-      //  href: about.html#support
-      // }
-      link-version: <纺织者>
-      label-nickname: 您的昵称:
-      input-nickame: {
-        placeholder: 昵称
-      }
-      link-edit-deck: 编辑卡组
-      label-bgm: 音乐
-      label-sound-effect: 音效
-      label-room-list: 房间列表:
-      span-play-replay: 录像回放
-      label-create-room-password: 房间密码:
-      label-mayus-room: 茧的房间
-      label-create-room: 创建房间:
-      input-room-name: {
-        placeholder: 房间名字
-      }
-      button-create-room: 创建
-      link-about: {
-        textContent: 关于我们
-        href: about.html
-      }
-      link-service: {
-        textContent: 服务条款
-        href: service.html
-      }
-      link-disclaimer: {
-        textContent: 免责声明
-        href: service.html#disclaimer
-      }
-      link-supporters: {
-        textContent: 捐赠者名单
-        href: supporters.html
-      }
-      span-leave-room: <<返回
-      label-live: 直播
-      // label-room: 房间:
-      // label-host: 主机:
-      // label-guest: 客机:
-      label-ready: 准备
-      // label-deck: 牌组:
-      button-replay-step: 下一步
-      button-replay-auto: 自动播放
-      span-surrender: 投降
-      span-leave-game: 离开
-      chat-input: {
-        placeholder: 在此处聊天
-      }
-      label-replay-list: 录像列表:
-      label-replay-file: 录像文件:
-      button-replay-return: 返回
-      reconnect-title: 连接已断开!
-      reconnect-retry: 正在重新连接...
-      wait-for-reconnect-title: 对手的连接已断开!
-      wait-for-reconnect-retry: 正在等待重新连接...
-      wait-for-reconnect-button-drop: 放弃等待
-      span-set-proxy: 设置代理
-      proxy-title: 设置代理
-      proxy-description: 使用代理后你与WEBXOSS服务器之间的数据将由代理服务器转发. 通常情况下你不必设置代理但如果掉线情况频繁发生代理可能会有所帮助.
-      proxy-noproxy: 不使用代理
-      proxy-cloudflare: CloudFlare
-      proxy-incapsula: Incapsula
-      proxy-provide: 提供代理服务器...
-      proxy-button-ok: 确定
-      msgbox-button-ok: 确定
-      msgbox-button-cancel: 取消
-    }
-    DeckEditor: {
-      link-back-to-webxoss: 完成编辑
-      label-select-deck: 选择牌组:
-      button-delete-deck: 删除
-      button-rename: 重命名
-      label-new-deck: 新建牌组:
-      input-new-deck-name: {
-        placeholder: 牌组名字
-      }
-      button-new-deck: 新建
-      button-copy-deck: 复制
-      button-import-export: 导入/导出
-      main-deck-title: 主卡组
-      main-deck-mayus-room: 茧的房间
-      main-deck-burst-title: 爆发:
-      lrig-deck-title: LRIG卡组
-      label-import-from-file: 从文件导入:
-      label-export-to-file: 导出到文件:
-      button-export: 导出
-      button-text: 显示文本
-      button-export-code: 显示代码
-      button-import-code: 导入代码
-      button-import-export-cancel: 取消
-      search-input: {
-        placeholder: 输入关键字以搜索
-      }
-      link-search-tips: {
-        textContent: 搜索技巧
-        href: SearchTips.html
-      }
-      search-show-more: 显示更多
-    }
-  }
+suffix: _zh_CN
+common: {
+  OK: 确定
+  CANCEL: 取消
+  NO_CARDS: 没有卡牌
+  OR: 或
+}
+_misc: {
+  DIALOG_TITLE_EFFECTS: 多个效果发动选择一个优先处理
+  // NO_TARGET: 没有目标
+  NO_OPTIONS: 无法%s
+  // GIVE_UP_TARGET: 不选择目标
+  GIVE_UP: 不%s
+  GUARD_TRUE: 有
+  GUARD_FALSE: 无
+  LIMITING: %s限定
+  WAIT: 等待对方操作
+  CLASS_SEPARATOR: ":"
+  CROSS_NAME_QUOTE_LEFT: 《
+  CROSS_NAME_QUOTE_RIGHT: 》
+  CROSS_LEFT: 【CROSS】%s的左侧
+  CROSS_RIGHT: 【CROSS】%s的右侧
+  CROSS_AND: 【CROSS】%s的左侧 和 %s的右侧
+  CROSS_OR: 或
+  GUARD_DESCRIPTION: 【防御】（从手牌舍弃此牌，将分身的1次攻击无效化）
+  MULTI_ENER_DESCRIPTION: 【常】：【万花色】（支付费用时，这张牌视为持有所有颜色）
+}
+buttonTitle: {
+  OK: 确定
+  CANCEL: 取消
+  LEVEL0_LRIG: 设置分身
+  DISCARD_AND_REDRAW: 换牌
+  CHARGE: 充能
+  GROW: 成长
+  SUMMON_SIGNI: 召唤
+  SUMMON_SIGNI_ZONE: 召唤区
+  BANISH: 破坏
+  BOUNCE: 返回手牌
+  TRASH: 废弃
+  TRASH_SIGNI: 废弃
+  USE_SPELL: 使用
+  SPELL_EFFECT: 选择魔法效果
+  USE_ARTS: 使用必杀
+  ARTS_EFFECT: 选择必杀效果
+  SPELL_CUT_IN: 使用魔法切入
+  USE_ACTION_EFFECT: 起动效果
+  SEEK: 探寻
+  SET_ORDER: 设置顺序
+  SIGNI_ATTACK: 攻击
+  LRIG_ATTACK: 攻击
+  GUARD: 防御
+  DISCARD: 舍弃
+  DECLARE: 宣言
+  PAY: 支付
+  PAY_EXCEED: 超越
+  DOWN: 横置
+  UP: 竖置
+  TARGET: 目标
+  PAY_ENER: 支付能量
+  LAUNCH: 发动
+  EFFECTS: 优先处理
+  CONFIRM: 确认
+  END_SELECT: 完成选择
+  END_ENER_PHASE: 结束充能阶段
+  END_GROW_PHASE: 结束成长阶段
+  END_MAIN_PHASE: 结束主要阶段
+  END_ARTS_STEP: 结束必杀使用步骤
+  END_SIGNI_ATTACK_STEP: 结束精灵攻击步骤
+  END_LRIG_ATTACK_STEP: 结束分身攻击步骤
+  VIEW: 查看
+  ADD_TO_HAND: 加入手牌
+  COLOR: 颜色
+  CHOOSE_EFFECT: 选择效果
+  CHOOSE_ZONE: 选择区域
+  RESET_SIGNI_ZONE: 重新配置
+  CHARM_CARD: 魅饰卡
+  TRASH_CHARM: 废弃魅饰
+  REVEAL: 公开
+  PUT_TO_TOP: 放置到卡组顶
+  PUT_TO_BOTTOM: 放置到卡组底
+  REVEAL_MORE: 多公开几张卡
+  PROTECT: 保护
+  _SHIRONAKUJI: -6000
+  CLASS: 类别
+  PAY_WHITE_INSTEAD: 代替白色费用
+  TRASH_OSAKI: 废弃御先狐
+  RESONA: 共鸣
+  CRASH: 击溃
+  PLAYER: 玩家
+  PUT_TO_CHECK_ZONE: 放置到检查区
+  PUT_TO_ENER_ZONE: 放置到能量区
+  CONFIRM_REFRESH_SELF: 我方卡组重构\n请确认废弃区
+  CONFIRM_REFRESH_OPPONENT: 对方卡组重构\n请确认废弃区
+}
+noOptions: {
+  TARGET: 没有目标
+}
+giveUp: {
+  TARGET: 不选择目标
+  SUMMON_SIGNI_ZONE: 取消
+}
+gameText: {
+  white: 白色
+  black: 黑色
+  red: 红色
+  blue: 蓝色
+  green: 绿色
+  colorless: 无色
+  ADD_TO_HAND: 加入手牌
+  SUMMON: 出场
+  DOWN: 横置
+  UP: 竖置
+  SHOW_EFFECTS_DIALOG_TITLE: 效果
+  PUT_TO_TOP: 放置到卡组顶
+  PUT_TO_BOTTOM: 放置到卡组底
+  SELF: 自己
+  OPPONENT: 对战对手
+  PUT_TO_ENER_ZONE: 放置到能量区
+  CONFIRM_ENCORE: 要支付回响费用吗？
+  MAIN_DECK: 卡组
+  HAND: 手牌
+  SIGNI_ZONE: 精灵区
+  TRASH_ZONE: 废弃区
+  LIFE_CLOTH: 生命护甲
+  SELECT_DONE: 完成选择
+}
+prop: {
+  cardType: 种类
+  classes: 类别
+  level: 等级
+  color: 颜色
+  limit: 界限
+  power: 力量
+  limting: 限定
+  guard: 防御
+  cost: 费用
+  timmings: 时点
+  effects: 效果
+  burst: 爆发
+}
+cardType: {
+  LRIG: 分身
+  SIGNI: 精灵
+  SPELL: 魔法
+  ARTS: 必杀
+  RESONA: 共鸣
+}
+color: {
+  white: 白
+  black: 黑
+  red: 红
+  blue: 蓝
+  green: 绿
+  colorless: 无
+}
+costColor: {
+  costWhite: 白
+  costBlack: 黑
+  costRed: 红
+  costBlue: 蓝
+  costGreen: 绿
+  costColorless: 无
+}
+timming: {
+  mainPhase: 【主要阶段】
+  attackPhase: 【攻击阶段】
+  spellCutIn: 【魔法切入】
+}
+class: {
+  タマ: 小玉
+  花代: 花代
+  ユヅキ: 游月
+  ピルルク: 皮璐璐可
+  エルドラ: 艾尔德拉
+  ミルルン: 米璐璐恩
+  緑子: 绿子
+  アン: 安
+  ウリス: 乌莉丝
+  イオナ: 伊绪奈
+  ウムル: 乌姆尔
+  // TODO: 甲壳虫化
+  リメンバ: 小忆
+  タウィル: 塔维尔
+  サシェ: 莎榭
+  ミュウ: 缪
+  アイヤイ: 艾娅伊
+  アルフォウ: 阿尔芙
+  ハナレ: 离
+  精像: 精像
+  天使: 天使
+  悪魔: 恶魔
+  美巧: 美巧
+  精武: 精武
+  アーム: 武装
+  ウェポン: 武器
+  遊具: 游具
+  毒牙: 毒牙
+  精羅: 精罗
+  鉱石: 矿石
+  宝石: 宝石
+  植物: 植物
+  原子: 原子
+  宇宙: 宇宙
+  精械: 精械
+  電機: 电机
+  古代兵器: 古代兵器
+  迷宮: 迷宫
+  精生: 精生
+  水獣: 水兽
+  空獣: 空兽
+  地獣: 地兽
+  龍獣: 龙兽
+  凶蟲: 凶虫
+  精元: 精元
+}
+// TODO: remove DOM
+DOM: {
   index: {
-    REQUIRE_UPDATE: 客户端版本与服务器不匹配!\n更新后才能进行游戏!
-    UPDATING: 正在更新...
-    UPDATE_READY: 更新完毕点击此处完成更新!
-    NET_WORK_ERROR: 网络错误.
-    DISCONNECTED: 连接已断开
-    NO_VALID_DECK: 没有可用的卡组!\n请先编辑卡组!
-    OPPONENT_DISCONNECTED: 对手断开了连接!
-    SELF_DISCONNECTED: 己方断开了连接!
-    PLEASE_INPUT_A_NICKNAME: 请输入昵称!
-    PLEASE_INPUT_A_ROOM_NAME: 请输入房间名字!
-    FAILED_TO_READ_DECK: 读取卡组失败!
-    NEW_GUEST: %s进入了房间
-    GUEST_LEFT: %s离开了房间
-    READY: 对手已经做好准备
-    UNREADY: 对手取消了准备
-    INPUT_PASSWORD: 请输入房间密码
-    WRONG_PASSWORD: 密码错误!
-    NOT_CONNECTED: 未与服务器建立连接!\n请稍后重试!
-    SUPPORT_URL: about.html#support
-    CONFIRM_SURRENDER: 确定要投降吗?
-    SURRENDERED: 你投降了!
-    OPPONENT_SURRENDERED: 对手投降了!
-    CONFIRM_CLOSE: 游戏正在进行您确定要离开吗?
-    DROPPED: 对战对手已经离开了游戏
-    SAVE_REPLAY: 保存录像
-    FAILED_TO_PARSE_REPLAY: 解析文件失败!
-    UNSUPPORTED_REPLAY_VERSION: 不支持的录像版本!\n请升级你的客户端!
-    PROVIDE_PROXY_SERVER: 你愿意为WEBXOSS提供代理服务吗?\n联系webxoss@gmail.com吧!\nWEBXOSS将在你的帮助下变得更棒!
-    FETCHING_DATA: 正在读取数据...\n点击"确定"取消操作.
-    FAILED_TO_FETCH_DATA: 读取数据失败!
+    // link-support-webxoss: {
+    //  textContent: WEBXOSS需要您的帮助!
+    //  href: about.html#support
+    // }
+    link-version: <纺织者>
+    label-nickname: 您的昵称:
+    input-nickame: {
+      placeholder: 昵称
+    }
+    link-edit-deck: 编辑卡组
+    label-bgm: 音乐
+    label-sound-effect: 音效
+    label-room-list: 房间列表:
+    span-play-replay: 录像回放
+    label-create-room-password: 房间密码:
+    label-mayus-room: 茧的房间
+    label-create-room: 创建房间:
+    input-room-name: {
+      placeholder: 房间名字
+    }
+    button-create-room: 创建
+    link-about: {
+      textContent: 关于我们
+      href: about.html
+    }
+    link-service: {
+      textContent: 服务条款
+      href: service.html
+    }
+    link-disclaimer: {
+      textContent: 免责声明
+      href: service.html#disclaimer
+    }
+    link-supporters: {
+      textContent: 捐赠者名单
+      href: supporters.html
+    }
+    span-leave-room: <<返回
+    label-live: 直播
+    // label-room: 房间:
+    // label-host: 主机:
+    // label-guest: 客机:
+    label-ready: 准备
+    // label-deck: 牌组:
+    button-replay-step: 下一步
+    button-replay-auto: 自动播放
+    span-surrender: 投降
+    span-leave-game: 离开
+    chat-input: {
+      placeholder: 在此处聊天
+    }
+    label-replay-list: 录像列表:
+    label-replay-file: 录像文件:
+    button-replay-return: 返回
+    reconnect-title: 连接已断开!
+    reconnect-retry: 正在重新连接...
+    wait-for-reconnect-title: 对手的连接已断开!
+    wait-for-reconnect-retry: 正在等待重新连接...
+    wait-for-reconnect-button-drop: 放弃等待
+    span-set-proxy: 设置代理
+    proxy-title: 设置代理
+    proxy-description: 使用代理后你与WEBXOSS服务器之间的数据将由代理服务器转发. 通常情况下你不必设置代理但如果掉线情况频繁发生代理可能会有所帮助.
+    proxy-noproxy: 不使用代理
+    proxy-cloudflare: CloudFlare
+    proxy-incapsula: Incapsula
+    proxy-provide: 提供代理服务器...
+    proxy-button-ok: 确定
+    msgbox-button-ok: 确定
+    msgbox-button-cancel: 取消
   }
-  editor: {
-    PLEASE_INPUT_A_DECK_NAME: 请输入牌组名字!
-    DECK_NAME: 新的卡组名字
-    DECK_NAME_ALREADY_EXISTS: 卡组"%s"已存在!
-    FAILED_TO_PARSE_FILE: 解析文件失败!
-    FAILED_TO_PARSE_CODE: 解析代码失败!
-    CONFIRM_DELETE_DECK: 确定要删除卡组"%s"吗?
+  DeckEditor: {
+    link-back-to-webxoss: 完成编辑
+    label-select-deck: 选择牌组:
+    button-delete-deck: 删除
+    button-rename: 重命名
+    label-new-deck: 新建牌组:
+    input-new-deck-name: {
+      placeholder: 牌组名字
+    }
+    button-new-deck: 新建
+    button-copy-deck: 复制
+    button-import-export: 导入/导出
+    main-deck-title: 主卡组
+    main-deck-mayus-room: 茧的房间
+    main-deck-burst-title: 爆发:
+    lrig-deck-title: LRIG卡组
+    label-import-from-file: 从文件导入:
+    label-export-to-file: 导出到文件:
+    button-export: 导出
+    button-text: 显示文本
+    button-export-code: 显示代码
+    button-import-code: 导入代码
+    button-import-export-cancel: 取消
+    search-input: {
+      placeholder: 输入关键字以搜索
+    }
+    link-search-tips: {
+      textContent: 搜索技巧
+      href: SearchTips.html
+    }
+    search-show-more: 显示更多
   }
+}
+index: {
+  REQUIRE_UPDATE: 客户端版本与服务器不匹配!\n更新后才能进行游戏!
+  UPDATING: 正在更新...
+  UPDATE_READY: 更新完毕点击此处完成更新!
+  NET_WORK_ERROR: 网络错误.
+  DISCONNECTED: 连接已断开
+  NO_VALID_DECK: 没有可用的卡组!\n请先编辑卡组!
+  OPPONENT_DISCONNECTED: 对手断开了连接!
+  SELF_DISCONNECTED: 己方断开了连接!
+  PLEASE_INPUT_A_NICKNAME: 请输入昵称!
+  PLEASE_INPUT_A_ROOM_NAME: 请输入房间名字!
+  FAILED_TO_READ_DECK: 读取卡组失败!
+  NEW_GUEST: %s进入了房间
+  GUEST_LEFT: %s离开了房间
+  READY: 对手已经做好准备
+  UNREADY: 对手取消了准备
+  INPUT_PASSWORD: 请输入房间密码
+  WRONG_PASSWORD: 密码错误!
+  NOT_CONNECTED: 未与服务器建立连接!\n请稍后重试!
+  SUPPORT_URL: about.html#support
+  CONFIRM_SURRENDER: 确定要投降吗?
+  SURRENDERED: 你投降了!
+  OPPONENT_SURRENDERED: 对手投降了!
+  CONFIRM_CLOSE: 游戏正在进行您确定要离开吗?
+  DROPPED: 对战对手已经离开了游戏
+  SAVE_REPLAY: 保存录像
+  FAILED_TO_PARSE_REPLAY: 解析文件失败!
+  UNSUPPORTED_REPLAY_VERSION: 不支持的录像版本!\n请升级你的客户端!
+  PROVIDE_PROXY_SERVER: 你愿意为WEBXOSS提供代理服务吗?\n联系webxoss@gmail.com吧!\nWEBXOSS将在你的帮助下变得更棒!
+  FETCHING_DATA: 正在读取数据...\n点击"确定"取消操作.
+  FAILED_TO_FETCH_DATA: 读取数据失败!
+}
+editor: {
+  PLEASE_INPUT_A_DECK_NAME: 请输入牌组名字!
+  DECK_NAME: 新的卡组名字
+  DECK_NAME_ALREADY_EXISTS: 卡组"%s"已存在!
+  FAILED_TO_PARSE_FILE: 解析文件失败!
+  FAILED_TO_PARSE_CODE: 解析代码失败!
+  CONFIRM_DELETE_DECK: 确定要删除卡组"%s"吗?
+}
+DeckPage: {
+  new_deck: 新建卡组
+  clone: 复制卡组
+  rename: 重命名
+  delete: 删除
+  import: 导入
+  export: 导出
+  CONFIRM_DELETE: 确定删除当前卡组？
+  DECK_NAME_INPUT: 新的卡组名字：
 }
