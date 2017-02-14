@@ -27,18 +27,23 @@ export default {
         if (this.blocking) {
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
-            this.updateQueryPart({ query })
+            this.updateQueryPart({
+              query,
+              limit: 20,
+            })
             this.blocking = false
-            this.limit = 20
-            scrollTo(0, 0)
+            window.scrollTo(0, 0)
           }, 500)
           return
         }
 
-        this.updateQueryPart({ query })
+        this.updateQueryPart({
+          query,
+          limit: 20,
+        })
+        window.scrollTo(0, 0)
+
         this.blocking = true
-        this.limit = 20 // reset limit to 20
-        scrollTo(0, 0) // return to top when search
         this.timer = setTimeout(() => {
           this.blocking = false
         }, 500)
