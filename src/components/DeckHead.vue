@@ -1,9 +1,5 @@
 <script>
-import Icon from 'components/Icon'
 export default {
-  components: {
-    Icon,
-  },
   props: {
     scrolledToLrig: {
       require: true,
@@ -44,19 +40,6 @@ export default {
 <template>
   <div :class="$style.wrapper">
     <div :class="[$style.head, shadow ? $style.shadow : '']">
-      <icon
-        :class="$style.icon"
-        v-if="previewing"
-        name="list"
-        label="list view"
-        @click.native="$emit('switchView', 'list')"/>
-      <icon
-        :class="$style.icon"
-        v-if="!previewing"
-        name="blocks"
-        label="preview"
-        @click.native="$emit('switchView', 'preview')"/>
-
       <template v-if="previewing">
         <span>Overview</span>
       </template>
@@ -102,9 +85,11 @@ export default {
 
   background-color: #fff;
   border-bottom: 1px solid var(--cell-border-color);
-}
-.shadow {
-  @apply --shadow-2dp;
+
+  &.shadow {
+    @apply --shadow-2dp;
+    border-bottom: transparent;
+  }
 }
 .right {
   flex: 1;
@@ -115,8 +100,5 @@ export default {
 }
 .mayu {
   margin-right: .5em;
-}
-.icon {
-  font-size: 1.8em;
 }
 </style>
