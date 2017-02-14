@@ -5,6 +5,26 @@ common: {
   NO_CARDS: カードはありません
   or: または
 }
+_misc: {
+  DIALOG_TITLE_EFFECTS: 複数の効果が同時に発動しています。\n先に処理するのを一つ選びなさい。
+  // NO_TARGET: 目標はありません
+  NO_OPTIONS: %sできません
+  // GIVE_UP_TARGET: 選びません
+  GIVE_UP: %sしない
+  GUARD_TRUE: 有
+  GUARD_FALSE: "-"
+  LIMITING: %s限定
+  WAIT: 対戦相手は考え中
+  CLASS_SEPARATOR: ":"
+  CROSS_NAME_QUOTE_LEFT: 《
+  CROSS_NAME_QUOTE_RIGHT: 》
+  CROSS_LEFT: 【クロス】%sの左
+  CROSS_RIGHT: 【クロス】%sの右
+  CROSS_AND: 【クロス】%sの左 かつ %sの右
+  CROSS_OR: か
+  GUARD_DESCRIPTION: 【ガード】（このカードを手札から捨てることで、ルリグの攻撃を一度無効にする）
+  MULTI_ENER_DESCRIPTION: 【常時能力】：【マルチエナ】（コストを支払う際に、このカードは全ての色を持つかのように扱う）
+}
 prop: {
   cardType: 種類
   classes: タイプ

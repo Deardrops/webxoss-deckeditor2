@@ -1,11 +1,11 @@
 import { inArr, toArr, isStr, isObj, concat } from 'js/util.js'
 const Localize = (() => {
-  let map_zh_CN = require('../lang/map_zh_CN.hjson')
-  let map_en = require('../lang/map_en.hjson')
-  let map_jp = require('../lang/map_jp.hjson')
-  let map_ru = require('../lang/map_ru.hjson')
-  let map_it = require('../lang/map_it.hjson')
-  let map_ko = require('../lang/map_ko.hjson')
+  let map_zh_CN = require('../lang/zh_Hans.hjson')
+  let map_en = require('../lang/en.hjson')
+  let map_jp = require('../lang/jp.hjson')
+  let map_ru = require('../lang/ru.hjson')
+  let map_it = require('../lang/it.hjson')
+  let map_ko = require('../lang/ko.hjson')
 
   let map_zh_TW = Object.create(map_zh_CN)
   map_zh_TW.traditional = true
@@ -305,6 +305,10 @@ const Localize = (() => {
 
   Localize.waitingMsg = function( /*operation*/ ) {
     return Localize('_misc', 'WAIT')
+  }
+
+  Localize.deckPage = function(text) {
+    return Localize('deckPage', text)
   }
 
   return Localize

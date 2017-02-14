@@ -1,6 +1,8 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
+import Localize from 'js/Localize'
+let $ = Localize.deckPage
 export default {
   components: {
     Modal,
@@ -20,9 +22,9 @@ export default {
       return {
         'add': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: $('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'CREATE',
+          okText: $('add').toUpperCase(),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -33,9 +35,9 @@ export default {
         },
         'clone': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: $('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'CLONE',
+          okText: $('clone').toUpperCase(),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -46,10 +48,10 @@ export default {
         },
         'rename': {
           type: 'prompt',
-          content: 'New deck name:',
+          content: $('input_new_deck_name'),
           defaultInput: this.deckName,
           validate: name => name && !this.deckNames.includes(name),
-          okText: 'RENAME',
+          okText: $('rename').toUpperCase(),
           ok: name => {
             this.$store.commit('renameDeck', {
               origin: this.deckName,

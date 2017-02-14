@@ -1,9 +1,30 @@
 suffix: _en
-common: 
+common: {
   OK: OK
   CANCEL: CANCEL
   NO_CARDS: No cards
   or: or
+}
+_misc: {
+  DIALOG_TITLE_EFFECTS: Multiple effects have been triggered\nChoose one to resolve.
+  // NO_TARGET: No targets
+  NO_OPTIONS: Unable to %s
+  // GIVE_UP_TARGET: Don\'t select
+  GIVE_UP: Don\'t %s
+  GUARD_TRUE: Yes
+  GUARD_FALSE: No
+  LIMITING: %s Only
+  WAIT: Waiting...
+  CLASS_SEPARATOR: ":\n"
+  CROSS_NAME_QUOTE_LEFT: "\""
+  CROSS_NAME_QUOTE_RIGHT: "\""
+  CROSS_LEFT: >Cross< %s Left
+  CROSS_RIGHT: >Cross< %s Right
+  CROSS_AND: >Cross< %s Right and %s Left
+  CROSS_OR:  or 
+  GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
+  MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
+}
 prop: {
   cardType: Type
   classes: Class
@@ -91,4 +112,20 @@ class: {
   龍獣: Dragon Beast
   凶蟲: Misfortune Insect
   精元: Origin
+}
+deckPage: {
+  // header menu list
+  new_deck: New Deck
+  clone: Clone
+  rename: Rename
+  delete: Delete
+  import: Import
+  export: Export
+  // modal button
+  add: add
+  create: create
+  reserve: reserve
+  // modal content text
+  input_new_deck_name: New deck name:
+  confirm_delete: Are you sure to delete?
 }

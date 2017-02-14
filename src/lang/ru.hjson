@@ -5,6 +5,28 @@ common: {
   NO_CARDS: Нет карт
   or: or
 }
+_misc: {
+  DIALOG_TITLE_EFFECTS: Сработало несколько способностей.\nВыберите какую выполнить.
+  // NO_TARGET: No targets
+  NO_OPTIONS: Не могу %s
+  // GIVE_UP_TARGET: Don\t select
+  GIVE_UP: Не %s
+  GUARD_TRUE: Да
+  GUARD_FALSE: Нет
+  LIMITING: Лишь для %s
+  WAIT: Ожидание...
+  CLASS_SEPARATOR: ":\n"
+  CROSS_NAME_QUOTE_LEFT: "\""
+  CROSS_NAME_QUOTE_RIGHT: "\""
+  CROSS_LEFT: >Связь< слева от %s
+  CROSS_RIGHT: >Связь< справа от %s
+  CROSS_AND: >Cross< %s Right and %s Left
+  CROSS_OR:  или 
+  // CROSS_LEFT: >Связь< слева от "%s"
+  // CROSS_RIGHT: >Связь< справа от "%s"
+  GUARD_DESCRIPTION: "[Защита] (Сбросив эту карту со своей руки, отмените атаку одной ИДЕЛ.)"
+  MULTI_ENER_DESCRIPTION: "[Постоянно]: [Мульти-энер] (Когда Вы платите цену, считается, что эта карта относится ко всем цветам.)"
+}
 prop: {
   cardType: Тип
   classes: Класс

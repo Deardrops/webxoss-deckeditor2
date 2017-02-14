@@ -5,6 +5,26 @@ common: {
   NO_CARDS: No cards
   or: or
 }
+_misc: {
+  DIALOG_TITLE_EFFECTS: Piu effetti sono stati attivati\nScegline uno da risolvere.
+  // NO_TARGET: Nessun bersaglio
+  NO_OPTIONS: Non hai %s
+  // GIVE_UP_TARGET: Non selezionare
+  GIVE_UP: Non %s
+  GUARD_TRUE: Si
+  GUARD_FALSE: No
+  LIMITING: %s Only
+  WAIT: In attesa...
+  CLASS_SEPARATOR: ":\n"
+  CROSS_NAME_QUOTE_LEFT: "\""
+  CROSS_NAME_QUOTE_RIGHT: "\""
+  CROSS_LEFT: >Cross< %s Sinistra
+  CROSS_RIGHT: >Cross< %s Destra
+  CROSS_AND: >Cross< %s Right and %s Left
+  CROSS_OR:  o 
+  GUARD_DESCRIPTION: "[Guard] (Scartando questa carta dalla tua mano annulla un attacco di una LRIG)"
+  MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (Mentre paghi un costo tratta questa carta come se fosse di un qualsiasi colore)"
+}
 prop: {
   cardType: Tipo
   classes: Classe

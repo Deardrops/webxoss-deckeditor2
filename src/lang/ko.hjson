@@ -5,6 +5,26 @@ common: {
   NO_CARDS: 카드가 없습니다
   or: or
 }
+_misc: {
+  DIALOG_TITLE_EFFECTS: 복수의 효과가 동시에 발동되었습니다.\n먼저 처리할 효과를 하나 골라주세요
+  // NO_TARGET: 목표가 없습니다
+  NO_OPTIONS: %s할 수 없습니다
+  // GIVE_UP_TARGET: 고를 수 없습니다
+  GIVE_UP: %s하지 않는다
+  GUARD_TRUE: 있음
+  GUARD_FALSE: "-"
+  LIMITING: %s 한정
+  WAIT: 대전 상대가 생각중
+  CLASS_SEPARATOR: ":"
+  CROSS_NAME_QUOTE_LEFT: 《
+  CROSS_NAME_QUOTE_RIGHT: 》
+  CROSS_LEFT: "[크로스]%s의 왼쪽"
+  CROSS_RIGHT: "[크로스]%s의 오른쪽"
+  CROSS_AND: "[크로스]%s의 왼쪽과  %s의 오른쪽"
+  CROSS_OR: 또는
+  GUARD_DESCRIPTION: "[가드]（이 카드를 패에서 버리는 것으로, 루리그의 공격을 한 번 무효로 한다.）"
+  MULTI_ENER_DESCRIPTION: "[상시]：[멀티에나]（코스트를 지불할 때, 이 카드는 모든 색을 가진것 처럼 취급한다.）"
+}
 prop: {
   cardType: 종류
   classes: 타입
