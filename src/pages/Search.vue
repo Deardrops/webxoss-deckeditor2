@@ -29,12 +29,16 @@ export default {
           this.timer = setTimeout(() => {
             this.updateQueryPart({ query })
             this.blocking = false
+            this.limit = 20
+            scrollTo(0, 0)
           }, 500)
           return
         }
 
         this.updateQueryPart({ query })
         this.blocking = true
+        this.limit = 20 // reset limit to 20
+        scrollTo(0, 0) // return to top when search
         this.timer = setTimeout(() => {
           this.blocking = false
         }, 500)
