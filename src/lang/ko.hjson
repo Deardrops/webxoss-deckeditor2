@@ -1,0 +1,115 @@
+suffix: _ko
+common: {
+  OK: 확인
+  CANCEL: 캔슬
+  NO_CARDS: 카드가 없습니다
+  or: or
+}
+_misc: {
+  DIALOG_TITLE_EFFECTS: 복수의 효과가 동시에 발동되었습니다.\n먼저 처리할 효과를 하나 골라주세요
+  // NO_TARGET: 목표가 없습니다
+  NO_OPTIONS: %s할 수 없습니다
+  // GIVE_UP_TARGET: 고를 수 없습니다
+  GIVE_UP: %s하지 않는다
+  GUARD_TRUE: 있음
+  GUARD_FALSE: "-"
+  LIMITING: %s 한정
+  WAIT: 대전 상대가 생각중
+  CLASS_SEPARATOR: ":"
+  CROSS_NAME_QUOTE_LEFT: 《
+  CROSS_NAME_QUOTE_RIGHT: 》
+  CROSS_LEFT: "[크로스]%s의 왼쪽"
+  CROSS_RIGHT: "[크로스]%s의 오른쪽"
+  CROSS_AND: "[크로스]%s의 왼쪽과  %s의 오른쪽"
+  CROSS_OR: 또는
+  GUARD_DESCRIPTION: "[가드]（이 카드를 패에서 버리는 것으로, 루리그의 공격을 한 번 무효로 한다.）"
+  MULTI_ENER_DESCRIPTION: "[상시]：[멀티에나]（코스트를 지불할 때, 이 카드는 모든 색을 가진것 처럼 취급한다.）"
+}
+prop: {
+  cardType: 종류
+  classes: 타입
+  level: 레벨
+  color: 색
+  limit: 리미트
+  power: 파워
+  limting: 한정조건
+  guard: 가드
+  cost: 코스트
+  timmings: 타이밍
+  effects: 효과
+  burst: 라이프 버스트
+}
+cardType: {
+  LRIG: 루리그
+  SIGNI: 시그니
+  SPELL: 스펠
+  ARTS: 아츠
+  RESONA: 레조나
+}
+color: {
+  white: 백
+  black: 흑
+  red: 적
+  blue: 청
+  green: 녹
+  colorless: 무
+}
+costColor: {
+  costWhite: 백
+  costBlack: 흑
+  costRed: 적
+  costBlue: 청
+  costGreen: 녹
+  costColorless: 무
+}
+timming: {
+  mainPhase: "[메인 페이즈]"
+  attackPhase: "[어택 페이즈]"
+  spellCutIn: "[스펠 컷인]"
+}
+class: {
+  タマ: 타마
+  花代: 하나요
+  ユヅキ: 유즈키
+  ピルルク: 피루루크
+  エルドラ: 엘도라
+  ミルルン: 미루룽
+  緑子: 미도리코
+  アン: 안
+  ウリス: 우리스
+  イオナ: 이오나
+  ウムル: 움르
+  リメンバ: 리멤버
+  タウィル: 타윌
+  サシェ: 사셰
+  ミュウ: 뮤
+  アイヤイ: 아이야이
+  アルフォウ: 알포우
+  ハナレ: 하나레
+  精像: 정상
+  天使: 천사
+  悪魔: 악마
+  美巧: 미교
+  精武: 정무
+  アーム: 암
+  ウェポン: 웨펀
+  遊具: 유구
+  毒牙: 독아
+  精羅: 정나
+  鉱石: 광석
+  宝石: 보석
+  植物: 식물
+  原子: 원자
+  宇宙: 우주
+  精械: 정계
+  電機: 전기
+  古代兵器: 고대병기
+  迷宮: 미궁
+  精生: 정생
+  水獣: 수수
+  空獣: 공수
+  地獣: 지수
+  龍獣: 용수
+  凶蟲: 흉충
+  精元: 정원
+}

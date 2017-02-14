@@ -1,0 +1,115 @@
+suffix: _en
+common: {
+  OK: OK
+  CANCEL: CANCEL
+  NO_CARDS: No cards
+  or: or
+}
+_misc: {
+  DIALOG_TITLE_EFFECTS: Piu effetti sono stati attivati\nScegline uno da risolvere.
+  // NO_TARGET: Nessun bersaglio
+  NO_OPTIONS: Non hai %s
+  // GIVE_UP_TARGET: Non selezionare
+  GIVE_UP: Non %s
+  GUARD_TRUE: Si
+  GUARD_FALSE: No
+  LIMITING: %s Only
+  WAIT: In attesa...
+  CLASS_SEPARATOR: ":\n"
+  CROSS_NAME_QUOTE_LEFT: "\""
+  CROSS_NAME_QUOTE_RIGHT: "\""
+  CROSS_LEFT: >Cross< %s Sinistra
+  CROSS_RIGHT: >Cross< %s Destra
+  CROSS_AND: >Cross< %s Right and %s Left
+  CROSS_OR:  o 
+  GUARD_DESCRIPTION: "[Guard] (Scartando questa carta dalla tua mano annulla un attacco di una LRIG)"
+  MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (Mentre paghi un costo tratta questa carta come se fosse di un qualsiasi colore)"
+}
+prop: {
+  cardType: Tipo
+  classes: Classe
+  level: Livello
+  color: Colore
+  limit: Limite
+  power: Power
+  limting: Limitazione
+  guard: Guard
+  cost: Costo
+  timmings: Timing
+  effects: Abilita
+  burst: Life Burst
+}
+cardType: {
+  LRIG: LRIG
+  SIGNI: SIGNI
+  SPELL: SPELL
+  ARTS: ARTS
+  RESONA: RESONA
+}
+color: {
+  white: White
+  black: Black
+  red: Red
+  blue: Blue
+  green: Green
+  colorless: Colorless
+}
+costColor: {
+  costWhite: White
+  costBlack: Black
+  costRed: Red
+  costBlue: Blue
+  costGreen: Green
+  costColorless: Colorless
+}
+timming: {
+  mainPhase: "[Main Phase]"
+  attackPhase: "[Attack Phase]"
+  spellCutIn: "[Spell Cut-In]"
+}
+class: {
+  タマ: Tama
+  花代: Hanayo
+  ユヅキ: Yuzuki
+  ピルルク: Piruluk
+  エルドラ: Eldora
+  ミルルン: Mirurun
+  緑子: Midoriko
+  アン: Anne
+  ウリス: Ulith
+  イオナ: Iona
+  ウムル: Umuru
+  リメンバ: Remember
+  タウィル: Tawil
+  サシェ: Sashe
+  ミュウ: Myuu
+  アイヤイ: Aiyai
+  アルフォウ: Alfou
+  ハナレ: Hanare
+  精像: Image
+  天使: Angel
+  悪魔: Devil
+  美巧: Beautiful Technique
+  精武: War
+  アーム: Arm
+  ウェポン: Weapon
+  遊具: Playground Equipment
+  毒牙: Poison Fang
+  精羅: Nature
+  鉱石: Ore
+  宝石: Gem
+  植物: Plant
+  原子: Atom
+  宇宙: Space
+  精械: Machine
+  電機: Electric
+  古代兵器: Ancient Weapon
+  迷宮: Labyrinth
+  精生: Living
+  水獣: Water Beast
+  空獣: Sky Beast
+  地獣: Earth Beast
+  龍獣: Dragon Beast
+  凶蟲: Misfortune Insect
+  精元: Origin
+}

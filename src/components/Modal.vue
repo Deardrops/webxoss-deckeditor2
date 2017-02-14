@@ -1,4 +1,8 @@
 <script>
+import Localize from 'js/Localize'
+let $ = (text) => {
+  return Localize('common', text)
+}
 export default {
   props: {
     config: {
@@ -18,10 +22,10 @@ export default {
       return this.config.type !== 'alert'
     },
     okText() {
-      return this.config.okText || 'OK'
+      return this.config.okText || $('OK')
     },
     cancleText() {
-      return this.config.cancleText || 'CANCLE'
+      return this.config.cancleText || $('CANCEL')
     },
   },
   methods: {
