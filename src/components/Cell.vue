@@ -133,7 +133,11 @@ export default {
         this.$store.commit('delRemainingCard', pid)
       }
 
-      this.$store.commit('addCard', pid)
+      this.$store.dispatch('addCard', pid).then((successed) => {
+        if (!successed) {
+          console.log('already full') // show toast here
+        }
+      })
     },
     minus() {
       let pid = this.card.pid

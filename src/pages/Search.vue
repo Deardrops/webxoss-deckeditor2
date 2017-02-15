@@ -27,13 +27,22 @@ export default {
         if (this.blocking) {
           clearTimeout(this.timer)
           this.timer = setTimeout(() => {
-            this.updateQueryPart({ query })
+            this.updateQueryPart({
+              query,
+              limit: 20,
+            })
             this.blocking = false
+            window.scrollTo(0, 0)
           }, 500)
           return
         }
 
-        this.updateQueryPart({ query })
+        this.updateQueryPart({
+          query,
+          limit: 20,
+        })
+        window.scrollTo(0, 0)
+
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
