@@ -6,15 +6,9 @@ common: {
   or: or
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: Piu effetti sono stati attivati\nScegline uno da risolvere.
-  // NO_TARGET: Nessun bersaglio
-  NO_OPTIONS: Non hai %s
-  // GIVE_UP_TARGET: Non selezionare
-  GIVE_UP: Non %s
   GUARD_TRUE: Si
   GUARD_FALSE: No
   LIMITING: %s Only
-  WAIT: In attesa...
   CLASS_SEPARATOR: ":\n"
   CROSS_NAME_QUOTE_LEFT: "\""
   CROSS_NAME_QUOTE_RIGHT: "\""

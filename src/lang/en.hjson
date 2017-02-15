@@ -1,20 +1,14 @@
 suffix: _en
 common: {
-  OK: OK
-  CANCEL: CANCEL
-  NO_CARDS: No cards
+  ok: ok
+  cancel: cancel
+  no_cards: No cards
   or: or
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: Multiple effects have been triggered\nChoose one to resolve.
-  // NO_TARGET: No targets
-  NO_OPTIONS: Unable to %s
-  // GIVE_UP_TARGET: Don\'t select
-  GIVE_UP: Don\'t %s
   GUARD_TRUE: Yes
   GUARD_FALSE: No
   LIMITING: %s Only
-  WAIT: Waiting...
   CLASS_SEPARATOR: ":\n"
   CROSS_NAME_QUOTE_LEFT: "\""
   CROSS_NAME_QUOTE_RIGHT: "\""
@@ -114,18 +108,22 @@ class: {
   精元: Origin
 }
 deckPage: {
+  // deck head
+  main_deck: MainDeck
+  lrig_deck: LrigDeck
+  mayu_room: Mayu's Room
   // header menu list
-  new_deck: New Deck
-  clone: Clone
-  rename: Rename
-  delete: Delete
-  import: Import
-  export: Export
+  new_deck: new Deck
+  clone: clone
+  rename: rename
+  delete: delete
+  import: import
+  export: export
   // modal button
   add: add
   create: create
   reserve: reserve
   // modal content text
   input_new_deck_name: New deck name:
-  confirm_delete: Are you sure to delete?
+  confirm_delete: Are you sure to delete %s ?
 }

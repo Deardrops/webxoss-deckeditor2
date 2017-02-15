@@ -6,15 +6,9 @@ common: {
   or: or
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: Сработало несколько способностей.\nВыберите какую выполнить.
-  // NO_TARGET: No targets
-  NO_OPTIONS: Не могу %s
-  // GIVE_UP_TARGET: Don\t select
-  GIVE_UP: Не %s
   GUARD_TRUE: Да
   GUARD_FALSE: Нет
   LIMITING: Лишь для %s
-  WAIT: Ожидание...
   CLASS_SEPARATOR: ":\n"
   CROSS_NAME_QUOTE_LEFT: "\""
   CROSS_NAME_QUOTE_RIGHT: "\""

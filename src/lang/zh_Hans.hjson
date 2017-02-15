@@ -1,20 +1,14 @@
 suffix: _zh_CN
 common: {
-  OK: 确定
-  CANCEL: 取消
-  NO_CARDS: 没有卡牌
-  OR: 或
+  ok: 确定
+  cancel: 取消
+  no_cards: 没有卡牌
+  or: 或
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: 多个效果发动选择一个优先处理
-  // NO_TARGET: 没有目标
-  NO_OPTIONS: 无法%s
-  // GIVE_UP_TARGET: 不选择目标
-  GIVE_UP: 不%s
   GUARD_TRUE: 有
   GUARD_FALSE: 无
   LIMITING: %s限定
-  WAIT: 等待对方操作
   CLASS_SEPARATOR: ":"
   CROSS_NAME_QUOTE_LEFT: 《
   CROSS_NAME_QUOTE_RIGHT: 》
@@ -115,6 +109,10 @@ class: {
   精元: 精元
 }
 deckPage: {
+  // deck head
+  main_deck: 主卡组
+  lrig_deck: 分身卡组
+  mayu_room: 萤的房间
   // header menu list
   new_deck: 新建卡组
   clone: 复制
@@ -128,5 +126,5 @@ deckPage: {
   reserve: 保留
   // modal content text
   input_new_deck_name: 新的卡组名字：
-  confirm_delete: 确定删除当前卡组？
+  confirm_delete: 确定删除卡组 %s ？
 }

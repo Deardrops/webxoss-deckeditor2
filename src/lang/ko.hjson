@@ -6,15 +6,9 @@ common: {
   or: or
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: 복수의 효과가 동시에 발동되었습니다.\n먼저 처리할 효과를 하나 골라주세요
-  // NO_TARGET: 목표가 없습니다
-  NO_OPTIONS: %s할 수 없습니다
-  // GIVE_UP_TARGET: 고를 수 없습니다
-  GIVE_UP: %s하지 않는다
   GUARD_TRUE: 있음
   GUARD_FALSE: "-"
   LIMITING: %s 한정
-  WAIT: 대전 상대가 생각중
   CLASS_SEPARATOR: ":"
   CROSS_NAME_QUOTE_LEFT: 《
   CROSS_NAME_QUOTE_RIGHT: 》

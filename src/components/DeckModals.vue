@@ -2,7 +2,9 @@
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
 import Localize from 'js/Localize'
-let $ = Localize.deckPage
+let L = (text, variable) => {
+  return Localize('deckPage', text, variable)
+}
 export default {
   components: {
     Modal,
@@ -22,9 +24,9 @@ export default {
       return {
         'add': {
           type: 'prompt',
-          content: $('input_new_deck_name'),
+          content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: $('add').toUpperCase(),
+          okText: L('add').toUpperCase(),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -35,9 +37,9 @@ export default {
         },
         'clone': {
           type: 'prompt',
-          content: $('input_new_deck_name'),
+          content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: $('clone').toUpperCase(),
+          okText: L('clone').toUpperCase(),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -48,10 +50,10 @@ export default {
         },
         'rename': {
           type: 'prompt',
-          content: $('input_new_deck_name'),
+          content: L('input_new_deck_name'),
           defaultInput: this.deckName,
           validate: name => name && !this.deckNames.includes(name),
-          okText: $('rename').toUpperCase(),
+          okText: L('rename').toUpperCase(),
           ok: name => {
             this.$store.commit('renameDeck', {
               origin: this.deckName,
@@ -61,12 +63,12 @@ export default {
         },
         'delete': {
           type: 'confirm',
-          content: `Are you sure to delete "${this.deckName}" ?`,
-          okText: 'DELETE',
+          content: L('confirm_delete', this.deckName),
+          okText: L('delete').toUpperCase(),
           ok: () => {
             this.$store.commit('deleteDeck', this.deckName)
           },
-          cancleText: 'RESERVE',
+          cancelText: L('reserve').toUpperCase(),
         },
       }[this.$route.query.modal] || {}
     },
@@ -108,5 +110,5 @@ export default {
     v-show="shown"
     :config="config"
     @ok="ok"
-    @cancle="close"/>
+    @cancel="close"/>
 </template>

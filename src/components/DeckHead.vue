@@ -1,5 +1,6 @@
 <script>
 import Icon from 'components/Icon'
+import Localize from 'js/Localize'
 export default {
   components: {
     Icon,
@@ -35,6 +36,11 @@ export default {
       return this.lrigCount === 10 ? '' : this.$style.warn
     },
   },
+  methods: {
+    L(text) {
+      return Localize('deckPage', text)
+    },
+  },
 }
 </script>
 
@@ -55,17 +61,17 @@ export default {
         @click.native="$emit('switchView', 'preview')"/>
 
       <template v-if="!scrolledToLrig">
-        <span :class="$style.deckName">MainDeck </span>
+        <span :class="$style.deckName">{{ L('main_deck') }}</span>
         (<span :class="mainClass">{{ mainCount }}</span>/40)
       </template>
 
       <template v-if="scrolledToLrig">
-        <span :class="$style.deckName">LrigDeck </span>
+        <span :class="$style.deckName">{{ L('lrig_deck') }}</span>
         (<span :class="lrigClass">{{ lrigCount }}</span>/10)
       </template>
 
       <div :class="$style.right">
-        <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
+        <span :class="[$style.warn, $style.mayu]">{{ L('mayu_room') }}</span>
         <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>

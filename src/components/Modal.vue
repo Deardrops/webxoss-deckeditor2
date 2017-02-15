@@ -1,7 +1,7 @@
 <script>
 import Localize from 'js/Localize'
-let $ = (text) => {
-  return Localize('common', text)
+let L = (text) => {
+  return Localize('common', text).toUpperCase()
 }
 export default {
   props: {
@@ -18,14 +18,14 @@ export default {
       return this.config.type === 'prompt' &&
         (this.config.validate && !this.config.validate(this.input))
     },
-    cancleShown() {
+    cancelShown() {
       return this.config.type !== 'alert'
     },
     okText() {
-      return this.config.okText || $('OK')
+      return this.config.okText || L('ok')
     },
-    cancleText() {
-      return this.config.cancleText || $('CANCEL')
+    cancelText() {
+      return this.config.cancelText || L('cancel')
     },
   },
   methods: {
@@ -39,8 +39,8 @@ export default {
         this.$refs.wrapper.focus()
       }
     },
-    cancle() {
-      this.$emit('cancle')
+    cancel() {
+      this.$emit('cancel')
     },
     ok() {
       this.$emit('ok', this.input)
@@ -54,7 +54,7 @@ export default {
     ref="wrapper"
     :class="$style.wrapper"
     tabindex="0"
-    @keyup.esc="cancle">
+    @keyup.esc="cancel">
     <form :class="$style.dialog" @submit.prevent="ok">
       <h3 :class="$style.title" v-if="config.title">{{ config.title }}</h3>
       <div :class="$style.content">{{ config.content }}</div>
@@ -69,10 +69,10 @@ export default {
       <div :class="$style.foot">
         <button
           :class="$style.button"
-          v-if="cancleShown"
+          v-if="cancelShown"
           type="button"
-          @click="cancle">
-          {{ cancleText }}
+          @click="cancel">
+          {{ cancelText }}
         </button>
         <button
           :class="$style.button"

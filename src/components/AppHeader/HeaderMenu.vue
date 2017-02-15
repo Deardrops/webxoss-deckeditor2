@@ -89,6 +89,7 @@ export default {
 
   & > * {
     vertical-align: middle;
+    text-transform: capitalize;
   }
 }
 .icon {

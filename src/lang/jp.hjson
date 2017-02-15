@@ -6,15 +6,9 @@ common: {
   or: または
 }
 _misc: {
-  DIALOG_TITLE_EFFECTS: 複数の効果が同時に発動しています。\n先に処理するのを一つ選びなさい。
-  // NO_TARGET: 目標はありません
-  NO_OPTIONS: %sできません
-  // GIVE_UP_TARGET: 選びません
-  GIVE_UP: %sしない
   GUARD_TRUE: 有
   GUARD_FALSE: "-"
   LIMITING: %s限定
-  WAIT: 対戦相手は考え中
   CLASS_SEPARATOR: ":"
   CROSS_NAME_QUOTE_LEFT: 《
   CROSS_NAME_QUOTE_RIGHT: 》
