@@ -54,6 +54,9 @@ const getters = {
 
 const mutations = {
   addCard(state, pid) {
+    if (!pid) {
+      return
+    }
     let pids = getters.deckPids(state)
     pids.push(pid)
   },
@@ -143,10 +146,28 @@ const mutations = {
     }
   },
 }
+
+const actions = {
+  addCard({getters, commit}, pid) {
+    let isMainCard = !isLrigCard(CardInfo[pid])
+    return new Promise((resolve) => {
+      if (isMainCard && getters.mainDeck.length < 50) {
+        commit('addCard', pid)
+        resolve(true)
+      }
+      if (!isMainCard && getters.lrigDeck.length < 20) {
+        commit('addCard', pid)
+        resolve(true)
+      }
+      resolve(false)
+    })
+  },
+}
 const store = new Vuex.Store({
   state,
-  mutations,
   getters,
+  mutations,
+  actions,
   strict: process.env.NODE_ENV !== 'production',
 })
 
