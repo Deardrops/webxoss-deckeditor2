@@ -12,7 +12,7 @@ import _ from 'lodash'
 import Localize from 'js/Localize'
 
 let L = (text) => {
-  return Localize('deckPage', text)
+  return Localize('page', text)
 }
 
 let requestFrame = window.requestIdleCallback || window.requestAnimationFrame

@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     L(text) {
-      return Localize('deckPage', text)
+      return Localize('page', text)
     },
   },
 }
@@ -72,7 +72,7 @@ export default {
 
       <div :class="$style.right">
         <span :class="[$style.warn, $style.mayu]">{{ L('mayu_room') }}</span>
-        <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
+        <span>{{ L('life_burst_short') }}: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>
   </div>

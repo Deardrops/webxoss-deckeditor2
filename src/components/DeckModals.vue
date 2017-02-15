@@ -3,7 +3,7 @@ import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
 import Localize from 'js/Localize'
 let L = (text, variable) => {
-  return Localize('deckPage', text, variable)
+  return Localize('page', text, variable)
 }
 export default {
   components: {
@@ -26,7 +26,7 @@ export default {
           type: 'prompt',
           content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: L('add').toUpperCase(),
+          okText: L('add'),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -39,7 +39,7 @@ export default {
           type: 'prompt',
           content: L('input_new_deck_name'),
           validate: name => name && !this.deckNames.includes(name),
-          okText: L('clone').toUpperCase(),
+          okText: L('clone'),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
@@ -53,7 +53,7 @@ export default {
           content: L('input_new_deck_name'),
           defaultInput: this.deckName,
           validate: name => name && !this.deckNames.includes(name),
-          okText: L('rename').toUpperCase(),
+          okText: L('rename'),
           ok: name => {
             this.$store.commit('renameDeck', {
               origin: this.deckName,
@@ -64,11 +64,11 @@ export default {
         'delete': {
           type: 'confirm',
           content: L('confirm_delete', this.deckName),
-          okText: L('delete').toUpperCase(),
+          okText: L('delete'),
           ok: () => {
             this.$store.commit('deleteDeck', this.deckName)
           },
-          cancelText: L('reserve').toUpperCase(),
+          cancelText: L('reserve'),
         },
       }[this.$route.query.modal] || {}
     },

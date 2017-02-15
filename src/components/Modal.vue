@@ -1,7 +1,7 @@
 <script>
 import Localize from 'js/Localize'
 let L = (text) => {
-  return Localize('common', text).toUpperCase()
+  return Localize('page', text)
 }
 export default {
   props: {
@@ -128,6 +128,7 @@ export default {
   margin-right: var(--padding);
   color: var(--main-color);
   font-weight: bold;
+  text-transform: uppercase;
 
   &:disabled {
     color: #999;
