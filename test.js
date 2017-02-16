@@ -20,4 +20,12 @@ compiler.run((err, stats) => {
     info.errors.forEach(console.error)
     process.exit(1)
   }
+
+  process.stdout.write(stats.toString({
+    colors: true,
+    modules: false,
+    children: false,
+    chunks: false,
+    chunkModules: false,
+  }) + '\n')
 })
