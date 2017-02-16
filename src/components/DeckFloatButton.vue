@@ -57,7 +57,7 @@ export default {
 <style module>
 @import 'css/vars.css';
 .button {
-  position: fixed;
+  position: absolute;
   bottom: 2rem;
   right: 2rem;
   width: 4rem;

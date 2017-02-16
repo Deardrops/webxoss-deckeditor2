@@ -166,10 +166,32 @@ config.base = {
     new webpack.optimize.CommonsChunkPlugin({
       name: 'vue',
     }),
+    new webpack.optimize.CommonsChunkPlugin({
+      name: 'meta',
+      chunks: ['vue'],
+    }),
     new html({
       title: 'test',
       filename: 'index.html',
       template: PATHS.template,
+    }),
+    new (require('appcache-webpack-plugin'))({
+      cache: ['CardInfo.json'],
+      exclude: ['index.html'],
+      output: 'webxoss.appcache',
+    }),
+    new (require('serviceworker-webpack-plugin'))({
+      entry: './src/service-worker.js',
+      filename: 'service-worker.js',
+      excludes: ['**/*.', '**/*.map', '**/*.appcache', '**/*.hot-update.*'],
+      template: option => {
+        // add hash
+        let hash = require('crypto').createHash('sha256')
+        hash.update(JSON.stringify(option))
+        hash.update(require('fs').readFileSync('./src/service-worker.js'))
+        option.hash = hash.digest('base64').slice(0, 7)
+        return Promise.resolve('')
+      },
     }),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
