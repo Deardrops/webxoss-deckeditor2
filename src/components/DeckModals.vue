@@ -1,10 +1,8 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
-import Localize from 'js/Localize'
-let L = (text, variable) => {
-  return Localize('page', text, variable)
-}
+import L from 'js/Localize'
+
 export default {
   components: {
     Modal,

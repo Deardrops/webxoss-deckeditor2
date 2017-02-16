@@ -1,8 +1,6 @@
 <script>
-import Localize from 'js/Localize'
-let L = (text) => {
-  return Localize('page', text)
-}
+import L from 'js/Localize'
+
 export default {
   props: {
     config: {

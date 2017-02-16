@@ -9,11 +9,7 @@ import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
-import Localize from 'js/Localize'
-
-let L = (text) => {
-  return Localize('page', text)
-}
+import L from 'js/Localize'
 
 let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
 let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame

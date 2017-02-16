@@ -38,7 +38,7 @@ export default {
   },
   methods: {
     L(text) {
-      return Localize('page', text)
+      return Localize(text)
     },
   },
 }

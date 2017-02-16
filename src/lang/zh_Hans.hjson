@@ -106,11 +106,17 @@ page: {
   // common
   ok: 确定
   cancel: 取消
+  add: 新建
+  create: 创建
+  reserve: 保留
+
   // deck head
   main_deck: 主卡组
   lrig_deck: 分身卡组
   mayu_room: 萤的房间
   life_burst_short: 爆发
+  overview: 总览
+
   // header menu list
   new_deck: 新建卡组
   clone: 复制
@@ -118,13 +124,11 @@ page: {
   delete: 删除
   import: 导入
   export: 导出
-  // modal button - deck page
-  add: 新建
-  create: 创建
-  reserve: 保留
+
   // modal content text
   input_new_deck_name: 新的卡组名字：
   confirm_delete: 确定删除卡组 %s ？
+  
   // cell component
   no_cost: 无费用
 }
