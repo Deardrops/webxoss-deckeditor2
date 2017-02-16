@@ -225,4 +225,8 @@ config.dev = {
   ],
 }
 
+config.test = {
+  devtool: false,
+}
+
 module.exports = merge.smart(config.base, config[env])
