@@ -36,9 +36,9 @@ const TESTS = {
 }
 let browsers = [
   'last 2 versions',
-  'ie >= 10',
+  'ie >= 11',
   'Firefox ESR',
-  'Android >= 4.3',
+  'Android >= 4.4',
   'iOS >= 8',
   'last 2 ChromeAndroid versions',
 ].join(', ')
