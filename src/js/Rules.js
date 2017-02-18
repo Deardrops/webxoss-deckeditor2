@@ -283,7 +283,7 @@ LimitingRule.parse = function(words) {
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
       let matched = false
-      let localizedClass = Localize('class', cls).toLowerCase()
+      let localizedClass = Localize.class(cls).toLowerCase()
       if (word === localizedClass) {
         matched = true
       } else if (word === localizedClass + '+') {
@@ -332,7 +332,7 @@ ClassRule.parse = function(words) {
     ]
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
-      if (word === Localize('class', cls).toLowerCase().replace(' ', '')) {
+      if (word === Localize.class(cls).toLowerCase().replace(' ', '')) {
         matchedClasses.push(cls)
         words.splice(i, 1)
         i--

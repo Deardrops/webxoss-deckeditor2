@@ -6,9 +6,6 @@ import App from './app'
 
 import 'js/global'
 
-import Localize from 'js/Localize'
-Localize.init() // test
-
 import ImageFileCache from 'js/ImageFileCache'
 
 import { $get } from 'js/util'
