@@ -109,3 +109,33 @@ class: {
   凶蟲: Злобное насекомое
   精元: Первородный
 }
+page: {
+  // common
+  ok: ok
+  cancel: cancel
+  add: add
+  create: create
+  reserve: reserve
+
+  // deck head
+  main_deck: MainDeck
+  lrig_deck: LrigDeck
+  mayu_room: Mayu's Room
+  life_burst_short: LB
+  overview: Overview
+
+  // header menu list
+  new_deck: new deck
+  clone: clone
+  rename: rename
+  delete: delete
+  import: import
+  export: export
+
+  // modal content text
+  input_new_deck_name: New deck name:
+  confirm_delete: Are you sure to delete %s ?
+
+  // cell component
+  no_cost: no cost
+}
