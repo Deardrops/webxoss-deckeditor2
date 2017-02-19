@@ -47,7 +47,7 @@ export default {
   <div :class="$style.wrapper">
     <div :class="[$style.head, shadow ? $style.shadow : '']">
       <template v-if="previewing">
-        <span>Overview</span>
+        <span>{{ L('overview') }}</span>
       </template>
 
       <template v-if="!previewing && !scrolledToLrig">
