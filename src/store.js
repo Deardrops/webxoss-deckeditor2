@@ -30,9 +30,11 @@ const state = {
   deckName: '',
 
   localization: {
-    lang: 'en',
+    lang: localStorage.getItem('language') || 'en',
   },
 }
+
+Localize.config = state.localization
 
 const getters = {
   deckPids: ({ deckFiles, deckName }) => {
@@ -156,7 +158,7 @@ const mutations = {
       lang = 'zh_Hant'
     }
     state.localization.lang = lang
-    Localize.config = state.localization
+    localStorage.setItem('language', lang)
   },
 }
 
