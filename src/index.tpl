@@ -9,5 +9,17 @@
   </head>
   <body>
     <div id="app"></div>
+    <script async>
+      var el = document.createElement('div')
+      el.style.width = '100vw'
+      if (el.style.width !== '100vw') {
+        var msg = [
+          'Sorry, this browser is not supported by WEBXOSS :(',
+          'For Android <= 4.3, please download Google Chrome.',
+          'For iOS <= 7, please update your system.',
+        ].join('\n')
+        window.alert(msg)
+      }
+    </script>
   </body>
 </html>
