@@ -14,7 +14,7 @@ let maps = {
 
 // add language suffix to string
 const suff = str => {
-  return str + Localize.map.suffix
+  return str + Localize.getMap().suffix
 }
 
 // replace `%s` with args
@@ -26,7 +26,7 @@ const formatString = (str, args) => {
 }
 
 export default function Localize(label, ...args) {
-  let map = Localize.map
+  let map = Localize.getMap()
   if (!(label in map)) {
     console.warn(`no such label: "${label}"`)
     return label
@@ -36,37 +36,19 @@ export default function Localize(label, ...args) {
 }
 
 // default to english
-Localize.map = maps['en']
+Localize.config = {
+  lang: 'en',
+}
+
+Localize.getMap = () => {
+  return maps[Localize.config.lang] || maps['en']
+}
 
 Localize.traditionalize = str => {
-  if (!Localize.map.traditional) {
+  if (!Localize.getMap().traditional) {
     return str
   }
   return traditionalize(str)
-}
-
-Localize.getLanguage = () => {
-  // compatible for zh_CN, zh_TW
-  let lang = localStorage.getItem('language') || 'en'
-  if (lang === 'zh_CN') {
-    return 'zh_Hans'
-  } else if (lang === 'zh_TW') {
-    return 'zh_Hant'
-  } else {
-    return lang
-  }
-}
-
-Localize.setLanguage = lang => {
-  // compatible for zh_CN, zh_TW
-  Localize.map = maps[lang] || maps['en']
-  if (lang === 'zh_Hans') {
-    localStorage.setItem('language', 'zh_CN')
-  } else if (lang === 'zh_Hant') {
-    localStorage.setItem('language', 'zh_TW')
-  } else {
-    localStorage.setItem('language', lang)
-  }
 }
 
 Localize.cardName = info => {

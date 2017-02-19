@@ -29,7 +29,9 @@ const state = {
   // current selected deck name
   deckName: '',
 
-  language: Localize.getLanguage() || 'en',
+  localization: {
+    lang: 'en',
+  },
 }
 
 const getters = {
@@ -148,10 +150,13 @@ const mutations = {
     }
   },
   changeLanguage(state, lang) {
-    if (!lang) {
-      return
+    if (lang === 'zh_CN') {
+      lang = 'zh_Hans'
+    } else if (lang === 'zh_TW') {
+      lang = 'zh_Hant'
     }
-    state.language = lang
+    state.localization.lang = lang
+    Localize.config = state.localization
   },
 }
 

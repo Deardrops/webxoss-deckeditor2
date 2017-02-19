@@ -2,6 +2,8 @@
 let scrollTopMap = {}
 export default {
   created() {
+    this.$store.commit('changeLanguage', localStorage.getItem('language') || 'en')
+
     let deckFileNames = localStorage.getItem('deck_filenames')
     let fileNames = JSON.parse(deckFileNames)
 
