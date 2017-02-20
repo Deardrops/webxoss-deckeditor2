@@ -1,4 +1,5 @@
 <script>
+import Localize from 'js/Localize'
 export default {
   props: {
     scrolledToLrig: {
@@ -34,6 +35,11 @@ export default {
       return this.lrigCount <= 10 ? '' : this.$style.warn
     },
   },
+  methods: {
+    L(text) {
+      return Localize(text)
+    },
+  },
 }
 </script>
 
@@ -41,22 +47,22 @@ export default {
   <div :class="$style.wrapper">
     <div :class="[$style.head, shadow ? $style.shadow : '']">
       <template v-if="previewing">
-        <span>Overview</span>
+        <span>{{ L('overview') }}</span>
       </template>
 
       <template v-if="!previewing && !scrolledToLrig">
-        <span :class="$style.deckName">MainDeck </span>
+        <span :class="$style.deckName">{{ L('main_deck')}} </span>
         (<span :class="mainClass">{{ mainCount }}</span>/40)
       </template>
 
       <template v-if="!previewing && scrolledToLrig">
-        <span :class="$style.deckName">LrigDeck </span>
+        <span :class="$style.deckName">{{ L('lrig_deck') }} </span>
         (<span :class="lrigClass">{{ lrigCount }}</span>/10)
       </template>
 
       <div :class="$style.right">
-        <span :class="[$style.warn, $style.mayu]">Mayu's Room</span>
-        <span>LB: <span :class="burstClass">{{ burstCount }}</span>/20</span>
+        <span :class="[$style.warn, $style.mayu]">{{ L('mayu_room') }}</span>
+        <span>{{ L('life_burst_short') }}: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>
   </div>

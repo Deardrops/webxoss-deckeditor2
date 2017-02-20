@@ -9,6 +9,7 @@ import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
+import L from 'js/Localize'
 
 let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
 let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
@@ -41,42 +42,42 @@ export default {
     menuItems() {
       return [
         {
-          title: 'New Deck',
+          title: L('new_deck'),
           icon: 'add',
           action: () => {
             this.openModal('add')
           },
         },
         {
-          title: 'Clone',
+          title: L('clone'),
           icon: 'copy',
           action: () => {
             this.openModal('clone')
           },
         },
         {
-          title: 'Rename',
+          title: L('rename'),
           icon: 'edit',
           action: () => {
             this.openModal('rename')
           },
         },
         {
-          title: 'Delete',
+          title: L('delete'),
           icon: 'del',
           action: () => {
             this.openModal('delete')
           },
         },
         {
-          title: 'Import',
+          title: L('import'),
           icon: 'download',
           action: () => {
             alert('Not yet implemented.')
           },
         },
         {
-          title: 'Export',
+          title: L('export'),
           icon: 'upload',
           action: () => {
             alert('Not yet implemented.')

@@ -51,10 +51,10 @@ export default {
     metas() {
       let card = this.card
       let level = `Lv.${card.level}`
-      let limit = `Limit:${card.limit}`
+      let limit = `${Localize('limit')}:${card.limit}`
       let power = `${card.power}`
       let classes = `<${Localize.classes(card)}>`
-      let type = `${Localize.cardType(card)}`
+      let type = `${Localize(card.cardType)}`
 
       let levelLimit = `${level} | ${limit}`
       let levelPower = `${level} | ${power}`
@@ -117,7 +117,7 @@ export default {
       return !!card.burstEffectTexts
     },
     noCostText() {
-      return `0 ${Localize.propToKey('cost')}`
+      return Localize('no_cost')
     },
     isRemaining() {
       return this.protectionEnabled && this.remainingPids.includes(this.card.pid)

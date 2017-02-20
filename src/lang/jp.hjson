@@ -1,0 +1,132 @@
+suffix: ""
+
+// common
+ok: ok
+cancel: cancel
+add: add
+create: create
+reserve: reserve
+
+// deck head
+main_deck: MainDeck
+lrig_deck: LrigDeck
+mayu_room: Mayu's Room
+life_burst_short: LB
+overview: Overview
+
+// header menu list
+new_deck: new deck
+clone: clone
+rename: rename
+delete: delete
+import: import
+export: export
+
+// modal content text
+input_new_deck_name: New deck name:
+confirm_delete: Are you sure to delete %s ?
+
+// cell component
+no_cost: no cost
+
+// prop
+cardType: 種類
+classes: タイプ
+level: レベル
+color: 色
+limit: リミット
+power: パワー
+limting: 限定条件
+guard: ガード
+cost: コスト
+timings: タイミング
+effects: 効果
+burst: ライフバースト
+
+// cardType
+LRIG: ルリグ
+SIGNI: シグニ
+SPELL: スペル
+ARTS: アーツ
+RESONA: レゾナ
+
+// color
+white: 白
+black: 黒
+red: 赤
+blue: 青
+green: 緑
+colorless: 無
+
+// costColor
+costWhite: 白
+costBlack: 黒
+costRed: 赤
+costBlue: 青
+costGreen: 緑
+costColorless: 無
+
+// timing
+mainPhase: 【メインフェイズ】
+attackPhase: 【アタックフェイズ】
+spellCutIn: 【スペルカットイン】
+
+// class
+タマ: タマ
+花代: 花代
+ユヅキ: ユヅキ
+ピルルク: ピルルク
+エルドラ: エルドラ
+ミルルン: ミルルン
+緑子: 緑子
+アン: アン
+ウリス: ウリス
+イオナ: イオナ
+ウムル: ウムル
+リメンバ: リメンバ
+タウィル: タウィル
+サシェ: サシェ
+ミュウ: ミュウ
+アイヤイ: アイヤイ
+アルフォウ: アルフォウ
+ハナレ: ハナレ
+精像: 精像
+天使: 天使
+悪魔: 悪魔
+美巧: 美巧
+精武: 精武
+アーム: アーム
+ウェポン: ウェポン
+遊具: 遊具
+毒牙: 毒牙
+精羅: 精羅
+鉱石: 鉱石
+宝石: 宝石
+植物: 植物
+原子: 原子
+宇宙: 宇宙
+精械: 精械
+電機: 電機
+古代兵器: 古代兵器
+迷宮: 迷宮
+精生: 精生
+水獣: 水獣
+空獣: 空獣
+地獣: 地獣
+龍獣: 龍獣
+凶蟲: 凶蟲
+精元: 精元
+
+// misc
+GUARD_TRUE: 有
+GUARD_FALSE: "-"
+LIMITING: %s限定
+CLASS_SEPARATOR: ":"
+CROSS_NAME_QUOTE_LEFT: 《
+CROSS_NAME_QUOTE_RIGHT: 》
+CROSS_LEFT: 【クロス】%sの左
+CROSS_RIGHT: 【クロス】%sの右
+CROSS_AND: 【クロス】%sの左 かつ %sの右
+CROSS_OR: か
+GUARD_DESCRIPTION: 【ガード】（このカードを手札から捨てることで、ルリグの攻撃を一度無効にする）
+MULTI_ENER_DESCRIPTION: 【常時能力】：【マルチエナ】（コストを支払う際に、このカードは全ての色を持つかのように扱う）

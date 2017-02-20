@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import _ from 'lodash'
 import { isLrigCard } from 'js/util'
-
+import Localize from 'js/Localize.js'
 Vue.use(Vuex)
 
 /*
@@ -28,7 +28,13 @@ const state = {
 
   // current selected deck name
   deckName: '',
+
+  localization: {
+    lang: localStorage.getItem('language') || 'en',
+  },
 }
+
+Localize.config = state.localization
 
 const getters = {
   deckPids: ({ deckFiles, deckName }) => {
@@ -145,6 +151,15 @@ const mutations = {
       state.deckName = name
     }
   },
+  changeLanguage(state, lang) {
+    if (lang === 'zh_CN') {
+      lang = 'zh_Hans'
+    } else if (lang === 'zh_TW') {
+      lang = 'zh_Hant'
+    }
+    state.localization.lang = lang
+    localStorage.setItem('language', lang)
+  },
 }
 
 const actions = {
@@ -170,7 +185,6 @@ const store = new Vuex.Store({
   actions,
   strict: process.env.NODE_ENV !== 'production',
 })
-
 
 // watch deck change && save to localStorage immediately
 store.watch((state, getters) => {

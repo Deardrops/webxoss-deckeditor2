@@ -1,0 +1,132 @@
+suffix: _ru
+
+// common
+ok: ok
+cancel: cancel
+add: add
+create: create
+reserve: reserve
+
+// deck head
+main_deck: MainDeck
+lrig_deck: LrigDeck
+mayu_room: Mayu's Room
+life_burst_short: LB
+overview: Overview
+
+// header menu list
+new_deck: new deck
+clone: clone
+rename: rename
+delete: delete
+import: import
+export: export
+
+// modal content text
+input_new_deck_name: New deck name:
+confirm_delete: Are you sure to delete %s ?
+
+// cell component
+no_cost: no cost
+
+// prop
+cardType: Тип
+classes: Класс
+level: Уровень
+color: Цвет
+limit: Лимит
+power: Сила
+limting: Ограничения
+guard: Защита
+cost: Цена
+timings: Момент
+effects: Способности
+burst: вспышка
+
+// cardType
+LRIG: ИДЕЛ
+SIGNI: Запись
+SPELL: Магия
+ARTS: Умение
+RESONA: Отголосок
+
+// color
+white: Белая
+black: Чёрная
+red: Красная
+blue: Синяя
+green: Зелёная
+colorless: Бесцветная
+
+// costColor
+costWhite: Белая
+costBlack: Чёрная
+costRed: Красная
+costBlue: Синяя
+costGreen: Зелёная
+costColorless: Бесцветная
+
+// timing
+mainPhase: "[Основная фаза]"
+attackPhase: "[Фаза атаки]"
+spellCutIn: "[Ответ на магию]"
+
+// class
+タマ: Tama
+花代: Hanayo
+ユヅキ: Yuzuki
+ピルルク: Piruluk
+エルドラ: Eldora
+ミルルン: Mirurun
+緑子: Midoriko
+アン: Anne
+ウリス: Ulith
+イオナ: Iona
+ウムル: Umr
+リメンバ: Remember
+タウィル: Tawil
+サシェ: Sashe
+ミュウ: Myuu
+アイヤイ: Aiyai
+アルフォウ: Alfou
+ハナレ: Hanare
+精像: Миф
+天使: Ангел
+悪魔: Демон
+美巧: Прекрасный навык
+精武: Война
+アーム: Вооружение
+ウェポン: Снаряд
+遊具: Игровой предмет
+毒牙: Ядовитый клык
+精羅: Естество
+鉱石: Руда
+宝石: Драгоценность
+植物: Растение
+原子: Атом
+宇宙: Космос
+精械: Механика
+電機: Электромашина
+古代兵器: Древнее оружие
+迷宮: Лабиринт
+精生: Существо
+水獣: Водный зверь
+空獣: Небесный зверь
+地獣: Земной зверь
+龍獣: Драконоподобный зверь
+凶蟲: Злобное насекомое
+精元: Первородный
+
+// misc
+GUARD_TRUE: Да
+GUARD_FALSE: Нет
+LIMITING: Лишь для %s
+CLASS_SEPARATOR: ":\n"
+CROSS_NAME_QUOTE_LEFT: "\""
+CROSS_NAME_QUOTE_RIGHT: "\""
+CROSS_LEFT: >Связь< слева от %s
+CROSS_RIGHT: >Связь< справа от %s
+CROSS_AND: >Cross< %s Right and %s Left
+CROSS_OR:  или 
+GUARD_DESCRIPTION: "[Защита] (Сбросив эту карту со своей руки, отмените атаку одной ИДЕЛ.)"
+MULTI_ENER_DESCRIPTION: "[Постоянно]: [Мульти-энер] (Когда Вы платите цену, считается, что эта карта относится ко всем цветам.)"

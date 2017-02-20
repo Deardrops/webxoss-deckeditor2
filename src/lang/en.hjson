@@ -1,0 +1,132 @@
+suffix: _en
+
+// common
+ok: ok
+cancel: cancel
+add: add
+create: create
+reserve: reserve
+
+// deck head
+main_deck: MainDeck
+lrig_deck: LrigDeck
+mayu_room: Mayu's Room
+life_burst_short: LB
+overview: Overview
+
+// header menu list
+new_deck: new deck
+clone: clone
+rename: rename
+delete: delete
+import: import
+export: export
+
+// modal content text
+input_new_deck_name: New deck name:
+confirm_delete: Are you sure to delete %s ?
+
+// cell component
+no_cost: no cost
+
+// prop
+cardType: Type
+classes: Class
+level: Level
+color: Color
+limit: Limit
+power: Power
+limting: Limiting
+guard: Guard
+cost: Cost
+timings: Timing
+effects: Abilities
+burst: Life Burst
+
+// card type
+LRIG: LRIG
+SIGNI: SIGNI
+SPELL: SPELL
+ARTS: ARTS
+RESONA: RESONA
+
+// color
+white: White
+black: Black
+red: Red
+blue: Blue
+green: Green
+colorless: Colorless
+
+// cost
+costWhite: White
+costBlack: Black
+costRed: Red
+costBlue: Blue
+costGreen: Green
+costColorless: Colorless
+
+// timing
+mainPhase: "[Main Phase]"
+attackPhase: "[Attack Phase]"
+spellCutIn: "[Spell Cut-In]"
+
+// class
+タマ: Tama
+花代: Hanayo
+ユヅキ: Yuzuki
+ピルルク: Piruluk
+エルドラ: Eldora
+ミルルン: Mirurun
+緑子: Midoriko
+アン: Anne
+ウリス: Ulith
+イオナ: Iona
+ウムル: Umuru
+リメンバ: Remember
+タウィル: Tawil
+サシェ: Sashe
+ミュウ: Myuu
+アイヤイ: Aiyai
+アルフォウ: Alfou
+ハナレ: Hanare
+精像: Image
+天使: Angel
+悪魔: Devil
+美巧: Beautiful Technique
+精武: War
+アーム: Arm
+ウェポン: Weapon
+遊具: Playground Equipment
+毒牙: Poison Fang
+精羅: Nature
+鉱石: Ore
+宝石: Gem
+植物: Plant
+原子: Atom
+宇宙: Space
+精械: Machine
+電機: Electric
+古代兵器: Ancient Weapon
+迷宮: Labyrinth
+精生: Living
+水獣: Water Beast
+空獣: Sky Beast
+地獣: Earth Beast
+龍獣: Dragon Beast
+凶蟲: Misfortune Insect
+精元: Origin
+
+// misc
+GUARD_TRUE: Yes
+GUARD_FALSE: No
+LIMITING: %s Only
+CLASS_SEPARATOR: ":\n"
+CROSS_NAME_QUOTE_LEFT: "\""
+CROSS_NAME_QUOTE_RIGHT: "\""
+CROSS_LEFT: >Cross< %s Left
+CROSS_RIGHT: >Cross< %s Right
+CROSS_AND: >Cross< %s Right and %s Left
+CROSS_OR:  or 
+GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
+MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
