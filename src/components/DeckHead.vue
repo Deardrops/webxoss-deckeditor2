@@ -1,5 +1,7 @@
 <script>
 import Localize from 'js/Localize'
+import checkMayusRoom from 'js/MayusRoom'
+
 export default {
   props: {
     scrolledToLrig: {
@@ -33,6 +35,9 @@ export default {
     },
     lrigClass() {
       return this.lrigCount <= 10 ? '' : this.$style.warn
+    },
+    deckBanned() {
+      return checkMayusRoom(this.$store.getters.deck)
     },
   },
   methods: {
