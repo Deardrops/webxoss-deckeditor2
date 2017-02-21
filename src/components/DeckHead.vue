@@ -1,6 +1,6 @@
 <script>
 import Localize from 'js/Localize'
-import { checkMayusRoom } from 'js/util'
+import checkIfMayusRoom from 'js/MayusRoom'
 
 export default {
   props: {
@@ -36,8 +36,8 @@ export default {
     lrigClass() {
       return this.lrigCount <= 10 ? '' : this.$style.warn
     },
-    deckLimited() {
-      return checkMayusRoom(this.$store.getters.deck)
+    deckBanned() {
+      return checkIfMayusRoom(this.$store.getters.deck)
     },
   },
   methods: {
@@ -67,7 +67,7 @@ export default {
 
       <div :class="$style.right">
         <span 
-          v-show="deckLimited"
+          v-show="deckBanned"
           :class="[$style.warn, $style.mayu]">
           {{ L('mayu_room') }}
         </span>
