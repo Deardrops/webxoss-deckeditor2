@@ -1,7 +1,5 @@
 <script>
 import Localize from 'js/Localize'
-import checkIfMayusRoom from 'js/MayusRoom'
-
 export default {
   props: {
     scrolledToLrig: {
@@ -36,9 +34,6 @@ export default {
     lrigClass() {
       return this.lrigCount <= 10 ? '' : this.$style.warn
     },
-    deckBanned() {
-      return checkIfMayusRoom(this.$store.getters.deck)
-    },
   },
   methods: {
     L(text) {
@@ -66,11 +61,7 @@ export default {
       </template>
 
       <div :class="$style.right">
-        <span 
-          v-show="deckBanned"
-          :class="[$style.warn, $style.mayu]">
-          {{ L('mayu_room') }}
-        </span>
+        <span :class="[$style.warn, $style.mayu]">{{ L('mayu_room') }}</span>
         <span>{{ L('life_burst_short') }}: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>
