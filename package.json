@@ -9,7 +9,8 @@
     "lint": "npm run lint:node",
     "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src",
     "serve": "npm run lint:node && node serve",
-    "test": "npm run lint && node test"
+    "test": "npm run lint && node test",
+    "check:language": "node check_language.js"
   },
   "author": "deardrops <lness@qq.com>",
   "repository": {
