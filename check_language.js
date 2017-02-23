@@ -1,50 +1,58 @@
 'use strict'
 
-const rf = require('fs')
+const fs = require('fs')
 
-const lang_dir = './src/lang/'
+const dir = './src/lang/'
+
+let names = []
+
+if (!fs.statSync(dir).isDirectory()) {
+  console.error('no such directory: ' + dir)
+  process.exit(1)
+} else {
+  names = fs.readdirSync(dir)
+}
 
 const Hjson = require('hjson')
 
-const lang_names = [
-  'en',
-  'it',
-  'jp',
-  'ko',
-  'ru',
-  'zh_Hans',
-]
+let maps = {}
 
-const lang_maps = {}
-
-lang_names.forEach(function (name) {
-  const hjson = rf.readFileSync(lang_dir + name + '.hjson', 'utf-8')
-  const json = Hjson.parse(hjson)
-  lang_maps[name] = json
+names.forEach(function (name) {
+  let hjson = fs.readFileSync(dir + name, 'utf-8')
+  let json = Hjson.parse(hjson)
+  maps[name] = json
 })
 
 const _ = require('lodash')
 
-function check_keys(name) {
-  const keys = Object.keys(lang_maps[name])
-  const origin_keys = Object.keys(lang_maps['en'])
-  const surplus_keys = _.difference(keys, origin_keys)
-  if (surplus_keys.length !== 0) {
-    console.log('Surplus keys in ' + name)
-    console.log(surplus_keys)
+let checkFail = false
+
+function checkLanguage(name) {
+  let keys = Object.keys(maps[name])
+  let originKeys = Object.keys(maps['en.hjson'])
+  let surplusKeys = _.difference(keys, originKeys)
+  if (surplusKeys.length) {
+    console.warn('Surplus keys in ' + name)
+    console.log(surplusKeys)
+    checkFail = true
   }
-  const lack_keys = _.difference(origin_keys, keys)
-  if (lack_keys.length !== 0) {
-    console.log('Lack keys in ' + name)
-    console.log(lack_keys)
+  let lackKeys = _.difference(originKeys, keys)
+  if (lackKeys.length) {
+    console.warn('Lack keys in ' + name)
+    console.log(lackKeys)
+    checkFail = true
   }
 }
 
-lang_names.forEach(function (name) {
-  if (name === 'en') {
+names.forEach(function (name) {
+  if (name === 'en.hjson') {
     return
   }
-  check_keys(name)
+  checkLanguage(name)
 })
 
-console.log('All Done!')
+if (checkFail) {
+  process.exit(1)
+} else {
+  console.log('All Done!')
+}
