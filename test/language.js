@@ -26,13 +26,13 @@ function checkLanguage(name) {
   let originKeys = Object.keys(maps['en.hjson'])
   let surplusKeys = _.difference(keys, originKeys)
   if (surplusKeys.length) {
-    console.warn(`Surplus keys in ${name}`)
+    console.error(`Surplus keys in ${name}`)
     console.log(surplusKeys)
     checkFailed = true
   }
   let lackKeys = _.difference(originKeys, keys)
   if (lackKeys.length) {
-    console.warn(`Lack keys in ${name}`)
+    console.error(`Lack keys in ${name}`)
     console.log(lackKeys)
     checkFailed = true
   }
