@@ -24,16 +24,16 @@ let checkFailed = false
 function checkLanguage(name) {
   let keys = Object.keys(maps[name])
   let originKeys = Object.keys(maps['en.hjson'])
-  let surplusKeys = _.difference(keys, originKeys)
-  if (surplusKeys.length) {
-    console.error(`Surplus keys in ${name}`)
-    console.log(surplusKeys)
+  let unexpectKeys = _.difference(keys, originKeys)
+  if (unexpectKeys.length) {
+    console.error(`Unexpect keys in ${name}`)
+    console.log(unexpectKeys)
     checkFailed = true
   }
-  let lackKeys = _.difference(originKeys, keys)
-  if (lackKeys.length) {
-    console.error(`Lack keys in ${name}`)
-    console.log(lackKeys)
+  let missingKeys = _.difference(originKeys, keys)
+  if (missingKeys.length) {
+    console.error(`Missing keys in ${name}`)
+    console.log(missingKeys)
     checkFailed = true
   }
 }
@@ -49,5 +49,5 @@ if (checkFailed) {
   process.exit(1)
 } else {
   console.log(names)
-  console.log('All language file test passed!')
+  console.log('All language files test passed!')
 }

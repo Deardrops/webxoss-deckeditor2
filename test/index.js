@@ -11,10 +11,10 @@ if (!args.length) {
     require(tests[name])
   }
 } else {
-  let argv = args[0]
-  if (argv in tests) {
-    require(tests[argv])
+  let arg = args[0]
+  if (arg in tests) {
+    require(tests[arg])
   } else {
-    console.warn(`No such test: ${argv}`)
+    console.warn(`No such test: ${arg}`)
   }
 }
