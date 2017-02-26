@@ -2,7 +2,8 @@
 
 const merge = require('merge')
 
-let env = process.env.npm_lifecycle_event.replace('lint:', '')
+let env = process.env.npm_lifecycle_event === 'lint' ? 'node' : 'src'
+
 let config = {}
 
 config.base = {

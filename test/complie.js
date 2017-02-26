@@ -1,6 +1,7 @@
 'use strict'
 
-const compiler = require('webpack')(require('./webpack.config.js'))
+const compiler = require('webpack')(require('../webpack.config.js'))
+
 compiler.outputFileSystem = new (require('memory-fs'))()
 
 compiler.run((err, stats) => {

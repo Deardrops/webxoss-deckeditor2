@@ -5,10 +5,9 @@
   "main": "src/index.js",
   "scripts": {
     "build": "npm run lint && node build",
-    "dev": "npm run lint:node && node dev",
-    "lint": "npm run lint:node",
-    "lint:node": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src",
-    "serve": "npm run lint:node && node serve",
+    "dev": "npm run lint && node dev",
+    "lint": "eslint . --c eslint.config.js --ignore-path .gitignore --cache --ignore-pattern src",
+    "serve": "npm run lint && node serve",
     "test": "npm run lint && node test"
   },
   "author": "deardrops <lness@qq.com>",
