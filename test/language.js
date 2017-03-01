@@ -10,7 +10,9 @@ if (!fs.statSync(dir).isDirectory()) {
   console.error(`no such directory: ${dir}`)
   process.exit(1)
 } else {
-  names = fs.readdirSync(dir)
+  names = fs.readdirSync(dir).filter(name => {
+    return name.endsWith('.hjson')
+  })
 }
 
 let maps = {}
