@@ -90,6 +90,8 @@ spellCutIn: "[Spell Cut-In]"
 アイヤイ: Aiyai
 アルフォウ: Alfou
 ハナレ: Hanare
+リル: Ril
+メル: Mel
 精像: Image
 天使: Angel
 悪魔: Devil
@@ -116,6 +118,8 @@ spellCutIn: "[Spell Cut-In]"
 龍獣: Dragon Beast
 凶蟲: Misfortune Insect
 精元: Origin
+武勇: Valor
+調理: Cooking
 
 // misc
 GUARD_TRUE: Yes
