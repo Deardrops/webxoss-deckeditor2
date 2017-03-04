@@ -1,33 +1,33 @@
 suffix: _ko
 
 // common
-ok: ok
-cancel: cancel
-add: add
-create: create
-reserve: reserve
+ok: 확인
+cancel: 취소
+add: 추가
+create: 생성
+reserve: 보존
 
 // deck head
-main_deck: MainDeck
-lrig_deck: LrigDeck
-mayu_room: Mayu's Room
+main_deck: 메인 덱
+lrig_deck: 루리그 덱
+mayu_room: 마유의 방
 life_burst_short: LB
-overview: Overview
+overview: 확인
 
 // header menu list
-new_deck: new deck
-clone: clone
-rename: rename
-delete: delete
-import: import
-export: export
+new_deck: 새 덱
+clone: 복사
+rename: 명명
+delete: 삭제
+import: 가져오기
+export: 저장하기
 
 // modal content text
-input_new_deck_name: New deck name:
-confirm_delete: Are you sure to delete %s ?
+input_new_deck_name: 새 덱 이름:
+confirm_delete: 정말로 %s 를 삭제합니까?
 
 // cell component
-no_cost: no cost
+no_cost: 코스트 없음
 
 // prop
 cardType: 종류
@@ -90,6 +90,8 @@ spellCutIn: "[스펠 컷인]"
 アイヤイ: 아이야이
 アルフォウ: 알포우
 ハナレ: 하나레
+リル: 릴
+メル: 멜
 精像: 정상
 天使: 천사
 悪魔: 악마
@@ -116,6 +118,8 @@ spellCutIn: "[스펠 컷인]"
 龍獣: 용수
 凶蟲: 흉충
 精元: 정원
+武勇: 무용
+調理: 조리
 
 // misc
 GUARD_TRUE: 있음
