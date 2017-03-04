@@ -2,32 +2,32 @@ suffix: _ru
 
 // common
 ok: ok
-cancel: cancel
-add: add
-create: create
-reserve: reserve
+cancel: отмена
+add: добавить
+create: создать
+reserve: резерв
 
 // deck head
-main_deck: MainDeck
-lrig_deck: LrigDeck
-mayu_room: Mayu's Room
+main_deck: Основная колода
+lrig_deck: ИДЕЛ-колода
+mayu_room: Комната Маю
 life_burst_short: LB
-overview: Overview
+overview: Обзор
 
 // header menu list
-new_deck: new deck
-clone: clone
-rename: rename
-delete: delete
-import: import
-export: export
+new_deck: новая колода
+clone: дублировать
+rename: переименовать
+delete: удалить
+import: импорт
+export: экспорт
 
 // modal content text
-input_new_deck_name: New deck name:
-confirm_delete: Are you sure to delete %s ?
+input_new_deck_name: Имя новой колоды:
+confirm_delete: Вы точно хотите удалить %s ?
 
 // cell component
-no_cost: no cost
+no_cost: нет цены
 
 // prop
 cardType: Тип
