@@ -66,7 +66,7 @@ export default {
       </template>
 
       <div :class="$style.right">
-        <span :class="[$style.warn, $style.mayu]">{{ L('mayu_room') }}</span>
+        <span :class="[$style.warn, $style.mayu]" v-show="deckBanned">{{ L('mayu_room') }}</span>
         <span>{{ L('life_burst_short') }}: <span :class="burstClass">{{ burstCount }}</span>/20</span>
       </div>
     </div>
