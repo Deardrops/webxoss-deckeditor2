@@ -30,7 +30,7 @@ const state = {
   deckName: '',
 
   localization: {
-    lang: localStorage.getItem('language') || 'en',
+    lang: 'en',
   },
 }
 
@@ -152,13 +152,14 @@ const mutations = {
     }
   },
   changeLanguage(state, lang) {
+    localStorage.setItem('language', lang)
+    // compatible with old webxoss client
     if (lang === 'zh_CN') {
       lang = 'zh_Hans'
     } else if (lang === 'zh_TW') {
       lang = 'zh_Hant'
     }
     state.localization.lang = lang
-    localStorage.setItem('language', lang)
   },
 }
 
