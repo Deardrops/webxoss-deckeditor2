@@ -1,87 +1,77 @@
-/*
-  Cache image files in IndexedDB
-*/
+// Check IndexedDB support.
+// https://bl.ocks.org/nolanlawson/8a2ead46a184c9fae231
+const checkIndexedDBSupport = () => {
+  // static checks
+  let notSupported =
+    (typeof indexedDB === 'undefined') ||
+    (window.indexedDB === null) ||
+    (typeof IDBKeyRange === 'undefined')
 
-function checkIndexedDBSupport(callback) {
-  let db = null
-  function done(supportIndexedDB, supportBlob) {
-    if (db) db.close()
-    callback(!!supportIndexedDB, !!supportBlob)
+  if (notSupported) {
+    return Promise.resolve(false)
   }
-  if (!window.indexedDB) return done()
-  if (!window.IDBKeyRange) return done()
-  if (!window.IDBOpenDBRequest) return done()
 
-  // IndexedDB is seriously broken on iOS 8,9
-  let open = indexedDB.open('test indexedDB support', 1)
-  if (!('onupgradeneeded' in open)) return done()
-  open.onupgradeneeded = function () {
-    db = this.result
-    db.createObjectStore('one')
-    db.createObjectStore('two', {keyPath: 'key'})
-  }
-  open.onerror = function () {
-    done()
-  }
-  open.onsuccess = function () {
-    db = this.result
-    db.onerror = function () {
-      done()
+  // test broken IndexedDB on iOS 8,9
+  return new Promise(resolve => {
+    let req = indexedDB.open('test', 1)
+    req.onerror = () => resolve(false)
+    req.onupgradeneeded = function (event) {
+      let db = event.target.result
+      db.createObjectStore('one', {
+        keyPath: 'key',
+      })
+      db.createObjectStore('two', {
+        keyPath: 'key',
+      })
     }
-    let transaction
-    try {
-      transaction = db.transaction(['one', 'two'], 'readwrite')
-    } catch (e) {
-      return done()
-    }
-    let req = transaction.objectStore('two').put({key: 1})
-    req.onsuccess = function () {
-      let xhr = new XMLHttpRequest()
-      xhr.responseType = 'blob'
-      if (!window.Blob || !window.URL || (xhr.responseType !== 'blob')) {
+    req.onsuccess = function (event) {
+      let db = event.target.result
+      let tx = null
+      try {
+        tx = db.transaction(['one', 'two'], 'readwrite')
+      } catch (error) {
+        return resolve(false)
+      }
+      tx.objectStore('two').put({
+        'key': Date.now(),
+      })
+      tx.oncomplete = function () {
         db.close()
-        return done(true, false)
-      } else {
-        let blob = new Blob(['text'], {type: 'text/plain'})
-        try {
-          req = transaction.objectStore('one').put(blob, 'blob')
-          transaction.onabort = function (event) {
-            event.stopPropagation()
-            done(true, false)
-          }
-          transaction.onerror = function (event) {
-            event.stopPropagation()
-            done(true, false)
-          }
-          transaction.oncomplete = function () {
-            return done(true, true)
-          }
-        } catch (e) {
-          return done(true, false)
-        }
+        resolve(true)
       }
     }
-  }
+  })
 }
 
-function get(url, type, callback, err) {
+/* Helper functions */
+const get = (url, type, callback, err) => {
   let xhr = new XMLHttpRequest()
   xhr.responseType = type
-  xhr.onload = function (e) {
+  xhr.onload = () => {
     if (xhr.status !== 200) {
-      err(xhr, e)
+      err(xhr, event)
     } else {
-      callback(xhr, e)
+      callback(xhr, event)
     }
   }
-  xhr.onerror = function (e) {
-    err(xhr, e)
+  xhr.onerror = event => {
+    err(xhr, event)
   }
   xhr.open('GET', url, true)
   xhr.send()
 }
+const wait = timeout => {
+  return new Promise(resolve => {
+    window.setTimeout(resolve, timeout)
+  })
+}
 
-function cache(pid, blob) {
+/* locals */
+let urlMap = {}
+let fetchingMap = {}
+
+/* private methods */
+const cache = (pid, blob) => {
   if (!ImageFileCache.supportBlob) return
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
@@ -95,18 +85,41 @@ function cache(pid, blob) {
     db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
   }
 }
+// Read all images form DB to cached blob urls.
+const readAll = () => {
+  return new Promise(resolve => {
+    let open = indexedDB.open('card images', 1)
+    open.onupgradeneeded = function () {
+      this.result.createObjectStore('images')
+    }
+    open.onsuccess = function () {
+      let db = this.result
+      db.transaction(['images'])
+      .objectStore('images')
+      .openCursor()
+      .onsuccess = function () {
+        let cursor = this.result
+        if (!cursor) {
+          return resolve()
+        }
+        let pid = cursor.key
+        let blob = cursor.value
+        let url = window.URL.createObjectURL(blob)
+        urlMap[pid] = url
+        cursor.continue()
+      }
+    }
+  })
+}
 
-/* locals */
-let urlMap = {}
-let fetchingMap = {}
-let ImageFileCache = {
+const ImageFileCache = {
   supportIndexedDB: false,
-  supportBlob: false,
+  supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
-    if (!ImageFileCache.supportBlob) return
+    if (!this.supportBlob) return
     if (fetchingMap[pid]) return
     fetchingMap[pid] = true
     get(url, 'blob', function (xhr) {
@@ -116,42 +129,21 @@ let ImageFileCache = {
       fetchingMap[pid] = false
     })
   },
-  init(callback, timeout) {
-    let called = false
-    let done = function () {
-      if (!called) {
-        called = true
-        callback()
-      }
+  init(timeout = 1000) {
+    if (!this.supportBlob) {
+      return Promise.resolve(false)
     }
-    setTimeout(done, timeout)
-    checkIndexedDBSupport(function (supportIndexedDB, supportBlob) {
-      ImageFileCache.supportIndexedDB = supportIndexedDB
-      ImageFileCache.supportBlob = supportBlob
-      if (!supportBlob) {
-        return done()
-      }
-      let open = indexedDB.open('card images', 1)
-      open.onupgradeneeded = function () {
-        this.result.createObjectStore('images')
-      }
-      open.onsuccess = function () {
-        let db = this.result
-        db.transaction(['images']).objectStore('images').openCursor().onsuccess = function () {
-          let cursor = this.result
-          if (!cursor) {
-            return done()
-          }
-          let pid = cursor.key
-          let blob = cursor.value
-          let url = window.URL.createObjectURL(blob)
-          urlMap[pid] = url
-          cursor.continue()
+    return Promise.race([
+      wait(timeout).then(() => false),
+      checkIndexedDBSupport().then(support => {
+        if (!support) {
+          return false
         }
-      }
-    })
+        this.supportIndexedDB = true
+        return readAll().then(() => true)
+      }),
+    ])
   },
 }
-
 
 export default ImageFileCache

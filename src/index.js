@@ -18,12 +18,17 @@ sync(store, router)
 $get('./CardInfo.json')
   .then(CardInfo => {
     window.CardInfo = Object.freeze(CardInfo)
-    ImageFileCache.init(() => {
+    ImageFileCache.init()
+    .catch(error => {
+      console.error('Error in ImageFileCache.init():')
+      console.error(error)
+    })
+    .then(() => {
       new Vue({
         el: '#app',
         router,
         store,
         ...App,
       })
-    }, 1000)
+    })
   })
