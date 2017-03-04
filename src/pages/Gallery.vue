@@ -27,7 +27,7 @@ export default {
   <div :class="$style.page">
     <app-header title="Gallery"></app-header>
     <div :class="$style.body" @click="goBack">
-      <card-image :class="$style.image" :pid="pid">
+      <card-image :class="$style.image" :pid="pid"/>
     </div>
   </div>
 </template>

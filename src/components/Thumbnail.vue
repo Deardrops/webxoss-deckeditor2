@@ -49,7 +49,7 @@ export default {
 
 <template>
   <div :class="$style.frame">
-    <card-image :pid="pid" :style="style">
+    <card-image :pid="pid" :style="style"/>
   </div>
 </template>
 
