@@ -8,6 +8,7 @@ import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
+import { parseDeckFile } from 'js/importDeck'
 import _ from 'lodash'
 import L from 'js/Localize'
 
@@ -35,6 +36,7 @@ export default {
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
+      'deckNames',
     ]),
     menuItems() {
       return [
@@ -70,7 +72,8 @@ export default {
           title: L('import'),
           icon: 'download',
           action: () => {
-            alert('Not yet implemented.')
+            this.$refs.input.click()
+            // alert('Not yet implemented.')
           },
         },
         {
@@ -152,6 +155,28 @@ export default {
         },
       })
     },
+    importDeck() {
+      this.goListView() // 立即收起Menu
+      let files = this.$refs.input.files
+      if (!files.length) {
+        return
+      }
+      let file = files[0]
+      let name = file.name.replace(/\.webxoss$/, '')
+      if (this.deckNames.includes(name)) {
+        alert('name alreadly exist.') // TODO: Localize
+        return
+      }
+      parseDeckFile(file, deck => {
+        if (!deck) {
+          alert('error while parsing deck file.') // TODO: Localize
+          return
+        }
+        let pids = deck.mainDeck.concat(deck.lrigDeck)
+        this.$store.commit('putDeckFile', {name, pids})
+        this.$store.commit('switchDeck', name)
+      })
+    },
   },
   mounted() {
     this.updateDeckHeader()
@@ -200,6 +225,12 @@ export default {
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
+    <input 
+      type="file" 
+      ref="input" 
+      style="display:none"
+      accept=".webxoss" 
+      @change="importDeck"/>
   </div>
 </template>
 
