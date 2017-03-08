@@ -35,12 +35,27 @@ export default {
   computed: {
     ...mapState([
       'remainingPids',
+      'deckName',
     ]),
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
       'deckNames',
     ]),
+    deckFileName() {
+      return `${this.deckName}.webxoss`
+    },
+    deckFileHref() {
+      let json = JSON.stringify({
+        format: 'WEBXOSS Deck',
+        version: '1',
+        content: {
+          mainDeck: this.mainDeck.map(card => card.pid),
+          lrigDeck: this.lrigDeck.map(card => card.pid),
+        },
+      })
+      return `data:application/octet-stream,${encodeURI(json)}`
+    },
     menuItems() {
       return [
         {
@@ -76,14 +91,15 @@ export default {
           icon: 'download',
           action: () => {
             this.$refs.input.click()
-            // alert('Not yet implemented.')
+            this.goListView() // 立即收起Menu
           },
         },
         {
           title: L('export'),
           icon: 'upload',
           action: () => {
-            alert('Not yet implemented.')
+            this.$refs.download.click()
+            this.goListView()
           },
         },
       ]
@@ -155,7 +171,6 @@ export default {
       })
     },
     importDeck() {
-      this.goListView() // 立即收起Menu
       let files = this.$refs.input.files
       if (!files.length) {
         return
@@ -232,12 +247,19 @@ export default {
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
-    <input 
-      type="file" 
-      ref="input" 
-      style="display:none"
-      accept=".webxoss" 
+    <input
+      type="file"
+      ref="input"
+      :class="$style.hidden"
+      accept=".webxoss"
       @change="importDeck"/>
+    <a
+      target="_blank"
+      ref="download"
+      :class="$style.hidden"
+      :download="deckFileName"
+      :href="deckFileHref"
+      />
   </div>
 </template>
 
@@ -256,5 +278,8 @@ export default {
 }
 .block {
   width: 20%;
+}
+.hidden {
+  display: none;
 }
 </style>
