@@ -1,13 +1,15 @@
-export function parseDeckFile (file, callback) {
-  if (!FileReader || file.size > 1024) {
-    callback(null)
-    return
-  }
-  let reader = new FileReader()
-  reader.onload = () => {
-    callback(parseCode(reader.result))
-  }
-  reader.readAsText(file)
+export default function parseDeckFile (file) {
+  return new Promise((resolve, reject) => {
+    if (!FileReader || file.size > 1024) {
+      reject(null)
+      return
+    }
+    let reader = new FileReader()
+    reader.onload = () => {
+      resolve(parseCode(reader.result))
+    }
+    reader.readAsText(file)
+  })
 }
 
 function parseCode (json) {

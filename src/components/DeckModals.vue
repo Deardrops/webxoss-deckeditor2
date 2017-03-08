@@ -1,11 +1,13 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
+import ImportExportModal from 'components/ImportExportModal'
 import L from 'js/Localize'
 
 export default {
   components: {
     Modal,
+    ImportExportModal,
   },
   computed: {
     ...mapState([
@@ -17,6 +19,9 @@ export default {
     ]),
     shown() {
       return !!this.config.type
+    },
+    shownIE() {
+      return this.$route.query.modal === 'importExport'
     },
     config() {
       return {
@@ -103,10 +108,17 @@ export default {
 </script>
 
 <template>
-  <modal
-    ref="modal"
-    v-show="shown"
-    :config="config"
-    @ok="ok"
-    @cancel="close"/>
+  <div>
+    <modal
+      ref="modal"
+      v-show="shown"
+      :config="config"
+      @ok="ok"
+      @cancel="close"/>
+    <import-export-modal
+      ref="importExportModal"
+      v-show="shownIE"
+      @openModal="open('rename')"
+      @cancel="close"/>
+  </div>
 </template>
