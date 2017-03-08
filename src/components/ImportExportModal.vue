@@ -35,9 +35,6 @@ export default {
     selectFile() {
       this.$refs.input.click()
     },
-    downloadFile() {
-      this.$refs.download.click()
-    },
     importDeck() {
       let files = this.$refs.input.files
       if (!files.length) {
@@ -68,24 +65,32 @@ export default {
     tabindex="0"
     @keyup.esc="cancel">
     <div :class="$style.dialog">
-    <div :class="$style.header">
-      <h3 :class="$style.title"> Import - Export </h3>
-      <span :class="$style.cancel" @click="$emit('cancel')">
-        <icon name="add" label="cancel" />
-      <span>
-    </div>
-    <div :class="$style.flex">
-      <div :class="$style.left">Import</div>
-      <div :class="$style.right">
-        <a @click="selectFile()">From file</a>
-        <a>From clipboard</a>
+      <div :class="$style.header">
+        <h3 :class="$style.title"> Import - Export </h3>
+        <span :class="$style.cancel" @click="$emit('cancel')">
+          <icon name="add" label="cancel" />
+        <span>
       </div>
-      <div :class="$style.left">Export</div>
-      <div :class="$style.right">
-        <a @click="downloadFile()">To file</a>
-        <a>To clipboard</a>
+      <div :class="$style.flex">
+        <div :class="$style.left">Import</div>
+        <div :class="$style.right">
+          <a @click="selectFile()">From file</a>
+          <a>From clipboard</a>
+        </div>
+        <div :class="$style.left">Export</div>
+        <div :class="$style.right">
+          <a
+            target="_blank"
+            ref="download"
+            :download="deckFileName"
+            :href="deckFileHref">
+            To file</a>
+          <a>To clipboard</a>
+        </div>
       </div>
-    </div>
+      <div :class="$style.qr">
+        <img src="../static/white_hope.png"/>
+      </div>
     </div>
     <input
       type="file"
@@ -93,13 +98,6 @@ export default {
       :class="$style.hidden"
       accept=".webxoss"
       @change="importDeck"/>
-    <a
-      target="_blank"
-      ref="download"
-      :class="$style.hidden"
-      :download="deckFileName"
-      :href="deckFileHref"
-      />
   </div>
 </template>
 
@@ -127,7 +125,7 @@ export default {
 .header {
   display: flex;
   align-items: center;
-  margin: calc(2 * var(--padding));
+  margin: calc(1.5 * var(--padding));
 }
 .title {
   flex: 1;
@@ -137,7 +135,7 @@ export default {
   justify-content: center;
   align-items: center;
   font-size: 1.8rem;
-  &>* {
+  & {
     transform: rotate(45deg);
     color: #f04228;
   }
@@ -154,29 +152,19 @@ export default {
 }
 .right {
   width: 60%;
-  &>a {
+  & > a {
     display: block;
     cursor: pointer;
     color: #fff;
     background-color: var(--main-color);
     text-align: center;
+    margin: .5em;
+    @apply --shadow-2dp;
   }
 }
-.button {
-  padding: 0 calc(.5 * var(--padding));
-  line-height: 2.5;
-  margin-right: var(--padding);
-  color: var(--main-color);
-  font-weight: bold;
-  text-transform: uppercase;
-
-  &:disabled {
-    color: #999;
-  }
-
-  &:focus {
-    background-color: #eee;
-  }
+.qr {
+  padding: 2em;
+  text-align: center;
 }
 .hidden {
   position: fixed;
