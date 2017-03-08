@@ -8,7 +8,6 @@ import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
-import { parseDeckFile } from 'js/importDeck'
 import _ from 'lodash'
 import L from 'js/Localize'
 
@@ -32,27 +31,11 @@ export default {
   computed: {
     ...mapState([
       'remainingPids',
-      'deckName',
     ]),
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
-      'deckNames',
     ]),
-    deckFileName() {
-      return `${this.deckName}.webxoss`
-    },
-    deckFileHref() {
-      let json = JSON.stringify({
-        format: 'WEBXOSS Deck',
-        version: '1',
-        content: {
-          mainDeck: this.mainDeck.map(card => card.pid),
-          lrigDeck: this.lrigDeck.map(card => card.pid),
-        },
-      })
-      return `data:application/octet-stream,${encodeURI(json)}`
-    },
     menuItems() {
       return [
         {
@@ -87,16 +70,14 @@ export default {
           title: L('import'),
           icon: 'download',
           action: () => {
-            this.$refs.input.click()
-            this.goListView() // 立即收起Menu
+            this.openModal('importExport')
           },
         },
         {
           title: L('export'),
           icon: 'upload',
           action: () => {
-            this.$refs.download.click()
-            this.goListView()
+            this.openModal('importExport')
           },
         },
       ]
@@ -171,27 +152,6 @@ export default {
         },
       })
     },
-    importDeck() {
-      let files = this.$refs.input.files
-      if (!files.length) {
-        return
-      }
-      let file = files[0]
-      let name = file.name.replace(/\.webxoss$/, '')
-      if (this.deckNames.includes(name)) {
-        alert('name alreadly exist.') // TODO: Localize
-        return
-      }
-      parseDeckFile(file, deck => {
-        if (!deck) {
-          alert('error while parsing deck file.') // TODO: Localize
-          return
-        }
-        let pids = deck.mainDeck.concat(deck.lrigDeck)
-        this.$store.commit('putDeckFile', {name, pids})
-        this.$store.commit('switchDeck', name)
-      })
-    },
   },
   mounted() {
     this.updateDeckHeader()
@@ -240,19 +200,6 @@ export default {
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
-    <input
-      type="file"
-      ref="input"
-      :class="$style.hidden"
-      accept=".webxoss"
-      @change="importDeck"/>
-    <a
-      target="_blank"
-      ref="download"
-      :class="$style.hidden"
-      :download="deckFileName"
-      :href="deckFileHref"
-      />
   </div>
 </template>
 
@@ -271,8 +218,5 @@ export default {
 }
 .block {
   width: 20%;
-}
-.hidden {
-  display: none;
 }
 </style>
