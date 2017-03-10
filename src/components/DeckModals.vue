@@ -1,7 +1,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
-
 import L from 'js/Localize'
 
 export default {
@@ -119,10 +118,10 @@ export default {
 </script>
 
 <template>
-    <modal
-      ref="modal"
-      v-show="shown"
-      :config="config"
-      @ok="ok"
-      @cancel="close"/>
+  <modal
+    ref="modal"
+    v-show="shown"
+    :config="config"
+    @ok="ok"
+    @cancel="close"/>
 </template>

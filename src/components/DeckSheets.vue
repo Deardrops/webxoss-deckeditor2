@@ -37,9 +37,6 @@ export default {
     shown() {
       return this.config.length
     },
-    shownModal() {
-      return !!this.modalConfig
-    },
     config() {
       return {
         'import': [{
