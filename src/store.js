@@ -32,6 +32,11 @@ const state = {
   localization: {
     lang: 'en',
   },
+
+  importedDeck: {
+    name: '',
+    pids: [],
+  },
 }
 
 Localize.config = state.localization
@@ -149,6 +154,15 @@ const mutations = {
     // Renaming current deck, switch to new name
     if (state.deckName === origin) {
       state.deckName = name
+    }
+  },
+  importDeck(state, { name, pids }) {
+    if (!name) {
+      return
+    }
+    state.importedDeck = {
+      name,
+      pids,
     }
   },
   changeLanguage(state, lang) {

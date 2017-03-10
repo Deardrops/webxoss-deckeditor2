@@ -7,7 +7,8 @@
   /* z-indexes */
   --z-header: 1;
   --z-header-menu: 2;
-  --z-modal: 3;
+  --z-sheet: 3;
+  --z-modal: 4;
 
   /* shadows */
   --shadow-2dp: {

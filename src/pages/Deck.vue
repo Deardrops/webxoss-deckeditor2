@@ -2,6 +2,7 @@
 import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
+import DeckSheets from 'components/DeckSheets'
 import DeckFloatButton from 'components/DeckFloatButton'
 import Cell from 'components/Cell'
 import Block from 'components/Block'
@@ -20,6 +21,7 @@ export default {
     HeaderIcon,
     HeaderMenu,
     DeckModals,
+    DeckSheets,
     DeckFloatButton,
     Cell,
     Block,
@@ -73,14 +75,14 @@ export default {
           title: L('import'),
           icon: 'download',
           action: () => {
-            this.openModal('importExport')
+            this.openSheet('import')
           },
         },
         {
           title: L('export'),
           icon: 'upload',
           action: () => {
-            this.openModal('importExport')
+            this.openSheet('export')
           },
         },
       ]
@@ -124,6 +126,9 @@ export default {
     },
     closeModal() {
       this.$refs.modals.close()
+    },
+    openSheet(type) {
+      this.$refs.sheets.open(type)
     },
     updateDeckHeader() {
       let $lrigDeck = this.$refs.lrigDeck
@@ -207,6 +212,7 @@ export default {
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
+    <deck-sheets ref="sheets" @openModal="openModal('import')"/>
   </div>
 </template>
 

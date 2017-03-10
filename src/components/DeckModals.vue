@@ -1,17 +1,17 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
-import ImportExportModal from 'components/ImportExportModal'
+
 import L from 'js/Localize'
 
 export default {
   components: {
     Modal,
-    ImportExportModal,
   },
   computed: {
     ...mapState([
       'deckName',
+      'importedDeck',
     ]),
     ...mapGetters([
       'deckPids',
@@ -19,9 +19,6 @@ export default {
     ]),
     shown() {
       return !!this.config.type
-    },
-    shownIE() {
-      return this.$route.query.modal === 'importExport'
     },
     config() {
       return {
@@ -73,6 +70,20 @@ export default {
           },
           cancelText: L('reserve'),
         },
+        'import': {
+          type: 'prompt',
+          content: L('input_new_deck_name'),
+          defaultInput: this.importedDeck.name,
+          validate: name => name && !this.deckNames.includes(name),
+          okText: L('add'),
+          ok: name => {
+            this.$store.commit('putDeckFile', {
+              name,
+              pids: this.importedDeck.pids,
+            })
+            this.$store.commit('switchDeck', name)
+          },
+        },
       }[this.$route.query.modal] || {}
     },
   },
@@ -108,17 +119,10 @@ export default {
 </script>
 
 <template>
-  <div>
     <modal
       ref="modal"
       v-show="shown"
       :config="config"
       @ok="ok"
       @cancel="close"/>
-    <import-export-modal
-      ref="importExportModal"
-      v-show="shownIE"
-      @openModal="open('rename')"
-      @cancel="close"/>
-  </div>
 </template>
