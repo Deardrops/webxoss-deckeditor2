@@ -10,11 +10,8 @@ export default {
   computed: {
     ...mapState([
       'deckName',
-      'deckFiles',
     ]),
     ...mapGetters([
-      'mainDeck',
-      'lrigDeck',
       'deckPids',
       'deckFileJson',
     ]),
@@ -48,15 +45,12 @@ export default {
         }, {
           text: 'To text',
           click: () => {
-            let name = this.deckName
-            let pids = this.deckPids
-            this.$store.commit('importDeck', {name, pids})
-            this.$emit('openModal', 'showDeck')
-          },
-        }, {
-          text: 'To clipboard',
-          click: () => {
-            this.copy()
+            if (!this.copy()) {
+              let name = this.deckName
+              let pids = this.deckPids
+              this.$store.commit('importDeck', {name, pids})
+              this.$emit('openModal', 'showDeck')
+            }
           },
         }],
       }[this.$route.query.sheet] || []
@@ -91,16 +85,32 @@ export default {
       })
     },
     close() {
-      this.$router.go(-1)
+      this.$router.replace({
+        path: this.$route.path,
+        query: Object.assign({}, this.$route.query, {
+          sheet: '',
+        }),
+      })
     },
     copy() {
-      this.$refs.copyArea.select()
-      try {
-        let successful = document.execCommand('copy')
-        let msg = successful ? 'successful' : 'unsuccessful'
-        console.log('Copying text command was ' + msg)
-      } catch (e) {
-        console.log('Oops, unable to copy')
+      if (document.queryCommandSupported('copy')) {
+        this.$refs.copyArea.select()
+        let successed = document.execCommand('copy')
+        if (successed) {
+          // TODO: toast successed info here
+          return true
+        }
+      }
+      return false
+    },
+  },
+  watch: {
+    shown(shown) {
+      document.body.style.overflow = shown ? 'hidden' : 'auto'
+      if (shown) {
+        this.$nextTick(() => {
+          this.$refs.sheet.focus()
+        })
       }
     },
   },
@@ -110,6 +120,7 @@ export default {
 <template>
   <div>
     <sheet 
+      ref="sheet"
       v-show="shown"
       :config="config"
       @cancel="close"/>
@@ -136,24 +147,23 @@ export default {
 </template>
 
 <style module>
-@import 'css/vars.css';
 .hidden {
   position: fixed;
-  width: 0;
-  height: 0;
-  overflow: hidden;
   top: 0;
   left: 0;
-  zIndex: -1024;
+  width: 0;
+  height: 0;
   opacity: 0;
+  zIndex: -1024;
+  overflow: hidden;
 }
 .text {
   position: fixed;
   top: 0;
   left: 0;
-  width: 2em;
-  height: 2em;
-  padiding: 0;
+  width: 0;
+  height: 0;
+  padding: 0;
   border: none;
   outline: none;
   box-shadow: none;
