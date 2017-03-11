@@ -1,7 +1,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
-import Modal from 'components/Modal'
 import { parseDeckJson } from 'js/parseDeckFile'
+import Modal from 'components/Modal'
 import L from 'js/Localize'
 
 export default {
@@ -99,7 +99,7 @@ export default {
             this.open('inputDeckName')
 
             this.$refs.modal.setInputValue() // clearup input box
-            return false // avoid close Modal
+            return false // avoid closing Modal
           },
         },
         'showDeck': {

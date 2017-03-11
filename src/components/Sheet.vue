@@ -6,12 +6,14 @@ export default {
       require: true,
     },
   },
-  computed: {
-
-  },
   methods: {
     cancel() {
       this.$emit('cancel')
+    },
+    focus() {
+      if (this.$refs.wrapper) {
+        this.$refs.wrapper.focus()
+      }
     },
   },
 }
@@ -21,11 +23,10 @@ export default {
   <div
     ref="wrapper"
     :class="$style.wrapper"
-    tabindex="0"
     @touchmove.stop
     @keyup.esc="cancel"
     @click.self="cancel">
-    <div :class="$style.modal">
+    <div :class="$style.sheet">
       <div v-for="item in config" :class="$style.item">
         <a @click="item.click">{{ item.text }}</a>
       </div>
@@ -43,10 +44,11 @@ export default {
   background-color: #0006;
   z-index: var(--z-sheet);
 }
-.modal {
+.sheet {
   position: fixed;
   bottom: 0;
   width: 100%;
+  padding: .5em;
   background-color: #fff;
 }
 .item {
