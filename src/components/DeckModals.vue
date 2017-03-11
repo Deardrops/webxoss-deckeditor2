@@ -87,7 +87,7 @@ export default {
         },
         'inputDeck': {
           type: 'prompt',
-          content: 'input deck here',
+          content: 'please input deck here',
           validate: json => {
             return json && parseDeckJson(json)
           },
@@ -97,6 +97,9 @@ export default {
             let pids = parseDeckJson(json)
             this.$store.commit('importDeck', {name, pids})
             this.open('inputDeckName')
+
+            this.$refs.modal.setInputValue() // clearup input box
+            return false // avoid close Modal
           },
         },
         'showDeck': {
@@ -114,6 +117,7 @@ export default {
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
+          sheet: '',
           modal: type,
         }),
       })
