@@ -61,6 +61,16 @@ const getters = {
   deckNames: (state) => {
     return state.deckFiles.map(file => file.name)
   },
+  deckFileJson: (state, getters) =>{
+    return JSON.stringify({
+      format: 'WEBXOSS Deck',
+      version: '1',
+      content: {
+        mainDeck: getters.mainDeck.map(card => card.pid),
+        lrigDeck: getters.lrigDeck.map(card => card.pid),
+      },
+    })
+  },
 }
 
 const mutations = {
@@ -157,7 +167,7 @@ const mutations = {
     }
   },
   importDeck(state, { name, pids }) {
-    if (!name) {
+    if (!pids) {
       return
     }
     state.importedDeck = {

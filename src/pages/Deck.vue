@@ -212,7 +212,7 @@ export default {
     <deck-float-button />
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
-    <deck-sheets ref="sheets" @openImportModal="openModal('import')"/>
+    <deck-sheets ref="sheets" @openModal="openModal(arguments[0])"/>
   </div>
 </template>
 

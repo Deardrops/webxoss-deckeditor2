@@ -6,13 +6,14 @@ export default function parseDeckFile (file) {
     }
     let reader = new FileReader()
     reader.onload = () => {
-      resolve(parseCode(reader.result))
+      resolve(parseDeckJson(reader.result))
     }
     reader.readAsText(file)
   })
 }
 
-function parseCode (json) {
+// parse deck's Json string and return deckFile Object
+export function parseDeckJson (json) {
   try {
     let obj = JSON.parse(json)
     let legal =
@@ -21,7 +22,7 @@ function parseCode (json) {
       (obj.content.mainDeck.length <= 50) &&
       (obj.content.lrigDeck.length <= 20)
     if (legal) {
-      return obj.content
+      return obj.content.mainDeck.concat(obj.content.lrigDeck)
     } else {
       return null
     }

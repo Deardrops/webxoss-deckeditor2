@@ -1,6 +1,7 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
 import Modal from 'components/Modal'
+import { parseDeckJson } from 'js/parseDeckFile'
 import L from 'js/Localize'
 
 export default {
@@ -15,6 +16,7 @@ export default {
     ...mapGetters([
       'deckPids',
       'deckNames',
+      'deckFileJson',
     ]),
     shown() {
       return !!this.config.type
@@ -69,7 +71,7 @@ export default {
           },
           cancelText: L('reserve'),
         },
-        'import': {
+        'inputDeckName': {
           type: 'prompt',
           content: L('input_new_deck_name'),
           defaultInput: this.importedDeck.name,
@@ -82,6 +84,27 @@ export default {
             })
             this.$store.commit('switchDeck', name)
           },
+        },
+        'inputDeck': {
+          type: 'prompt',
+          content: 'input deck here',
+          validate: json => {
+            return json && parseDeckJson(json)
+          },
+          okText: L('ok'),
+          ok: json => {
+            let name = ''
+            let pids = parseDeckJson(json)
+            this.$store.commit('importDeck', {name, pids})
+            this.open('inputDeckName')
+          },
+        },
+        'showDeck': {
+          type: 'prompt',
+          content: 'please copy the text below',
+          defaultInput: this.deckFileJson,
+          okText: L('ok'),
+          ok: () => {},
         },
       }[this.$route.query.modal] || {}
     },

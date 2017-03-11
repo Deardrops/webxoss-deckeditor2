@@ -7,32 +7,22 @@ export default {
   components: {
     Sheet,
   },
-  data: () => ({
-    newDeckName: '',
-    newDeckPids: [],
-  }),
   computed: {
     ...mapState([
       'deckName',
+      'deckFiles',
     ]),
     ...mapGetters([
       'mainDeck',
       'lrigDeck',
-      'deckNames',
+      'deckPids',
+      'deckFileJson',
     ]),
     deckFileName() {
       return `${this.deckName}.webxoss`
     },
     deckFileHref() {
-      let json = JSON.stringify({
-        format: 'WEBXOSS Deck',
-        version: '1',
-        content: {
-          mainDeck: this.mainDeck.map(card => card.pid),
-          lrigDeck: this.lrigDeck.map(card => card.pid),
-        },
-      })
-      return `data:text/plain;base64,${window.btoa(json)}`
+      return `data:text/plain;base64,${window.btoa(this.deckFileJson)}`
     },
     shown() {
       return this.config.length
@@ -45,8 +35,10 @@ export default {
             this.$refs.input.click()
           },
         }, {
-          text: 'From clipboard',
-          click: () => {},
+          text: 'From text',
+          click: () => {
+            this.$emit('openModal', 'inputDeck')
+          },
         }],
         'export': [{
           text: 'To file',
@@ -54,8 +46,18 @@ export default {
             this.$refs.download.click()
           },
         }, {
+          text: 'To text',
+          click: () => {
+            let name = this.deckName
+            let pids = this.deckPids
+            this.$store.commit('importDeck', {name, pids})
+            this.$emit('openModal', 'showDeck')
+          },
+        }, {
           text: 'To clipboard',
-          click: () => {},
+          click: () => {
+            this.copy()
+          },
         }],
       }[this.$route.query.sheet] || []
     },
@@ -69,14 +71,14 @@ export default {
       let file = files[0]
       let name = file.name.replace(/\.webxoss$/, '')
 
-      parseDeckFile(file).then(deck => {
-        if (!deck) {
+      parseDeckFile(file).then(pids => {
+        if (!pids) {
           alert('error while parsing deck file.') // TODO: Localize
           return
         }
-        let pids = deck.mainDeck.concat(deck.lrigDeck)
         this.$store.commit('importDeck', { name, pids })
-        this.$emit('openModal')
+        this.$emit('openModal', 'inputDeckName')
+        // TODO: hide Sheet when open ImportMoal
       })
     },
     open(type) {
@@ -89,6 +91,16 @@ export default {
     },
     close() {
       this.$router.go(-1)
+    },
+    copy() {
+      this.$refs.copyArea.select()
+      try {
+        let successful = document.execCommand('copy')
+        let msg = successful ? 'successful' : 'unsuccessful'
+        console.log('Copying text command was ' + msg)
+      } catch (e) {
+        console.log('Oops, unable to copy')
+      }
     },
   },
 }
@@ -113,6 +125,12 @@ export default {
       :download="deckFileName"
       :href="deckFileHref"
       />
+    <textarea
+      ref="copyArea"
+      :class="$style.text"
+      readonly="true">
+      {{ deckFileJson }}
+    </textarea>
   </div>
 </template>
 
@@ -127,5 +145,17 @@ export default {
   left: 0;
   zIndex: -1024;
   opacity: 0;
+}
+.text {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 2em;
+  height: 2em;
+  padiding: 0;
+  border: none;
+  outline: none;
+  box-shadow: none;
+  background: transparent;
 }
 </style>
