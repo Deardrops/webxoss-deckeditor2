@@ -78,13 +78,14 @@ export default {
         }
         this.$store.commit('importDeck', { name, pids })
         this.$emit('openModal', 'inputDeckName')
-        // TODO: hide Sheet when open ImportMoal
       })
     },
     open(type) {
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
+          menu: '',
+          modal: '',
           sheet: type,
         }),
       })
