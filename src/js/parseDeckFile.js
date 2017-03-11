@@ -8,11 +8,14 @@ export default function parseDeckFile (file) {
     reader.onload = () => {
       resolve(parseDeckJson(reader.result))
     }
+    reader.onerror = () => {
+      reject()
+    }
     reader.readAsText(file)
   })
 }
 
-// parse deck's Json string and return deckFile Object
+// parse deck's json string and return deckFile Object
 export function parseDeckJson (json) {
   try {
     let obj = JSON.parse(json)

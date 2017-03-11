@@ -72,6 +72,8 @@ export default {
         }
         this.$store.commit('importDeck', { name, pids })
         this.$emit('openModal', 'inputDeckName')
+      }).catch(() => {
+        alert('error while parsing deck file.')
       })
     },
     open(type) {
@@ -94,6 +96,7 @@ export default {
     },
     copy() {
       if (document.queryCommandSupported('copy')) {
+        this.$refs.copyArea.value = this.deckFileJson
         this.$refs.copyArea.select()
         let successed = document.execCommand('copy')
         if (successed) {
@@ -141,7 +144,6 @@ export default {
       ref="copyArea"
       :class="$style.text"
       readonly="true">
-      {{ deckFileJson }}
     </textarea>
   </div>
 </template>
@@ -161,8 +163,8 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
-  width: 0;
-  height: 0;
+  width: 2em;
+  height: 2em;
   padding: 0;
   border: none;
   outline: none;
