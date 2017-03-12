@@ -1,7 +1,7 @@
 <script>
 export default {
   props: {
-    config: {
+    sheetConfigs: {
       type: Array,
       require: true,
     },
@@ -27,7 +27,7 @@ export default {
     @keyup.esc="cancel"
     @click.self="cancel">
     <div :class="$style.sheet">
-      <div v-for="item in config" :class="$style.item">
+      <div v-for="item in sheetConfigs" :class="$style.item">
         <a @click="item.click">{{ item.text }}</a>
       </div>
     </div>

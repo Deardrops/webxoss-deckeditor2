@@ -1,6 +1,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
-import parseDeckFile from 'js/parseDeckFile'
+import parseDeckFile from 'js/parseDeck'
 import Sheet from 'components/Sheet'
 // import L from 'js/Localize'
 export default {
@@ -22,9 +22,9 @@ export default {
       return `data:text/plain;base64,${window.btoa(this.deckFileJson)}`
     },
     shown() {
-      return this.config.length
+      return this.sheetConfigs.length
     },
-    config() {
+    sheetConfigs() {
       return {
         'import': [{
           text: 'From file',
@@ -34,7 +34,7 @@ export default {
         }, {
           text: 'From text',
           click: () => {
-            this.$emit('openModal', 'inputDeck')
+            this.$emit('openModal', 'pasteDeck')
           },
         }],
         'export': [{
@@ -48,7 +48,7 @@ export default {
             if (!this.copy()) {
               let name = this.deckName
               let pids = this.deckPids
-              this.$store.commit('importDeck', {name, pids})
+              this.$store.commit('setTempDeck', {name, pids})
               this.$emit('openModal', 'showDeck')
             }
           },
@@ -66,14 +66,10 @@ export default {
       let name = file.name.replace(/\.webxoss$/, '')
 
       parseDeckFile(file).then(pids => {
-        if (!pids) {
-          alert('error while parsing deck file.') // TODO: Localize
-          return
-        }
-        this.$store.commit('importDeck', { name, pids })
-        this.$emit('openModal', 'inputDeckName')
+        this.$store.commit('setTempDeck', { name, pids })
+        this.$emit('openModal', 'nameDeck')
       }).catch(() => {
-        alert('error while parsing deck file.')
+        alert('error while parsing deck file.') // TODO: Localize
       })
     },
     open(type) {
@@ -125,7 +121,7 @@ export default {
     <sheet 
       ref="sheet"
       v-show="shown"
-      :config="config"
+      :sheetConfigs="sheetConfigs"
       @cancel="close"/>
     <input
       type="file"
