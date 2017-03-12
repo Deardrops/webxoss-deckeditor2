@@ -1,6 +1,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
-import { parseDeckJson } from 'js/parseDeckFile'
+import { parseDeckJson } from 'js/parseDeck'
 import Modal from 'components/Modal'
 import L from 'js/Localize'
 
@@ -11,7 +11,7 @@ export default {
   computed: {
     ...mapState([
       'deckName',
-      'importedDeck',
+      'tempDeck',
     ]),
     ...mapGetters([
       'deckPids',
@@ -71,21 +71,21 @@ export default {
           },
           cancelText: L('reserve'),
         },
-        'inputDeckName': {
+        'nameDeck': {
           type: 'prompt',
           content: L('input_new_deck_name'),
-          defaultInput: this.importedDeck.name,
+          defaultInput: this.tempDeck.name,
           validate: name => name && !this.deckNames.includes(name),
           okText: L('add'),
           ok: name => {
             this.$store.commit('putDeckFile', {
               name,
-              pids: this.importedDeck.pids,
+              pids: this.tempDeck.pids,
             })
             this.$store.commit('switchDeck', name)
           },
         },
-        'inputDeck': {
+        'pasteDeck': {
           type: 'prompt',
           content: 'please input deck here',
           validate: json => {
@@ -95,11 +95,13 @@ export default {
           ok: json => {
             let name = ''
             let pids = parseDeckJson(json)
-            this.$store.commit('importDeck', {name, pids})
-            this.open('inputDeckName')
+            this.$store.commit('setTempDeck', {name, pids})
+            this.open('nameDeck')
 
-            this.$refs.modal.setInputValue() // clearup input box
-            return false // avoid closing Modal
+            // clearup input box
+            this.$refs.modal.setInputValue()
+            // avoid closing Modal
+            return false
           },
         },
         'showDeck': {

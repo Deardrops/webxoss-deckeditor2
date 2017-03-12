@@ -33,7 +33,8 @@ const state = {
     lang: 'en',
   },
 
-  importedDeck: {
+  // import / export use
+  tempDeck: {
     name: '',
     pids: [],
   },
@@ -166,11 +167,11 @@ const mutations = {
       state.deckName = name
     }
   },
-  importDeck(state, { name, pids }) {
+  setTempDeck(state, { name, pids }) {
     if (!pids) {
       return
     }
-    state.importedDeck = {
+    state.tempDeck = {
       name,
       pids,
     }

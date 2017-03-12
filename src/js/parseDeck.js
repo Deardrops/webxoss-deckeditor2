@@ -1,12 +1,16 @@
 export default function parseDeckFile (file) {
   return new Promise((resolve, reject) => {
     if (!FileReader || file.size > 1024) {
-      reject(null)
-      return
+      reject()
     }
     let reader = new FileReader()
     reader.onload = () => {
-      resolve(parseDeckJson(reader.result))
+      let result = parseDeckJson(reader.result)
+      if (result) {
+        resolve(result)
+      } else {
+        reject()
+      }
     }
     reader.onerror = () => {
       reject()
