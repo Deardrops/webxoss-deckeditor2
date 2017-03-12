@@ -32,6 +32,12 @@ const state = {
   localization: {
     lang: 'en',
   },
+
+  // import / export use
+  tempDeck: {
+    name: '',
+    pids: [],
+  },
 }
 
 Localize.config = state.localization
@@ -55,6 +61,16 @@ const getters = {
 
   deckNames: (state) => {
     return state.deckFiles.map(file => file.name)
+  },
+  deckFileJson: (state, getters) =>{
+    return JSON.stringify({
+      format: 'WEBXOSS Deck',
+      version: '1',
+      content: {
+        mainDeck: getters.mainDeck.map(card => card.pid),
+        lrigDeck: getters.lrigDeck.map(card => card.pid),
+      },
+    })
   },
 }
 
@@ -149,6 +165,15 @@ const mutations = {
     // Renaming current deck, switch to new name
     if (state.deckName === origin) {
       state.deckName = name
+    }
+  },
+  setTempDeck(state, { name, pids }) {
+    if (!pids) {
+      return
+    }
+    state.tempDeck = {
+      name,
+      pids,
     }
   },
   changeLanguage(state, lang) {
