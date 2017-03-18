@@ -6,14 +6,28 @@ export default {
       require: true,
     },
   },
+  data: () => ({
+    leaving: false,
+  }),
   computed: {
     opened() {
-      return !!this.$route.query.sheet
+      return !!this.$route.query.sheet && !this.leaving
     },
   },
   methods: {
     cancel() {
-      this.$emit('cancel')
+      this.leaving = true
+    },
+    close() {
+      if (this.leaving) {
+        this.leaving = false
+      }
+      this.$router.replace({
+        path: this.$route.path,
+        query: Object.assign({}, this.$route.query, {
+          sheet: '',
+        }),
+      })
     },
     focus() {
       if (this.$refs.wrapper) {
@@ -24,9 +38,9 @@ export default {
   watch: {
     opened(opened) {
       document.body.style.overflow = opened ? 'hidden' : 'auto'
-      this.$nextTick(() => {
+      if (opened) {
         this.focus()
-      })
+      }
     },
   },
 }
@@ -35,11 +49,12 @@ export default {
 <template>
   <div
     ref="wrapper"
+    tabindex="0"
     :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
     @keyup.esc="cancel"
     @click.self="cancel">
-    <transition name="fade">
+    <transition name="fade" @after-leave="close">
       <div :class="$style.sheet" v-show="opened">
         <div v-for="item in sheetConfigs" :class="$style.item">
           <a @click="item.click">{{ item.text }}</a>
@@ -72,15 +87,12 @@ export default {
   cursor: pointer;
 }
 .sheet:global(.fade-enter-active),
-.sheet:global(.fade-leave-active) {
-  transition: all 1s ease-out;
+.sheet:global(.fade-leave-active) {  
+  transition: all .7s ease-out;
 }
-.sheet:global(.fade-enter) {
-  transform: translateY(50px);
-  opacity: 0;
-}
+.sheet:global(.fade-enter),
 .sheet:global(.fade-leave-active) {
-  transform: translateY(50px);
+  transform: translateY(100px);
   opacity: 0;
 }
 </style>
