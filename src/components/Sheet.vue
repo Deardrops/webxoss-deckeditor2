@@ -19,9 +19,7 @@ export default {
       this.leaving = true
     },
     close() {
-      if (this.leaving) {
-        this.leaving = false
-      }
+      this.leaving = false
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
@@ -39,7 +37,9 @@ export default {
     opened(opened) {
       document.body.style.overflow = opened ? 'hidden' : 'auto'
       if (opened) {
-        this.focus()
+        this.$nextTick(() => {
+          this.focus()
+        })
       }
     },
   },
@@ -88,11 +88,10 @@ export default {
 }
 .sheet:global(.fade-enter-active),
 .sheet:global(.fade-leave-active) {  
-  transition: all .7s ease-out;
+  transition: all .4s ease-out;
 }
 .sheet:global(.fade-enter),
 .sheet:global(.fade-leave-active) {
-  transform: translateY(100px);
-  opacity: 0;
+  transform: translateY(100%);
 }
 </style>
