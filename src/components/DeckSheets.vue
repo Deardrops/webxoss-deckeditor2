@@ -79,14 +79,6 @@ export default {
         }),
       })
     },
-    close() {
-      this.$router.replace({
-        path: this.$route.path,
-        query: Object.assign({}, this.$route.query, {
-          sheet: '',
-        }),
-      })
-    },
     copy() {
       if (document.queryCommandSupported('copy')) {
         this.$refs.copyArea.value = this.deckFileJson
@@ -107,8 +99,7 @@ export default {
   <div>
     <sheet 
       ref="sheet"
-      :sheetConfigs="sheetConfigs"
-      @cancel="close"/>
+      :sheetConfigs="sheetConfigs"/>
     <input
       type="file"
       ref="input"
