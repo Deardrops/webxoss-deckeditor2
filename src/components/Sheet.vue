@@ -55,11 +55,11 @@ export default {
     @keyup.esc="cancel"
     @click.self="cancel">
     <transition name="fade" @after-leave="close">
-      <div :class="$style.sheet" v-show="opened">
-        <div v-for="item in sheetConfigs" :class="$style.item">
-          <a @click="item.click">{{ item.text }}</a>
-        </div>
-      </div>
+      <ul :class="$style.sheet" v-show="opened">
+        <li v-for="item in sheetConfigs" :class="$style.item" @click="item.click">
+          {{ item.text }}
+        </li>
+      </ul>
     </transition>
   </div>
 </template>
@@ -72,6 +72,7 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
+  background-color: #0006;
   z-index: var(--z-sheet);
 }
 .sheet {
@@ -88,7 +89,7 @@ export default {
 }
 .sheet:global(.fade-enter-active),
 .sheet:global(.fade-leave-active) {  
-  transition: all .4s ease-out;
+  transition: all .2s ease-out;
 }
 .sheet:global(.fade-enter),
 .sheet:global(.fade-leave-active) {
