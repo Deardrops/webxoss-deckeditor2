@@ -4,6 +4,9 @@ import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
 import marked from 'marked'
 
+let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
+let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
+
 export default {
   components: {
     AppHeader,
@@ -15,6 +18,10 @@ export default {
     // block the search for a short time after input.
     timer: -1,
     blocking: false,
+    request: -1,
+    index: 0,
+    start: 0,
+    end: 10,
     searchTips: require('./searchTips.md'), // test
     emptyTips: require('./emptyTips.md'), // test
   }),
@@ -29,7 +36,6 @@ export default {
           this.timer = setTimeout(() => {
             this.updateQueryPart({
               query,
-              limit: 20,
             })
             this.blocking = false
             window.scrollTo(0, 0)
@@ -39,31 +45,25 @@ export default {
 
         this.updateQueryPart({
           query,
-          limit: 20,
         })
         window.scrollTo(0, 0)
-
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
         }, 500)
       },
     },
-    limit: {
-      get() {
-        return +this.$route.query.limit || 0
-      },
-      set(limit) {
-        this.updateQueryPart({
-          limit,
-        })
-      },
-    },
     matchedCards() {
       return Searcher.search(this.query)
     },
     shownCards() {
-      return this.matchedCards.slice(0, this.limit)
+      return this.matchedCards.slice(this.start, this.end)
+    },
+    frontCount() {
+      return this.start
+    },
+    backCount() {
+      return this.matchedCards.length - this.frontCount - this.shownCards.length
     },
   },
   methods: {
@@ -80,14 +80,46 @@ export default {
         query,
       })
     },
-    showMore(count) {
-      this.limit = this.limit + count
+    updateShowMore() {
+      let $list = this.$refs.list
+      if ($list) {
+        for (let li of $list.children) {
+          let rect = li.getBoundingClientRect()
+          if (rect.bottom > window.innerHeight
+            && rect.top < window.innerHeight) {
+            this.index = +li.getAttribute('idx')
+            this.updateView()
+          }
+        }
+      }
+      this.request = requestFrame(this.updateShowMore)
+    },
+    updateView() {
+      if (this.index + 10 <= this.matchedCards.length
+        && this.index + 10 > this.end) {
+        this.end = this.index + 10
+      } else if (this.index - 10 >= 0
+        && this.index - 10 < this.start) {
+        this.start = this.index - 10
+      }
+    },
+    initView() {
+      if (this.index + 10 <= this.matchedCards.length) {
+        this.end = this.index + 10
+      } else if (this.index - 10 >= 0) {
+        this.start = this.index - 10
+      }
     },
   },
   mounted() {
+    this.initView()
+    this.updateShowMore()
     if (!this.query) {
       this.$refs.input.focus()
     }
+  },
+  destroyed() {
+    cancelRequest(this.request)
   },
 }
 </script>
@@ -107,15 +139,21 @@ export default {
       <header-icon name="more"/>
     </app-header>
     <section v-if="query && shownCards.length">
-      <ul>
-        <li v-for="card in shownCards">
+      <ul ref='list'>
+        <li v-for="n in frontCount" :idx="n - 1">
+          <div :class="$style.null" />
+        </li>
+        <li v-for="(card, idx) in shownCards" :idx="frontCount + idx">
           <cell :card="card" />
+        </li>
+        <li v-for="n in backCount" :idx="frontCount + shownCards.length + n - 1">
+          <div :class="$style.null" />
         </li>
       </ul>
       <div
+        ref="more"
         v-if="shownCards.length < matchedCards.length"
         :class="$style.more">
-        <button @click="showMore(20)">Show more</button>
       </div>
     </section>
     <section :class="$style.tips" v-if="!query">
@@ -146,7 +184,11 @@ export default {
 .more {
   text-align: center;
   font-size: 2em;
-  padding: 1em 0;
+  /*padding: 1em 0;*/
+}
+.null {
+  height: calc(4px + 2*var(--padding) + 6.25rem);
+  border-bottom: 1px solid var(--cell-border-color);
 }
 .tips {
   padding: 2rem 2rem 0 2rem;
