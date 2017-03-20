@@ -29,6 +29,7 @@ const state = {
   // current selected deck name
   deckName: '',
 
+  searchIndex: 0,
   localization: {
     lang: 'en',
   },
@@ -160,6 +161,11 @@ const mutations = {
       lang = 'zh_Hant'
     }
     state.localization.lang = lang
+  },
+  updateSearchIndex(state, index) {
+    if (index >= 0) {
+      state.searchIndex = index
+    }
   },
 }
 

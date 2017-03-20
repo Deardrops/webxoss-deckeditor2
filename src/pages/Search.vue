@@ -19,7 +19,6 @@ export default {
     timer: -1,
     blocking: false,
     request: -1,
-    index: 0,
     start: 0,
     end: 10,
     searchTips: require('./searchTips.md'), // test
@@ -39,6 +38,7 @@ export default {
             })
             this.blocking = false
             window.scrollTo(0, 0)
+            this.$store.commit('updateSearchIndex', 0)
           }, 500)
           return
         }
@@ -47,6 +47,7 @@ export default {
           query,
         })
         window.scrollTo(0, 0)
+        this.initView()
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
@@ -55,6 +56,9 @@ export default {
     },
     matchedCards() {
       return Searcher.search(this.query)
+    },
+    index() {
+      return this.$store.state.searchIndex
     },
     shownCards() {
       return this.matchedCards.slice(this.start, this.end)
@@ -87,8 +91,11 @@ export default {
           let rect = li.getBoundingClientRect()
           if (rect.bottom > window.innerHeight
             && rect.top < window.innerHeight) {
-            this.index = +li.getAttribute('idx')
-            this.updateView()
+            let index = +li.getAttribute('idx')
+            if (index !== this.index) {
+              this.$store.commit('updateSearchIndex', index)
+              this.updateView()
+            }
           }
         }
       }
@@ -98,7 +105,8 @@ export default {
       if (this.index + 10 <= this.matchedCards.length
         && this.index + 10 > this.end) {
         this.end = this.index + 10
-      } else if (this.index - 10 >= 0
+      }
+      if (this.index - 10 >= 0
         && this.index - 10 < this.start) {
         this.start = this.index - 10
       }
@@ -106,8 +114,13 @@ export default {
     initView() {
       if (this.index + 10 <= this.matchedCards.length) {
         this.end = this.index + 10
-      } else if (this.index - 10 >= 0) {
+      } else {
+        this.end = this.matchedCards.length
+      }
+      if (this.index - 10 >= 0) {
         this.start = this.index - 10
+      } else {
+        this.start = 0
       }
     },
   },
