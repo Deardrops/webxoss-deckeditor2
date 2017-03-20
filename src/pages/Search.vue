@@ -19,6 +19,7 @@ export default {
     timer: -1,
     blocking: false,
     request: -1,
+    index: 0,
     start: 0, // start index of shownCards in matchedCards
     end: 10, // end index of shownCards in matchedCards
     searchTips: require('./searchTips.md'), // test
@@ -38,8 +39,8 @@ export default {
             })
             this.blocking = false
             window.scrollTo(0, 0)
-            this.start = 0 // reinitialize view
-            this.end = 10
+            // this.start = 0 // reinitialize view
+            // this.end = 10
           }, 500)
           return
         }
@@ -48,8 +49,8 @@ export default {
           query,
         })
         window.scrollTo(0, 0)
-        this.start = 0
-        this.end = 10
+        // this.start = 0
+        // this.end = 10
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
@@ -58,9 +59,6 @@ export default {
     },
     matchedCards() {
       return Searcher.search(this.query)
-    },
-    index() {
-      return this.$store.state.searchIndex
     },
     shownCards() {
       return this.matchedCards.slice(this.start, this.end)
@@ -96,7 +94,8 @@ export default {
             && rect.top < window.innerHeight) {
             let index = +li.getAttribute('idx')
             if (index !== this.index) {
-              this.$store.commit('updateSearchIndex', index)
+              this.index = index
+              console.log(index)
               this.updateView()
             }
           }
