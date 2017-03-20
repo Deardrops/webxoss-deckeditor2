@@ -1,9 +1,6 @@
 <script>
 import Icon from 'components/Icon'
 
-let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
-let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
-
 export default {
   components: {
     Icon,
@@ -14,9 +11,6 @@ export default {
     hidden: false,
     searchRoute: {
       path: '/search',
-      query: {
-        limit: 20,
-      },
     },
   }),
   methods: {
@@ -34,14 +28,14 @@ export default {
         this.hidden = false
       }
       this.lastScrollTop = currentScrollTop
-      this.request = requestFrame(this.updateFloatButton)
+      this.request = requestIdleCallback(this.updateFloatButton)
     },
   },
   mounted() {
     this.updateFloatButton()
   },
   destroyed() {
-    cancelRequest(this.request)
+    cancelIdleCallback(this.request)
   },
 }
 </script>

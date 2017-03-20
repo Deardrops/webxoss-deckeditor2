@@ -1,12 +1,23 @@
-if (!window.requestAnimationFrame) {
-  window.requestAnimationFrame = callback => {
-    // 30 fps only.
-    // Because browsers without RAF support generally have low performance.
-    return window.setTimeout(callback, 1000 / 30)
+/* polyfills */
+window.requestAnimationFrame =
+  window.requestAnimationFrame ||
+  function requestAnimationFrame(callback) {
+    return setTimeout(callback, 100)
   }
-  window.cancelAnimationFrame = id => {
-    return window.clearTimeout(id)
-  }
-}
 
+window.cancelAnimationFrame =
+  window.cancelAnimationFrame ||
+  function cancelAnimationFrame(id) {
+    return clearTimeout(id)
+  }
+
+window.requestIdleCallback =
+  window.requestIdleCallback ||
+  window.requestAnimationFrame
+
+window.cancelIdleCallback =
+  window.cancelIdleCallback ||
+  window.cancelAnimationFrame
+
+/* settings */
 history.scrollRestoration = 'manual'

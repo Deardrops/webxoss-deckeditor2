@@ -14,6 +14,7 @@ config.base = {
     'require': true,
     'process': true,
     'CardInfo': true,
+    'cancelIdleCallback': true,
   },
   extends: 'eslint:recommended',
   plugins: ['vue'],

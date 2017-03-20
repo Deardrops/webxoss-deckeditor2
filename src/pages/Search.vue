@@ -4,8 +4,8 @@ import Cell from 'components/Cell'
 import Searcher from 'js/Searcher.js'
 import marked from 'marked'
 
-let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
-let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
+// 8rem
+let cellHeight = 8
 
 export default {
   components: {
@@ -19,9 +19,20 @@ export default {
     timer: -1,
     blocking: false,
     request: -1,
+
+    /*
+      Long list optimization.
+
+      Only render card cells in viewport.
+      Cells outside viewport are replaced with list padding.
+
+      `index`:
+        The index of the top cell in viewport.
+        It's automatically set when scrolling.
+        See `updateIndex` for details.
+    */
     index: 0,
-    start: 0,
-    end: 10,
+
     searchTips: require('./searchTips.md'), // test
     emptyTips: require('./emptyTips.md'), // test
   }),
@@ -56,14 +67,26 @@ export default {
     matchedCards() {
       return Searcher.search(this.query)
     },
+    start() {
+      // 5 cards before index
+      return Math.max(0, this.index - 5)
+    },
+    end() {
+      // 10 cards after index
+      return Math.min(this.matchedCards.length, this.index + 10)
+    },
     shownCards() {
       return this.matchedCards.slice(this.start, this.end)
     },
-    frontCount() {
-      return this.start
-    },
-    backCount() {
-      return this.matchedCards.length - this.frontCount - this.shownCards.length
+    padding() {
+      // Paddings before / after shown cells.
+      // They keep list height and scroll position from changing。
+      let beforeCount = this.start
+      let afterCount = this.matchedCards.length - beforeCount - this.shownCards.length
+      return {
+        'padding-top': `${cellHeight * beforeCount}rem`,
+        'padding-bottom': `${cellHeight * afterCount}rem`,
+      }
     },
   },
   methods: {
@@ -80,46 +103,25 @@ export default {
         query,
       })
     },
-    updateShowMore() {
+    updateIndex() {
+      // Find the top cell in viewport according to `window.scrollY`.
       let $list = this.$refs.list
       if ($list) {
-        for (let li of $list.children) {
-          let rect = li.getBoundingClientRect()
-          if (rect.bottom > window.innerHeight
-            && rect.top < window.innerHeight) {
-            this.index = +li.getAttribute('idx')
-            this.updateView()
-          }
-        }
+        let fontSize = +window.getComputedStyle(window.document.body)
+          .fontSize.slice(0, -2)
+        this.index = Math.round(window.scrollY / (cellHeight * fontSize))
       }
-      this.request = requestFrame(this.updateShowMore)
-    },
-    updateView() {
-      if (this.index + 10 <= this.matchedCards.length
-        && this.index + 10 > this.end) {
-        this.end = this.index + 10
-      } else if (this.index - 10 >= 0
-        && this.index - 10 < this.start) {
-        this.start = this.index - 10
-      }
-    },
-    initView() {
-      if (this.index + 10 <= this.matchedCards.length) {
-        this.end = this.index + 10
-      } else if (this.index - 10 >= 0) {
-        this.start = this.index - 10
-      }
+      this.request = requestIdleCallback(this.updateIndex)
     },
   },
   mounted() {
-    this.initView()
-    this.updateShowMore()
+    this.updateIndex()
     if (!this.query) {
       this.$refs.input.focus()
     }
   },
   destroyed() {
-    cancelRequest(this.request)
+    cancelIdleCallback(this.request)
   },
 }
 </script>
@@ -139,22 +141,11 @@ export default {
       <header-icon name="more"/>
     </app-header>
     <section v-if="query && shownCards.length">
-      <ul ref='list'>
-        <li v-for="n in frontCount" :idx="n - 1">
-          <div :class="$style.null" />
-        </li>
-        <li v-for="(card, idx) in shownCards" :idx="frontCount + idx">
+      <ul ref="list" :style="padding">
+        <li v-for="card in shownCards">
           <cell :card="card" />
         </li>
-        <li v-for="n in backCount" :idx="frontCount + shownCards.length + n - 1">
-          <div :class="$style.null" />
-        </li>
       </ul>
-      <div
-        ref="more"
-        v-if="shownCards.length < matchedCards.length"
-        :class="$style.more">
-      </div>
     </section>
     <section :class="$style.tips" v-if="!query">
       <div v-html="marked(searchTips)"></div>
@@ -180,15 +171,6 @@ export default {
 .search::selection {
   color: #333;
   background-color: #ffff00;
-}
-.more {
-  text-align: center;
-  font-size: 2em;
-  /*padding: 1em 0;*/
-}
-.null {
-  height: calc(4px + 2*var(--padding) + 6.25rem);
-  border-bottom: 1px solid var(--cell-border-color);
 }
 .tips {
   padding: 2rem 2rem 0 2rem;

@@ -11,9 +11,6 @@ import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
 import L from 'js/Localize'
 
-let requestFrame = window.requestIdleCallback || window.requestAnimationFrame
-let cancelRequest = window.cancelIdleCallback || window.cancelAnimationFrame
-
 export default {
   components: {
     AppHeader,
@@ -130,7 +127,7 @@ export default {
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
       this.scrolledToTop = window.scrollY <= 0
-      this.request = requestFrame(this.updateDeckHeader)
+      this.request = requestIdleCallback(this.updateDeckHeader)
     },
     toggleView() {
       this.previewing ? this.goListView() : this.goBlockView()
@@ -156,7 +153,7 @@ export default {
     this.updateDeckHeader()
   },
   destroyed() {
-    cancelRequest(this.request)
+    cancelIdleCallback(this.request)
   },
 }
 </script>
