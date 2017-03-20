@@ -19,11 +19,10 @@ export default {
     timer: -1,
     blocking: false,
     request: -1,
-    index: 0,
-    start: 0, // start index of shownCards in matchedCards
-    end: 10, // end index of shownCards in matchedCards
     searchTips: require('./searchTips.md'), // test
     emptyTips: require('./emptyTips.md'), // test
+
+    index: 0,
   }),
   computed: {
     query: {
@@ -69,6 +68,12 @@ export default {
     backCount() {
       return this.matchedCards.length - this.frontCount - this.shownCards.length
     },
+    start() {
+      return Math.max(0, this.index - 10)
+    },
+    end() {
+      return Math.min(this.matchedCards.length, this.index + 10)
+    },
   },
   methods: {
     marked,
@@ -84,7 +89,7 @@ export default {
         query,
       })
     },
-    updateShowMore() {
+    updateIndex() {
       // auto update searchIndex & will be viewed cards
       let $list = this.$refs.list
       if ($list) {
@@ -96,41 +101,16 @@ export default {
             if (index !== this.index) {
               this.index = index
               console.log(index)
-              this.updateView()
             }
           }
         }
       }
-      this.request = requestFrame(this.updateShowMore)
-    },
-    updateView() {
-      // calculate start & end index by searchIndex
-      if (this.index + 10 <= this.matchedCards.length
-        && this.index + 10 > this.end) {
-        this.end = this.index + 10
-      }
-      if (this.index - 10 >= 0
-        && this.index - 10 < this.start) {
-        this.start = this.index - 10
-      }
-    },
-    initView() {
-      // render front & back 20 cards only when return from other page
-      if (this.index + 10 <= this.matchedCards.length) {
-        this.end = this.index + 10
-      } else {
-        this.end = this.matchedCards.length
-      }
-      if (this.index - 10 >= 0) {
-        this.start = this.index - 10
-      } else {
-        this.start = 0
-      }
+      this.request = requestFrame(this.updateIndex)
     },
   },
   mounted() {
-    this.initView()
-    this.updateShowMore()
+    // this.initView()
+    this.updateIndex()
     if (!this.query) {
       this.$refs.input.focus()
     }
@@ -156,14 +136,14 @@ export default {
       <header-icon name="more"/>
     </app-header>
     <section v-if="query && shownCards.length">
-      <ul ref='list'>
-        <li v-for="n in frontCount" :idx="n - 1">
+      <ul ref="list">
+        <li v-for="n in frontCount" :idx="n - 1" key="n - 1">
           <div :class="$style.null" />
         </li>
-        <li v-for="(card, idx) in shownCards" :idx="frontCount + idx">
+        <li v-for="(card, idx) in shownCards" :idx="frontCount + idx" key="frontCount + idx">
           <cell :card="card" />
         </li>
-        <li v-for="n in backCount" :idx="frontCount + shownCards.length + n - 1">
+        <li v-for="n in backCount" :idx="frontCount + shownCards.length + n - 1" key="frontCount + shownCards.length + n - 1">
           <div :class="$style.null" />
         </li>
       </ul>
