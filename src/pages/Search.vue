@@ -19,8 +19,8 @@ export default {
     timer: -1,
     blocking: false,
     request: -1,
-    start: 0,
-    end: 10,
+    start: 0, // start index of shownCards in matchedCards
+    end: 10, // end index of shownCards in matchedCards
     searchTips: require('./searchTips.md'), // test
     emptyTips: require('./emptyTips.md'), // test
   }),
@@ -38,7 +38,8 @@ export default {
             })
             this.blocking = false
             window.scrollTo(0, 0)
-            this.$store.commit('updateSearchIndex', 0)
+            this.start = 0 // reinitialize view
+            this.end = 10
           }, 500)
           return
         }
@@ -47,7 +48,8 @@ export default {
           query,
         })
         window.scrollTo(0, 0)
-        this.initView()
+        this.start = 0
+        this.end = 10
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
@@ -85,6 +87,7 @@ export default {
       })
     },
     updateShowMore() {
+      // auto update searchIndex & will be viewed cards
       let $list = this.$refs.list
       if ($list) {
         for (let li of $list.children) {
@@ -102,6 +105,7 @@ export default {
       this.request = requestFrame(this.updateShowMore)
     },
     updateView() {
+      // calculate start & end index by searchIndex
       if (this.index + 10 <= this.matchedCards.length
         && this.index + 10 > this.end) {
         this.end = this.index + 10
@@ -112,6 +116,7 @@ export default {
       }
     },
     initView() {
+      // render front & back 20 cards only when return from other page
       if (this.index + 10 <= this.matchedCards.length) {
         this.end = this.index + 10
       } else {
@@ -163,11 +168,6 @@ export default {
           <div :class="$style.null" />
         </li>
       </ul>
-      <div
-        ref="more"
-        v-if="shownCards.length < matchedCards.length"
-        :class="$style.more">
-      </div>
     </section>
     <section :class="$style.tips" v-if="!query">
       <div v-html="marked(searchTips)"></div>
@@ -193,11 +193,6 @@ export default {
 .search::selection {
   color: #333;
   background-color: #ffff00;
-}
-.more {
-  text-align: center;
-  font-size: 2em;
-  /*padding: 1em 0;*/
 }
 .null {
   height: calc(4px + 2*var(--padding) + 6.25rem);

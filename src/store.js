@@ -29,7 +29,10 @@ const state = {
   // current selected deck name
   deckName: '',
 
+  // index of last visiable cell in Search page
+  // used by calc start & end index
   searchIndex: 0,
+
   localization: {
     lang: 'en',
   },
