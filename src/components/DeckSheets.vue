@@ -23,7 +23,7 @@ export default {
       return `data:text/plain;base64,${window.btoa(this.deckFileJson)}`
     },
     sheetConfigs() {
-      return {
+      let configs = {
         'import': [{
           text: 'import deck from file',
           icon: 'file',
@@ -55,7 +55,13 @@ export default {
             }
           },
         }],
-      }[this.$route.query.sheet] || []
+      }
+      // iOS devices do not support import /export file operations
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        configs['import'].splice(0, 1)
+        configs['export'].splice(0, 1)
+      }
+      return configs[this.$route.query.sheet] || []
     },
   },
   methods: {
