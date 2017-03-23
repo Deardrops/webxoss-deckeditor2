@@ -1,10 +1,15 @@
 <script>
+import Icon from 'components/Icon'
+
 export default {
   props: {
     sheetConfigs: {
       type: Array,
       require: true,
     },
+  },
+  components: {
+    Icon,
   },
   methods: {
     cancel() {
@@ -27,9 +32,15 @@ export default {
     @keyup.esc="cancel"
     @click.self="cancel">
     <div :class="$style.sheet">
-      <div v-for="item in sheetConfigs" :class="$style.item">
-        <a @click="item.click">{{ item.text }}</a>
-      </div>
+      <a
+        v-for="item in sheetConfigs"
+        :class="$style.item"
+        @click="item.click">
+        <span :class="$style.icon">
+          <icon :name="item.icon" />
+        </span>
+        <span>{{ item.text }}</span>
+      </a>
     </div>
 </template>
 
@@ -52,8 +63,16 @@ export default {
   background-color: #fff;
 }
 .item {
+  display: flex;
+  align-items: center;
   padding: .5em 1em;
   font-size: 1.5em;
   cursor: pointer;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: .7em;
 }
 </style>
