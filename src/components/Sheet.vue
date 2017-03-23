@@ -1,4 +1,6 @@
 <script>
+import Icon from 'components/Icon'
+
 export default {
   props: {
     sheetConfigs: {
@@ -13,6 +15,9 @@ export default {
     opened() {
       return !!this.$route.query.sheet && !this.leaving
     },
+  },
+  components: {
+    Icon,
   },
   methods: {
     cancel() {
@@ -54,14 +59,17 @@ export default {
     @touchmove.stop
     @keyup.esc="cancel"
     @click.self="cancel">
-    <transition name="fade" @after-leave="close">
-      <ul :class="$style.sheet" v-show="opened">
-        <li v-for="item in sheetConfigs" :class="$style.item" @click="item.click">
-          {{ item.text }}
-        </li>
-      </ul>
-    </transition>
-  </div>
+    <div :class="$style.sheet">
+      <a
+        v-for="item in sheetConfigs"
+        :class="$style.item"
+        @click="item.click">
+        <span :class="$style.icon">
+          <icon :name="item.icon" />
+        </span>
+        <span>{{ item.text }}</span>
+      </a>
+    </div>
 </template>
 
 <style module>
@@ -83,16 +91,16 @@ export default {
   background-color: #fff;
 }
 .item {
+  display: flex;
+  align-items: center;
   padding: .5em 1em;
   font-size: 1.5em;
   cursor: pointer;
 }
-.sheet:global(.fade-enter-active),
-.sheet:global(.fade-leave-active) {  
-  transition: all .2s ease-out;
-}
-.sheet:global(.fade-enter),
-.sheet:global(.fade-leave-active) {
-  transform: translateY(100%);
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: .7em;
 }
 </style>

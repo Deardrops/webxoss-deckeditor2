@@ -2,6 +2,7 @@
 import { mapState, mapGetters } from 'vuex'
 import parseDeckFile from 'js/parseDeck'
 import Sheet from 'components/Sheet'
+
 // import L from 'js/Localize'
 export default {
   components: {
@@ -25,22 +26,26 @@ export default {
       return {
         'import': [{
           text: 'From file',
+          icon: 'file',
           click: () => {
             this.$refs.input.click()
           },
         }, {
           text: 'From text',
+          icon: 'paste',
           click: () => {
             this.$emit('openModal', 'pasteDeck')
           },
         }],
         'export': [{
           text: 'To file',
+          icon: 'file',
           click: () => {
             this.$refs.download.click()
           },
         }, {
           text: 'To text',
+          icon: 'paste',
           click: () => {
             if (!this.copy()) {
               let name = this.deckName
