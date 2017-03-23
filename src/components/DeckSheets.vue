@@ -28,26 +28,26 @@ export default {
     sheetConfigs() {
       return {
         'import': [{
-          text: 'From file',
+          text: 'import deck from file',
           icon: 'file',
           click: () => {
             this.$refs.input.click()
           },
         }, {
-          text: 'From text',
+          text: 'paste and import deck',
           icon: 'paste',
           click: () => {
             this.$emit('openModal', 'pasteDeck')
           },
         }],
         'export': [{
-          text: 'To file',
+          text: 'export deck to file',
           icon: 'file',
           click: () => {
             this.$refs.download.click()
           },
         }, {
-          text: 'To text',
+          text: 'copy deck to clipboard',
           icon: 'paste',
           click: () => {
             if (!this.copy()) {

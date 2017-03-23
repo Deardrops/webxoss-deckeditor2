@@ -87,7 +87,7 @@ export default {
         },
         'pasteDeck': {
           type: 'prompt',
-          content: 'please input deck here',
+          content: 'paste your deck here',
           validate: json => {
             return json && parseDeckJson(json)
           },
@@ -106,7 +106,7 @@ export default {
         },
         'showDeck': {
           type: 'prompt',
-          content: 'please copy the text below',
+          content: 'copy the deck by yourself',
           defaultInput: this.deckFileJson,
           okText: L('ok'),
           ok: () => {},
