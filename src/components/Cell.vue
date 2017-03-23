@@ -161,7 +161,7 @@ export default {
 <template>
   <router-link :to="detailRoute">
     <div :class="[$style.cell, isRemaining ? $style.translucent : '']">
-      <div>
+      <div :class="$style.left">
         <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="card.pid"></thumbnail>
         <div v-if="hasBurst" :class="$style.wrapper">
           <div :class="[$style.hexagon, $color[card.color]]">
@@ -227,21 +227,27 @@ export default {
 }
 .cell {
   display: flex;
+  box-sizing: border-box;
   padding: var(--padding);
+  height: 8rem;
+  justify-content: center;
   border-bottom: 1px solid var(--cell-border-color);
 }
 .thumbnail {
-  width: 6.25rem; /* avoid stretch */
-  height: 6.25rem;
+  width: calc(8rem - 2 * var(--padding));
+  height: calc(8rem - 2 * var(--padding));
   border: 2px solid currentColor;
   margin: auto 0;
+}
+.left {
+  align-self: center;
 }
 .right {
   display: flex;
   flex-direction: column;
   justify-content: space-between;
   flex: 1;
-  padding: calc(var(--padding) / 2) var(--padding);
+  padding: 0 var(--padding);
   overflow: hidden;
 }
 .name {
