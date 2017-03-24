@@ -94,8 +94,8 @@ export default {
   font-size: 1.3em;
   padding: .5em 0;
   color: #666;
-  &:first-letter {
-    text-transform: capitalize;
+  &::first-letter {
+    text-transform: uppercase;
   }
 }
 .option {
