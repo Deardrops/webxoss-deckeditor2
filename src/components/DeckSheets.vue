@@ -2,6 +2,7 @@
 import { mapState, mapGetters } from 'vuex'
 import parseDeckFile from 'js/parseDeck'
 import Sheet from 'components/Sheet'
+
 // import L from 'js/Localize'
 export default {
   components: {
@@ -21,36 +22,55 @@ export default {
     deckFileHref() {
       return `data:text/plain;base64,${window.btoa(this.deckFileJson)}`
     },
+    shown() {
+      return !!this.sheetConfigs.head
+    },
     sheetConfigs() {
-      return {
-        'import': [{
-          text: 'From file',
-          click: () => {
-            this.$refs.input.click()
-          },
-        }, {
-          text: 'From text',
-          click: () => {
-            this.$emit('openModal', 'pasteDeck')
-          },
-        }],
-        'export': [{
-          text: 'To file',
-          click: () => {
-            this.$refs.download.click()
-          },
-        }, {
-          text: 'To text',
-          click: () => {
-            if (!this.copy()) {
-              let name = this.deckName
-              let pids = this.deckPids
-              this.$store.commit('setTempDeck', {name, pids})
-              this.$emit('openModal', 'showDeck')
-            }
-          },
-        }],
-      }[this.$route.query.sheet] || []
+      let configs = {
+        'import': {
+          head: 'import from',
+          options: [{
+            text: 'file',
+            icon: 'file',
+            click: () => {
+              this.$refs.input.click()
+            },
+          }, {
+            text: 'text',
+            icon: 'text',
+            click: () => {
+              this.$emit('openModal', 'pasteDeck')
+            },
+          }],
+        },
+        'export': {
+          head: 'export to',
+          options: [{
+            text: 'file',
+            icon: 'file',
+            click: () => {
+              this.$refs.download.click()
+            },
+          }, {
+            text: 'clipboard',
+            icon: 'paste',
+            click: () => {
+              if (!this.copy()) {
+                let name = this.deckName
+                let pids = this.deckPids
+                this.$store.commit('setTempDeck', {name, pids})
+                this.$emit('openModal', 'showDeck')
+              }
+            },
+          }],
+        },
+      }
+      // iOS devices do not support import /export file operations
+      if (/iPad|iPhone|iPod/.test(navigator.userAgent) && !window.MSStream) {
+        configs['import'].options.splice(0, 1)
+        configs['export'].options.splice(0, 1)
+      }
+      return configs[this.$route.query.sheet] || {}
     },
   },
   methods: {
