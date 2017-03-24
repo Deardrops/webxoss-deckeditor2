@@ -7,25 +7,16 @@ export default {
     },
   },
   data: () => ({
-    leaving: false,
+    configs: [],
   }),
   computed: {
     opened() {
-      return !!this.$route.query.sheet && !this.leaving
+      return !!this.$route.query.sheet
     },
   },
   methods: {
-    cancel() {
-      this.leaving = true
-    },
     close() {
-      this.leaving = false
-      this.$router.replace({
-        path: this.$route.path,
-        query: Object.assign({}, this.$route.query, {
-          sheet: '',
-        }),
-      })
+      this.$router.go(-1)
     },
     focus() {
       if (this.$refs.wrapper) {
@@ -42,6 +33,11 @@ export default {
         })
       }
     },
+    sheetConfigs(sheetConfigs) {
+      if (sheetConfigs.length) {
+        this.configs = sheetConfigs
+      }
+    },
   },
 }
 </script>
@@ -52,11 +48,11 @@ export default {
     tabindex="0"
     :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="cancel"
-    @click.self="cancel">
-    <transition name="fade" @after-leave="close">
+    @keyup.esc="close"
+    @click.self="close">
+    <transition name="fade">
       <ul :class="$style.sheet" v-show="opened">
-        <li v-for="item in sheetConfigs" :class="$style.item" @click="item.click">
+        <li v-for="item in configs" :class="$style.item" @click="item.click">
           {{ item.text }}
         </li>
       </ul>
@@ -89,7 +85,7 @@ export default {
 }
 .sheet:global(.fade-enter-active),
 .sheet:global(.fade-leave-active) {  
-  transition: all .2s ease-out;
+  transition: transform .2s ease-out;
 }
 .sheet:global(.fade-enter),
 .sheet:global(.fade-leave-active) {

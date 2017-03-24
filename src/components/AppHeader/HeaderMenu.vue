@@ -12,7 +12,9 @@ export default {
   },
   computed: {
     opened() {
-      return !!this.$route.query.menu && !this.$route.query.modal
+      return !!this.$route.query.menu
+        && !this.$route.query.modal
+        && !this.$route.query.sheet
     },
   },
   methods: {
