@@ -4,7 +4,7 @@ import Icon from 'components/Icon'
 export default {
   props: {
     sheetConfigs: {
-      type: Array,
+      type: Object,
       require: true,
     },
   },
@@ -53,15 +53,22 @@ export default {
     tabindex="0"
     :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="close"
-    @click.self="close">
-    <transition name="fade">
-      <ul :class="$style.sheet" v-show="opened">
-        <li v-for="item in configs" :class="$style.item" @click="item.click">
-          {{ item.text }}
-        </li>
-      </ul>
-    </transition>
+    @keyup.esc="cancel"
+    @click.self="cancel">
+    <div :class="$style.sheet">
+      <div :class="$style.head">
+        {{ sheetConfigs.head }}
+      </div>
+      <a
+        v-for="option in sheetConfigs.options"
+        :class="$style.option"
+        @click="option.click">
+        <span :class="$style.icon">
+          <icon :name="option.icon" />
+        </span>
+        <span>{{ option.text }}</span>
+      </a>
+    </div>
   </div>
 </template>
 
@@ -80,15 +87,24 @@ export default {
   position: fixed;
   bottom: 0;
   width: 100%;
-  padding: .5em;
+  padding: .5em 1em;
   background-color: #fff;
 }
-.item {
+.head {
+  font-size: 1.3em;
+  padding: .5em 0;
+  color: #666;
+  &:first-letter {
+    text-transform: capitalize;
+  }
+}
+.option {
   display: flex;
   align-items: center;
-  padding: .5em 1em;
+  padding: .5em 0;
   font-size: 1.5em;
   cursor: pointer;
+  text-transform: capitalize;
 }
 .sheet:global(.fade-enter-active),
 .sheet:global(.fade-leave-active) {  
