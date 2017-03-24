@@ -11,13 +11,36 @@ export default {
   components: {
     Icon,
   },
+  data: () => ({
+    configs: [],
+  }),
+  computed: {
+    opened() {
+      return !!this.$route.query.sheet
+    },
+  },
   methods: {
-    cancel() {
-      this.$emit('cancel')
+    close() {
+      this.$router.go(-1)
     },
     focus() {
       if (this.$refs.wrapper) {
         this.$refs.wrapper.focus()
+      }
+    },
+  },
+  watch: {
+    opened(opened) {
+      document.body.style.overflow = opened ? 'hidden' : 'auto'
+      if (opened) {
+        this.$nextTick(() => {
+          this.focus()
+        })
+      }
+    },
+    sheetConfigs(sheetConfigs) {
+      if (sheetConfigs.length) {
+        this.configs = sheetConfigs
       }
     },
   },
@@ -27,29 +50,33 @@ export default {
 <template>
   <div
     ref="wrapper"
-    :class="$style.wrapper"
+    tabindex="0"
+    :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="cancel"
-    @click.self="cancel">
-    <div :class="$style.sheet">
-      <div :class="$style.head">
-        {{ sheetConfigs.head }}
+    @keyup.esc="close"
+    @click.self="close">
+    <transition name="fade">
+      <div :class="$style.sheet" v-show="opened">
+        <div :class="$style.head">
+          {{ sheetConfigs.head }}
+        </div>
+        <a
+          v-for="option in sheetConfigs.options"
+          :class="$style.option"
+          @click="option.click">
+          <span :class="$style.icon">
+            <icon :name="option.icon" />
+          </span>
+          <span>{{ option.text }}</span>
+        </a>
       </div>
-      <a
-        v-for="option in sheetConfigs.options"
-        :class="$style.option"
-        @click="option.click">
-        <span :class="$style.icon">
-          <icon :name="option.icon" />
-        </span>
-        <span>{{ option.text }}</span>
-      </a>
-    </div>
+    </transition>
+  </div>
 </template>
 
 <style module>
 @import 'css/vars.css';
-.wrapper {
+.wrapper.opened {
   position: fixed;
   top: 0;
   left: 0;
@@ -86,5 +113,13 @@ export default {
   justify-content: center;
   align-items: center;
   padding-right: .7em;
+}
+.sheet:global(.fade-enter-active),
+.sheet:global(.fade-leave-active) {  
+  transition: transform .2s ease-out;
+}
+.sheet:global(.fade-enter),
+.sheet:global(.fade-leave-active) {
+  transform: translateY(100%);
 }
 </style>
