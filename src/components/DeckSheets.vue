@@ -84,7 +84,6 @@ export default {
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
-          menu: '',
           modal: '',
           sheet: type,
         }),

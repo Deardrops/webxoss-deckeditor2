@@ -9,28 +9,19 @@ export default {
     },
   },
   data: () => ({
-    leaving: false,
+    configs: [],
   }),
   computed: {
     opened() {
-      return !!this.$route.query.sheet && !this.leaving
+      return !!this.$route.query.sheet
     },
   },
   components: {
     Icon,
   },
   methods: {
-    cancel() {
-      this.leaving = true
-    },
     close() {
-      this.leaving = false
-      this.$router.replace({
-        path: this.$route.path,
-        query: Object.assign({}, this.$route.query, {
-          sheet: '',
-        }),
-      })
+      this.$router.go(-1)
     },
     focus() {
       if (this.$refs.wrapper) {
@@ -47,6 +38,11 @@ export default {
         })
       }
     },
+    sheetConfigs(sheetConfigs) {
+      if (sheetConfigs.length) {
+        this.configs = sheetConfigs
+      }
+    },
   },
 }
 </script>
@@ -57,19 +53,16 @@ export default {
     tabindex="0"
     :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="cancel"
-    @click.self="cancel">
-    <div :class="$style.sheet">
-      <a
-        v-for="item in sheetConfigs"
-        :class="$style.item"
-        @click="item.click">
-        <span :class="$style.icon">
-          <icon :name="item.icon" />
-        </span>
-        <span>{{ item.text }}</span>
-      </a>
-    </div>
+    @keyup.esc="close"
+    @click.self="close">
+    <transition name="fade">
+      <ul :class="$style.sheet" v-show="opened">
+        <li v-for="item in configs" :class="$style.item" @click="item.click">
+          {{ item.text }}
+        </li>
+      </ul>
+    </transition>
+  </div>
 </template>
 
 <style module>
@@ -97,10 +90,12 @@ export default {
   font-size: 1.5em;
   cursor: pointer;
 }
-.icon {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  padding-right: .7em;
+.sheet:global(.fade-enter-active),
+.sheet:global(.fade-leave-active) {  
+  transition: transform .2s ease-out;
+}
+.sheet:global(.fade-enter),
+.sheet:global(.fade-leave-active) {
+  transform: translateY(100%);
 }
 </style>
