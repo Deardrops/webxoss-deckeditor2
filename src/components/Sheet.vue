@@ -6,13 +6,36 @@ export default {
       require: true,
     },
   },
+  data: () => ({
+    configs: [],
+  }),
+  computed: {
+    opened() {
+      return !!this.$route.query.sheet
+    },
+  },
   methods: {
-    cancel() {
-      this.$emit('cancel')
+    close() {
+      this.$router.go(-1)
     },
     focus() {
       if (this.$refs.wrapper) {
         this.$refs.wrapper.focus()
+      }
+    },
+  },
+  watch: {
+    opened(opened) {
+      document.body.style.overflow = opened ? 'hidden' : 'auto'
+      if (opened) {
+        this.$nextTick(() => {
+          this.focus()
+        })
+      }
+    },
+    sheetConfigs(sheetConfigs) {
+      if (sheetConfigs.length) {
+        this.configs = sheetConfigs
       }
     },
   },
@@ -22,20 +45,24 @@ export default {
 <template>
   <div
     ref="wrapper"
-    :class="$style.wrapper"
+    tabindex="0"
+    :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="cancel"
-    @click.self="cancel">
-    <div :class="$style.sheet">
-      <div v-for="item in sheetConfigs" :class="$style.item">
-        <a @click="item.click">{{ item.text }}</a>
-      </div>
-    </div>
+    @keyup.esc="close"
+    @click.self="close">
+    <transition name="fade">
+      <ul :class="$style.sheet" v-show="opened">
+        <li v-for="item in configs" :class="$style.item" @click="item.click">
+          {{ item.text }}
+        </li>
+      </ul>
+    </transition>
+  </div>
 </template>
 
 <style module>
 @import 'css/vars.css';
-.wrapper {
+.wrapper.opened {
   position: fixed;
   top: 0;
   left: 0;
@@ -55,5 +82,13 @@ export default {
   padding: .5em 1em;
   font-size: 1.5em;
   cursor: pointer;
+}
+.sheet:global(.fade-enter-active),
+.sheet:global(.fade-leave-active) {  
+  transition: transform .2s ease-out;
+}
+.sheet:global(.fade-enter),
+.sheet:global(.fade-leave-active) {
+  transform: translateY(100%);
 }
 </style>

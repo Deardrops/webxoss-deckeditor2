@@ -21,9 +21,6 @@ export default {
     deckFileHref() {
       return `data:text/plain;base64,${window.btoa(this.deckFileJson)}`
     },
-    shown() {
-      return this.sheetConfigs.length
-    },
     sheetConfigs() {
       return {
         'import': [{
@@ -76,17 +73,8 @@ export default {
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
-          menu: '',
           modal: '',
           sheet: type,
-        }),
-      })
-    },
-    close() {
-      this.$router.replace({
-        path: this.$route.path,
-        query: Object.assign({}, this.$route.query, {
-          sheet: '',
         }),
       })
     },
@@ -103,16 +91,6 @@ export default {
       return false
     },
   },
-  watch: {
-    shown(shown) {
-      document.body.style.overflow = shown ? 'hidden' : 'auto'
-      if (shown) {
-        this.$nextTick(() => {
-          this.$refs.sheet.focus()
-        })
-      }
-    },
-  },
 }
 </script>
 
@@ -120,9 +98,7 @@ export default {
   <div>
     <sheet 
       ref="sheet"
-      v-show="shown"
-      :sheetConfigs="sheetConfigs"
-      @cancel="close"/>
+      :sheetConfigs="sheetConfigs"/>
     <input
       type="file"
       ref="input"
