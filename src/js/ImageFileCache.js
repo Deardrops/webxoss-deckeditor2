@@ -76,32 +76,21 @@ const cache = (pid, blob) => {
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  let open = indexedDB.open('card images', 2)
-  // open.onupgradeneeded = function () {
-  //   let objectStore = this.result.createObjectStore('images', {
-  //     keyPath: 'pid',
-  //   })
-  //   objectStore.createIndex('date', 'date', {
-  //     unique: false,
-  //   })
-  //   objectStore.createIndex('blob', 'blob', {
-  //     unique: true,
-  //   })
-  // }
-  open.onsuccess = function () {
-    let objectStore = this.result
-      .transaction(['images'], 'readwrite')
-      .objectStore('images')
-    objectStore.count().onsuccess = function() {
-      keepDbSize(this.result, objectStore).then(() => {
-        objectStore.add({
-          pid,
-          blob,
-          date: Date.now(),
+  indexedDB.open('card images', 2)
+    .onsuccess = function () {
+      let objectStore = this.result
+        .transaction(['images'], 'readwrite')
+        .objectStore('images')
+      objectStore.count().onsuccess = function() {
+        keepDbSize(this.result, objectStore).then(() => {
+          objectStore.add({
+            pid,
+            blob,
+            date: Date.now(),
+          })
         })
-      })
+      }
     }
-  }
 }
 const updateRecentUse = (pid) => {
   indexedDB.open('card images', 2)
@@ -143,8 +132,8 @@ const readAll = () => {
     let open = indexedDB.open('card images', 2)
     open.onupgradeneeded = function () {
       let db = this.result
-      if ('images' === db.objectStoreNames[0]) {
-        db.deleteObject('images')
+      if (db.objectStoreNames.contains('images')) {
+        db.deleteObjectStore('images')
       }
       let objectStore = db.createObjectStore('images', {keyPath: 'pid'})
       objectStore.createIndex('date', 'date', {
