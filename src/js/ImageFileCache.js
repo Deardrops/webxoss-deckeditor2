@@ -76,21 +76,83 @@ const cache = (pid, blob) => {
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  let open = indexedDB.open('card images', 1)
-  open.onupgradeneeded = function () {
-    this.result.createObjectStore('images')
-  }
+  let open = indexedDB.open('card images', 2)
+  // open.onupgradeneeded = function () {
+  //   let objectStore = this.result.createObjectStore('images', {
+  //     keyPath: 'pid',
+  //   })
+  //   objectStore.createIndex('date', 'date', {
+  //     unique: false,
+  //   })
+  //   objectStore.createIndex('blob', 'blob', {
+  //     unique: true,
+  //   })
+  // }
   open.onsuccess = function () {
-    let db = this.result
-    db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
+    let objectStore = this.result
+      .transaction(['images'], 'readwrite')
+      .objectStore('images')
+    objectStore.count().onsuccess = function() {
+      keepDbSize(this.result, objectStore).then(() => {
+        objectStore.add({
+          pid,
+          blob,
+          date: Date.now(),
+        })
+      })
+    }
   }
+}
+const updateRecentUse = (pid) => {
+  indexedDB.open('card images', 2)
+    .onsuccess = function () {
+      let objectStore = this.result
+        .transaction(['images'], 'readwrite')
+        .objectStore('images')
+      objectStore.get(pid).onsuccess = function () {
+        let data = this.result
+        if (!data) {
+          return
+        }
+        data.date = Date.now()
+        objectStore.put(data)
+      }
+    }
+}
+const keepDbSize = (count, objectStore) => {
+  let limit = 50 //test use
+  let deleteCount = parseInt(limit * 0.1)
+  return new Promise(resolve => {
+    if (count > limit) {
+      objectStore.index('date').openCursor().onsuccess = function () {
+        let cursor = this.result
+        if (!cursor || deleteCount < 0) {
+          return resolve()
+        }
+        objectStore.delete(cursor.value.pid)
+        deleteCount--
+        cursor.continue()
+      }
+    }
+    resolve()
+  })
 }
 // Read all images form DB to cached blob urls.
 const readAll = () => {
   return new Promise(resolve => {
-    let open = indexedDB.open('card images', 1)
+    let open = indexedDB.open('card images', 2)
     open.onupgradeneeded = function () {
-      this.result.createObjectStore('images')
+      let db = this.result
+      if ('images' === db.objectStoreNames[0]) {
+        db.deleteObject('images')
+      }
+      let objectStore = db.createObjectStore('images', {keyPath: 'pid'})
+      objectStore.createIndex('date', 'date', {
+        unique: false,
+      })
+      objectStore.createIndex('blob', 'blob', {
+        unique: true,
+      })
     }
     open.onsuccess = function () {
       let db = this.result
@@ -103,7 +165,7 @@ const readAll = () => {
           return resolve()
         }
         let pid = cursor.key
-        let blob = cursor.value
+        let blob = cursor.value.blob
         let url = window.URL.createObjectURL(blob)
         urlMap[pid] = url
         cursor.continue()
@@ -116,6 +178,7 @@ const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
+    updateRecentUse(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
