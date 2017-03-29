@@ -76,75 +76,116 @@ const cache = (pid, blob) => {
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  indexedDB.open('card images', 2)
-    .onsuccess = function () {
-      let objectStore = this.result
-        .transaction(['images'], 'readwrite')
-        .objectStore('images')
-      objectStore.count().onsuccess = function() {
-        keepDbSize(this.result, objectStore).then(() => {
-          objectStore.add({
-            pid,
-            blob,
-            date: Date.now(),
-          })
-        })
-      }
-    }
-}
-const updateRecentUse = (pid) => {
-  indexedDB.open('card images', 2)
-    .onsuccess = function () {
-      let objectStore = this.result
-        .transaction(['images'], 'readwrite')
-        .objectStore('images')
-      objectStore.get(pid).onsuccess = function () {
-        let data = this.result
-        if (!data) {
-          return
-        }
-        data.date = Date.now()
-        objectStore.put(data)
-      }
-    }
-}
-const keepDbSize = (count, objectStore) => {
-  let limit = 50 //test use
-  let deleteCount = parseInt(limit * 0.1)
-  return new Promise(resolve => {
-    if (count > limit) {
-      objectStore.index('date').openCursor().onsuccess = function () {
-        let cursor = this.result
-        if (!cursor || deleteCount < 0) {
-          return resolve()
-        }
-        objectStore.delete(cursor.value.pid)
-        deleteCount--
-        cursor.continue()
-      }
-    }
-    resolve()
+
+  checkSize().then(() => {
+    openStore('images', 'records')
+    .then(([imagesStore, recordsStore]) => {
+      imagesStore.add(blob, pid)
+      recordsStore.add({
+        pid,
+        date: Date.now(),
+      })
+    })
   })
 }
+const openStore = (...names) => {
+  return new Promise(resolve => {
+    indexedDB.open('card images', 2)
+    .onsuccess = function () {
+      return resolve(names.map(name => this.result
+        .transaction([name], 'readwrite')
+        .objectStore(name)
+      ))
+    }
+  })
+}
+
+const checkSize = () => {
+  let limit = 100 // test use
+  let deleteCount = parseInt(limit * 0.1)
+  return new Promise(resolve => {
+    openStore('images').then(([imagesStore]) => {
+      imagesStore.count().onsuccess = function() {
+        if (this.result > limit) {
+          openStore('records').then(([recordsStore]) => {
+            let pids = []
+            new Promise(resolve => {
+              recordsStore.index('date')
+              .openCursor().onsuccess = function () {
+                let cursor = this.result
+                if (!cursor || deleteCount < 0) {
+                  return resolve(pids)
+                }
+                pids.push(cursor.value.pid)
+                deleteCount--
+                cursor.continue()
+              }
+            }).then(pids => {
+              openStore('images', 'records')
+              .then(([imagesStore, recordsStore]) => {
+                pids.forEach(pid => {
+                  imagesStore.delete(pid)
+                  recordsStore.delete(pid)
+                })
+              })
+            })
+          })
+        } else {
+          resolve()
+        }
+      }
+    })
+  })
+}
+const initRecord = () => {
+  new Promise(resolve => {
+    openStore('images').then(([imagesStore]) => {
+      let pids = []
+      imagesStore.openCursor().onsuccess = function () {
+        let cursor = this.result
+        if (!cursor) {
+          return resolve(pids)
+        }
+        pids.push(cursor.key)
+        cursor.continue()
+      }
+    })
+  }).then(pids => {
+    openStore('records').then(([recordsStore]) => {
+      pids.forEach(pid => {
+        recordsStore.put({
+          pid,
+          date: Date.now(),
+        })
+      })
+    })
+  })
+}
+
 // Read all images form DB to cached blob urls.
 const readAll = () => {
   return new Promise(resolve => {
+    let initRecordNeeded = false
     let open = indexedDB.open('card images', 2)
     open.onupgradeneeded = function () {
       let db = this.result
-      if (db.objectStoreNames.contains('images')) {
-        db.deleteObjectStore('images')
+      if (!db.objectStoreNames.contains('images')) {
+        db.createObjectStore('images')
+      } else {
+        // upgrade from version 1 to 2
+        initRecordNeeded = true
       }
-      let objectStore = db.createObjectStore('images', {keyPath: 'pid'})
-      objectStore.createIndex('date', 'date', {
+      db.createObjectStore('records', {
+        keyPath: 'pid',
+      }).createIndex('date', 'date', {
         unique: false,
-      })
-      objectStore.createIndex('blob', 'blob', {
-        unique: true,
       })
     }
     open.onsuccess = function () {
       let db = this.result
+      if (initRecordNeeded) {
+        initRecord()
+      }
       db.transaction(['images'])
       .objectStore('images')
       .openCursor()
@@ -154,7 +195,7 @@ const readAll = () => {
           return resolve()
         }
         let pid = cursor.key
-        let blob = cursor.value.blob
+        let blob = cursor.value
         let url = window.URL.createObjectURL(blob)
         urlMap[pid] = url
         cursor.continue()
@@ -162,7 +203,18 @@ const readAll = () => {
     }
   })
 }
-
+const updateRecentUse = (pid) => {
+  openStore('records').then(([recordsStore]) => {
+    recordsStore.get(pid).onsuccess = function () {
+      let data = this.result
+      if (!data) {
+        return
+      }
+      data.date = Date.now()
+      recordsStore.put(data)
+    }
+  })
+}
 const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
@@ -199,3 +251,17 @@ const ImageFileCache = {
 }
 
 export default ImageFileCache
+
+// test use
+window.showCount = () => {
+  openStore('images', 'records')
+  .then(([imagesStore, recordsStore]) => {
+    imagesStore.count().onsuccess = function() {
+      console.log('image count:' + this.result)
+    }
+    recordsStore.count().onsuccess = function() {
+      console.log('record count:' + this.result)
+    }
+    console.log('urlMap count:'+ Object.values(urlMap).length)
+  })
+}
