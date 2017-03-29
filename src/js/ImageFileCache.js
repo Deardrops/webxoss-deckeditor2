@@ -71,23 +71,7 @@ let urlMap = {}
 let fetchingMap = {}
 
 /* private methods */
-const cache = (pid, blob) => {
-  if (!ImageFileCache.supportBlob) return
-  if (pid in urlMap) return
-  let url = window.URL.createObjectURL(blob)
-  urlMap[pid] = url
-
-  checkSize().then(() => {
-    openStore('images', 'records')
-    .then(([imagesStore, recordsStore]) => {
-      imagesStore.add(blob, pid)
-      recordsStore.add({
-        pid,
-        date: Date.now(),
-      })
-    })
-  })
-}
+// open stores with specific names
 const openStore = (...names) => {
   return new Promise(resolve => {
     indexedDB.open('card images', 2)
@@ -99,10 +83,11 @@ const openStore = (...names) => {
     }
   })
 }
-
+// delete img blob from indexedDB if too big
+// eliminate cards by LRU (least recently used) algorithm
 const checkSize = () => {
   let limit = 100 // test use
-  let deleteCount = parseInt(limit * 0.1)
+  let deleteCount = Math.ceil(limit * 0.1)
   return new Promise(resolve => {
     openStore('images').then(([imagesStore]) => {
       imagesStore.count().onsuccess = function() {
@@ -131,12 +116,32 @@ const checkSize = () => {
             })
           })
         } else {
+          // if not reach amount limit, do nothing
           resolve()
         }
       }
     })
   })
 }
+const cache = (pid, blob) => {
+  if (!ImageFileCache.supportBlob) return
+  if (pid in urlMap) return
+  let url = window.URL.createObjectURL(blob)
+  urlMap[pid] = url
+
+  checkSize().then(() => {
+    openStore('images', 'records')
+    .then(([imagesStore, recordsStore]) => {
+      imagesStore.add(blob, pid)
+      recordsStore.add({
+        pid,
+        date: Date.now(),
+      })
+    })
+  })
+}
+// when upgrade from version 1 to 2
+// init records in pids by images in DB
 const initRecord = () => {
   new Promise(resolve => {
     openStore('images').then(([imagesStore]) => {
@@ -203,7 +208,9 @@ const readAll = () => {
     }
   })
 }
-const updateRecentUse = (pid) => {
+// when access one img blob in DB,
+// update its recently used date in DB
+const updateRecentUsedDate = (pid) => {
   openStore('records').then(([recordsStore]) => {
     recordsStore.get(pid).onsuccess = function () {
       let data = this.result
@@ -219,7 +226,7 @@ const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
-    updateRecentUse(pid)
+    updateRecentUsedDate(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
