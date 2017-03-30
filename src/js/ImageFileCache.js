@@ -68,29 +68,39 @@ const wait = timeout => {
 }
 
 // test use
-window.showCount = () => {
-  console.log(cacheManager.usedQueue.length)
+window.showCacheCount = () => {
+  console.log(cacheManager.usedQueue.length + ' in usedQueue')
   indexedDB.open('card images', 1).onsuccess = function () {
     this.result
     .transaction(['images'], 'readwrite')
     .objectStore('images')
     .count().onsuccess = function() {
-      console.log('image count:' + this.result)
+      console.log(this.result + ' in indexedDB')
     }
   }
 }
+// manage image cache in indexedDB by LRU 最近最久未使用算法
 const cacheManager = {
   usedQueue: [],
   limit: 100, // test use
+  deleteCount: 10,
   update(pid) {
+    // remove pid if it already in usedQueue, then add it to the tail of usedQueue
     _.pull(this.usedQueue, pid)
     this.usedQueue.push(pid)
     localStorage.setItem('usedQueue', JSON.stringify(this.usedQueue))
   },
   checkSize() {
+    // for keeping indexedDB's size (used storage)
+    // delete some images and free the space
     let count = this.usedQueue.length - this.limit
-    if (count > Math.ceil(this.limit * 0.1)) {
+    if (count > this.deleteCount) {
+      // delete some items from the head of usedQueue
       let pids = this.usedQueue.splice(0, count)
+
+      // due to the operation to indexedDB is mutually-exclusive (互斥的)
+      // use Promise to ensure that dealing with transaction one by one
+      // here: delete some cards, and then add one cards to DB
       return new Promise(resolve => {
         indexedDB.open('card images', 1).onsuccess = function () {
           let objectStore = this.result
@@ -159,8 +169,14 @@ const readAll = () => {
         let pid = cursor.key
         let blob = cursor.value
         let url = window.URL.createObjectURL(blob)
-        cacheManager.update(pid)
         urlMap[pid] = url
+
+        // add new images (added by old webxoss page) to cacheManager
+        // images already in usedQueue will not be updated
+        if (!cacheManager.usedQueue.includes(pid)) {
+          cacheManager.update(pid)
+        }
+
         cursor.continue()
       }
     }
