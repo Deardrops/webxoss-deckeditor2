@@ -1,3 +1,4 @@
+import _ from 'lodash'
 // Check IndexedDB support.
 // https://bl.ocks.org/nolanlawson/8a2ead46a184c9fae231
 const checkIndexedDBSupport = () => {
@@ -66,6 +67,56 @@ const wait = timeout => {
   })
 }
 
+// test use
+window.showCount = () => {
+  console.log(cacheManager.usedQueue.length)
+  indexedDB.open('card images', 1).onsuccess = function () {
+    this.result
+    .transaction(['images'], 'readwrite')
+    .objectStore('images')
+    .count().onsuccess = function() {
+      console.log('image count:' + this.result)
+    }
+  }
+}
+const cacheManager = {
+  usedQueue: [],
+  limit: 100, // test use
+  update(pid) {
+    _.pull(this.usedQueue, pid)
+    this.usedQueue.push(pid)
+    localStorage.setItem('usedQueue', JSON.stringify(this.usedQueue))
+  },
+  checkSize() {
+    let count = this.usedQueue.length - this.limit
+    if (count > Math.ceil(this.limit * 0.1)) {
+      let pids = this.usedQueue.splice(0, count)
+      return new Promise(resolve => {
+        indexedDB.open('card images', 1).onsuccess = function () {
+          let objectStore = this.result
+          .transaction(['images'], 'readwrite')
+          .objectStore('images')
+          Promise.all(pids.map(pid => {
+            return new Promise(resolve => {
+              objectStore.delete(pid).onsuccess = function () {
+                resolve()
+              }
+            })
+          })).then(() => {
+            resolve()
+          })
+        }
+      })
+    } else {
+      return Promise.resolve()
+    }
+  },
+  init() {
+    let usedQueueJson = localStorage.getItem('usedQueue')
+    this.usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
+  },
+}
+
 /* locals */
 let urlMap = {}
 let fetchingMap = {}
@@ -76,17 +127,20 @@ const cache = (pid, blob) => {
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  let open = indexedDB.open('card images', 1)
-  open.onupgradeneeded = function () {
-    this.result.createObjectStore('images')
-  }
-  open.onsuccess = function () {
-    let db = this.result
-    db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
-  }
+  cacheManager.checkSize().then(() => {
+    let open = indexedDB.open('card images', 1)
+    open.onupgradeneeded = function () {
+      this.result.createObjectStore('images')
+    }
+    open.onsuccess = function () {
+      let db = this.result
+      db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
+    }
+  })
 }
 // Read all images form DB to cached blob urls.
 const readAll = () => {
+  cacheManager.init()
   return new Promise(resolve => {
     let open = indexedDB.open('card images', 1)
     open.onupgradeneeded = function () {
@@ -105,6 +159,7 @@ const readAll = () => {
         let pid = cursor.key
         let blob = cursor.value
         let url = window.URL.createObjectURL(blob)
+        cacheManager.update(pid)
         urlMap[pid] = url
         cursor.continue()
       }
@@ -116,6 +171,7 @@ const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
+    cacheManager.update(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
