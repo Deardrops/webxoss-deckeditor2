@@ -67,28 +67,19 @@ const wait = timeout => {
   })
 }
 
-// test use
-window.showCacheCount = () => {
-  console.log(cacheManager.usedQueue.length + ' in usedQueue')
-  indexedDB.open('card images', 1).onsuccess = function () {
-    this.result
-    .transaction(['images'], 'readwrite')
-    .objectStore('images')
-    .count().onsuccess = function() {
-      console.log(this.result + ' in indexedDB')
-    }
-  }
-}
+let saveQueue = _.throttle(() => {
+  localStorage.setItem('usedQueue', JSON.stringify(cacheManager.usedQueue))
+}, 1000)
 // manage image cache in indexedDB by LRU 最近最久未使用算法
 const cacheManager = {
   usedQueue: [],
-  limit: 100, // test use
-  deleteCount: 10,
+  limit: 1000,
+  deleteCount: 100,
   update(pid) {
     // remove pid if it already in usedQueue, then add it to the tail of usedQueue
     _.pull(this.usedQueue, pid)
     this.usedQueue.push(pid)
-    localStorage.setItem('usedQueue', JSON.stringify(this.usedQueue))
+    saveQueue()
   },
   checkSize() {
     // for keeping indexedDB's size (used storage)
@@ -114,16 +105,13 @@ const cacheManager = {
             })
           })).then(() => {
             resolve()
+            saveQueue()
           })
         }
       })
     } else {
       return Promise.resolve()
     }
-  },
-  init() {
-    let usedQueueJson = localStorage.getItem('usedQueue')
-    this.usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
   },
 }
 
@@ -150,7 +138,8 @@ const cache = (pid, blob) => {
 }
 // Read all images form DB to cached blob urls.
 const readAll = () => {
-  cacheManager.init()
+  let usedQueueJson = localStorage.getItem('usedQueue')
+  cacheManager.usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
   return new Promise(resolve => {
     let open = indexedDB.open('card images', 1)
     open.onupgradeneeded = function () {
