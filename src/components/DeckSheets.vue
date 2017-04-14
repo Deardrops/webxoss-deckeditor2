@@ -157,10 +157,6 @@ export default {
   left: 0;
   width: 2em;
   height: 2em;
-  padding: 0;
-  border: none;
-  outline: none;
-  box-shadow: none;
-  background: transparent;
+  opacity: 0;
 }
 </style>
