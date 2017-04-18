@@ -12,9 +12,6 @@ let noImage = newImage(require('media/noImage.jpg'))
 // let white = newImage(require('media/WIXOSS_WHITE.jpg'))
 
 export const getUrlByPid = pid => {
-  if (CardInfo[pid].wxbid) {
-    return './images/WXB/' + CardInfo[pid].wxbid + '.jpg'
-  }
   let url = ImageFileCache.getUrlByPid(pid)
   if (url) {
     return url
