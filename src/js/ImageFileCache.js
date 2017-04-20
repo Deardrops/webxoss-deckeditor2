@@ -16,7 +16,7 @@ const checkIndexedDBSupport = () => {
   return new Promise(resolve => {
     let req = indexedDB.open('test', 1)
     req.onerror = () => resolve(false)
-    req.onupgradeneeded = function(event) {
+    req.onupgradeneeded = function (event) {
       let db = event.target.result
       db.createObjectStore('one', {
         keyPath: 'key',
@@ -25,7 +25,7 @@ const checkIndexedDBSupport = () => {
         keyPath: 'key',
       })
     }
-    req.onsuccess = function(event) {
+    req.onsuccess = function (event) {
       let db = event.target.result
       let tx = null
       try {
@@ -36,7 +36,7 @@ const checkIndexedDBSupport = () => {
       tx.objectStore('two').put({
         'key': Date.now(),
       })
-      tx.oncomplete = function() {
+      tx.oncomplete = function () {
         db.close()
         resolve(true)
       }
@@ -67,47 +67,47 @@ const wait = timeout => {
   })
 }
 
+/* Cache Manager */
 let saveQueue = _.throttle(() => {
-  localStorage.setItem('usedImgQueue', JSON.stringify(cacheManager.usedQueue))
+  localStorage.setItem('usedImgQueue', JSON.stringify(usedQueue))
 }, 1000)
-// Manage image cache in indexedDB by LRU
-const cacheManager = {
-  usedQueue: [],
-  limit: 1000,
-  deleteCount: 100,
-  update(pid) {
-    // remove pid if it already in usedQueue, then add it to the tail of usedQueue
-    _.pull(this.usedQueue, pid)
-    this.usedQueue.push(pid)
-    saveQueue()
-  },
-  freeDbNeeded() {
-    return this.usedQueue.length - this.limit > this.deleteCount
-  },
-  freeDb() {
-    // delete some items from the head of usedQueue
-    let count = this.usedQueue.length - this.limit
-    let pids = this.usedQueue.splice(0, count)
 
-    return new Promise(resolve => {
-      indexedDB.open('card images', 1).onsuccess = function() {
-        let objectStore = this.result
-          .transaction(['images'], 'readwrite')
-          .objectStore('images')
-        Promise.all(pids.map(pid => {
-          return new Promise(resolve => {
-            objectStore.delete(pid).onsuccess = function() {
-              resolve()
-            }
-          })
-        })).then(() => {
-          saveQueue()
-          resolve()
-        })
-      }
-    })
-  },
+// Manage cached image blob in indexedDB
+// use LRU to delete unused images
+let usedQueue = []
+// add / move pid to the tail of usedQueue
+const update = (pid) => {
+  _.pull(usedQueue, pid)
+  usedQueue.push(pid)
+  saveQueue()
 }
+
+let limit = 1000
+let deleteCount = 100
+const deleteSomeCardsNeeded = () => {
+  return usedQueue.length - limit > deleteCount
+}
+const deleteSomeCards = (pids) => {
+  return new Promise(resolve => {
+    indexedDB.open('card images', 1).onsuccess = function () {
+      let objectStore = this.result
+        .transaction(['images'], 'readwrite')
+        .objectStore('images')
+      // Delete some cards asynchronously
+      Promise.all(pids.map(pid => {
+        return new Promise(resolve => {
+          objectStore.delete(pid).onsuccess = function () {
+            resolve()
+          }
+        })
+      })).then(() => {
+        saveQueue()
+        resolve()
+      })
+    }
+  })
+}
+
 
 /* locals */
 let urlMap = {}
@@ -116,10 +116,10 @@ let fetchingMap = {}
 /* private methods */
 const saveImageBlob = (pid, blob) => {
   let open = indexedDB.open('card images', 1)
-  open.onupgradeneeded = function() {
+  open.onupgradeneeded = function () {
     this.result.createObjectStore('images')
   }
-  open.onsuccess = function() {
+  open.onsuccess = function () {
     let db = this.result
     db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
   }
@@ -129,8 +129,14 @@ const cache = (pid, blob) => {
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  if (cacheManager.freeDbNeeded()) {
-    cacheManager.freeDb().then(() => {
+  if (deleteSomeCardsNeeded()) {
+    let pids = usedQueue.splice(0, usedQueue.length - limit)
+    pids.forEach(pid => {
+      if (pid in urlMap) {
+        delete urlMap[pid]
+      }
+    })
+    deleteSomeCards(pids).then(() => {
       saveImageBlob(pid, blob)
     })
   } else {
@@ -140,18 +146,18 @@ const cache = (pid, blob) => {
 // Read all images form DB to cached blob urls.
 const readAll = () => {
   let usedQueueJson = localStorage.getItem('usedQueue')
-  cacheManager.usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
+  usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
   return new Promise(resolve => {
     let open = indexedDB.open('card images', 1)
-    open.onupgradeneeded = function() {
+    open.onupgradeneeded = function () {
       this.result.createObjectStore('images')
     }
-    open.onsuccess = function() {
+    open.onsuccess = function () {
       let db = this.result
       db.transaction(['images'])
         .objectStore('images')
         .openCursor()
-        .onsuccess = function() {
+        .onsuccess = function () {
           let cursor = this.result
           if (!cursor) {
             return resolve()
@@ -161,10 +167,10 @@ const readAll = () => {
           let url = window.URL.createObjectURL(blob)
           urlMap[pid] = url
 
-          // add new images (added by old webxoss page) to cacheManager
-          // images already in usedQueue will not be updated
-          if (!cacheManager.usedQueue.includes(pid)) {
-            cacheManager.update(pid)
+          // If some cards added to indexedDB by old webxoss,
+          // add those cards to usedQueue
+          if (!usedQueue.includes(pid)) {
+            update(pid)
           }
 
           cursor.continue()
@@ -177,17 +183,17 @@ const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
-    cacheManager.update(pid)
+    update(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
     if (!this.supportBlob) return
     if (fetchingMap[pid]) return
     fetchingMap[pid] = true
-    get(url, 'blob', function(xhr) {
+    get(url, 'blob', function (xhr) {
       let blob = xhr.response
       cache(pid, blob)
-    }, function() {
+    }, function () {
       fetchingMap[pid] = false
     })
   },
