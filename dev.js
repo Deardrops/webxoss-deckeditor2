@@ -25,5 +25,6 @@ app.use('/images', express.static('./images'))
 app.use('/background', express.static('./background'))
 app.use('/', express.static('./src'))
 app.use('/dist', express.static('./dist'))
+app.use('/lang', express.static('./lang'))
 
 module.exports = app.listen(8080)

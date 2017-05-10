@@ -14,7 +14,8 @@ let maps = {
 
 // add language suffix to string
 const suff = str => {
-  return str + Localize.getMap().suffix
+  return str
+  // return str + Localize.getMap().suffix
 }
 
 // replace `%s` with args

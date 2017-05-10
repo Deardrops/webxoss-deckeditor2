@@ -160,6 +160,16 @@ const mutations = {
       lang = 'zh_Hant'
     }
     state.localization.lang = lang
+    let langMaps = {
+      'zh_Hans': window.CardInfo_zh,
+      'zh_Hant': window.CardInfo_zh,
+      'en': window.CardInfo_en,
+      'jp': window.CardInfo_jp,
+      'ko': window.CardInfo_ko,
+      'ru': window.CardInfo_ru,
+      'it': window.CardInfo_it,
+    }
+    window.CardInfo = langMaps[lang]
   },
 }
 
