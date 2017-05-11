@@ -20,7 +20,10 @@ TextualRule.prototype.parse = function(words) {
   return function filter(info) {
     if (!keywords.length) return true
     return keywords.some(function(keyword) {
-      let value = info[prop].toLowerCase()
+      if (info[prop] && typeof info[prop] !== 'string') {
+        info[prop] = true
+      }
+      let value = ('' + info[prop]).toLowerCase()
       if (exact) {
         return value === keyword
       } else {
@@ -43,10 +46,10 @@ TextualRule.prototype.parseWord = function(word) {
   ///////////////////////////////////////////////////////////////
   //
   //  枚举型规则,包括:
-  //    ColorRule,TypeRule,RarityRule
+  //    ColorRule,TypeRule,RarityRule,RiseRule,TrapRule,AcceRule
   //  匹配例子:
   //    "白 LRIG SR 红"
-  //    "白色 精灵 lr red"
+  //    "白色 精灵 lr red rise"
   //
   ///////////////////////////////////////////////////////////////
 let ColorRule = new TextualRule('color', {
@@ -74,7 +77,15 @@ let RarityRule = new TextualRule('rarity', {
   'pr': ['pr'],
   'sp': ['sp'],
 }, true)
-
+let RiseRule = new TextualRule('rise', {
+  'true': ['rise', '升阶', 'ライズ'],
+}, true)
+let TrapRule = new TextualRule('trap', {
+  'true': ['trap', '陷阱', '陷阱标记', 'トラップ'],
+}, true)
+let AcceRule = new TextualRule('acce', {
+  'true': ['acce', 'accessory', '附属', 'アクセ'],
+}, true)
 ///////////////////////////////////////////////////////////////
 //
 //  效果(能力)型规则:
@@ -279,6 +290,7 @@ LimitingRule.parse = function(words) {
       'タマ', '花代', 'ユヅキ', 'ピルルク', 'エルドラ', 'ミルルン', '緑子',
       'アン', 'ウリス', 'イオナ', 'ウムル', 'リメンバ', 'タウィル', 'サシェ',
       'ミュウ', 'アイヤイ', 'アルフォウ', 'ハナレ',
+      'あや', 'ナナシ', 'ドーナ', 'ママ',
     ]
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
@@ -329,6 +341,7 @@ ClassRule.parse = function(words) {
       '精像', '天使', '悪魔', '美巧', '精武', 'アーム', 'ウェポン', '遊具',
       '毒牙', '精羅', '鉱石', '宝石', '植物', '原子', '宇宙', '精械', '電機',
       '古代兵器', '迷宮', '精生', '水獣', '空獣', '地獣', '龍獣', '凶蟲', '精元',
+      'トリック', '英知', '微菌', '怪異',
     ]
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
@@ -597,6 +610,9 @@ export default [
   CrossRule,
   TypeRule,
   RarityRule,
+  RiseRule,
+  TrapRule,
+  AcceRule,
   SkillRule,
   NoBurstRule,
   // LifeBurstRule,
