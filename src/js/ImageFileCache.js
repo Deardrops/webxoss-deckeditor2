@@ -71,29 +71,126 @@ let urlMap = {}
 let fetchingMap = {}
 
 /* private methods */
+// open stores with specific names
+const openStore = (...names) => {
+  return new Promise(resolve => {
+    indexedDB.open('card images', 2)
+    .onsuccess = function () {
+      return resolve(names.map(name => this.result
+        .transaction([name], 'readwrite')
+        .objectStore(name)
+      ))
+    }
+  })
+}
+// delete img blob from indexedDB if too big
+// eliminate cards by LRU (least recently used) algorithm
+const checkSize = () => {
+  let limit = 100 // test use
+  let deleteCount = Math.ceil(limit * 0.1)
+  return new Promise(resolve => {
+    openStore('images').then(([imagesStore]) => {
+      imagesStore.count().onsuccess = function() {
+        if (this.result > limit) {
+          openStore('records').then(([recordsStore]) => {
+            let pids = []
+            new Promise(resolve => {
+              recordsStore.index('date')
+              .openCursor().onsuccess = function () {
+                let cursor = this.result
+                if (!cursor || deleteCount < 0) {
+                  return resolve(pids)
+                }
+                pids.push(cursor.value.pid)
+                deleteCount--
+                cursor.continue()
+              }
+            }).then(pids => {
+              openStore('images', 'records')
+              .then(([imagesStore, recordsStore]) => {
+                pids.forEach(pid => {
+                  imagesStore.delete(pid)
+                  recordsStore.delete(pid)
+                })
+              })
+            })
+          })
+        } else {
+          // if not reach amount limit, do nothing
+          resolve()
+        }
+      }
+    })
+  })
+}
 const cache = (pid, blob) => {
   if (!ImageFileCache.supportBlob) return
   if (pid in urlMap) return
   let url = window.URL.createObjectURL(blob)
   urlMap[pid] = url
-  let open = indexedDB.open('card images', 1)
-  open.onupgradeneeded = function () {
-    this.result.createObjectStore('images')
-  }
-  open.onsuccess = function () {
-    let db = this.result
-    db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
-  }
+
+  checkSize().then(() => {
+    openStore('images', 'records')
+    .then(([imagesStore, recordsStore]) => {
+      imagesStore.add(blob, pid)
+      recordsStore.add({
+        pid,
+        date: Date.now(),
+      })
+    })
+  })
 }
+// when upgrade from version 1 to 2
+// init records in pids by images in DB
+const initRecord = () => {
+  new Promise(resolve => {
+    openStore('images').then(([imagesStore]) => {
+      let pids = []
+      imagesStore.openCursor().onsuccess = function () {
+        let cursor = this.result
+        if (!cursor) {
+          return resolve(pids)
+        }
+        pids.push(cursor.key)
+        cursor.continue()
+      }
+    })
+  }).then(pids => {
+    openStore('records').then(([recordsStore]) => {
+      pids.forEach(pid => {
+        recordsStore.put({
+          pid,
+          date: Date.now(),
+        })
+      })
+    })
+  })
+}
+
 // Read all images form DB to cached blob urls.
 const readAll = () => {
   return new Promise(resolve => {
-    let open = indexedDB.open('card images', 1)
+    let initRecordNeeded = false
+    let open = indexedDB.open('card images', 2)
     open.onupgradeneeded = function () {
-      this.result.createObjectStore('images')
+      let db = this.result
+      if (!db.objectStoreNames.contains('images')) {
+        db.createObjectStore('images')
+      } else {
+        // upgrade from version 1 to 2
+        initRecordNeeded = true
+      }
+      db.createObjectStore('records', {
+        keyPath: 'pid',
+      }).createIndex('date', 'date', {
+        unique: false,
+      })
     }
     open.onsuccess = function () {
       let db = this.result
+      if (initRecordNeeded) {
+        initRecord()
+      }
       db.transaction(['images'])
       .objectStore('images')
       .openCursor()
@@ -111,11 +208,25 @@ const readAll = () => {
     }
   })
 }
-
+// when access one img blob in DB,
+// update its recently used date in DB
+const updateRecentUsedDate = (pid) => {
+  openStore('records').then(([recordsStore]) => {
+    recordsStore.get(pid).onsuccess = function () {
+      let data = this.result
+      if (!data) {
+        return
+      }
+      data.date = Date.now()
+      recordsStore.put(data)
+    }
+  })
+}
 const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
+    updateRecentUsedDate(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
@@ -147,3 +258,17 @@ const ImageFileCache = {
 }
 
 export default ImageFileCache
+
+// test use
+window.showCount = () => {
+  openStore('images', 'records')
+  .then(([imagesStore, recordsStore]) => {
+    imagesStore.count().onsuccess = function() {
+      console.log('image count:' + this.result)
+    }
+    recordsStore.count().onsuccess = function() {
+      console.log('record count:' + this.result)
+    }
+    console.log('urlMap count:'+ Object.values(urlMap).length)
+  })
+}
