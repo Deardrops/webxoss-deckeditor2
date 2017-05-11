@@ -12,11 +12,6 @@ let maps = {
   ko: require('../lang/ko.hjson'),
 }
 
-// add language suffix to string
-const suff = str => {
-  return str + Localize.getMap().suffix
-}
-
 // replace `%s` with args
 const formatString = (str, args) => {
   for (let arg of args) {
@@ -52,13 +47,13 @@ Localize.traditionalize = str => {
 }
 
 Localize.cardName = info => {
-  return Localize.traditionalize(info[suff('name')])
+  return Localize.traditionalize(info['name'])
 }
 
 Localize.effectTexts = info => {
   info = CardInfo[info.cid]
   // extra
-  let texts = [].concat(info[suff('extraTexts')] || [])
+  let texts = [].concat(info['extraTexts'] || [])
   // guard
   if (info.guardFlag) {
     texts.push(Localize('GUARD_DESCRIPTION'))
@@ -83,14 +78,14 @@ Localize.effectTexts = info => {
     texts.push(Localize('CROSS_RIGHT', toNames(info.crossRight)))
   }
   // SPELL && ARTS
-  [suff('spellEffectTexts'), suff('artsEffectTexts')].forEach(prop => {
+  ['spellEffectTexts', 'artsEffectTexts'].forEach(prop => {
     if (!info[prop]) {
       return
     }
     texts.push(info[prop][0])
   }, this)
   // Cost, On-Play, Action
-  let tmp = [suff('constEffectTexts'), suff('startUpEffectTexts'), suff('actionEffectTexts')]
+  let tmp = ['constEffectTexts', 'startUpEffectTexts', 'actionEffectTexts']
   tmp.forEach(prop => {
     if (!info[prop]) {
       return
@@ -102,10 +97,10 @@ Localize.effectTexts = info => {
 
 Localize.burstEffectTexts = info => {
   info = CardInfo[info.cid]
-  if (!info[suff('burstEffectTexts')]) {
+  if (!info['burstEffectTexts']) {
     return '-'
   }
-  return Localize.traditionalize(info[suff('burstEffectTexts')][0])
+  return Localize.traditionalize(info['burstEffectTexts'][0])
 }
 
 Localize.guard = info => {
