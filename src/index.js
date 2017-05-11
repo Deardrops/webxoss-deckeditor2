@@ -9,7 +9,7 @@ import App from './app'
 import 'js/global'
 
 import ImageFileCache from 'js/ImageFileCache'
-import initCardInfos from 'js/CardInfoManager'
+import { initCardInfos } from 'js/CardInfoManager'
 
 initCardInfos()
 

@@ -3,7 +3,7 @@ import Vuex from 'vuex'
 import _ from 'lodash'
 import { isLrigCard } from 'js/util'
 import Localize from 'js/Localize'
-import { setCardInfo } from 'js/CardInfoManager'
+import { setLanguegeCardInfo } from 'js/CardInfoManager'
 Vue.use(Vuex)
 
 /*
@@ -161,7 +161,7 @@ const mutations = {
       lang = 'zh_Hant'
     }
     state.localization.lang = lang
-    setCardInfo(lang)
+    setLanguegeCardInfo(lang)
   },
 }
 

@@ -1,34 +1,35 @@
 import { $get } from './util'
 
-window.CardInfo_jp = Object.create(window.CardInfo)
-window.CardInfo_zh = Object.create(window.CardInfo)
-window.CardInfo_en = Object.create(window.CardInfo)
-window.CardInfo_ko = Object.create(window.CardInfo)
-window.CardInfo_ru = Object.create(window.CardInfo)
-window.CardInfo_it = Object.create(window.CardInfo)
+let CardInfo_jp = Object.create(window.CardInfo)
+let CardInfo_zh = Object.create(window.CardInfo)
+let CardInfo_en = Object.create(window.CardInfo)
+let CardInfo_ko = Object.create(window.CardInfo)
+let CardInfo_ru = Object.create(window.CardInfo)
+let CardInfo_it = Object.create(window.CardInfo)
 
-export default function initCardInfos() {
+export function initCardInfos() {
   let CardInfos = {
-    'CardInfo_zh_CN': window.CardInfo_zh,
-    'CardInfo_en': window.CardInfo_en,
-    'CardInfo_ko': window.CardInfo_ko,
-    'CardInfo_ru': window.CardInfo_ru,
+    'CardInfo_zh_CN': CardInfo_zh,
+    'CardInfo_en': CardInfo_en,
+    'CardInfo_ko': CardInfo_ko,
+    'CardInfo_ru': CardInfo_ru,
   }
 
-  let dir = location.pathname.match(/\/next\/?$/) ? '../lang/' : './lang/'
+  let dir = process.env.NODE_ENV === 'production' ? '../lang/' : './lang/'
   for (let name of Object.keys(CardInfos)) {
     $get(dir + name + '.json')
       .then(translation => {
         for (let pid in translation) {
           let tran = translation[pid]
-          let info = Object.create(window.CardInfo_jp[pid])
+          let info = Object.create(CardInfo_jp[pid])
           for (let prop in tran) {
             info[prop] = tran[prop]
           }
           info.pid = +info.pid
           CardInfos[name][pid] = info
           if (name === 'CardInfo_en') {
-            window.CardInfo_it = CardInfos[name]
+            // Italian CardInfo === English CardInfo
+            CardInfo_it = CardInfos[name]
           }
         }
       })
@@ -36,16 +37,16 @@ export default function initCardInfos() {
 }
 
 const langMaps = {
-  'zh_Hans': window.CardInfo_zh,
-  'zh_Hant': window.CardInfo_zh,
-  'en': window.CardInfo_en,
-  'jp': window.CardInfo_jp,
-  'ko': window.CardInfo_ko,
-  'ru': window.CardInfo_ru,
-  'it': window.CardInfo_it,
+  'zh_Hans': CardInfo_zh,
+  'zh_Hant': CardInfo_zh,
+  'en': CardInfo_en,
+  'jp': CardInfo_jp,
+  'ko': CardInfo_ko,
+  'ru': CardInfo_ru,
+  'it': CardInfo_it,
 }
 
-export const setCardInfo = lang => {
+export const setLanguegeCardInfo = lang => {
   if (lang in langMaps) {
     window.CardInfo = langMaps[lang]
   } else {
