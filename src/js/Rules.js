@@ -319,7 +319,10 @@ LimitingRule.parse = function(words) {
       }, this)
     }
     if (!info.limiting) return flagNoLimiting
-    return inArr(info.limiting, matchedClasses)
+    let limitings = info.limiting.split('/')
+    return limitings.some(function(limiting) {
+      return inArr(limiting, matchedClasses)
+    })
   }
 }
 
@@ -341,7 +344,7 @@ ClassRule.parse = function(words) {
       '精像', '天使', '悪魔', '美巧', '精武', 'アーム', 'ウェポン', '遊具',
       '毒牙', '精羅', '鉱石', '宝石', '植物', '原子', '宇宙', '精械', '電機',
       '古代兵器', '迷宮', '精生', '水獣', '空獣', '地獣', '龍獣', '凶蟲', '精元',
-      'トリック', '英知', '微菌', '怪異',
+      '武勇', '調理', 'トリック', '英知', '微菌', '怪異',
     ]
     for (let j = 0; j < classes.length; j++) {
       let cls = classes[j]
