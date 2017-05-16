@@ -31,7 +31,7 @@ export default {
   mounted() {
     let url = `./images/raw/${('0000' + this.pid).slice(-4)}.jpg`
     $get(url, 'blob', xhr => {
-      this.src = window.URL.createObjectURL(xhr.response)
+      this.src = xhr.responseURL
       this.loading = false
     })
   },
