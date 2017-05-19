@@ -1,3 +1,4 @@
+import _ from 'lodash'
 // Check IndexedDB support.
 // https://bl.ocks.org/nolanlawson/8a2ead46a184c9fae231
 const checkIndexedDBSupport = () => {
@@ -66,16 +67,54 @@ const wait = timeout => {
   })
 }
 
+/* Cache Manager */
+let saveQueue = _.throttle(() => {
+  localStorage.setItem('usedImgQueue', JSON.stringify(usedQueue))
+}, 1000)
+
+// Manage cached image blob in indexedDB
+// use LRU to delete unused images
+let usedQueue = []
+// add / move pid to the tail of usedQueue
+const update = (pid) => {
+  _.pull(usedQueue, pid)
+  usedQueue.push(pid)
+  saveQueue()
+}
+
+let limit = 1000
+let deleteCount = 100
+const deleteSomeCardsNeeded = () => {
+  return usedQueue.length - limit > deleteCount
+}
+const deleteSomeCards = (pids) => {
+  return new Promise(resolve => {
+    indexedDB.open('card images', 1).onsuccess = function () {
+      let objectStore = this.result
+        .transaction(['images'], 'readwrite')
+        .objectStore('images')
+      // Delete some cards asynchronously
+      Promise.all(pids.map(pid => {
+        return new Promise(resolve => {
+          objectStore.delete(pid).onsuccess = function () {
+            resolve()
+          }
+        })
+      })).then(() => {
+        saveQueue()
+        resolve()
+      })
+    }
+  })
+}
+
+
 /* locals */
 let urlMap = {}
 let fetchingMap = {}
 
 /* private methods */
-const cache = (pid, blob) => {
-  if (!ImageFileCache.supportBlob) return
-  if (pid in urlMap) return
-  let url = window.URL.createObjectURL(blob)
-  urlMap[pid] = url
+const saveImageBlob = (pid, blob) => {
   let open = indexedDB.open('card images', 1)
   open.onupgradeneeded = function () {
     this.result.createObjectStore('images')
@@ -85,8 +124,29 @@ const cache = (pid, blob) => {
     db.transaction(['images'], 'readwrite').objectStore('images').add(blob, pid)
   }
 }
+const cache = (pid, blob) => {
+  if (!ImageFileCache.supportBlob) return
+  if (pid in urlMap) return
+  let url = window.URL.createObjectURL(blob)
+  urlMap[pid] = url
+  if (deleteSomeCardsNeeded()) {
+    let pids = usedQueue.splice(0, usedQueue.length - limit)
+    pids.forEach(pid => {
+      if (pid in urlMap) {
+        delete urlMap[pid]
+      }
+    })
+    deleteSomeCards(pids).then(() => {
+      saveImageBlob(pid, blob)
+    })
+  } else {
+    saveImageBlob(pid, blob)
+  }
+}
 // Read all images form DB to cached blob urls.
 const readAll = () => {
+  let usedQueueJson = localStorage.getItem('usedQueue')
+  usedQueue = usedQueueJson ? JSON.parse(usedQueueJson) : []
   return new Promise(resolve => {
     let open = indexedDB.open('card images', 1)
     open.onupgradeneeded = function () {
@@ -95,19 +155,26 @@ const readAll = () => {
     open.onsuccess = function () {
       let db = this.result
       db.transaction(['images'])
-      .objectStore('images')
-      .openCursor()
-      .onsuccess = function () {
-        let cursor = this.result
-        if (!cursor) {
-          return resolve()
+        .objectStore('images')
+        .openCursor()
+        .onsuccess = function () {
+          let cursor = this.result
+          if (!cursor) {
+            return resolve()
+          }
+          let pid = cursor.key
+          let blob = cursor.value
+          let url = window.URL.createObjectURL(blob)
+          urlMap[pid] = url
+
+          // If some cards added to indexedDB by old webxoss,
+          // add those cards to usedQueue
+          if (!usedQueue.includes(pid)) {
+            update(pid)
+          }
+
+          cursor.continue()
         }
-        let pid = cursor.key
-        let blob = cursor.value
-        let url = window.URL.createObjectURL(blob)
-        urlMap[pid] = url
-        cursor.continue()
-      }
     }
   })
 }
@@ -116,6 +183,7 @@ const ImageFileCache = {
   supportIndexedDB: false,
   supportBlob: !!window.Blob && !!window.URL,
   getUrlByPid(pid) {
+    update(pid)
     return urlMap[pid] || ''
   },
   fetchAndCache(pid, url) {
