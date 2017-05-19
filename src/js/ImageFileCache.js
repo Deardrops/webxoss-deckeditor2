@@ -45,7 +45,7 @@ const checkIndexedDBSupport = () => {
 }
 
 /* Helper functions */
-const get = (url, type, callback, err) => {
+export const $get = (url, type, callback, err) => {
   let xhr = new XMLHttpRequest()
   xhr.responseType = type
   xhr.onload = () => {
@@ -190,7 +190,7 @@ const ImageFileCache = {
     if (!this.supportBlob) return
     if (fetchingMap[pid]) return
     fetchingMap[pid] = true
-    get(url, 'blob', function (xhr) {
+    $get(url, 'blob', function (xhr) {
       let blob = xhr.response
       cache(pid, blob)
     }, function () {
