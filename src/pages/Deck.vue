@@ -179,16 +179,16 @@ export default {
 
     <!-- List view -->
     <template v-if="!previewing">
-      <ul>
-        <li v-for="card in shownMainDeck">
+      <div :class="$style.row">
+        <div v-for="card in shownMainDeck" :class="$style.col">
           <cell :card="card" :protectionEnabled="true"/>
-        </li>
-      </ul>
-      <ul ref="lrigDeck">
-        <li v-for="card in shownLrigDeck">
+        </div>
+      </div>
+      <div ref="lrigDeck" :class="$style.row">
+        <div v-for="card in shownLrigDeck" :class="$style.col">
           <cell :card="card" :protectionEnabled="true"/>
-        </li>
-      </ul>
+        </div>
+      </div>
     </template>
 
     <!-- Block view -->
@@ -222,5 +222,15 @@ export default {
 }
 .block {
   width: 20%;
+}
+.row {
+  display: flex;
+  flex-wrap: wrap;
+}
+.col {
+  width: 100%;
+  @media (width > 748px) {
+    width: 50%;
+  }
 }
 </style>
