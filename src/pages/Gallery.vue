@@ -33,7 +33,7 @@ export default {
     $get(url, 'blob', () => {
       this.src = url
       this.loading = false
-    })
+    }, () => {})
   },
 }
 </script>
