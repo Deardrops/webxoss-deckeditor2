@@ -33,6 +33,7 @@ const state = {
   localization: {
     lang: 'en',
   },
+  windowWidth: 0,
 }
 
 Localize.config = state.localization
@@ -163,6 +164,9 @@ const mutations = {
     state.localization.lang = lang
     setLanguegeCardInfo(lang)
   },
+  changeWindowWidth(state, width) {
+    state.windowWidth = width
+  },
 }
 
 const actions = {
@@ -206,5 +210,9 @@ store.watch((state, getters) => {
   let deckName = `deck_file_${state.deckName}`
   localStorage.setItem(deckName, JSON.stringify(file))
 })
+
+window.addEventListener('resize', () => {
+  store.commit('changeWindowWidth', window.innerWidth)
+}, false)
 
 export default store

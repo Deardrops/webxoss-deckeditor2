@@ -3,7 +3,7 @@ import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
-import Cell from 'components/Cell'
+import CellContainer from 'components/CellContainer'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
@@ -18,7 +18,7 @@ export default {
     HeaderMenu,
     DeckModals,
     DeckFloatButton,
-    Cell,
+    CellContainer,
     Block,
     DeckHead,
     Icon,
@@ -123,7 +123,11 @@ export default {
       this.$refs.modals.close()
     },
     updateDeckHeader() {
-      let $lrigDeck = this.$refs.lrigDeck
+      let lrigDeck = this.$refs.lrigDeck
+      if (!lrigDeck) {
+        return
+      }
+      let $lrigDeck = lrigDeck.$el
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
       this.scrolledToTop = window.scrollY <= 0
@@ -179,16 +183,8 @@ export default {
 
     <!-- List view -->
     <template v-if="!previewing">
-      <ul>
-        <li v-for="card in shownMainDeck">
-          <cell :card="card" :protectionEnabled="true"/>
-        </li>
-      </ul>
-      <ul ref="lrigDeck">
-        <li v-for="card in shownLrigDeck">
-          <cell :card="card" :protectionEnabled="true"/>
-        </li>
-      </ul>
+      <cell-container :cards="shownMainDeck" :protectionEnabled="true"/>
+      <cell-container ref="lrigDeck" :cards="shownLrigDeck" :protectionEnabled="true"/>
     </template>
 
     <!-- Block view -->
