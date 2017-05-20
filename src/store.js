@@ -211,8 +211,8 @@ store.watch((state, getters) => {
   localStorage.setItem(deckName, JSON.stringify(file))
 })
 
-window.onresize = function () {
-  store.commit('changeWindowWidth', window.document.body.clientWidth)
-}
+window.addEventListener('resize', () => {
+  store.commit('changeWindowWidth', window.innerWidth)
+}, false)
 
 export default store

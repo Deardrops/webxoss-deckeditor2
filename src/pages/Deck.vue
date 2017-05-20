@@ -123,7 +123,11 @@ export default {
       this.$refs.modals.close()
     },
     updateDeckHeader() {
-      let $lrigDeck = this.$refs.lrigDeck.$el // TODO: check null
+      let lrigDeck = this.$refs.lrigDeck
+      if (!lrigDeck) {
+        return
+      }
+      let $lrigDeck = lrigDeck.$el
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
       this.scrolledToTop = window.scrollY <= 0
