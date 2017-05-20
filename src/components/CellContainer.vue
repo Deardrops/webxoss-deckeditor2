@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex'
 import Cell from 'components/Cell'
 
 // 8rem
@@ -14,6 +15,9 @@ export default {
       required: true,
     },
     protectionEnabled: {
+      require: false,
+    },
+    longListOpimizationEnabled: {
       require: false,
     },
   },
@@ -34,15 +38,16 @@ export default {
     index: 0,
   }),
   computed: {
+    ...mapState([
+      'windowWidth',
+    ]),
     isTwoColunm() {
-      return window.screen.width > 768
+      return this.windowWidth >= 1024
     },
     allColunmsCount() {
-      if (this.isTwoColunm) {
-        return Math.ceil(this.cards.length / 2)
-      } else {
-        return this.cards.length
-      }
+      return this.isTwoColunm
+        ? Math.ceil(this.cards.length / 2)
+        : this.cards.length
     },
     start() {
       // 5 colunms before index
@@ -53,18 +58,14 @@ export default {
       return Math.min(this.allColunmsCount, this.index + 10)
     },
     shownCards() {
-      if (this.isTwoColunm) {
-        return this.cards.slice(2 * this.start, 2 * this.end)
-      } else {
-        return this.cards.slice(this.start, this.end)
-      }
+      return this.isTwoColunm
+        ? this.cards.slice(2 * this.start, 2 * this.end)
+        : this.cards.slice(this.start, this.end)
     },
     shownColunmsCount() {
-      if (this.isTwoColunm) {
-        return Math.ceil(this.shownCards.length / 2)
-      } else {
-        return this.cards.length
-      }
+      return this.isTwoColunm
+        ? Math.ceil(this.shownCards.length / 2)
+        : this.shownCards.length
     },
     padding() {
       // Paddings before / after shown cells.
@@ -75,6 +76,11 @@ export default {
         'padding-top': `${cellHeight * beforeCount}rem`,
         'padding-bottom': `${cellHeight * afterCount}rem`,
       }
+    },
+    cardIterator() {
+      return this.longListOpimizationEnabled
+        ? this.shownCards
+        : this.cards
     },
   },
   methods: {
@@ -87,7 +93,9 @@ export default {
     },
   },
   mounted() {
-    this.updateIndex()
+    if (this.longListOpimizationEnabled) {
+      this.updateIndex()
+    }
   },
   destroyed() {
     cancelIdleCallback(this.request)
@@ -97,7 +105,7 @@ export default {
 
 <template>
   <div :class="$style.row" :style="padding">
-    <div v-for="card in shownCards" :class="$style.col">
+    <div v-for="card in cardIterator" :class="$style.col">
       <cell :card="card" :protectionEnabled="protectionEnabled"/>
     </div>
   </div>
@@ -110,7 +118,7 @@ export default {
 }
 .col {
   width: 100%;
-  @media (width > 768px) {
+  @media (width >= 1024px) {
     width: 50%;
   }
 }

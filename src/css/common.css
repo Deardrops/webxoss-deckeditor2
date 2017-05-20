@@ -24,9 +24,13 @@
   }
 
   /* tablet */
-/*  @media (width >= 768px) {
+  @media (width >= 768px) and (width < 1024px) {
     font-size: 24px;
-  }*/
+  }
+
+  @media (width >= 1280px){
+    font-size: 24px;
+  }
 }
 
 html,

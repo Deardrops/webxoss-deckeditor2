@@ -5,6 +5,7 @@ export default {
     let deckFileNames = localStorage.getItem('deck_filenames')
     let fileNames = JSON.parse(deckFileNames)
 
+    this.$store.commit('changeWindowWidth', window.screen.width)
     this.$store.commit('changeLanguage', localStorage.getItem('language') || 'en')
 
     // if no deck in localStorage, initialize WHITE_HOPE

@@ -90,7 +90,7 @@ export default {
       <header-icon name="more"/>
     </app-header>
     <section v-if="query && matchedCards.length">
-      <cell-container :cards="matchedCards"/>
+      <cell-container :cards="matchedCards" :longListOpimizationEnabled="true"/>
     </section>
     <section :class="$style.tips" v-if="!query">
       <div v-html="marked(searchTips)"></div>
