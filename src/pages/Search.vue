@@ -15,7 +15,6 @@ export default {
     // block the search for a short time after input.
     timer: -1,
     blocking: false,
-    request: -1,
 
     searchTips: require('./searchTips.md'), // test
     emptyTips: require('./emptyTips.md'), // test

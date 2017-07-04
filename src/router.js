@@ -26,5 +26,9 @@ export default new Router({
       path: '/gallery',
       component: require('pages/Gallery'),
     },
+    {
+      path: '/deckeditor',
+      component: require('pages/DeckEditor'),
+    },
   ],
 })
