@@ -157,6 +157,14 @@ export default {
         },
       })
     },
+    goDetail(pid) {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          pid,
+        },
+      })
+    },
   },
   mounted() {
     this.updateDeckHeader()
@@ -195,10 +203,10 @@ export default {
     <!-- Block view -->
     <div :class="$style.blocks" v-if="previewing">
       <div>
-        <block v-for="card in shownMainDeck" :class="$style.block" :card="card"/>
+        <block v-for="card in shownMainDeck" :class="$style.block" :card="card" :showCount="true" @click="goDetail"/>
       </div>
       <div>
-        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card"/>
+        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card" :showCount="true" @click="goDetail"/>
       </div>
     </div>
 
@@ -224,5 +232,6 @@ export default {
 }
 .block {
   width: 20%;
+  padding: .2em;
 }
 </style>

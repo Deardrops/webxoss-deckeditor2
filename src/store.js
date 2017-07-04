@@ -29,7 +29,7 @@ const state = {
 
   // current selected deck name
   deckName: '',
-
+  shownPid: 1,
   localization: {
     lang: 'en',
   },
@@ -191,6 +191,11 @@ const mutations = {
   },
   changeWindowWidth(state, width) {
     state.windowWidth = width
+  },
+  setShownPid(state, pid) {
+    if (0 < pid && pid < Object.keys(CardInfo).length) {
+      state.pid = pid
+    }
   },
 }
 
