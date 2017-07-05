@@ -169,7 +169,7 @@ const mutations = {
   },
   setShownPid(state, pid) {
     if (0 < pid && pid < Object.keys(CardInfo).length) {
-      state.pid = pid
+      state.shownPid = pid
     }
   },
 }

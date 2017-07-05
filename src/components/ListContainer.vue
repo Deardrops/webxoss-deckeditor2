@@ -1,23 +1,16 @@
 <script>
 import { mapState } from 'vuex'
-import Cell from 'components/Cell'
-
-// 8rem
-let cellHeight = 8
 
 export default {
-  components: {
-    Cell,
-  },
   props: {
     cards: {
       type: Array,
       required: true,
     },
-    protectionEnabled: {
+    longListOpimizationEnabled: {
       require: false,
     },
-    longListOpimizationEnabled: {
+    columnNumber: {
       require: false,
     },
   },
@@ -36,18 +29,17 @@ export default {
         See `updateIndex` for details.
     */
     index: 0,
+    itemHeight: 1,
   }),
   computed: {
     ...mapState([
       'windowWidth',
     ]),
-    isTwoColunm() {
-      return this.windowWidth >= 1024
+    _colNum() {
+      return this.columnNumber ? this.columnNumber : 1
     },
     allColunmsCount() {
-      return this.isTwoColunm
-        ? Math.ceil(this.cards.length / 2)
-        : this.cards.length
+      return Math.ceil(this.cards.length / this._colNum)
     },
     start() {
       // 5 colunms before index
@@ -58,14 +50,10 @@ export default {
       return Math.min(this.allColunmsCount, this.index + 10)
     },
     shownCards() {
-      return this.isTwoColunm
-        ? this.cards.slice(2 * this.start, 2 * this.end)
-        : this.cards.slice(this.start, this.end)
+      return this.cards.slice(this._colNum * this.start, this._colNum * this.end)
     },
     shownColunmsCount() {
-      return this.isTwoColunm
-        ? Math.ceil(this.shownCards.length / 2)
-        : this.shownCards.length
+      return Math.ceil(this.shownCards.length / this._colNum)
     },
     padding() {
       // Paddings before / after shown cells.
@@ -73,11 +61,11 @@ export default {
       let beforeCount = this.start
       let afterCount = this.allColunmsCount - this.shownColunmsCount - beforeCount
       return {
-        'padding-top': `${cellHeight * beforeCount}rem`,
-        'padding-bottom': `${cellHeight * afterCount}rem`,
+        'padding-top': `${this.itemHeight * beforeCount}px`,
+        'padding-bottom': `${this.itemHeight * afterCount}px`,
       }
     },
-    cardIterator() {
+    iterator() {
       return this.longListOpimizationEnabled
         ? this.shownCards
         : this.cards
@@ -85,10 +73,15 @@ export default {
   },
   methods: {
     updateIndex() {
-      // Find the top cell in viewport according to `window.scrollY`.
-      let fontSize = +window.getComputedStyle(window.document.body)
-        .fontSize.slice(0, -2)
-      this.index = Math.round(window.scrollY / (cellHeight * fontSize))
+      // Find the top cell in viewport according to`window.scrollY`.
+      if (this.$children.length) {
+        this.itemHeight = this.$children[0].$el.getBoundingClientRect().height
+      }
+      let scrollPostion = document.body.clientHeight === window.innerHeight ?
+        this.$el.parentElement.scrollTop :
+        window.scrollY
+      this.index = Math.round(scrollPostion / this.itemHeight)
+
       this.request = requestIdleCallback(this.updateIndex)
     },
   },
@@ -105,9 +98,7 @@ export default {
 
 <template>
   <div :class="$style.row" :style="padding">
-    <div v-for="card in cardIterator" :class="$style.col">
-      <cell :card="card" :protectionEnabled="protectionEnabled"/>
-    </div>
+    <slot v-for="item in iterator" :card="item"/>
   </div>
 </template>
 
@@ -116,10 +107,7 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-.col {
+.row>* {
   width: 100%;
-  @media (width >= 1024px) {
-    width: 50%;
-  }
 }
 </style>

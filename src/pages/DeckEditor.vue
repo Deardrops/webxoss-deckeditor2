@@ -1,20 +1,24 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
+import { AppHeader, HeaderIcon } from 'components/AppHeader'
+import ListContainer from 'components/ListContainer'
 import Block from 'components/Block'
+import CardImage from 'components/CardImage'
 import Searcher from 'js/Searcher.js'
 import { defaultSort } from 'js/util'
-import CardImage from 'components/CardImage'
 
 export default {
   components: {
+    AppHeader,
+    HeaderIcon,
+    ListContainer,
     Block,
     CardImage,
   },
   data: () => ({
-    queryString: '',
+    queryString: 's',
     timer: -1,
     blocking: false,
-    request: -1,
   }),
   computed: {
     ...mapState([
@@ -35,11 +39,13 @@ export default {
           this.timer = setTimeout(() => {
             this.queryString = query
             this.blocking = false
+            this.scrollToTop()
           }, 500)
           return
         }
 
         this.queryString = query
+        this.scrollToTop()
         this.blocking = true
         this.timer = setTimeout(() => {
           this.blocking = false
@@ -67,6 +73,11 @@ export default {
         }
       })
     },
+    scrollToTop() {
+      if (this.$refs.scrollDiv) {
+        this.$refs.scrollDiv.scrollTop = 0
+      }
+    },
   },
   mounted() {
     this.query = ''
@@ -75,27 +86,8 @@ export default {
 </script>
 
 <template>
-  <div :class="$style.container">
-    <div :class="$style.detail">
-      <card-image :pid="shownPid" :class="$style.image" />
-    </div>
-    <div :class="$style.blocks">
-      <div>
-        <block
-          v-for="card in sortedMainDeck"
-          :class="$style.block"
-          :card="card"
-          @click="delCard"/>
-      </div>
-      <div>
-        <block
-          v-for="card in sortedLrigDeck"
-          :class="$style.block"
-          :card="card"
-          @click="delCard"/>
-      </div>
-    </div>
-    <div :class="$style.searcher">
+  <div>
+    <app-header>
       <input
         :class="$style.search"
         placeholder="Search..."
@@ -103,11 +95,42 @@ export default {
         autocomplete="off"
         autocapitalize="none"
         maxlength="30"
-        ref="input"
-        v-model="query">
-      <section :class="$style.result">
-        <block v-for="card in matchedCards.slice(0,20)" :card="card" @click="addCard"/>
-      </section>
+        v-model="query"/>
+    </app-header>
+    <div :class="$style.container">
+      <div :class="$style.searchZone" ref="scrollDiv">
+        <list-container
+          :columnNumber="5"
+          :cards="matchedCards"
+          :longListOpimizationEnabled="true">
+          <template scope="props">
+            <block
+              :class="$style.searchBlock"
+              :card="props.card"
+              @click="addCard"/>
+          </template>
+        </list-container>
+      </div>
+      <div :class="$style.deckZone">
+        <div :class="$style.blocks">
+          <div>MainDeck</div>
+          <div>
+            <block
+              v-for="card in sortedMainDeck"
+              :class="$style.deckBlock"
+              :card="card"
+              @click="delCard"/>
+          </div>
+          <div>LrigDeck</div>
+          <div>
+            <block
+              v-for="card in sortedLrigDeck"
+              :class="$style.deckBlock"
+              :card="card"
+              @click="delCard"/>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </template>
@@ -117,41 +140,34 @@ export default {
 .container {
   display: flex;
 }
-.detail {
-  width: 20%;
-}
-.image {
-  display: block;
-  margin: 0 auto;
-}
-.blocks {
-  width: 60%;
-}
-.block {
-  width: 10%;
-}
-.searcher {
-  width: 20%;
-  height: 100vh;
-  overflow: auto;
-}
 .search {
-  position: absolute;
-  z-index: 1;
-  height: 2em;
-  margin: .5em;
-  background-color: #fff;
-  box-shadow: 0 3px 6px rgba(0,0,0,0.16), 0 3px 6px rgba(0,0,0,0.23);
+  flex: .4;
+  color: #fff;
+  padding: .3em .5em;
+  background-color: color(var(--main-color) l(+10%));
+  border-radius: 3px;
 }
 .search::placeholder {
-  color: #000a;
+  color: #fffa;
 }
 .search::selection {
   color: #333;
+  background-color: #ffff00;
 }
-.result {
-  width: 200px;
-  padding-top: 3em;
-  margin: 0 auto;
+.deckZone {
+  width: 50%;
+  padding: .5em;
+}
+.deckBlock {
+  width: 10%;
+}
+.searchZone {
+  width: 50%;
+  height: calc(100vh - var(--header-height));
+  overflow: scroll;
+}
+.searchBlock {
+  padding: .3em;
+  width: 20%;
 }
 </style>
