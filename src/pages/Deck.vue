@@ -4,7 +4,8 @@ import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckSheets from 'components/DeckSheets'
 import DeckFloatButton from 'components/DeckFloatButton'
-import CellContainer from 'components/CellContainer'
+import ListContainer from 'components/ListContainer'
+import Cell from 'components/Cell'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
@@ -20,10 +21,11 @@ export default {
     DeckModals,
     DeckSheets,
     DeckFloatButton,
-    CellContainer,
+    ListContainer,
     Block,
     DeckHead,
     Icon,
+    Cell,
   },
   data: () => ({
     request: -1,
@@ -144,9 +146,6 @@ export default {
     goListView() {
       this.$router.push({
         path: '/deck',
-        // query: {
-        //   mode: 'list',
-        // },
       })
     },
     goBlockView() {
@@ -196,8 +195,16 @@ export default {
 
     <!-- List view -->
     <template v-if="!previewing">
-      <cell-container :cards="shownMainDeck" :protectionEnabled="true"/>
-      <cell-container ref="lrigDeck" :cards="shownLrigDeck" :protectionEnabled="true"/>
+      <list-container :cards="shownMainDeck">
+        <template scope="props">
+          <cell :card="props.card" :protectionEnabled="true"></cell>
+        </template>
+      </list-container>
+      <list-container ref="lrigDeck" :cards="shownLrigDeck">
+        <template scope="props">
+          <cell :card="props.card" :protectionEnabled="true"></cell>
+        </template>
+      </list-container>
     </template>
 
     <!-- Block view -->
