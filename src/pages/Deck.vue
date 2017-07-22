@@ -20,10 +20,10 @@ export default {
     DeckModals,
     DeckFloatButton,
     ListContainer,
+    Cell,
     Block,
     DeckHead,
     Icon,
-    Cell,
   },
   data: () => ({
     request: -1,
