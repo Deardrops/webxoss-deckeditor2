@@ -5,9 +5,11 @@
   --cell-border-color: #d6d6d6;
 
   /* z-indexes */
-  --z-header: 1;
-  --z-header-menu: 2;
-  --z-modal: 3;
+  --z-sidebar: 1;
+  --z-header: 2;
+  --z-header-menu: 3;
+  --z-modal: 4;
+  --z-nav: 5;
 
   /* shadows */
   --shadow-2dp: {

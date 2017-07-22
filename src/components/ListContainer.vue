@@ -87,7 +87,7 @@ export default {
   },
   mounted() {
     if (this.longListOpimizationEnabled) {
-      this.updateIndex()
+      // this.updateIndex()
     }
   },
   destroyed() {

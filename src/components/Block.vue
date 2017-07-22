@@ -28,9 +28,9 @@ export default {
     handleClick() {
       this.$emit('click', this.card.pid)
     },
-    hover() {
+    handleHover() {
       // 节流
-      this.$store.commit('setShownPid', this.card.pid)
+      this.$emit('hover', this.card.pid)
     },
   },
 }
@@ -39,8 +39,8 @@ export default {
 <template>
   <a
     :class="$style.block"
-    @click="handleClick"
-    @mouseover="hover">
+    @click.stop="handleClick"
+    @mouseover="handleHover">
     <card-image :pid="card.pid" :class="$style.image" />
     <div v-if="showCount" :class="$style.dimmer">×{{ count }}</div>
   </a>

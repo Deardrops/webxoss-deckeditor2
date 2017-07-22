@@ -7,6 +7,8 @@ import CardImage from 'components/CardImage'
 import Searcher from 'js/Searcher.js'
 import { defaultSort } from 'js/util'
 import Icon from 'components/Icon'
+import CardInfoTable from 'components/CardInfoTable'
+import Localize from 'js/Localize'
 
 export default {
   components: {
@@ -16,11 +18,13 @@ export default {
     Block,
     CardImage,
     Icon,
+    CardInfoTable,
   },
   data: () => ({
     queryString: 's',
     timer: -1,
     blocking: false,
+    sidebarVisible: false,
   }),
   computed: {
     ...mapState([
@@ -64,6 +68,15 @@ export default {
     matchedCards() {
       return Searcher.search(this.query)
     },
+    shownCard() {
+      return CardInfo[this.shownPid]
+    },
+    shownCardName() {
+      return Localize.cardName(this.shownCard)
+    },
+    shownCardLimiting() {
+      return Localize.limiting(this.shownCard)
+    },
   },
   methods: {
     delCard(pid) {
@@ -75,6 +88,16 @@ export default {
           console.log('already full') // show toast here
         }
       })
+    },
+    setAsShownCard(pid) {
+      this.openSidebar()
+      this.$store.commit('setShownPid', pid)
+    },
+    openSidebar() {
+      this.sidebarVisible = true
+    },
+    closeSidebar() {
+      this.sidebarVisible = false
     },
     scrollToTop() {
       if (this.$refs.scrollDiv) {
@@ -89,41 +112,41 @@ export default {
 </script>
 
 <template>
-  <div :class="$style.page">
-<!--     <div :class="$style.nav">
+  <div>
+    <div :class="$style.nav">
       <div>WHITE HOPE</div>
       <div>RED AMBITION</div>
       <div>BLUE APPLI</div>
       <div>GREEN WANNA</div>
       <div>BLACDESIRE</div>
       <div>BLUE REQUEST</div>
-    </div> -->
+    </div>
     <div>
-      <div :class="$style.panel">
-      </div>
-      <div :class="$style.container">
+      <app-header>
+        <input
+          :class="$style.searchBar"
+          placeholder="Search..."
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="none"
+          maxlength="30"
+          v-model="query"/>
+        <header-icon name="more"/>
+      </app-header>
+      <div :class="$style.container" @click="closeSidebar">
         <div :class="$style.content">
-          <div :class="$style.header">
-            <div :class="$style.deckName">{{ deckName }}</div>
-            <div :class="$style.empty"></div>
-            <input
-              :class="$style.searchBar"
-              placeholder="Search..."
-              spellcheck="false"
-              autocomplete="off"
-              autocapitalize="none"
-              maxlength="30"
-              v-model="query"/>
+          <div>
+            <div>{{ deckName }}</div>
           </div>
-          <div :class="$style.flex">
+          <div style="display: flex;">
             <div :class="$style.blocks">
-              <!-- <div>MainDeck</div> -->
+              <div>MainDeck</div>
               <div>
                 <block
                   v-for="card in sortedMainDeck"
                   :class="$style.deckBlock"
                   :card="card"
-                  @click="delCard"/>
+                  @click="setAsShownCard"/>
               </div>
               <div>LrigDeck</div>
               <div>
@@ -131,77 +154,67 @@ export default {
                   v-for="card in sortedLrigDeck"
                   :class="$style.deckBlock"
                   :card="card"
-                  @click="delCard"/>
+                  @click="setAsShownCard"/>
               </div>
-            </div>
-            <div :class="$style.searchZone" ref="scrollDiv">
-              <list-container
-                :cards="matchedCards"
-                :longListOpimizationEnabled="true">
-                <template scope="props">
-                  <block
-                    :class="$style.searchBlock"
-                    :card="props.card"
-                    @click="addCard"/>
-                </template>
-              </list-container>
             </div>
           </div>
         </div>
       </div>
     </div>
-    <div :class="$style.sidebar">
-    </div>
+    <transition name="slide">
+      <div v-show="sidebarVisible" :class="$style.sidebar">
+        <card-image :class="$style.image" :pid="shownPid"/>
+        <div style="display: flex;">
+          <span>{{ shownCard.wxid }}</span>
+          <span style="margin-left: auto;">{{ shownCardLimiting }}</span>
+        </div>
+        <div style="font-size: 1.5em;">{{ shownCardName }}</div>
+        <card-info-table :card="shownCard"/>
+      </div>
+    </transition>
   </div>
 </template>
 
 <style module>
 @import 'css/vars.css';
-.page {
-  /*padding-left: 256px;*/
-  background-color: #fafafa;
-}
-.flex {
-  display: flex;
-}
 .nav {
   position: fixed;
+  z-index: var(--z-nav);
   top: 0;
   left: 0;
-  width: 256px;
+  width: 15%;
   height: 100vh;
   font-size: 1.2em;
-  border-right: 2px solid var(--cell-border-color);
-  padding-top: 20rem;
+  padding-top: 4rem;
+  box-shadow: 0 0 4px rgba(0,0,0,.14), 2px 4px 8px rgba(0,0,0,.28);
+  background-color: #fff;
   &>div {
     width: 10em;
     padding: .2em 1em;
   }
 }
-.panel {
-  height: 20rem;
-  background-color: var(--main-color);
+.searchBar {
+  flex: 1;
+  color: #fff;
+  padding: .3em .5em;
+  background-color: color(var(--main-color) l(+10%));
+  border-radius: 3px;
 }
-.header {
-  display: flex;
-  /*height: 10rem;*/
-  padding: 1em 0;
-  color: #000;
-  font-size: 1.5em;
+.searchBar::placeholder {
+  color: #fffa;
 }
-.deckName {
-  padding-left: 3rem;
+.searchBar::selection {
+  color: #333;
+  background-color: #ffff00;
 }
 .container {
-  /*padding-right: calc(256px + 3rem);*/
+  margin-left: 15%;
+  margin-right: 10%;
 }
 .content {
-  position: relative;
-  top: -10rem;
-  width: 60%;
+  width: 90%;
   margin: 0 auto;
   background-color: #fafafa;
-  @apply --shadow-8dp;
 }
 .blocks {
   padding: 2em;
@@ -212,46 +225,20 @@ export default {
 }
 .sidebar {
   position: fixed;
-  top: 10rem;
-  right: 3rem;
-  width: 256px;
-  /*border-left: 2px solid var(--cell-border-color);*/
+  z-index: var(--z-sidebar);
+  top: 4rem;
+  right: 0;
+  width: 20%;
+  height: calc(100% - 4rem);
   background-color: #fafafa;
-  z-index: 1;
-}
-.empty {
-  flex: 1;
-}
-.searchBar {
-  color: #fff;
-  /*background-color: #fafafa;*/
-  border-radius: 3px;
-  /*margin: .5em;*/
-  height: 2rem;
-  margin-right: 1rem;
-  width: calc(6rem);
-  padding-left: .5em;
-  background-color: #eee;
-  /*background-color: color(var(--main-color) l(+10%));*/
-  /*@apply --shadow-4dp;*/
-}
-.searchBar::placeholder {
-  color: #000;
-}
-.searchBar::selection {
-  color: #333;
-  background-color: #ffff00;
-}
-.searchZone {
-  padding: 2rem 1rem;
-  width: 6rem;
-  height: calc(100vh - 3em);
   overflow-y: auto;
-  /*margin: 0 .5em;*/
-  /*@apply --shadow-8dp;*/
+  box-shadow: -2px 0 4px 0 rgba(0, 0, 0, .15);
+  transition: transform 0.3s, right 0.3s;
+  padding: .5em;
 }
-.searchBlock {
-  /*padding: .2rem 1rem;*/
-  width: 100%;
+.image {
+  width: 80%;
+  display: block;
+  margin: 0 auto;
 }
 </style>
