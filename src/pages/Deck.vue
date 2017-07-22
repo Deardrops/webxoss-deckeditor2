@@ -22,10 +22,10 @@ export default {
     DeckSheets,
     DeckFloatButton,
     ListContainer,
+    Cell,
     Block,
     DeckHead,
     Icon,
-    Cell,
   },
   data: () => ({
     request: -1,
