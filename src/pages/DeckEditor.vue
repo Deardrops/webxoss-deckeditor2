@@ -9,6 +9,7 @@ import { defaultSort } from 'js/util'
 import Icon from 'components/Icon'
 import CardInfoTable from 'components/CardInfoTable'
 import Localize from 'js/Localize'
+import Card from 'components/Card'
 
 export default {
   components: {
@@ -19,12 +20,14 @@ export default {
     CardImage,
     Icon,
     CardInfoTable,
+    Card,
   },
   data: () => ({
     queryString: 's',
     timer: -1,
     blocking: false,
     sidebarVisible: false,
+    resultVisible: false,
   }),
   computed: {
     ...mapState([
@@ -108,21 +111,36 @@ export default {
   mounted() {
     this.query = ''
   },
+  watch: {
+    query(str) {
+      if (str) {
+        this.resultVisible = true
+      } else {
+        this.resultVisible = false
+      }
+    },
+  },
 }
 </script>
 
 <template>
   <div>
     <div :class="$style.nav">
-      <div>WHITE HOPE</div>
-      <div>RED AMBITION</div>
-      <div>BLUE APPLI</div>
-      <div>GREEN WANNA</div>
-      <div>BLACDESIRE</div>
-      <div>BLUE REQUEST</div>
+      <div :class="$style.flexCenter">
+        <a :class="$style.title"> WEBXOSS </a>
+      </div>
+      <div :class="$style.decks">
+        <div>WHITE HOPE</div>
+        <div>RED AMBITION</div>
+        <div>BLUE APPLI</div>
+        <div>GREEN WANNA</div>
+        <div>BLACDESIRE</div>
+        <div>BLUE REQUEST</div>
+      </div>
     </div>
     <div>
       <app-header>
+        <div slot="left" style="width: 15%;" />
         <input
           :class="$style.searchBar"
           placeholder="Search..."
@@ -131,32 +149,39 @@ export default {
           autocapitalize="none"
           maxlength="30"
           v-model="query"/>
-        <header-icon name="more"/>
+        <header-icon slot="right" name="blocks"/>
+        <div slot="right" style="width: 15%;"/>
       </app-header>
       <div :class="$style.container" @click="closeSidebar">
-        <div :class="$style.content">
-          <div>
-            <div>{{ deckName }}</div>
+        <div v-show="resultVisible" :class="$style.content">
+          <div :class="$style.cards">
+            <card
+              v-for="card in matchedCards.slice(0,50)"
+              :card=card
+              actionType="add"
+              @click="setAsShownCard"
+              @action="addCard" />
           </div>
-          <div style="display: flex;">
-            <div :class="$style.blocks">
-              <div>MainDeck</div>
-              <div>
-                <block
-                  v-for="card in sortedMainDeck"
-                  :class="$style.deckBlock"
-                  :card="card"
-                  @click="setAsShownCard"/>
-              </div>
-              <div>LrigDeck</div>
-              <div>
-                <block
-                  v-for="card in sortedLrigDeck"
-                  :class="$style.deckBlock"
-                  :card="card"
-                  @click="setAsShownCard"/>
-              </div>
-            </div>
+        </div>
+        <div v-show="!resultVisible" :class="$style.content">
+          <div :class="$style.cards">
+            <card
+              v-for="card in sortedMainDeck"
+              :card=card
+              :class="$style.card"
+              actionType="remove"
+              @click="setAsShownCard"
+              @action="delCard" />
+          </div>
+          <div :class="$style.cards">
+            <card
+              v-for="card in sortedLrigDeck"
+              :card=card
+              :class="$style.card"
+              actionType="remove"
+              @click="setAsShownCard"
+              @action="delCard">
+            </card>
           </div>
         </div>
       </div>
@@ -185,18 +210,33 @@ export default {
   width: 15%;
   height: 100vh;
   font-size: 1.2em;
-  padding-top: 4rem;
   box-shadow: 0 0 4px rgba(0,0,0,.14), 2px 4px 8px rgba(0,0,0,.28);
   background-color: #fff;
+}
+.flexCenter {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 3rem;
+  border-bottom: 1px solid var(--cell-border-color);
+}
+.title {
+  font-size: 1.5rem;
+  color: var(--main-color);
+}
+.decks {
+  color: #757575;
+  padding: 1em 1em;
   &>div {
-    width: 10em;
-    padding: .2em 1em;
+    padding: .3em 0;
   }
 }
 .searchBar {
   flex: 1;
   color: #fff;
   padding: .3em .5em;
+  margin-left: 2em;
+  margin-right: 40%;
   background-color: color(var(--main-color) l(+10%));
   border-radius: 3px;
 }
@@ -209,19 +249,16 @@ export default {
 }
 .container {
   margin-left: 15%;
-  margin-right: 10%;
+  margin-right: 15%;
 }
 .content {
-  width: 90%;
-  margin: 0 auto;
+  margin-left: 2em;
   background-color: #fafafa;
 }
-.blocks {
-  padding: 2em;
-  flex: 1;
-}
-.deckBlock {
-  width: 10%;
+.cards {
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
 }
 .sidebar {
   position: fixed;
