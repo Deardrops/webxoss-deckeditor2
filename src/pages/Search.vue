@@ -1,6 +1,6 @@
 <script>
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
-import ListContainer from 'components/ListContainer'
+import CellContainer from 'components/CellContainer'
 import Searcher from 'js/Searcher.js'
 import marked from 'marked'
 import Cell from 'components/Cell'
@@ -9,7 +9,7 @@ export default {
   components: {
     AppHeader,
     HeaderIcon,
-    ListContainer,
+    CellContainer,
     Cell,
   },
   data: () => ({
@@ -91,11 +91,11 @@ export default {
       <header-icon name="more"/>
     </app-header>
     <section v-if="query && matchedCards.length">
-      <list-container :cards="matchedCards" :longListOpimizationEnabled="true">
+      <cell-container :cards="matchedCards" :longListOpimizationEnabled="true">
         <template scope="props">
-          <cell :card="props.card"></cell>
+          <cell :card="props.card"/>
         </template>
-      </list-container>
+      </cell-container>
     </section>
     <section :class="$style.tips" v-if="!query">
       <div v-html="marked(searchTips)"></div>

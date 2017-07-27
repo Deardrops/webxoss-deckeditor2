@@ -34,6 +34,7 @@ const state = {
     lang: 'en',
   },
   windowWidth: 0,
+  fontSize: 14,
 }
 
 Localize.config = state.localization
@@ -164,8 +165,13 @@ const mutations = {
     state.localization.lang = lang
     setLanguegeCardInfo(lang)
   },
-  changeWindowWidth(state, width) {
-    state.windowWidth = width
+  setWindowData(state) {
+    state.windowWidth = window.innerWidth
+    state.fontSize = +window.getComputedStyle(window.document.body)
+        .fontSize.slice(0, -2)
+  },
+  setFontSize(state, size) {
+    state.fontSize = size
   },
   setShownPid(state, pid) {
     if (0 < pid && pid < Object.keys(CardInfo).length) {
@@ -216,8 +222,6 @@ store.watch((state, getters) => {
   localStorage.setItem(deckName, JSON.stringify(file))
 })
 
-window.addEventListener('resize', () => {
-  store.commit('changeWindowWidth', window.innerWidth)
-}, false)
+window.addEventListener('resize', store.setWindowData, false)
 
 export default store

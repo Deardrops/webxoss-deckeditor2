@@ -3,7 +3,7 @@ import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
-import ListContainer from 'components/ListContainer'
+import CellContainer from 'components/CellContainer'
 import Cell from 'components/Cell'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
@@ -19,7 +19,7 @@ export default {
     HeaderMenu,
     DeckModals,
     DeckFloatButton,
-    ListContainer,
+    CellContainer,
     Cell,
     Block,
     DeckHead,
@@ -190,16 +190,16 @@ export default {
 
     <!-- List view -->
     <template v-if="!previewing">
-      <list-container :cards="shownMainDeck">
+      <cell-container :cards="shownMainDeck">
         <template scope="props">
-          <cell :card="props.card" :protectionEnabled="true"></cell>
+          <cell :card="props.card" :protectionEnabled="true"/>
         </template>
-      </list-container>
-      <list-container ref="lrigDeck" :cards="shownLrigDeck">
+      </cell-container>
+      <cell-container ref="lrigDeck" :cards="shownLrigDeck">
         <template scope="props">
-          <cell :card="props.card" :protectionEnabled="true"></cell>
+          <cell :card="props.card" :protectionEnabled="true"/>
         </template>
-      </list-container>
+      </cell-container>
     </template>
 
     <!-- Block view -->

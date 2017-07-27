@@ -1,7 +1,7 @@
 <script>
 import Thumbnail from 'components/Thumbnail'
-import Localize from 'js/Localize'
 import Icon from 'components/Icon'
+import Localize from 'js/Localize'
 
 export default {
   props: {
@@ -9,7 +9,7 @@ export default {
       type: Object,
       require: true,
     },
-    actionType: {
+    icon: {
       type: String,
       require: true,
     },
@@ -45,18 +45,20 @@ export default {
 </script>
 
 <template>
-  <div
-    :class="$style.wrapper"
-    @click.stop="click"
-    @mouseover="showAction"
-    @mouseout="hideAction">
-    <thumbnail :class="$style.image" :pid="card.pid" />
-    <div :class="$style.dimmer">
-      <div :class="$style.title">{{ name }}</div>
-      <a v-show="actionVisible" :class="$style.action" @click.stop="buttonClick">
-        <icon v-if="actionType==='add'" name="add" />
-        <icon v-else name="add" style="transform: rotate(45deg);"/>
-      </a>
+  <div :class="$style.wrapper">
+    <div
+      :class="$style.box"
+      @click.stop="click"
+      @mouseover="showAction"
+      @mouseout="hideAction">
+      <thumbnail :class="$style.image" :pid="card.pid" />
+      <div :class="$style.dimmer">
+        <div :class="$style.title">{{ name }}</div>
+        <a v-show="actionVisible" :class="$style.action" @click.stop="buttonClick">
+          <icon v-if="icon==='remove'" name="add" style="transform: rotate(45deg);"/>
+          <icon v-else :name="icon"/>
+        </a>
+      </div>
     </div>
   </div>
 </template>
@@ -64,12 +66,17 @@ export default {
 <style module>
 @import 'css/vars.css';
 .wrapper {
-  width: 8rem;
-  height: 8rem;
-  margin: .5rem;
+  height: 9rem;
+  width: 9rem;
+  padding: .5rem;
+}
+.box {
+  height: 100%;
+  width: 100%;
+  cursor: pointer;
   @apply --shadow-2dp;
 }
-.wrapper:hover {
+.box:hover {
   @apply --shadow-6dp;
 }
 .image {

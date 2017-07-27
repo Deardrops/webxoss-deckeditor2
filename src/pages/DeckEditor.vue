@@ -1,26 +1,24 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
-import ListContainer from 'components/ListContainer'
-import Block from 'components/Block'
-import CardImage from 'components/CardImage'
-import Searcher from 'js/Searcher.js'
-import { defaultSort } from 'js/util'
-import Icon from 'components/Icon'
+import FlexboxContainer from 'components/FlexboxContainer'
 import CardInfoTable from 'components/CardInfoTable'
+import CardImage from 'components/CardImage'
+import Icon from 'components/Icon'
+import Box from 'components/Box'
+import { defaultSort } from 'js/util'
+import Searcher from 'js/Searcher.js'
 import Localize from 'js/Localize'
-import Card from 'components/Card'
 
 export default {
   components: {
     AppHeader,
     HeaderIcon,
-    ListContainer,
-    Block,
+    FlexboxContainer,
+    CardInfoTable,
     CardImage,
     Icon,
-    CardInfoTable,
-    Card,
+    Box,
   },
   data: () => ({
     queryString: 's',
@@ -103,9 +101,8 @@ export default {
       this.sidebarVisible = false
     },
     scrollToTop() {
-      if (this.$refs.scrollDiv) {
-        this.$refs.scrollDiv.scrollTop = 0
-      }
+      window.scrollTo(0, 0)
+      this.$refs.flexboxContainer.resetRows()
     },
   },
   mounted() {
@@ -154,34 +151,33 @@ export default {
       </app-header>
       <div :class="$style.container" @click="closeSidebar">
         <div v-show="resultVisible" :class="$style.content">
-          <div :class="$style.cards">
-            <card
-              v-for="card in matchedCards.slice(0,50)"
-              :card=card
-              actionType="add"
-              @click="setAsShownCard"
-              @action="addCard" />
-          </div>
+          <flexbox-container ref="flexboxContainer" :cards="matchedCards">
+            <template scope="props">
+              <box
+                :card="props.card"
+                :class="$style.card"
+                icon="add"
+                @click="setAsShownCard"
+                @action="addCard" />
+            </template>
+          </flexbox-container>
         </div>
         <div v-show="!resultVisible" :class="$style.content">
-          <div :class="$style.cards">
-            <card
+          <div :class="$style.boxs">
+            <box
               v-for="card in sortedMainDeck"
-              :card=card
-              :class="$style.card"
-              actionType="remove"
+              :card="card"
+              icon="remove"
               @click="setAsShownCard"
-              @action="delCard" />
+              @action="delCard"/>
           </div>
-          <div :class="$style.cards">
-            <card
+          <div :class="$style.boxs">
+            <box
               v-for="card in sortedLrigDeck"
-              :card=card
-              :class="$style.card"
-              actionType="remove"
+              :card="card"
+              icon="remove"
               @click="setAsShownCard"
-              @action="delCard">
-            </card>
+              @action="delCard"/>
           </div>
         </div>
       </div>
@@ -255,7 +251,7 @@ export default {
   margin-left: 2em;
   background-color: #fafafa;
 }
-.cards {
+.boxs {
   width: 100%;
   display: flex;
   flex-wrap: wrap;

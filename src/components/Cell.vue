@@ -193,15 +193,27 @@ export default {
       </div>
     </div>
   </router-link>
-
 </template>
 
 <style src="css/colors.css" module="$color"></style>
 <style module>
 @import 'css/vars.css';
-
+.cell {
+  display: flex;
+  box-sizing: border-box;
+  padding: var(--padding);
+  height: 8rem;
+  justify-content: center;
+  border-bottom: 1px solid var(--cell-border-color);
+}
 .translucent {
   opacity: 0.7;
+}
+.thumbnail {
+  width: calc(8rem - 2 * var(--padding));
+  height: calc(8rem - 2 * var(--padding));
+  border: 2px solid currentColor;
+  margin: auto 0;
 }
 .wrapper {
   position: relative;
@@ -224,20 +236,6 @@ export default {
     top: 0;
     left: 0;
   }
-}
-.cell {
-  display: flex;
-  box-sizing: border-box;
-  padding: var(--padding);
-  height: 8rem;
-  justify-content: center;
-  border-bottom: 1px solid var(--cell-border-color);
-}
-.thumbnail {
-  width: calc(8rem - 2 * var(--padding));
-  height: calc(8rem - 2 * var(--padding));
-  border: 2px solid currentColor;
-  margin: auto 0;
 }
 .left {
   align-self: center;
