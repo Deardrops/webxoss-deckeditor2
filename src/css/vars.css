@@ -8,8 +8,8 @@
   --z-sidebar: 1;
   --z-header: 2;
   --z-header-menu: 3;
-  --z-modal: 4;
-  --z-nav: 5;
+  --z-nav: 4;
+  --z-modal: 5;
 
   /* shadows */
   --shadow-2dp: {

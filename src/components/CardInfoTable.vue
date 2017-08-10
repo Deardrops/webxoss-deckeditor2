@@ -112,7 +112,7 @@ export default {
   </div>
 </template>
 
-<style module>
+<style module scoped>
 .table {
   width: 100%;
   line-height: 1.5;

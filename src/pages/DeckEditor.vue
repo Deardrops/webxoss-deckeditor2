@@ -1,8 +1,10 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
+import DeckModals from 'components/DeckModals'
 import FlexboxContainer from 'components/FlexboxContainer'
 import CardInfoTable from 'components/CardInfoTable'
+import DeckSubheader from 'components/DeckSubheader'
 import CardImage from 'components/CardImage'
 import Icon from 'components/Icon'
 import Box from 'components/Box'
@@ -14,14 +16,16 @@ export default {
   components: {
     AppHeader,
     HeaderIcon,
+    DeckModals,
     FlexboxContainer,
+    DeckSubheader,
     CardInfoTable,
     CardImage,
     Icon,
     Box,
   },
   data: () => ({
-    queryString: 's',
+    queryString: '',
     timer: -1,
     blocking: false,
     sidebarVisible: false,
@@ -36,6 +40,7 @@ export default {
       'deckPids',
       'mainDeck',
       'lrigDeck',
+      'deckNames',
     ]),
     query: {
       get() {
@@ -80,6 +85,12 @@ export default {
     },
   },
   methods: {
+    openModal(type) {
+      this.$refs.modals.open(type)
+    },
+    closeModal() {
+      this.$refs.modals.close()
+    },
     delCard(pid) {
       this.$store.commit('delCard', pid)
     },
@@ -94,6 +105,10 @@ export default {
       this.openSidebar()
       this.$store.commit('setShownPid', pid)
     },
+    changeDeck(name) {
+      this.query = ''
+      this.$store.commit('switchDeck', name)
+    },
     openSidebar() {
       this.sidebarVisible = true
     },
@@ -102,11 +117,13 @@ export default {
     },
     scrollToTop() {
       window.scrollTo(0, 0)
-      this.$refs.flexboxContainer.resetRows()
+      if (this.$refs.flexboxContainer) {
+        this.$refs.flexboxContainer.resetRows()
+      }
     },
-  },
-  mounted() {
-    this.query = ''
+    L(text) {
+      return Localize(text)
+    },
   },
   watch: {
     query(str) {
@@ -124,15 +141,17 @@ export default {
   <div>
     <div :class="$style.nav">
       <div :class="$style.flexCenter">
-        <a :class="$style.title"> WEBXOSS </a>
+        <a href="#" :class="$style.title"> WEBXOSS</a>
+      </div>
+      <div :class="$style.flexCenter">
+        <button @click="openModal('add')" :class="[$style.mainColor, $style.button]">
+          {{ L('new_deck') }}
+        </button>
       </div>
       <div :class="$style.decks">
-        <div>WHITE HOPE</div>
-        <div>RED AMBITION</div>
-        <div>BLUE APPLI</div>
-        <div>GREEN WANNA</div>
-        <div>BLACDESIRE</div>
-        <div>BLUE REQUEST</div>
+        <a v-for="name in deckNames" @click="changeDeck(name)">
+          <div>{{ name }}</div>
+        </a>
       </div>
     </div>
     <div>
@@ -147,7 +166,7 @@ export default {
           maxlength="30"
           v-model="query"/>
         <header-icon slot="right" name="blocks"/>
-        <div slot="right" style="width: 15%;"/>
+        <div slot="right" style="width: 10%;"/>
       </app-header>
       <div :class="$style.container" @click="closeSidebar">
         <div v-show="resultVisible" :class="$style.content">
@@ -163,6 +182,17 @@ export default {
           </flexbox-container>
         </div>
         <div v-show="!resultVisible" :class="$style.content">
+          <div :class="$style.flex">
+            <div :class="$style.deckName">{{ deckName }}</div>
+            <div style="margin-left: auto;">
+              <button
+                :class="[$style.grey, $style.button]"
+                @click="openModal('delete')">
+                {{ L('delete')}}
+              </button>
+            </div>
+          </div>
+          <deck-subheader />
           <div :class="$style.boxs">
             <box
               v-for="card in sortedMainDeck"
@@ -171,6 +201,7 @@ export default {
               @click="setAsShownCard"
               @action="delCard"/>
           </div>
+          <deck-subheader :lrig="true" />
           <div :class="$style.boxs">
             <box
               v-for="card in sortedLrigDeck"
@@ -193,6 +224,7 @@ export default {
         <card-info-table :card="shownCard"/>
       </div>
     </transition>
+    <deck-modals ref="modals"/>
   </div>
 </template>
 
@@ -220,6 +252,19 @@ export default {
   font-size: 1.5rem;
   color: var(--main-color);
 }
+.mainColor {
+  color: #fff;
+  background-color: var(--main-color);
+}
+.grey {
+  color: #000;
+  background-color: #eee;
+}
+.button {
+  padding: .2em 2em;
+  text-transform: capitalize;
+  @apply --shadow-4dp;
+}
 .decks {
   color: #757575;
   padding: 1em 1em;
@@ -245,11 +290,19 @@ export default {
 }
 .container {
   margin-left: 15%;
-  margin-right: 15%;
+  margin-right: 10%;
 }
 .content {
   margin-left: 2em;
   background-color: #fafafa;
+}
+.flex {
+  display: flex;
+  align-items: center;
+  padding: .5rem;
+}
+.deckName {
+  font-size: 1.5em;
 }
 .boxs {
   width: 100%;
@@ -266,7 +319,6 @@ export default {
   background-color: #fafafa;
   overflow-y: auto;
   box-shadow: -2px 0 4px 0 rgba(0, 0, 0, .15);
-  transition: transform 0.3s, right 0.3s;
   padding: .5em;
 }
 .image {

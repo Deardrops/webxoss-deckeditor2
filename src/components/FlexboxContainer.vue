@@ -32,11 +32,13 @@ export default {
     calcColunms() {
       if (this.$children.length) {
         let itemWidth = this.$children[0].$el.clientWidth
-        let selfWidth = this.$el.clientWidth
-        this.colunms = Math.floor(selfWidth / itemWidth)
+        if (itemWidth) {
+          let selfWidth = this.$el.clientWidth
+          this.colunms = Math.floor(selfWidth / itemWidth)
+        }
       }
       this.request = requestIdleCallback(this.calcColunms)
-    }
+    },
   },
   mounted() {
     this.calcColunms()
@@ -50,6 +52,7 @@ export default {
   },
   destroyed() {
     cancelIdleCallback(this.request)
+    window.onscroll = false
   },
 }
 </script>

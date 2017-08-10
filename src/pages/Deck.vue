@@ -184,7 +184,7 @@ export default {
     </app-header>
     <deck-head
       :scrolledToLrig="scrolledToLrig"
-      :previewing="previewing"
+      :show="!previewing"
       :shadow="!scrolledToTop">
     </deck-head>
 

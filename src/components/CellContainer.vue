@@ -35,7 +35,7 @@ export default {
     ]),
     colunms() {
       // window's width > 1024px, use 2 colunm view
-      return this.windowWidth > 1024 ? 2 : 1
+      return this.windowWidth > 961 ? 2 : 1
     },
     rows() {
       return this.cards.length / this.colunms
@@ -100,9 +100,9 @@ export default {
   display: flex;
   flex-wrap: wrap;
 }
-.row>a {
+.row>* {
   width: 100%;
-  @media (width >= 1024px) {
+  @media (min-width: 961px) {
     width: 50%;
   }
 }

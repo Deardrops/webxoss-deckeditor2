@@ -1,48 +1,16 @@
 <script>
-import Localize from 'js/Localize'
-import checkMayusRoom from 'js/MayusRoom'
+import DeckSubheader from 'components/DeckSubheader'
 
 export default {
+  components: {
+    DeckSubheader,
+  },
   props: {
     scrolledToLrig: {
       require: true,
     },
-    previewing: {
-      require: true,
-    },
     shadow: {
       require: true,
-    },
-  },
-  computed: {
-    burstCount() {
-      return this.$store.getters.deck
-        .map(card => CardInfo[card.cid]) // TODO: utils
-        .filter(card => card.burstEffectTexts)
-        .length
-    },
-    burstClass() {
-      return this.burstCount === 20 ? '' : this.$style.warn
-    },
-    mainCount() {
-      return this.$store.getters.mainDeck.length
-    },
-    mainClass() {
-      return this.mainCount === 40 ? '' : this.$style.warn
-    },
-    lrigCount() {
-      return this.$store.getters.lrigDeck.length
-    },
-    lrigClass() {
-      return this.lrigCount <= 10 ? '' : this.$style.warn
-    },
-    deckBanned() {
-      return checkMayusRoom(this.$store.getters.deck)
-    },
-  },
-  methods: {
-    L(text) {
-      return Localize(text)
     },
   },
 }
@@ -51,24 +19,7 @@ export default {
 <template>
   <div :class="$style.wrapper">
     <div :class="[$style.head, shadow ? $style.shadow : '']">
-      <template v-if="previewing">
-        <span>{{ L('overview') }}</span>
-      </template>
-
-      <template v-if="!previewing && !scrolledToLrig">
-        <span :class="$style.deckName">{{ L('main_deck')}} </span>
-        (<span :class="mainClass">{{ mainCount }}</span>/40)
-      </template>
-
-      <template v-if="!previewing && scrolledToLrig">
-        <span :class="$style.deckName">{{ L('lrig_deck') }} </span>
-        (<span :class="lrigClass">{{ lrigCount }}</span>/10)
-      </template>
-
-      <div :class="$style.right">
-        <span :class="[$style.warn, $style.mayu]" v-show="deckBanned">{{ L('mayu_room') }}</span>
-        <span>{{ L('life_burst_short') }}: <span :class="burstClass">{{ burstCount }}</span>/20</span>
-      </div>
+      <deck-subheader :class="$style.subheader" :lrig="scrolledToLrig" />
     </div>
   </div>
 </template>
@@ -102,14 +53,7 @@ export default {
     border-bottom: transparent;
   }
 }
-.right {
-  flex: 1;
-  text-align: right;
-}
-.warn {
-  color: #ff5722;
-}
-.mayu {
-  margin-right: .5em;
+.subheader {
+  width: 100%
 }
 </style>

@@ -170,9 +170,6 @@ const mutations = {
     state.fontSize = +window.getComputedStyle(window.document.body)
         .fontSize.slice(0, -2)
   },
-  setFontSize(state, size) {
-    state.fontSize = size
-  },
   setShownPid(state, pid) {
     if (0 < pid && pid < Object.keys(CardInfo).length) {
       state.shownPid = pid
