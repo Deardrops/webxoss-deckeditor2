@@ -1,6 +1,6 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
-import { AppHeader, HeaderIcon } from 'components/AppHeader'
+import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import FlexboxContainer from 'components/FlexboxContainer'
 import CardInfoTable from 'components/CardInfoTable'
@@ -16,6 +16,7 @@ export default {
   components: {
     AppHeader,
     HeaderIcon,
+    HeaderMenu,
     DeckModals,
     FlexboxContainer,
     DeckSubheader,
@@ -33,7 +34,6 @@ export default {
   }),
   computed: {
     ...mapState([
-      'deckName',
       'shownPid',
     ]),
     ...mapGetters([
@@ -42,6 +42,31 @@ export default {
       'lrigDeck',
       'deckNames',
     ]),
+    menuItems() {
+      return [
+        {
+          title: Localize('clone'),
+          icon: 'copy',
+          action: () => {
+            this.openModal('clone')
+          },
+        },
+        {
+          title: Localize('import'),
+          icon: 'download',
+          action: () => {
+            alert('Not yet implemented.')
+          },
+        },
+        {
+          title: Localize('export'),
+          icon: 'upload',
+          action: () => {
+            alert('Not yet implemented.')
+          },
+        },
+      ]
+    },
     query: {
       get() {
         return this.queryString
@@ -65,6 +90,19 @@ export default {
         }, 500)
       },
     },
+    deckName: {
+      get() {
+        return this.$store.state.deckName
+      },
+      set(name) {
+        if (name && !this.deckNames.includes(name)) {
+          this.$store.commit('renameDeck', {
+            origin: this.deckName,
+            name,
+          })
+        }
+      },
+    },
     sortedMainDeck() {
       return defaultSort(this.mainDeck)
     },
@@ -85,6 +123,12 @@ export default {
     },
   },
   methods: {
+    openMenu() {
+      this.$refs.menu.open()
+    },
+    closeMenu() {
+      this.$refs.menu.close()
+    },
     openModal(type) {
       this.$refs.modals.open(type)
     },
@@ -148,9 +192,9 @@ export default {
           {{ L('new_deck') }}
         </button>
       </div>
-      <div :class="$style.decks">
+      <div :class="$style.navList">
         <a v-for="name in deckNames" @click="changeDeck(name)">
-          <div>{{ name }}</div>
+          <div :class="[$style.navItem, name === deckName ? $style.navItemSelected : '']">{{ name }}</div>
         </a>
       </div>
     </div>
@@ -165,7 +209,8 @@ export default {
           autocapitalize="none"
           maxlength="30"
           v-model="query"/>
-        <header-icon slot="right" name="blocks"/>
+        <header-icon slot="right" :style="{ width: 'initial' }" name="blocks"/>
+        <header-icon slot="right" name="more" @click.native="openMenu"/>
         <div slot="right" style="width: 10%;"/>
       </app-header>
       <div :class="$style.container" @click="closeSidebar">
@@ -183,7 +228,13 @@ export default {
         </div>
         <div v-show="!resultVisible" :class="$style.content">
           <div :class="$style.flex">
-            <div :class="$style.deckName">{{ deckName }}</div>
+            <input
+              v-model.lazy.trim="deckName"
+              spellcheck="false"
+              autocomplete="off"
+              autocapitalize="none"
+              maxlength="20"
+              :class="$style.deckNameInput" />
             <div style="margin-left: auto;">
               <button
                 :class="[$style.grey, $style.button]"
@@ -224,6 +275,7 @@ export default {
         <card-info-table :card="shownCard"/>
       </div>
     </transition>
+    <header-menu ref="menu" :items="menuItems" :decktopView="true"/>
     <deck-modals ref="modals"/>
   </div>
 </template>
@@ -264,13 +316,24 @@ export default {
   padding: .2em 2em;
   text-transform: capitalize;
   @apply --shadow-4dp;
+  transition: .3s;
 }
-.decks {
+.button:hover {
+  @apply --shadow-8dp;
+}
+.navList {
   color: #757575;
-  padding: 1em 1em;
-  &>div {
-    padding: .3em 0;
-  }
+  padding: 1em 0;
+}
+.navItem {
+  padding: .4em 1em;
+}
+.navItem:hover {
+  background-color: rgba(0,0,0,.03);
+}
+.navItemSelected {
+  background-color: rgba(0,0,0,.05);
+  color: #212121;
 }
 .searchBar {
   flex: 1;
@@ -301,13 +364,19 @@ export default {
   align-items: center;
   padding: .5rem;
 }
-.deckName {
+.deckNameInput {
   font-size: 1.5em;
+  cursor: text;
+  display: block;
+}
+.deckNameInput:hover {
+  background-color: rgba(77,144,254,0.15);
 }
 .boxs {
   width: 100%;
   display: flex;
   flex-wrap: wrap;
+  padding: .5em 0;
 }
 .sidebar {
   position: fixed;

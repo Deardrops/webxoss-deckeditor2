@@ -76,7 +76,6 @@ export default {
 <style module>
 .subheader {
   display: flex;
-  font-size: 1em;
   color: #666;
   padding: 0 .5rem;
 }

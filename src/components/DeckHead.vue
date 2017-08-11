@@ -54,6 +54,7 @@ export default {
   }
 }
 .subheader {
-  width: 100%
+  width: 100%;
+  font-size: 1.3em;
 }
 </style>

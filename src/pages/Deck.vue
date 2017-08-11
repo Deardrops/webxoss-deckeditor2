@@ -183,8 +183,8 @@ export default {
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
     <deck-head
+      v-show="!previewing"
       :scrolledToLrig="scrolledToLrig"
-      :show="!previewing"
       :shadow="!scrolledToTop">
     </deck-head>
 

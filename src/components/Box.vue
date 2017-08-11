@@ -75,6 +75,7 @@ export default {
   width: 100%;
   cursor: pointer;
   @apply --shadow-2dp;
+  transition: .3s;
 }
 .box:hover {
   @apply --shadow-6dp;
