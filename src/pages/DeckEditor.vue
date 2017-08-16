@@ -2,6 +2,7 @@
 import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
+import ActionButtonBar from 'components/ActionButtonBar'
 import FlexboxContainer from 'components/FlexboxContainer'
 import CardInfoTable from 'components/CardInfoTable'
 import DeckSubheader from 'components/DeckSubheader'
@@ -18,6 +19,7 @@ export default {
     HeaderIcon,
     HeaderMenu,
     DeckModals,
+    ActionButtonBar,
     FlexboxContainer,
     DeckSubheader,
     CardInfoTable,
@@ -29,12 +31,11 @@ export default {
     queryString: '',
     timer: -1,
     blocking: false,
-    sidebarVisible: false,
-    resultVisible: false,
   }),
   computed: {
     ...mapState([
       'shownPid',
+      'selectedPids',
     ]),
     ...mapGetters([
       'deckPids',
@@ -90,6 +91,15 @@ export default {
         }, 500)
       },
     },
+    resultVisible() {
+      return !!this.query
+    },
+    sidebarVisible() {
+      return !!this.shownPid
+    },
+    actionButtonBarVisable() {
+      return !!this.selectedPids.length
+    },
     deckName: {
       get() {
         return this.$store.state.deckName
@@ -112,8 +122,15 @@ export default {
     matchedCards() {
       return Searcher.search(this.query)
     },
+    shownCardPid() {
+      if (0 < this.shownPid && this.shownPid < Object.keys(CardInfo).length) {
+        return this.shownPid
+      } else {
+        return 23
+      }
+    },
     shownCard() {
-      return CardInfo[this.shownPid]
+      return CardInfo[this.shownCardPid]
     },
     shownCardName() {
       return Localize.cardName(this.shownCard)
@@ -135,29 +152,14 @@ export default {
     closeModal() {
       this.$refs.modals.close()
     },
-    delCard(pid) {
-      this.$store.commit('delCard', pid)
-    },
-    addCard(pid) {
-      this.$store.dispatch('addCard', pid).then((successed) => {
-        if (!successed) {
-          console.log('already full') // show toast here
-        }
-      })
-    },
-    setAsShownCard(pid) {
-      this.openSidebar()
-      this.$store.commit('setShownPid', pid)
+    closeBar() {
+      this.$store.commit('clearSelectedPids')
+      this.$store.commit('clearShownPid')
     },
     changeDeck(name) {
       this.query = ''
+      this.closeBar()
       this.$store.commit('switchDeck', name)
-    },
-    openSidebar() {
-      this.sidebarVisible = true
-    },
-    closeSidebar() {
-      this.sidebarVisible = false
     },
     scrollToTop() {
       window.scrollTo(0, 0)
@@ -169,15 +171,6 @@ export default {
       return Localize(text)
     },
   },
-  watch: {
-    query(str) {
-      if (str) {
-        this.resultVisible = true
-      } else {
-        this.resultVisible = false
-      }
-    },
-  },
 }
 </script>
 
@@ -185,7 +178,7 @@ export default {
   <div>
     <div :class="$style.nav">
       <div :class="$style.flexCenter">
-        <a href="#" :class="$style.title"> WEBXOSS</a>
+        <a href="#" :class="$style.title"> WEBXOSS </a>
       </div>
       <div :class="$style.flexCenter">
         <button @click="openModal('add')" :class="[$style.mainColor, $style.button]">
@@ -199,7 +192,7 @@ export default {
       </div>
     </div>
     <div>
-      <app-header>
+      <app-header :class="$style.appHeader">
         <div slot="left" style="width: 15%;" />
         <input
           :class="$style.searchBar"
@@ -211,18 +204,13 @@ export default {
           v-model="query"/>
         <header-icon slot="right" :style="{ width: 'initial' }" name="blocks"/>
         <header-icon slot="right" name="more" @click.native="openMenu"/>
-        <div slot="right" style="width: 10%;"/>
+        <div slot="right" style="width: 15%;"/>
       </app-header>
-      <div :class="$style.container" @click="closeSidebar">
+      <div :class="$style.container" @click="closeBar">
         <div v-show="resultVisible" :class="$style.content">
           <flexbox-container ref="flexboxContainer" :cards="matchedCards">
             <template scope="props">
-              <box
-                :card="props.card"
-                :class="$style.card"
-                icon="add"
-                @click="setAsShownCard"
-                @action="addCard" />
+              <box :card="props.card" :selection="actionButtonBarVisable"/>
             </template>
           </flexbox-container>
         </div>
@@ -245,28 +233,18 @@ export default {
           </div>
           <deck-subheader />
           <div :class="$style.boxs">
-            <box
-              v-for="card in sortedMainDeck"
-              :card="card"
-              icon="remove"
-              @click="setAsShownCard"
-              @action="delCard"/>
+            <box v-for="card in sortedMainDeck" :card="card" :selection="actionButtonBarVisable"/>
           </div>
           <deck-subheader :lrig="true" />
           <div :class="$style.boxs">
-            <box
-              v-for="card in sortedLrigDeck"
-              :card="card"
-              icon="remove"
-              @click="setAsShownCard"
-              @action="delCard"/>
+            <box v-for="card in sortedLrigDeck" :card="card" :selection="actionButtonBarVisable"/>
           </div>
         </div>
       </div>
     </div>
     <transition name="slide">
       <div v-show="sidebarVisible" :class="$style.sidebar">
-        <card-image :class="$style.image" :pid="shownPid"/>
+        <card-image :class="$style.image" :pid="shownCardPid"/>
         <div style="display: flex;">
           <span>{{ shownCard.wxid }}</span>
           <span style="margin-left: auto;">{{ shownCardLimiting }}</span>
@@ -275,7 +253,8 @@ export default {
         <card-info-table :card="shownCard"/>
       </div>
     </transition>
-    <header-menu ref="menu" :items="menuItems" :decktopView="true"/>
+    <action-button-bar v-show="actionButtonBarVisable" :searching="resultVisible" />
+    <header-menu ref="menu" :items="menuItems" :decktopView="true" />
     <deck-modals ref="modals"/>
   </div>
 </template>
@@ -297,7 +276,7 @@ export default {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 3rem;
+  height: 4rem;
   border-bottom: 1px solid var(--cell-border-color);
 }
 .title {
@@ -335,6 +314,9 @@ export default {
   background-color: rgba(0,0,0,.05);
   color: #212121;
 }
+.appHeader {
+  font-size: .75em;
+}
 .searchBar {
   flex: 1;
   color: #fff;
@@ -353,7 +335,7 @@ export default {
 }
 .container {
   margin-left: 15%;
-  margin-right: 10%;
+  margin-right: 15%;
 }
 .content {
   margin-left: 2em;
@@ -384,7 +366,7 @@ export default {
   top: 4rem;
   right: 0;
   width: 20%;
-  height: calc(100% - 4rem);
+  height: calc(100% - var(--header-height));
   background-color: #fafafa;
   overflow-y: auto;
   box-shadow: -2px 0 4px 0 rgba(0, 0, 0, .15);

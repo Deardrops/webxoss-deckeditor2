@@ -9,8 +9,7 @@ export default {
       type: Object,
       require: true,
     },
-    icon: {
-      type: String,
+    selection: {
       require: true,
     },
   },
@@ -19,25 +18,36 @@ export default {
     Icon,
   },
   data: () => ({
-    actionVisible: false,
+    selected: false,
   }),
   computed:{
     name() {
       return Localize.cardName(this.card)
     },
+    pid() {
+      return this.card.pid
+    },
   },
   methods: {
     click() {
-      this.$emit('click', this.card.pid)
+      if (this.selected) {
+        this.selected = false
+        // this.$store.commit('clearShownPid')
+        this.$store.commit('delSelectedPid', this.pid)
+      } else {
+        this.selected = true
+        this.$store.commit('addSelectedPid', this.pid)
+      }
     },
-    buttonClick() {
-      this.$emit('action', this.card.pid)
+    actionClick() {
+      this.$store.commit('setShownPid', this.pid)
     },
-    showAction() {
-      this.actionVisible = true
-    },
-    hideAction() {
-      this.actionVisible = false
+  },
+  watch: {
+    selection(selection) {
+      if (selection === false) {
+        this.selected = false
+      }
     },
   },
 }
@@ -48,15 +58,17 @@ export default {
   <div :class="$style.wrapper">
     <div
       :class="$style.box"
-      @click.stop="click"
-      @mouseover="showAction"
-      @mouseout="hideAction">
+      @click.stop="click">
       <thumbnail :class="$style.image" :pid="card.pid" />
-      <div :class="$style.dimmer">
-        <div :class="$style.title">{{ name }}</div>
-        <a v-show="actionVisible" :class="$style.action" @click.stop="buttonClick">
-          <icon v-if="icon==='remove'" name="add" style="transform: rotate(45deg);"/>
-          <icon v-else :name="icon"/>
+      <div v-show="selected" :class="$style.relative">
+        <div :class="$style.dimmer">
+          <icon :class="$style.circle" name="check" />
+        </div>
+      </div>
+      <div :class="$style.content">
+        <div :class="$style.title" :title="name">{{ name }}</div>
+        <a :class="$style.action" @click.stop="actionClick">
+          <icon name="information" />
         </a>
       </div>
     </div>
@@ -66,8 +78,8 @@ export default {
 <style module>
 @import 'css/vars.css';
 .wrapper {
-  height: 9rem;
-  width: 9rem;
+  height: 10.1rem;
+  width: 8rem;
   padding: .5rem;
 }
 .box {
@@ -81,34 +93,56 @@ export default {
   @apply --shadow-6dp;
 }
 .image {
-  width: 100%;
-  height: 100%;
+  width: 8rem;
+  height: 8rem;
 }
 .dimmer {
   position: relative;
-  top: -2.2rem;
-  display: flex;
+  top: -8rem;
+  left: 0;
+  height: 8rem;
+  width: 8rem;
   background-color: color(#000 a(.65))
+}
+.relative {
+  position: relative;
+  height: 0;
+}
+.circle {
+  position: absolute;
+  top: .5em;
+  right: .5em;
+  z-index: var(--z-box-counter);
+  font-size: 1.5em;
+  padding: .2em;
+  background-color: color(#fff a(.9));
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #000;
+}
+.content {
+  display: flex;
+  height: 2.1em;
+  background-color: #333;
 }
 .title {
   flex: 1;
-  font-size: .8rem;
-  line-height: 1rem;
-  padding: .1rem .2rem;
-  height: 2rem;
+  font-size: .7rem;
+  padding: 1em 0 1em 1em;
   overflow: hidden;
+  width: auto;
   text-overflow: ellipsis;
+  white-space: nowrap;
   color: #fff;
 }
 .action {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 2rem;
-  height: 2rem;
-  line-height: 2rem;
-  padding: .1rem .2rem;
-  font-size: 2rem;
+  width: 2.1rem;
+  height: 2.1rem;
   color: #fff;
 }
 </style>

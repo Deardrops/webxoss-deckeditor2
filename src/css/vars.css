@@ -1,15 +1,17 @@
 :root {
   --main-color: #2196f3;
   --header-height: 4rem;
-  --padding: .8rem;
+  --padding: .8em;
   --cell-border-color: #d6d6d6;
 
   /* z-indexes */
-  --z-sidebar: 1;
-  --z-header: 2;
-  --z-header-menu: 3;
-  --z-nav: 4;
-  --z-modal: 5;
+  --z-box-counter: 1;
+  --z-sidebar: 8;
+  --z-header: 16;
+  --z-header-menu: 32;
+  --z-nav: 64;
+  --z-action-button-bar: 96;
+  --z-modal: 128;
 
   /* shadows */
   --shadow-2dp: {

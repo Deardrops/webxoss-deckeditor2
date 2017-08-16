@@ -85,7 +85,7 @@ export default {
   right: var(--padding);
 }
 .decktopPostion {
-  top: calc(4rem - var(--padding));
+  top: calc(var(--header-height) - var(--padding));
   right: calc(10% + 2 * var(--padding));
 }
 .item {

@@ -27,12 +27,15 @@ const state = {
   deckFiles: [],
   remainingPids: [],
 
+  selectedPids: [],
   // current selected deck name
   deckName: '',
-  shownPid: 1,
+  shownPid: 0,
+
   localization: {
     lang: 'en',
   },
+
   windowWidth: 0,
   fontSize: 14,
 }
@@ -174,6 +177,23 @@ const mutations = {
     if (0 < pid && pid < Object.keys(CardInfo).length) {
       state.shownPid = pid
     }
+  },
+  clearShownPid(state) {
+    state.shownPid = 0
+  },
+  addSelectedPid(state, pid) {
+    if (0 < pid && pid < Object.keys(CardInfo).length) {
+      state.selectedPids.push(pid)
+    }
+  },
+  delSelectedPid(state, pid) {
+    let idx = state.selectedPids.indexOf(pid)
+    if (idx !== -1) {
+      state.selectedPids.splice(idx, 1)
+    }
+  },
+  clearSelectedPids(state) {
+    state.selectedPids.splice(0)
   },
 }
 
