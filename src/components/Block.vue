@@ -61,6 +61,7 @@ export default {
   right: .2em;
   bottom: .2em;
   padding: 0 .2em;
+  font-size: 1.2em;
   color: #fff;
   background-color: color(#000 a(.6));
 }

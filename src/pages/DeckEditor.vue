@@ -4,14 +4,16 @@ import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import ActionButtonBar from 'components/ActionButtonBar'
 import FlexboxContainer from 'components/FlexboxContainer'
-import CardInfoTable from 'components/CardInfoTable'
-import DeckSubheader from 'components/DeckSubheader'
-import CardImage from 'components/CardImage'
+import DeckHead from 'components/DeckHead'
+import Sidebar from 'components/Sidebar'
+import Tips from 'components/Tips'
 import Icon from 'components/Icon'
 import Box from 'components/Box'
+import Block from 'components/Block'
 import { defaultSort } from 'js/util'
 import Searcher from 'js/Searcher.js'
 import Localize from 'js/Localize'
+import _ from 'lodash'
 
 export default {
   components: {
@@ -21,20 +23,23 @@ export default {
     DeckModals,
     ActionButtonBar,
     FlexboxContainer,
-    DeckSubheader,
-    CardInfoTable,
-    CardImage,
+    DeckHead,
+    Sidebar,
+    Tips,
     Icon,
     Box,
+    Block,
   },
   data: () => ({
     queryString: '',
     timer: -1,
     blocking: false,
+
+    shownTips: false,
+    previewing: false,
   }),
   computed: {
     ...mapState([
-      'shownPid',
       'selectedPids',
     ]),
     ...mapGetters([
@@ -94,12 +99,6 @@ export default {
     resultVisible() {
       return !!this.query
     },
-    sidebarVisible() {
-      return !!this.shownPid
-    },
-    actionButtonBarVisable() {
-      return !!this.selectedPids.length
-    },
     deckName: {
       get() {
         return this.$store.state.deckName
@@ -113,33 +112,20 @@ export default {
         }
       },
     },
-    sortedMainDeck() {
-      return defaultSort(this.mainDeck)
-    },
-    sortedLrigDeck() {
-      return defaultSort(this.lrigDeck)
-    },
     matchedCards() {
       return Searcher.search(this.query)
     },
-    shownCardPid() {
-      if (0 < this.shownPid && this.shownPid < Object.keys(CardInfo).length) {
-        return this.shownPid
-      } else {
-        return 23
-      }
+    shownMainDeck() {
+      let deck = _.unionBy(this.mainDeck, 'pid')
+      return defaultSort(deck)
     },
-    shownCard() {
-      return CardInfo[this.shownCardPid]
-    },
-    shownCardName() {
-      return Localize.cardName(this.shownCard)
-    },
-    shownCardLimiting() {
-      return Localize.limiting(this.shownCard)
+    shownLrigDeck() {
+      let deck = _.unionBy(this.lrigDeck, 'pid')
+      return defaultSort(deck)
     },
   },
   methods: {
+    defaultSort,
     openMenu() {
       this.$refs.menu.open()
     },
@@ -161,8 +147,12 @@ export default {
       this.closeBar()
       this.$store.commit('switchDeck', name)
     },
+    tooglePreview() {
+      this.previewing ? this.previewing = false : this.previewing = true
+    },
     scrollToTop() {
       window.scrollTo(0, 0)
+      this.shownTips = false
       if (this.$refs.flexboxContainer) {
         this.$refs.flexboxContainer.resetRows()
       }
@@ -192,7 +182,7 @@ export default {
       </div>
     </div>
     <div>
-      <app-header :class="$style.appHeader">
+      <app-header>
         <div slot="left" style="width: 15%;" />
         <input
           :class="$style.searchBar"
@@ -202,58 +192,67 @@ export default {
           autocapitalize="none"
           maxlength="30"
           v-model="query"/>
-        <header-icon slot="right" :style="{ width: 'initial' }" name="blocks"/>
-        <header-icon slot="right" name="more" @click.native="openMenu"/>
+        <template v-if="!resultVisible">
+          <header-icon slot="right" :style="{ width: 'initial' }" name="blocks" @click.native="tooglePreview" />
+          <header-icon slot="right" name="more" @click.native="openMenu"/>
+        </template>
+        <template v-if="resultVisible">
+          <header-icon slot="right" name="bulb" @click.native="shownTips = true" />
+        </template>
         <div slot="right" style="width: 15%;"/>
       </app-header>
       <div :class="$style.container" @click="closeBar">
         <div v-show="resultVisible" :class="$style.content">
-          <flexbox-container ref="flexboxContainer" :cards="matchedCards">
+          <flexbox-container v-if="matchedCards.length && !shownTips" ref="flexboxContainer" :cards="matchedCards">
             <template scope="props">
-              <box :card="props.card" :selection="actionButtonBarVisable"/>
+              <box :card="props.card" />
             </template>
           </flexbox-container>
+          <tips v-if="!matchedCards.length && !shownTips" name="emptyTips" />
+          <tips v-if="shownTips" name="searchTips" />
         </div>
         <div v-show="!resultVisible" :class="$style.content">
-          <div :class="$style.flex">
-            <input
-              v-model.lazy.trim="deckName"
-              spellcheck="false"
-              autocomplete="off"
-              autocapitalize="none"
-              maxlength="20"
-              :class="$style.deckNameInput" />
-            <div style="margin-left: auto;">
-              <button
-                :class="[$style.grey, $style.button]"
-                @click="openModal('delete')">
-                {{ L('delete')}}
-              </button>
+          <template v-if="!previewing">
+            <div :class="$style.flex">
+              <input
+                v-model.lazy.trim="deckName"
+                spellcheck="false"
+                autocomplete="off"
+                autocapitalize="none"
+                maxlength="20"
+                :class="$style.deckNameInput" />
+              <div style="margin-left: auto;">
+                <button
+                  :class="[$style.grey, $style.button]"
+                  @click="openModal('delete')">
+                  {{ L('delete')}}
+                </button>
+              </div>
             </div>
-          </div>
-          <deck-subheader />
-          <div :class="$style.boxs">
-            <box v-for="card in sortedMainDeck" :card="card" :selection="actionButtonBarVisable"/>
-          </div>
-          <deck-subheader :lrig="true" />
-          <div :class="$style.boxs">
-            <box v-for="card in sortedLrigDeck" :card="card" :selection="actionButtonBarVisable"/>
-          </div>
+            <deck-head />
+            <div :class="$style.boxs">
+              <box v-for="card in defaultSort(mainDeck)" :card="card" />
+            </div>
+            <deck-head :lrig="true" />
+            <div :class="$style.boxs">
+              <box v-for="card in defaultSort(lrigDeck)" :card="card" />
+            </div>
+          </template>
+          <template v-if="previewing">          
+            <div :class="$style.blocks">
+              <div>
+                <block v-for="card in shownMainDeck" :class="$style.block" :card="card" :showCount="true" />
+              </div>
+              <div>
+                <block v-for="card in shownLrigDeck" :class="$style.block" :card="card" :showCount="true" />
+              </div>
+            </div>
+          </template>
         </div>
       </div>
     </div>
-    <transition name="slide">
-      <div v-show="sidebarVisible" :class="$style.sidebar">
-        <card-image :class="$style.image" :pid="shownCardPid"/>
-        <div style="display: flex;">
-          <span>{{ shownCard.wxid }}</span>
-          <span style="margin-left: auto;">{{ shownCardLimiting }}</span>
-        </div>
-        <div style="font-size: 1.5em;">{{ shownCardName }}</div>
-        <card-info-table :card="shownCard"/>
-      </div>
-    </transition>
-    <action-button-bar v-show="actionButtonBarVisable" :searching="resultVisible" />
+    <sidebar />
+    <action-button-bar :searching="resultVisible" />
     <header-menu ref="menu" :items="menuItems" :decktopView="true" />
     <deck-modals ref="modals"/>
   </div>
@@ -280,7 +279,7 @@ export default {
   border-bottom: 1px solid var(--cell-border-color);
 }
 .title {
-  font-size: 1.5rem;
+  font-size: 1.7rem;
   color: var(--main-color);
 }
 .mainColor {
@@ -314,9 +313,6 @@ export default {
   background-color: rgba(0,0,0,.05);
   color: #212121;
 }
-.appHeader {
-  font-size: .75em;
-}
 .searchBar {
   flex: 1;
   color: #fff;
@@ -334,8 +330,8 @@ export default {
   background-color: #ffff00;
 }
 .container {
-  margin-left: 15%;
-  margin-right: 15%;
+  padding: 0 15%;
+  min-height: calc(100vh - var(--header-height));
 }
 .content {
   margin-left: 2em;
@@ -360,21 +356,11 @@ export default {
   flex-wrap: wrap;
   padding: .5em 0;
 }
-.sidebar {
-  position: fixed;
-  z-index: var(--z-sidebar);
-  top: 4rem;
-  right: 0;
-  width: 20%;
-  height: calc(100% - var(--header-height));
-  background-color: #fafafa;
-  overflow-y: auto;
-  box-shadow: -2px 0 4px 0 rgba(0, 0, 0, .15);
-  padding: .5em;
+.blocks {
+  padding: var(--padding);
 }
-.image {
-  width: 80%;
-  display: block;
-  margin: 0 auto;
+.block {
+  width: 12%;
+  padding: .2em;
 }
 </style>

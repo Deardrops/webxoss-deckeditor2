@@ -1,4 +1,5 @@
 <script>
+import { mapState } from 'vuex'
 import Thumbnail from 'components/Thumbnail'
 import Icon from 'components/Icon'
 import Localize from 'js/Localize'
@@ -7,9 +8,6 @@ export default {
   props: {
     card: {
       type: Object,
-      require: true,
-    },
-    selection: {
       require: true,
     },
   },
@@ -21,6 +19,12 @@ export default {
     selected: false,
   }),
   computed:{
+    ...mapState([
+      'selectedPids',
+    ]),
+    selection() {
+      return !!this.selectedPids.length
+    },
     name() {
       return Localize.cardName(this.card)
     },
@@ -51,7 +55,6 @@ export default {
     },
   },
 }
-
 </script>
 
 <template>

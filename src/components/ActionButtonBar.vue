@@ -1,7 +1,12 @@
 <script>
 import { mapState } from 'vuex'
+import Icon from 'components/Icon'
+import Localize from 'js/Localize'
 
 export default {
+  components: {
+    Icon,
+  },
   props: {
     searching: {
       require: true,
@@ -14,6 +19,9 @@ export default {
     ]),
     count() {
       return this.selectedPids.length
+    },
+    visable() {
+      return !!this.selectedPids.length
     },
   },
   methods: {
@@ -32,26 +40,31 @@ export default {
     cancel() {
       this.$store.commit('clearSelectedPids')
     },
+    L(text) {
+      return Localize(text)
+    },
   },
 }
 </script>
 
 <template>
-  <div :class="$style.wrapper">
-    <div :class="$style.count"> {{ count }} selected </div>
-    <div v-show="searching" :class="$style.deck">
-      <span>add to</span>
-      <span>{{ deckName }}</span>
+  <transition name="slide">
+    <div v-show="visable" :class="$style.wrapper">
+      <div :class="$style.count"> {{ count }} selected </div>
+      <div v-show="searching" :class="$style.deck">
+        <span>add to deck</span>
+        <span :class="$style.name">{{ deckName }}</span>
+      </div>
+      <template v-if="!searching">
+        <a :class="$style.cancel" @click="cancel">{{ L('cancel') }}</a>
+        <a :class="$style.action" @click="remove">{{ L('delete') }}</a>
+      </template>
+      <template v-if="searching">
+        <a :class="$style.cancel" @click="cancel">{{ L('ok') }}</a>
+        <a :class="$style.action" @click="add">{{ L('add') }}</a>
+      </template>
     </div>
-    <template v-if="!searching">
-      <a :class="$style.cancel" @click="cancel">cancel</a>
-      <a :class="$style.action" @click="remove">remove</a>
-    </template>
-    <template v-if="searching">
-      <a :class="$style.cancel" @click="cancel">ok</a>
-      <a :class="$style.action" @click="add">add</a>
-    </template>
-  </div>
+  </transition>
 </template>
 
 <style module>
@@ -60,15 +73,16 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  height: var(--header-height);
+  width: 100%;
   display: flex;
   align-items: center;
-  height: var(--header-height);
   line-height: var(--header-height);
-  width: 100%;
   background-color: var(--main-color);
   z-index: var(--z-action-button-bar);
-  color: #fff;
   font-size: 1.2em;
+  color: #fff;
+  text-transform: capitalize;
 }
 .count {
   width: 15%;
@@ -77,11 +91,34 @@ export default {
 .deck {
   padding-left: .5rem;
 }
+.name {
+  padding-left: 2rem;
+}
 .cancel {
   margin-left: auto;
-  padding-right: 2rem;
 }
+.cancel,
 .action {
-  padding-right: 2rem;
+  cursor: pointer;
+  padding: 0 1rem;
+}
+.cancel:hover,
+.action:hover {
+  background-color: rgba(0,0,0,.27);
+}
+.wrapper:global(.slide-enter-active) {
+  animation: slide-in .5s;
+}
+.wrapper:global(.slide-leave-active) {
+  animation: slide-in .5s reverse;
+}
+@keyframes slide-in {
+  from {
+    transform: translate3d(0, -100%, 0);
+    visibility: visible;
+  }
+  to {
+    transform: translate3d(0, 0, 0);
+  }
 }
 </style>

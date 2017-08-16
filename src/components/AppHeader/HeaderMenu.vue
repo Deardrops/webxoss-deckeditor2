@@ -86,7 +86,7 @@ export default {
 }
 .decktopPostion {
   top: calc(var(--header-height) - var(--padding));
-  right: calc(10% + 2 * var(--padding));
+  right: calc(15% + 2 * var(--padding));
 }
 .item {
   padding: var(--padding);

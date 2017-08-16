@@ -2,8 +2,8 @@
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import CellContainer from 'components/CellContainer'
 import Searcher from 'js/Searcher.js'
-import marked from 'marked'
 import Cell from 'components/Cell'
+import Tips from 'components/Tips'
 
 export default {
   components: {
@@ -11,15 +11,13 @@ export default {
     HeaderIcon,
     CellContainer,
     Cell,
+    Tips,
   },
   data: () => ({
     // To improve performance when user typing,
     // block the search for a short time after input.
     timer: -1,
     blocking: false,
-
-    searchTips: require('./searchTips.md'), // test
-    emptyTips: require('./emptyTips.md'), // test
   }),
   computed: {
     query: {
@@ -54,7 +52,6 @@ export default {
     },
   },
   methods: {
-    marked,
     updateQueryPart(part) {
       let query = Object.assign({}, this.$route.query, part)
       Object.keys(query).forEach(key => {
@@ -97,12 +94,8 @@ export default {
         </template>
       </cell-container>
     </section>
-    <section :class="$style.tips" v-if="!query">
-      <div v-html="marked(searchTips)"></div>
-    </section>
-    <section :class="$style.tips" v-if="query && !matchedCards.length">
-      <div v-html="marked(emptyTips)"></div>
-    </section>
+    <tips v-if="!query" name="searchTips" />
+    <tips v-if="query && !matchedCards.length" name="emptyTips" />
   </div>
 </template>
 
@@ -121,32 +114,5 @@ export default {
 .search::selection {
   color: #333;
   background-color: #ffff00;
-}
-.tips {
-  padding: 2rem 2rem 0 2rem;
-  color: #666;
-  line-height: 1.5;
-
-  & h3 {
-    font-size: 1.5em;
-  }
-
-  & p,
-  & ul {
-    margin: .5em 0; 
-  }
-
-  & ul {
-    list-style-type: disc;
-    list-style-position: outside;
-    padding-left: 2em;
-  }
-
-  & code {
-    margin: 0 .2em;
-    font-family: monospace;
-    white-space: nowrap;
-    border-bottom: 1px dotted #333;
-  }
 }
 </style>
