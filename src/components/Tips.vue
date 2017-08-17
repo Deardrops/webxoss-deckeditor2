@@ -24,7 +24,7 @@ export default {
 
 <template>
   <section :class="$style.tips">
-    <div v-html="html"></div>
+    <div v-html="html" />
   </section>
 </template>
 

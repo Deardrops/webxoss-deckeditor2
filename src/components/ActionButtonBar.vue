@@ -40,8 +40,8 @@ export default {
     cancel() {
       this.$store.commit('clearSelectedPids')
     },
-    L(text) {
-      return Localize(text)
+    L(text, arg) {
+      return Localize(text, arg)
     },
   },
 }
@@ -50,18 +50,18 @@ export default {
 <template>
   <transition name="slide">
     <div v-show="visable" :class="$style.wrapper">
-      <div :class="$style.count"> {{ count }} selected </div>
+      <div :class="$style.count"> {{ L('card_selected', count) }}</div>
       <div v-show="searching" :class="$style.deck">
-        <span>add to deck</span>
+        <span>{{ L('add_to_deck') }}</span>
         <span :class="$style.name">{{ deckName }}</span>
       </div>
       <template v-if="!searching">
-        <a :class="$style.cancel" @click="cancel">{{ L('cancel') }}</a>
         <a :class="$style.action" @click="remove">{{ L('delete') }}</a>
+        <a :class="$style.cancel" @click="cancel">{{ L('cancel') }}</a>
       </template>
       <template v-if="searching">
-        <a :class="$style.cancel" @click="cancel">{{ L('ok') }}</a>
         <a :class="$style.action" @click="add">{{ L('add') }}</a>
+        <a :class="$style.cancel" @click="cancel">{{ L('finished') }}</a>
       </template>
     </div>
   </transition>
@@ -73,14 +73,14 @@ export default {
   position: fixed;
   top: 0;
   left: 0;
+  z-index: var(--z-action-button-bar);
   height: var(--header-height);
   width: 100%;
   display: flex;
   align-items: center;
   line-height: var(--header-height);
-  background-color: var(--main-color);
-  z-index: var(--z-action-button-bar);
   font-size: 1.2em;
+  background-color: var(--main-color);
   color: #fff;
   text-transform: capitalize;
 }
@@ -94,7 +94,7 @@ export default {
 .name {
   padding-left: 2rem;
 }
-.cancel {
+.action {
   margin-left: auto;
 }
 .cancel,
@@ -107,10 +107,10 @@ export default {
   background-color: rgba(0,0,0,.27);
 }
 .wrapper:global(.slide-enter-active) {
-  animation: slide-in .5s;
+  animation: slide-in .3s;
 }
 .wrapper:global(.slide-leave-active) {
-  animation: slide-in .5s reverse;
+  animation: slide-in .3s reverse;
 }
 @keyframes slide-in {
   from {

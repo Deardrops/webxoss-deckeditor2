@@ -22,7 +22,7 @@ export default {
     ...mapState([
       'selectedPids',
     ]),
-    selection() {
+    selecting() {
       return !!this.selectedPids.length
     },
     name() {
@@ -36,7 +36,6 @@ export default {
     click() {
       if (this.selected) {
         this.selected = false
-        // this.$store.commit('clearShownPid')
         this.$store.commit('delSelectedPid', this.pid)
       } else {
         this.selected = true
@@ -48,8 +47,8 @@ export default {
     },
   },
   watch: {
-    selection(selection) {
-      if (selection === false) {
+    selecting(selecting) {
+      if (selecting === false) {
         this.selected = false
       }
     },
@@ -116,14 +115,14 @@ export default {
   top: .5em;
   right: .5em;
   z-index: var(--z-box-counter);
-  font-size: 1.5em;
-  padding: .2em;
-  background-color: color(#fff a(.9));
-  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
+  font-size: 1.5em;
+  padding: .2em;
   color: #000;
+  background-color: color(#fff a(.9));
+  border-radius: 50%;
 }
 .content {
   display: flex;
@@ -135,7 +134,6 @@ export default {
   font-size: .7rem;
   padding: 1em 0 1em 1em;
   overflow: hidden;
-  width: auto;
   text-overflow: ellipsis;
   white-space: nowrap;
   color: #fff;

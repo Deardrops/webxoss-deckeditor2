@@ -1,10 +1,17 @@
 <script>
+import Box from 'components/Box'
 
 export default {
+  components: {
+    Box,
+  },
   props: {
     cards: {
       type: Array,
       require: true,
+    },
+    loadMoreEnabled: {
+      require: false,
     },
   },
   data: () => ({
@@ -17,9 +24,13 @@ export default {
       return this.colunms * this.rows
     },
     iterator() {
-      return this.shownCount < this.cards.length
-        ? this.cards.slice(0, this.shownCount)
-        : this.cards
+      if (this.loadMoreEnabled) {
+        return this.shownCount < this.cards.length
+          ? this.cards.slice(0, this.shownCount)
+          : this.cards
+      } else {
+        return this.cards
+      }
     },
   },
   methods: {
@@ -59,7 +70,7 @@ export default {
 
 <template>
   <div :class="$style.container">
-    <slot v-for="item in iterator" :card="item"/>
+    <box v-for="card in iterator" :card="card" />
   </div>
 </template>
 

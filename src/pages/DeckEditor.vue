@@ -3,7 +3,7 @@ import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import ActionButtonBar from 'components/ActionButtonBar'
-import FlexboxContainer from 'components/FlexboxContainer'
+import BoxContainer from 'components/BoxContainer'
 import DeckHead from 'components/DeckHead'
 import Sidebar from 'components/Sidebar'
 import Tips from 'components/Tips'
@@ -22,7 +22,7 @@ export default {
     HeaderMenu,
     DeckModals,
     ActionButtonBar,
-    FlexboxContainer,
+    BoxContainer,
     DeckHead,
     Sidebar,
     Tips,
@@ -75,7 +75,7 @@ export default {
     },
     query: {
       get() {
-        return this.queryString
+        return this.$route.query.query || ''
       },
       set(query) {
         if (this.blocking) {
@@ -88,7 +88,9 @@ export default {
           return
         }
 
-        this.queryString = query
+        this.updateQueryPart({
+          query,
+        })
         this.scrollToTop()
         this.blocking = true
         this.timer = setTimeout(() => {
@@ -126,6 +128,18 @@ export default {
   },
   methods: {
     defaultSort,
+    updateQueryPart(part) {
+      let query = Object.assign({}, this.$route.query, part)
+      Object.keys(query).forEach(key => {
+        if (!query[key]) {
+          delete query[key]
+        }
+      })
+      this.$router.replace({
+        path: this.$route.path,
+        query,
+      })
+    },
     openMenu() {
       this.$refs.menu.open()
     },
@@ -150,11 +164,14 @@ export default {
     tooglePreview() {
       this.previewing ? this.previewing = false : this.previewing = true
     },
+    toogleTips() {
+      this.shownTips ? this.shownTips = false : this.shownTips = true
+    },
     scrollToTop() {
       window.scrollTo(0, 0)
       this.shownTips = false
-      if (this.$refs.flexboxContainer) {
-        this.$refs.flexboxContainer.resetRows()
+      if (this.$refs.boxContainer) {
+        this.$refs.boxContainer.resetRows()
       }
     },
     L(text) {
@@ -197,17 +214,17 @@ export default {
           <header-icon slot="right" name="more" @click.native="openMenu"/>
         </template>
         <template v-if="resultVisible">
-          <header-icon slot="right" name="bulb" @click.native="shownTips = true" />
+          <header-icon slot="right" name="bulb" @click.native="toogleTips" />
         </template>
-        <div slot="right" style="width: 15%;"/>
+        <div slot="right" style="width: 10%;"/>
       </app-header>
       <div :class="$style.container" @click="closeBar">
-        <div v-show="resultVisible" :class="$style.content">
-          <flexbox-container v-if="matchedCards.length && !shownTips" ref="flexboxContainer" :cards="matchedCards">
-            <template scope="props">
-              <box :card="props.card" />
-            </template>
-          </flexbox-container>
+        <div v-if="resultVisible" :class="$style.content">
+          <box-container
+            v-if="matchedCards.length && !shownTips"
+            ref="boxContainer"
+            :loadMoreEnabled="true"
+            :cards="matchedCards" />
           <tips v-if="!matchedCards.length && !shownTips" name="emptyTips" />
           <tips v-if="shownTips" name="searchTips" />
         </div>
@@ -230,15 +247,11 @@ export default {
               </div>
             </div>
             <deck-head />
-            <div :class="$style.boxs">
-              <box v-for="card in defaultSort(mainDeck)" :card="card" />
-            </div>
+            <box-container :cards="defaultSort(mainDeck)" />
             <deck-head :lrig="true" />
-            <div :class="$style.boxs">
-              <box v-for="card in defaultSort(lrigDeck)" :card="card" />
-            </div>
+            <box-container :cards="defaultSort(lrigDeck)" />
           </template>
-          <template v-if="previewing">          
+          <template v-if="previewing">
             <div :class="$style.blocks">
               <div>
                 <block v-for="card in shownMainDeck" :class="$style.block" :card="card" :showCount="true" />
@@ -330,11 +343,12 @@ export default {
   background-color: #ffff00;
 }
 .container {
-  padding: 0 15%;
+  padding: 0 10% 0 15%;
   min-height: calc(100vh - var(--header-height));
 }
 .content {
   margin-left: 2em;
+  padding-top: .5em;
   background-color: #fafafa;
 }
 .flex {
@@ -349,12 +363,6 @@ export default {
 }
 .deckNameInput:hover {
   background-color: rgba(77,144,254,0.15);
-}
-.boxs {
-  width: 100%;
-  display: flex;
-  flex-wrap: wrap;
-  padding: .5em 0;
 }
 .blocks {
   padding: var(--padding);

@@ -28,19 +28,12 @@ export default {
     handleClick() {
       this.$emit('click', this.card.pid)
     },
-    handleHover() {
-      // 节流
-      this.$emit('hover', this.card.pid)
-    },
   },
 }
 </script>
 
 <template>
-  <a
-    :class="$style.block"
-    @click.stop="handleClick"
-    @mouseover="handleHover">
+  <a :class="$style.block" @click.stop="handleClick">
     <card-image :pid="card.pid" :class="$style.image" />
     <div v-if="showCount" :class="$style.dimmer">×{{ count }}</div>
   </a>

@@ -27,10 +27,10 @@ const state = {
   deckFiles: [],
   remainingPids: [],
 
-  selectedPids: [],
   // current selected deck name
   deckName: '',
   shownPid: 0,
+  selectedPids: [],
 
   localization: {
     lang: 'en',

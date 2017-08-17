@@ -29,6 +29,11 @@ confirm_delete: 确定删除卡组 %s ？
 // cell component
 no_cost: 无费用
 
+// action button bar
+card_selected: 已选择 %s 张卡片
+add_to_deck: 添加到卡组
+finished: 完成
+
 // prop
 cardType: 种类
 classes: 类别

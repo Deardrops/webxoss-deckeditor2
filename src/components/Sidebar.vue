@@ -1,8 +1,8 @@
 <script>
 import { mapState } from 'vuex'
-import Localize from 'js/Localize'
 import CardImage from 'components/CardImage'
 import CardInfoTable from 'components/CardInfoTable'
+import Localize from 'js/Localize'
 
 export default {
   components: {
@@ -10,22 +10,22 @@ export default {
     CardInfoTable,
   },
   data: () => ({
-    pid: 1,
+    pid: 0,
   }),
   computed: {
     ...mapState([
       'shownPid',
     ]),
-    sidebarVisible() {
+    visible() {
       return !!this.shownPid
     },
     card() {
       return CardInfo[this.pid]
     },
-    cardName() {
+    name() {
       return Localize.cardName(this.card)
     },
-    cardLimiting() {
+    limiting() {
       return Localize.limiting(this.card)
     },
   },
@@ -41,13 +41,13 @@ export default {
 
 <template>
   <transition name="slide">
-    <div v-show="sidebarVisible" :class="$style.sidebar">
+    <div v-show="visible" :class="$style.sidebar">
       <card-image :class="$style.image" :pid="pid"/>
       <div style="display: flex;">
         <span>{{ card.wxid }}</span>
-        <span style="margin-left: auto;">{{ cardLimiting }}</span>
+        <span style="margin-left: auto;">{{ limiting }}</span>
       </div>
-      <div style="font-size: 1.5em;">{{ cardName }}</div>
+      <div style="font-size: 1.5em;">{{ name }}</div>
       <card-info-table :card="card"/>
     </div>
   </transition>
@@ -73,10 +73,10 @@ export default {
   margin: 0 auto;
 }
 .sidebar:global(.slide-enter-active) {
-  animation: slide-in .5s;
+  animation: slide-in .3s;
 }
 .sidebar:global(.slide-leave-active) {
-  animation: slide-in .5s reverse;
+  animation: slide-in .3s reverse;
 }
 @keyframes slide-in {
   from {
