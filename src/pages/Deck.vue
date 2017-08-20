@@ -6,7 +6,7 @@ import DeckFloatButton from 'components/DeckFloatButton'
 import ListContainer from 'components/ListContainer'
 import Cell from 'components/Cell'
 import Block from 'components/Block'
-import DeckHead from 'components/DeckHead'
+import DeckSubheader from 'components/DeckSubheader'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
@@ -22,7 +22,7 @@ export default {
     ListContainer,
     Cell,
     Block,
-    DeckHead,
+    DeckSubheader,
     Icon,
   },
   data: () => ({
@@ -124,7 +124,7 @@ export default {
     closeModal() {
       this.$refs.modals.close()
     },
-    updateDeckHeader() {
+    updateDeckHead() {
       let lrigDeck = this.$refs.lrigDeck
       if (!lrigDeck) {
         return
@@ -133,7 +133,7 @@ export default {
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
       this.scrolledToTop = window.scrollY <= 0
-      this.request = requestIdleCallback(this.updateDeckHeader)
+      this.request = requestIdleCallback(this.updateDeckHead)
     },
     toggleView() {
       this.previewing ? this.goListView() : this.goBlockView()
@@ -161,7 +161,7 @@ export default {
     },
   },
   mounted() {
-    this.updateDeckHeader()
+    this.updateDeckHead()
   },
   destroyed() {
     cancelIdleCallback(this.request)
@@ -182,11 +182,11 @@ export default {
         @click.native="toggleView"/>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head
+    <deck-subheader
+      v-show="!previewing"
       :scrolledToLrig="scrolledToLrig"
-      :previewing="previewing"
       :shadow="!scrolledToTop">
-    </deck-head>
+    </deck-subheader>
 
     <!-- List view -->
     <template v-if="!previewing">

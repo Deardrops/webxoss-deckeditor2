@@ -8,6 +8,7 @@ import Searcher from 'js/Searcher.js'
 import { defaultSort } from 'js/util'
 import Icon from 'components/Icon'
 import CardInfo from 'components/CardInfo'
+import DeckHead from 'components/DeckHead'
 
 export default {
   components: {
@@ -18,6 +19,7 @@ export default {
     CardImage,
     Icon,
     CardInfo,
+    DeckHead,
   },
   data: () => ({
     queryString: 's',
@@ -99,7 +101,7 @@ export default {
         <div :class="$style.deckName">{{ deckName }}</div>
       </div>
 
-      <div>MainDeck</div>
+      <deck-head />
       <div :class="$style.mainDeck">
         <block
           v-for="card in sortedMainDeck"
@@ -107,7 +109,7 @@ export default {
           :card="card"
           @click="delCard"/>
       </div>
-      <div>LrigDeck</div>
+      <deck-head :lrig="true" />
       <div :class="$style.lrigDeck">
         <block
           v-for="card in sortedLrigDeck"
