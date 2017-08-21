@@ -92,53 +92,58 @@ export default {
 </script>
 
 <template>
-  <div :class="$style.container">
-    <div :class="$style.infoZone">
-      <card-info />
-    </div>
-    <div :class="$style.deckZone">
-      <div :class="$style.header">
-        <div :class="$style.deckName">{{ deckName }}</div>
+  <div>
+    <app-header :title="deckName">
+      <header-icon slot="right" name="more" @click.native="openMenu"/>
+    </app-header>
+    <div :class="$style.container">
+      <div :class="$style.infoZone">
+        <card-info />
       </div>
+      <div :class="$style.deckZone">
+<!--         <div :class="$style.header">
+          <div :class="$style.deckName">{{ deckName }}</div>
+        </div> -->
 
-      <deck-head />
-      <div :class="$style.mainDeck">
-        <block
-          v-for="card in sortedMainDeck"
-          :class="$style.deckBlock"
-          :card="card"
-          @click="delCard"/>
+        <deck-head />
+        <div :class="$style.mainDeck">
+          <block
+            v-for="card in sortedMainDeck"
+            :class="$style.deckBlock"
+            :card="card"
+            @click="delCard"/>
+        </div>
+        <deck-head :lrig="true" />
+        <div :class="$style.lrigDeck">
+          <block
+            v-for="card in sortedLrigDeck"
+            :class="$style.deckBlock"
+            :card="card"
+            @click="delCard"/>
+        </div>
       </div>
-      <deck-head :lrig="true" />
-      <div :class="$style.lrigDeck">
-        <block
-          v-for="card in sortedLrigDeck"
-          :class="$style.deckBlock"
-          :card="card"
-          @click="delCard"/>
-      </div>
-    </div>
-    <div :class="$style.searchZone">
-      <input
-        :class="$style.searchBar"
-        placeholder="Search..."
-        spellcheck="false"
-        autocomplete="off"
-        autocapitalize="none"
-        maxlength="30"
-        v-model="query"/>
-      <div :class="$style.result" ref="result">
-        <list-container
-          :cards="matchedCards"
-          :longListOpimizationEnabled="true"
-          :desktopView="true">
-          <template scope="props">
-            <block
-              :class="$style.searchBlock"
-              :card="props.card"
-              @click="addCard" />
-          </template>
-        </list-container>
+      <div :class="$style.searchZone">
+        <input
+          :class="$style.searchBar"
+          placeholder="Search..."
+          spellcheck="false"
+          autocomplete="off"
+          autocapitalize="none"
+          maxlength="30"
+          v-model="query"/>
+        <div :class="$style.result" ref="result">
+          <list-container
+            :cards="matchedCards"
+            :longListOpimizationEnabled="true"
+            :desktopView="true">
+            <template scope="props">
+              <block
+                :class="$style.searchBlock"
+                :card="props.card"
+                @click="addCard" />
+            </template>
+          </list-container>
+        </div>
       </div>
     </div>
   </div>
@@ -151,21 +156,24 @@ export default {
   --card-height: 4.886rem;
 }
 .container {
-  height: 100vh;
+  height: calc(100vh - var(--header-height));
   display: flex;
   justify-content: center;
   background-color: #fafafa;
   @apply --shadow-8dp;
 }
 .infoZone {
-  max-height: 100vh;
   width: calc(var(--card-width) * 4);
+  max-height: 100%;
   overflow-y: auto;
-  padding: .5em;
+  padding: .5rem;
 }
 .deckZone {
-  width: calc(var(--card-width) * 10);
-  max-height: 100vh;
+  min-width: calc(var(--card-width) * 10);
+  max-width: calc(var(--card-width) * 10.5);
+  max-height: 100%;
+  overflow-y: auto;
+  padding-top: .5rem;
 }
 .header {
   min-height: 3rem;
@@ -174,8 +182,9 @@ export default {
   font-size: 2rem;
 }
 .searchZone {
-  padding: 0 .5em;
+  max-height: 100%;
   width: calc(var(--card-width) * 3);
+  padding: 0 .5rem;
 }
 .deckBlock {
   width: var(--card-width);
@@ -199,7 +208,7 @@ export default {
   background-color: #2196f3;
 }
 .result {
-  max-height: calc(100vh - 3rem);
+  max-height: calc(100vh - 3rem - 4rem);
   overflow-y: auto;
 }
 .searchBlock {
