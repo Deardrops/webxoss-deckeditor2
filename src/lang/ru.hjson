@@ -142,3 +142,4 @@ CROSS_AND: >Cross< %s Right and %s Left
 CROSS_OR:  или 
 GUARD_DESCRIPTION: "[Защита] (Сбросив эту карту со своей руки, отмените атаку одной ИДЕЛ.)"
 MULTI_ENER_DESCRIPTION: "[Постоянно]: [Мульти-энер] (Когда Вы платите цену, считается, что эта карта относится ко всем цветам.)"
+LAYER_DESCRIPTION: "(Layer) All of your <Apparition> SIGNI get this [Layer] ability."

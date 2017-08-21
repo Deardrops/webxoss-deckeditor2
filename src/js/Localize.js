@@ -10,6 +10,7 @@ let maps = {
   ru: require('../lang/ru.hjson'),
   it: require('../lang/it.hjson'),
   ko: require('../lang/ko.hjson'),
+  sp: require('../lang/sp.hjson'),
 }
 
 // replace `%s` with args
@@ -61,6 +62,10 @@ Localize.effectTexts = info => {
   // mult ener
   if (info.multiEner) {
     texts.push(Localize('MULTI_ENER_DESCRIPTION'))
+  }
+  // layer
+  if (info.layer) {
+    texts.push(Localize('LAYER_DESCRIPTION'))
   }
   // CROSS
   function toNames(cross) {

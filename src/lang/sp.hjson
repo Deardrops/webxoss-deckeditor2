@@ -1,46 +1,46 @@
-suffix: _en
+suffix: _sp
 
 // common
 ok: ok
-cancel: cancel
-add: add
-create: create
+cancel: CANCELAR
+add: Agregar
+create: crear
 reserve: reserve
 
 // deck head
-main_deck: MainDeck
-lrig_deck: LrigDeck
-mayu_room: Mayu's Room
-life_burst_short: LB
+main_deck: Mazo Principal
+lrig_deck: Mazo LRIG
+mayu_room: Cuarto de Mayu
+life_burst_short: Burst
 overview: Overview
 
 // header menu list
 new_deck: new deck
 clone: clone
-rename: rename
-delete: delete
-import: import
-export: export
+rename: renombrar
+delete: borrar
+import: importar
+export: exportar
 
 // modal content text
 input_new_deck_name: New deck name:
-confirm_delete: Are you sure to delete %s ?
+confirm_delete: ¿Seguro que deseas borrar "%s"?
 
 // cell component
 no_cost: no cost
 
 // prop
-cardType: Type
-classes: Class
+cardType: Tipo
+classes: Clase
 level: Level
 color: Color
-limit: Limit
-power: Power
-limting: Limiting
-guard: Guard
-cost: Cost
-timings: Timing
-effects: Abilities
+limit: Limite
+power: Poder
+limting: Limitación
+guard: Guardia
+cost: Costo
+timings: Tiempo de Uso
+effects: Habilidades
 burst: Life Burst
 
 // card type
@@ -51,25 +51,25 @@ ARTS: ARTS
 RESONA: RESONA
 
 // color
-white: White
-black: Black
-red: Red
-blue: Blue
-green: Green
-colorless: Colorless
+white: Blanco
+black: Negro
+red: Rojo
+blue: Azul
+green: Verde
+colorless: Incoloro
 
 // cost
-costWhite: White
-costBlack: Black
-costRed: Red
-costBlue: Blue
-costGreen: Green
-costColorless: Colorless
+costWhite: Blanco
+costBlack: Negro
+costRed: Rojo
+costBlue: Azul
+costGreen: Verde
+costColorless: Incoloro
 
 // timing
-mainPhase: "[Main Phase]"
-attackPhase: "[Attack Phase]"
-spellCutIn: "[Spell Cut-In]"
+mainPhase: "[Fase Principal]"
+attackPhase: "[Fase de Ataque]"
+spellCutIn: "[Corta-Hechizos]"
 
 // class
 タマ: Tama
@@ -130,16 +130,16 @@ spellCutIn: "[Spell Cut-In]"
 怪異: Apparition
 
 // misc
-GUARD_TRUE: Yes
+GUARD_TRUE: Si
 GUARD_FALSE: No
 LIMITING: %s Only
 CLASS_SEPARATOR: ":\n"
 CROSS_NAME_QUOTE_LEFT: "\""
 CROSS_NAME_QUOTE_RIGHT: "\""
-CROSS_LEFT: >Cross< %s Left
-CROSS_RIGHT: >Cross< %s Right
-CROSS_AND: >Cross< %s Right and %s Left
-CROSS_OR:  or 
-GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
-MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
-LAYER_DESCRIPTION: "(Layer) All of your <Apparition> SIGNI get this [Layer] ability."
+CROSS_LEFT: >Cross< %s Izquierda
+CROSS_RIGHT: >Cross< %s Derecha
+CROSS_AND: >Cross< %s Derecha y %s Izquierda
+CROSS_OR:  o
+GUARD_DESCRIPTION: "[Guardia] (Al descartar esta carta de tu mano, deshabilita el ataque de una LRIG)"
+MULTI_ENER_DESCRIPTION: "[Constante]: [Multi Ener] (Cuando pagues un costo, trata esta carta como si tuviera todos los colores)"
+LAYER_DESCRIPTION: "(Layer) Todos tus SIGNI <Aparición> obtienen esta habilidad [Layer]."
