@@ -62,6 +62,10 @@ Localize.effectTexts = info => {
   if (info.multiEner) {
     texts.push(Localize('MULTI_ENER_DESCRIPTION'))
   }
+  // layer
+  if (info.layer) {
+    texts.push(Localize('LAYER_DESCRIPTION'))
+  }
   // CROSS
   function toNames(cross) {
     return [].concat(cross).map(cid => {

@@ -142,3 +142,4 @@ CROSS_AND: >Cross< %s Right and %s Left
 CROSS_OR:  or 
 GUARD_DESCRIPTION: "[Guard] (By discarding this card from your hand, disable one of a LRIG's attacks)"
 MULTI_ENER_DESCRIPTION: "[Constant]: [Multi Ener] (When you pay a cost, treat this card as if it has all colors)"
+LAYER_DESCRIPTION: "(Layer) All of your <Apparition> SIGNI get this [Layer] ability."

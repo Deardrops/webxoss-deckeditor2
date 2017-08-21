@@ -142,3 +142,4 @@ CROSS_AND: "[크로스]%s의 왼쪽과  %s의 오른쪽"
 CROSS_OR: 또는
 GUARD_DESCRIPTION: "[가드]（이 카드를 패에서 버리는 것으로, 루리그의 공격을 한 번 무효로 한다.）"
 MULTI_ENER_DESCRIPTION: "[상시]：[멀티에나]（코스트를 지불할 때, 이 카드는 모든 색을 가진것 처럼 취급한다.）"
+LAYER_DESCRIPTION: "(Layer) All of your <Apparition> SIGNI get this [Layer] ability."

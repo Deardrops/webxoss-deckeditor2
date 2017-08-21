@@ -142,3 +142,4 @@ CROSS_AND: 【CROSS】%s的左侧 和 %s的右侧
 CROSS_OR: 或
 GUARD_DESCRIPTION: 【防御】（从手牌舍弃此牌，将分身的1次攻击无效化）
 MULTI_ENER_DESCRIPTION: 【常】：【万花色】（支付费用时，这张牌视为持有所有颜色）
+LAYER_DESCRIPTION: "[レイヤー] なたのすべての＜怪異＞のシグニは《レイヤーア》の能力を得る"
