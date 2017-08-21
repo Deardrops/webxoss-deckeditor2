@@ -1,5 +1,5 @@
 <script>
-import { mapState, mapGetters } from 'vuex'
+import { mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import ListContainer from 'components/ListContainer'
 import Block from 'components/Block'
@@ -9,6 +9,7 @@ import { defaultSort } from 'js/util'
 import Icon from 'components/Icon'
 import CardInfo from 'components/CardInfo'
 import DeckHead from 'components/DeckHead'
+import DeckModals from 'components/DeckModals'
 
 export default {
   components: {
@@ -20,6 +21,7 @@ export default {
     Icon,
     CardInfo,
     DeckHead,
+    DeckModals,
   },
   data: () => ({
     queryString: 's',
@@ -27,14 +29,52 @@ export default {
     blocking: false,
   }),
   computed: {
-    ...mapState([
-      'deckName',
-    ]),
     ...mapGetters([
       'deckPids',
       'mainDeck',
       'lrigDeck',
+      'deckNames',
     ]),
+    actionItems() {
+      return [
+        {
+          icon: 'add',
+          action: () => {
+            this.openModal('add')
+          },
+        },
+        {
+          icon: 'copy',
+          action: () => {
+            this.openModal('clone')
+          },
+        },
+        {
+          icon: 'edit',
+          action: () => {
+            this.openModal('rename')
+          },
+        },
+        {
+          icon: 'del',
+          action: () => {
+            this.openModal('delete')
+          },
+        },
+        {
+          icon: 'download',
+          action: () => {
+            alert('Not yet implemented.')
+          },
+        },
+        {
+          icon: 'upload',
+          action: () => {
+            alert('Not yet implemented.')
+          },
+        },
+      ]
+    },
     query: {
       get() {
         return this.queryString
@@ -56,6 +96,14 @@ export default {
         this.timer = setTimeout(() => {
           this.blocking = false
         }, 500)
+      },
+    },
+    deckName: {
+      get() {
+        return this.$store.state.deckName
+      },
+      set(name) {
+        this.$store.commit('switchDeck', name)
       },
     },
     sortedMainDeck() {
@@ -84,6 +132,12 @@ export default {
         this.$refs.scrollDiv.scrollTop = 0
       }
     },
+    openModal(type) {
+      this.$refs.modals.open(type)
+    },
+    closeModal() {
+      this.$refs.modals.close()
+    },
   },
   mounted() {
     this.query = ''
@@ -93,20 +147,24 @@ export default {
 
 <template>
   <div>
-    <app-header :title="deckName">
-      <header-icon slot="right" name="more" @click.native="openMenu"/>
+    <app-header  :class="$style.appHeader">
+      <div slot="right"></div>
+      <select :class="$style.select" v-model="deckName">
+        <option v-for="name in deckNames" :value="name">{{ name }}</option>
+      </select>
+      <header-icon
+        v-for="item in actionItems"
+        slot="right"
+        :name="item.icon"
+        @click.native="item.action" />
     </app-header>
     <div :class="$style.container">
       <div :class="$style.infoZone">
         <card-info />
       </div>
       <div :class="$style.deckZone">
-<!--         <div :class="$style.header">
-          <div :class="$style.deckName">{{ deckName }}</div>
-        </div> -->
-
         <deck-head />
-        <div :class="$style.mainDeck">
+        <div :class="$style.blocks">
           <block
             v-for="card in sortedMainDeck"
             :class="$style.deckBlock"
@@ -114,7 +172,7 @@ export default {
             @click="delCard"/>
         </div>
         <deck-head :lrig="true" />
-        <div :class="$style.lrigDeck">
+        <div :class="$style.blocks">
           <block
             v-for="card in sortedLrigDeck"
             :class="$style.deckBlock"
@@ -146,6 +204,7 @@ export default {
         </div>
       </div>
     </div>
+    <deck-modals ref="modals"/>
   </div>
 </template>
 
@@ -155,6 +214,17 @@ export default {
   --card-width: 3.5rem;
   --card-height: 4.886rem;
 }
+.appHeader>header {
+  padding: 0 calc(0.5 * (100% - 18 * var(--card-width)));
+}
+.select {
+  flex: 1;
+  vertical-align: middle;
+  color: #fff;
+  & > option {
+    color: #000;
+  }
+}
 .container {
   height: calc(100vh - var(--header-height));
   display: flex;
@@ -163,17 +233,18 @@ export default {
   @apply --shadow-8dp;
 }
 .infoZone {
-  width: calc(var(--card-width) * 4);
+  width: calc(4 * var(--card-width));
   max-height: 100%;
   overflow-y: auto;
   padding: .5rem;
 }
 .deckZone {
-  min-width: calc(var(--card-width) * 10);
-  max-width: calc(var(--card-width) * 10.5);
   max-height: 100%;
   overflow-y: auto;
   padding-top: .5rem;
+}
+.blocks {
+  width: calc(10 * var(--card-width));
 }
 .header {
   min-height: 3rem;
@@ -183,7 +254,7 @@ export default {
 }
 .searchZone {
   max-height: 100%;
-  width: calc(var(--card-width) * 3);
+  width: calc(3 * var(--card-width));
   padding: 0 .5rem;
 }
 .deckBlock {
