@@ -1,0 +1,145 @@
+suffix: _sp
+
+// common
+ok: ok
+cancel: CANCELAR
+add: Agregar
+create: crear
+reserve: reserve
+
+// deck head
+main_deck: Mazo Principal
+lrig_deck: Mazo LRIG
+mayu_room: Cuarto de Mayu
+life_burst_short: Burst
+overview: Overview
+
+// header menu list
+new_deck: new deck
+clone: clone
+rename: renombrar
+delete: borrar
+import: importar
+export: exportar
+
+// modal content text
+input_new_deck_name: New deck name:
+confirm_delete: ¿Seguro que deseas borrar "%s"?
+
+// cell component
+no_cost: no cost
+
+// prop
+cardType: Tipo
+classes: Clase
+level: Level
+color: Color
+limit: Limite
+power: Poder
+limting: Limitación
+guard: Guardia
+cost: Costo
+timings: Tiempo de Uso
+effects: Habilidades
+burst: Life Burst
+
+// card type
+LRIG: LRIG
+SIGNI: SIGNI
+SPELL: SPELL
+ARTS: ARTS
+RESONA: RESONA
+
+// color
+white: Blanco
+black: Negro
+red: Rojo
+blue: Azul
+green: Verde
+colorless: Incoloro
+
+// cost
+costWhite: Blanco
+costBlack: Negro
+costRed: Rojo
+costBlue: Azul
+costGreen: Verde
+costColorless: Incoloro
+
+// timing
+mainPhase: "[Fase Principal]"
+attackPhase: "[Fase de Ataque]"
+spellCutIn: "[Corta-Hechizos]"
+
+// class
+タマ: Tama
+花代: Hanayo
+ユヅキ: Yuzuki
+ピルルク: Piruluk
+エルドラ: Eldora
+ミルルン: Mirurun
+緑子: Midoriko
+アン: Anne
+ウリス: Ulith
+イオナ: Iona
+ウムル: Umuru
+リメンバ: Remember
+タウィル: Tawil
+サシェ: Sashe
+ミュウ: Myuu
+アイヤイ: Aiyai
+アルフォウ: Alfou
+ハナレ: Hanare
+リル: Ril
+メル: Mel
+あや: Aya
+ナナシ: Nanashi
+ドーナ: Donna
+ママ: Mama
+精像: Image
+天使: Angel
+悪魔: Devil
+美巧: Beautiful Technique
+精武: War
+アーム: Arm
+ウェポン: Weapon
+遊具: Playground Equipment
+毒牙: Poison Fang
+精羅: Nature
+鉱石: Ore
+宝石: Gem
+植物: Plant
+原子: Atom
+宇宙: Space
+精械: Machine
+電機: Electric
+古代兵器: Ancient Weapon
+迷宮: Labyrinth
+精生: Living
+水獣: Water Beast
+空獣: Sky Beast
+地獣: Earth Beast
+龍獣: Dragon Beast
+凶蟲: Misfortune Insect
+精元: Origin
+武勇: Valor
+調理: Cooking
+トリック: Trick
+英知: Wisdom
+微菌: Bacteria
+怪異: Apparition
+
+// misc
+GUARD_TRUE: Si
+GUARD_FALSE: No
+LIMITING: %s Only
+CLASS_SEPARATOR: ":\n"
+CROSS_NAME_QUOTE_LEFT: "\""
+CROSS_NAME_QUOTE_RIGHT: "\""
+CROSS_LEFT: >Cross< %s Izquierda
+CROSS_RIGHT: >Cross< %s Derecha
+CROSS_AND: >Cross< %s Derecha y %s Izquierda
+CROSS_OR:  o
+GUARD_DESCRIPTION: "[Guardia] (Al descartar esta carta de tu mano, deshabilita el ataque de una LRIG)"
+MULTI_ENER_DESCRIPTION: "[Constante]: [Multi Ener] (Cuando pagues un costo, trata esta carta como si tuviera todos los colores)"
+LAYER_DESCRIPTION: "(Layer) Todos tus SIGNI <Aparición> obtienen esta habilidad [Layer]."

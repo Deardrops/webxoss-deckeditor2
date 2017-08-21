@@ -10,6 +10,7 @@ let maps = {
   ru: require('../lang/ru.hjson'),
   it: require('../lang/it.hjson'),
   ko: require('../lang/ko.hjson'),
+  sp: require('../lang/sp.hjson'),
 }
 
 // replace `%s` with args

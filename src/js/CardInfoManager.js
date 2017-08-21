@@ -6,6 +6,7 @@ let CardInfo_en = Object.create(window.CardInfo)
 let CardInfo_ko = Object.create(window.CardInfo)
 let CardInfo_ru = Object.create(window.CardInfo)
 let CardInfo_it = Object.create(window.CardInfo)
+let CardInfo_sp = Object.create(window.CardInfo)
 
 export function initCardInfos() {
   let CardInfos = {
@@ -13,6 +14,7 @@ export function initCardInfos() {
     'CardInfo_en': CardInfo_en,
     'CardInfo_ko': CardInfo_ko,
     'CardInfo_ru': CardInfo_ru,
+    'CardInfo_sp': CardInfo_sp,
   }
 
   let dir = process.env.NODE_ENV === 'production' ? '../lang/' : './lang/'
@@ -44,6 +46,7 @@ const langMaps = {
   'ko': CardInfo_ko,
   'ru': CardInfo_ru,
   'it': CardInfo_it,
+  'sp': CardInfo_sp,
 }
 
 export const setLanguegeCardInfo = lang => {
