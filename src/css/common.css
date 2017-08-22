@@ -1,36 +1,40 @@
+@custom-media --mobile-s (width <= 320px);
+@custom-media --mobile-m (width > 320px) and (width <= 375px);
+@custom-media --mobile-l (width > 375px) and (width <= 425px);
+@custom-media --tablet (width > 425px) and (width <= 768px);
+@custom-media --tablet-l (width > 768px) and (width <= 1024px);
+@custom-media --laptop (width > 1024px) and (width <= 1366px);
+@custom-media --laptop-l (width > 1366px) and (width <= 1440px);
+@custom-media --laptop-h (width > 1440px);
+
 :root {
   font-size: 14px;
   font-family: PingFangSC-Regular, 'Helvetica Neue', Tahoma, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   color: #333;
 
-  /* smartphones, iPhone, portrait 480x320 phones */
-  @media (min-width: 320px) {
+  @media (--mobile-s) {
     font-size: 12px;
   }
-
-  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
-  @media (min-width: 481px) {
+  @media (--mobile-m) {
     font-size: 14px;
   }
-
-  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
-  @media (min-width: 641px) {
+  @media (--mobile-l) {
+    font-size: 16px;
+  }
+  @media (--tablet) {
     font-size: 18px;
   }
-
-  /* tablet, landscape iPad, lo-res laptops ands desktops */
-  @media (min-width: 961px) {
+  @media (--tablet-l) {
     font-size: 20px;
   }
-
-  /* big landscape tablets, laptops, and desktops */ 
-  @media (min-width: 1025px){
-    font-size: 22px;
+  @media (--laptop) {
+    font-size: 14px;
   }
-
-  /* hi-res laptops and desktops */
-  @media (min-width: 1281px) {
-    font-size: 22px;
+  @media (--laptop-l) {
+    font-size: 16px;
+  }
+  @media (--laptop-h) {
+    font-size: 20px;
   }
 }
 

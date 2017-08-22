@@ -114,7 +114,7 @@ export default {
   flex-wrap: wrap;
   justify-content: center;
 }
-.row>* {
+.row > * {
   width: 100%;
   @media (min-width: 961px) {
     width: 50%;
