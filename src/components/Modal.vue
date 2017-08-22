@@ -25,6 +25,9 @@ export default {
     cancelText() {
       return this.config.cancelText || L('cancel')
     },
+    opened() {
+      return this.$route.query.modal
+    },
   },
   methods: {
     setInputValue(value) {
@@ -44,6 +47,11 @@ export default {
       this.$emit('ok', this.input)
     },
   },
+  watch: {
+    opened(opened) {
+      document.body.style.overflow = opened ? 'hidden' : 'auto'
+    },
+  },
 }
 </script>
 
@@ -52,6 +60,7 @@ export default {
     ref="wrapper"
     :class="$style.wrapper"
     tabindex="0"
+    @click.self="cancel"
     @keyup.esc="cancel">
     <form :class="$style.dialog" @submit.prevent="ok">
       <h3 :class="$style.title" v-if="config.title">{{ config.title }}</h3>
@@ -103,6 +112,9 @@ export default {
   background-color: #fff;
   border-radius: 2px;
   @apply --shadow-24dp;
+  @media (min-width: 1281px) {
+    width: 30%;
+  }
 }
 .title,
 .content,

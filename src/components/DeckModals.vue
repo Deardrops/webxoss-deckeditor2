@@ -73,7 +73,13 @@ export default {
   },
   methods: {
     open(type) {
-      this.$router.replace({
+      let assignRoute
+      if (Object.getOwnPropertyNames(this.$route.query).length) {
+        assignRoute = this.$router.replace.bind(this.$router)
+      } else {
+        assignRoute = this.$router.push.bind(this.$router)
+      }
+      assignRoute({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
           modal: type,

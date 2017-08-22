@@ -29,11 +29,15 @@ const state = {
 
   // current selected deck name
   deckName: '',
+  shownPid: 0,
+  selectedPids: [],
 
   localization: {
     lang: 'en',
   },
+
   windowWidth: 0,
+  fontSize: 14,
 }
 
 Localize.config = state.localization
@@ -164,8 +168,32 @@ const mutations = {
     state.localization.lang = lang
     setLanguegeCardInfo(lang)
   },
-  changeWindowWidth(state, width) {
-    state.windowWidth = width
+  setWindowData(state) {
+    state.windowWidth = window.innerWidth
+    state.fontSize = +window.getComputedStyle(window.document.body)
+        .fontSize.slice(0, -2)
+  },
+  setShownPid(state, pid) {
+    if (0 < pid && pid < Object.keys(CardInfo).length) {
+      state.shownPid = pid
+    }
+  },
+  clearShownPid(state) {
+    state.shownPid = 0
+  },
+  addSelectedPid(state, pid) {
+    if (0 < pid && pid < Object.keys(CardInfo).length) {
+      state.selectedPids.push(pid)
+    }
+  },
+  delSelectedPid(state, pid) {
+    let idx = state.selectedPids.indexOf(pid)
+    if (idx !== -1) {
+      state.selectedPids.splice(idx, 1)
+    }
+  },
+  clearSelectedPids(state) {
+    state.selectedPids.splice(0)
   },
 }
 
@@ -211,8 +239,6 @@ store.watch((state, getters) => {
   localStorage.setItem(deckName, JSON.stringify(file))
 })
 
-window.addEventListener('resize', () => {
-  store.commit('changeWindowWidth', window.innerWidth)
-}, false)
+window.addEventListener('resize', store.setWindowData, false)
 
 export default store

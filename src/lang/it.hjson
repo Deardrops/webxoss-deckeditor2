@@ -29,6 +29,11 @@ confirm_delete: Are you sure to delete %s ?
 // cell component
 no_cost: no cost
 
+// action button bar
+card_selected: %s selected
+add_to_deck: add to deck
+finished: finished
+
 // prop
 cardType: Tipo
 classes: Classe

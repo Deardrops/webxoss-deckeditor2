@@ -9,6 +9,9 @@ export default {
       type: Array,
       required: true,
     },
+    decktopView: {
+      required: false,
+    },
   },
   computed: {
     opened() {
@@ -42,7 +45,7 @@ export default {
 <template>
   <div :class="[$style.wrapper, opened ? $style.opened : '']" @click.self="close">
     <transition name="pop">
-      <ul :class="$style.menu" v-show="opened">
+      <ul :class="[$style.menu, decktopView ? $style.decktopPostion : $style.postion]" v-show="opened">
         <li
           :class="$style.item"
           v-for="item in items"
@@ -69,8 +72,6 @@ export default {
 }
 .menu {
   position: fixed;
-  top: var(--padding);
-  right: var(--padding);
   z-index: var(--z-header-menu);
 
   background-color: #fff;
@@ -78,6 +79,14 @@ export default {
 
   will-change: transform;
   transform-origin: right top;
+}
+.postion {
+  top: var(--padding);
+  right: var(--padding);
+}
+.decktopPostion {
+  top: calc(var(--header-height) - var(--padding));
+  right: calc(10% + 2 * var(--padding));
 }
 .item {
   padding: var(--padding);

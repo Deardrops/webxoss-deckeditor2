@@ -1,21 +1,11 @@
 <script>
 import { mapState } from 'vuex'
-import Cell from 'components/Cell'
-
-// 8rem
-let cellHeight = 8
 
 export default {
-  components: {
-    Cell,
-  },
   props: {
     cards: {
       type: Array,
       required: true,
-    },
-    protectionEnabled: {
-      require: false,
     },
     longListOpimizationEnabled: {
       require: false,
@@ -36,18 +26,19 @@ export default {
         See `updateIndex` for details.
     */
     index: 0,
+    itemHeight: 8,
   }),
   computed: {
     ...mapState([
       'windowWidth',
+      'fontSize',
     ]),
-    isTwoColunm() {
-      return this.windowWidth >= 1024
+    colunms() {
+      // window's width > 1024px, use 2 colunm view
+      return this.windowWidth > 961 ? 2 : 1
     },
-    allColunmsCount() {
-      return this.isTwoColunm
-        ? Math.ceil(this.cards.length / 2)
-        : this.cards.length
+    rows() {
+      return this.cards.length / this.colunms
     },
     start() {
       // 5 colunms before index
@@ -55,29 +46,25 @@ export default {
     },
     end() {
       // 10 colunms after index
-      return Math.min(this.allColunmsCount, this.index + 10)
+      return Math.min(this.rows, this.index + 10)
     },
     shownCards() {
-      return this.isTwoColunm
-        ? this.cards.slice(2 * this.start, 2 * this.end)
-        : this.cards.slice(this.start, this.end)
+      return this.cards.slice(this.colunms * this.start, this.colunms * this.end)
     },
-    shownColunmsCount() {
-      return this.isTwoColunm
-        ? Math.ceil(this.shownCards.length / 2)
-        : this.shownCards.length
+    shownRows() {
+      return Math.ceil(this.shownCards.length / this.colunms)
     },
     padding() {
-      // Paddings before / after shown cells.
+      // Paddings upper / under shown cells.
       // They keep list height and scroll position from changing。
-      let beforeCount = this.start
-      let afterCount = this.allColunmsCount - this.shownColunmsCount - beforeCount
+      let upperCount = this.start
+      let underCount = this.rows - this.shownRows - upperCount
       return {
-        'padding-top': `${cellHeight * beforeCount}rem`,
-        'padding-bottom': `${cellHeight * afterCount}rem`,
+        'padding-top': `${this.itemHeight * upperCount}rem`,
+        'padding-bottom': `${this.itemHeight * underCount}rem`,
       }
     },
-    cardIterator() {
+    iterator() {
       return this.longListOpimizationEnabled
         ? this.shownCards
         : this.cards
@@ -85,10 +72,8 @@ export default {
   },
   methods: {
     updateIndex() {
-      // Find the top cell in viewport according to `window.scrollY`.
-      let fontSize = +window.getComputedStyle(window.document.body)
-        .fontSize.slice(0, -2)
-      this.index = Math.round(window.scrollY / (cellHeight * fontSize))
+      // Find the top item in viewport according to`window.scrollY`.
+      this.index = Math.round(window.scrollY / this.itemHeight / this.fontSize)
       this.request = requestIdleCallback(this.updateIndex)
     },
   },
@@ -105,20 +90,19 @@ export default {
 
 <template>
   <div :class="$style.row" :style="padding">
-    <div v-for="card in cardIterator" :class="$style.col">
-      <cell :card="card" :protectionEnabled="protectionEnabled"/>
-    </div>
+    <slot v-for="item in iterator" :card="item"/>
   </div>
 </template>
 
 <style module>
 .row {
+  width: 100%;
   display: flex;
   flex-wrap: wrap;
 }
-.col {
+.row>* {
   width: 100%;
-  @media (width >= 1024px) {
+  @media (min-width: 961px) {
     width: 50%;
   }
 }

@@ -4,8 +4,9 @@ import { AppHeader, HeaderIcon, HeaderMenu } from 'components/AppHeader'
 import DeckModals from 'components/DeckModals'
 import DeckFloatButton from 'components/DeckFloatButton'
 import CellContainer from 'components/CellContainer'
+import Cell from 'components/Cell'
 import Block from 'components/Block'
-import DeckHead from 'components/DeckHead'
+import DeckSubheader from 'components/DeckSubheader'
 import Icon from 'components/Icon'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
@@ -19,8 +20,9 @@ export default {
     DeckModals,
     DeckFloatButton,
     CellContainer,
+    Cell,
     Block,
-    DeckHead,
+    DeckSubheader,
     Icon,
   },
   data: () => ({
@@ -122,7 +124,7 @@ export default {
     closeModal() {
       this.$refs.modals.close()
     },
-    updateDeckHeader() {
+    updateDeckSubheaderer() {
       let lrigDeck = this.$refs.lrigDeck
       if (!lrigDeck) {
         return
@@ -131,7 +133,7 @@ export default {
       let top = $lrigDeck ? $lrigDeck.getBoundingClientRect().top : 0
       this.scrolledToLrig = top <= window.innerHeight / 2
       this.scrolledToTop = window.scrollY <= 0
-      this.request = requestIdleCallback(this.updateDeckHeader)
+      this.request = requestIdleCallback(this.updateDeckSubheaderer)
     },
     toggleView() {
       this.previewing ? this.goListView() : this.goBlockView()
@@ -139,9 +141,6 @@ export default {
     goListView() {
       this.$router.push({
         path: '/deck',
-        // query: {
-        //   mode: 'list',
-        // },
       })
     },
     goBlockView() {
@@ -152,9 +151,17 @@ export default {
         },
       })
     },
+    goDetail(pid) {
+      this.$router.push({
+        path: '/detail',
+        query: {
+          pid,
+        },
+      })
+    },
   },
   mounted() {
-    this.updateDeckHeader()
+    this.updateDeckSubheaderer()
   },
   destroyed() {
     cancelIdleCallback(this.request)
@@ -175,25 +182,33 @@ export default {
         @click.native="toggleView"/>
       <header-icon slot="right" name="more" @click.native="openMenu"/>
     </app-header>
-    <deck-head
+    <deck-subheader
+      v-show="!previewing"
       :scrolledToLrig="scrolledToLrig"
-      :previewing="previewing"
       :shadow="!scrolledToTop">
-    </deck-head>
+    </deck-subheader>
 
     <!-- List view -->
     <template v-if="!previewing">
-      <cell-container :cards="shownMainDeck" :protectionEnabled="true"/>
-      <cell-container ref="lrigDeck" :cards="shownLrigDeck" :protectionEnabled="true"/>
+      <cell-container :cards="shownMainDeck">
+        <template scope="props">
+          <cell :card="props.card" :protectionEnabled="true"/>
+        </template>
+      </cell-container>
+      <cell-container ref="lrigDeck" :cards="shownLrigDeck">
+        <template scope="props">
+          <cell :card="props.card" :protectionEnabled="true"/>
+        </template>
+      </cell-container>
     </template>
 
     <!-- Block view -->
     <div :class="$style.blocks" v-if="previewing">
       <div>
-        <block v-for="card in shownMainDeck" :class="$style.block" :card="card"/>
+        <block v-for="card in shownMainDeck" :class="$style.block" :card="card" :showCount="true" @click="goDetail"/>
       </div>
       <div>
-        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card"/>
+        <block v-for="card in shownLrigDeck" :class="$style.block" :card="card" :showCount="true" @click="goDetail"/>
       </div>
     </div>
 
@@ -218,5 +233,6 @@ export default {
 }
 .block {
   width: 20%;
+  padding: .2em;
 }
 </style>

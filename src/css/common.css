@@ -3,33 +3,34 @@
   font-family: PingFangSC-Regular, 'Helvetica Neue', Tahoma, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   color: #333;
 
-  /* small mobile (iPhone5) */
-  @media (width <= 320px) {
+  /* smartphones, iPhone, portrait 480x320 phones */
+  @media (min-width: 320px) {
     font-size: 12px;
   }
 
-  /* middle mobile (iPhone6) */
-  @media (width > 375px) {
-    font-size: 16px;
+  /* portrait e-readers (Nook/Kindle), smaller tablets @ 600 or @ 640 wide. */
+  @media (min-width: 481px) {
+    font-size: 14px;
   }
 
-  /* large mobile (iPhone6 Plus) */
-  @media (width > 425px) {
+  /* portrait tablets, portrait iPad, landscape e-readers, landscape 800x480 or 854x480 phones */
+  @media (min-width: 641px) {
     font-size: 18px;
   }
 
-  /* larger mobile */
-  @media (width >= 667px) {
+  /* tablet, landscape iPad, lo-res laptops ands desktops */
+  @media (min-width: 961px) {
     font-size: 20px;
   }
 
-  /* tablet */
-  @media (width >= 768px) and (width < 1024px) {
-    font-size: 24px;
+  /* big landscape tablets, laptops, and desktops */ 
+  @media (min-width: 1025px){
+    font-size: 22px;
   }
 
-  @media (width >= 1280px){
-    font-size: 24px;
+  /* hi-res laptops and desktops */
+  @media (min-width: 1281px) {
+    font-size: 22px;
   }
 }
 

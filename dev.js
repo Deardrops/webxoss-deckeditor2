@@ -28,7 +28,7 @@ app.use('/background', express.static('./background'))
 app.use('/', express.static('./src'))
 app.use('/dist', express.static('./dist'))
 
-app.use('/lang', proxy('hongkong.webxoss.com:8080', {
+app.use('/lang', proxy('webxoss.com', {
   proxyReqPathResolver: req => '/lang' + url.parse(req.url).path,
   https: true,
 }))

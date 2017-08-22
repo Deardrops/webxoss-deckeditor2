@@ -11,40 +11,39 @@ export default {
       type: Object,
       require: true,
     },
+    showCount: {
+      type: Boolean,
+      require: false,
+    },
   },
   computed: {
     ...mapGetters([
       'deckPids',
     ]),
-    detailRoute() {
-      return {
-        path: '/detail',
-        query: {
-          pid: this.card.pid,
-        },
-      }
-    },
     count() {
       return this.deckPids.filter(pid => pid === this.card.pid).length
+    },
+  },
+  methods: {
+    handleClick() {
+      this.$emit('click', this.card.pid)
     },
   },
 }
 </script>
 
 <template>
-  <router-link :to="detailRoute" :class="$style.block">
-    <card-image :pid="card.pid" :class="$style.image"/>
-    <div :class="$style.dimmer">×{{ count }}</div>
-  </router-link>
+  <a :class="$style.block" @click.stop="handleClick">
+    <card-image :pid="card.pid" :class="$style.image" />
+    <div v-if="showCount" :class="$style.dimmer">×{{ count }}</div>
+  </a>
 </template>
 
-<style src="css/colors.css" module="$color"></style>
 <style module>
 .block {
   position: relative;
   display: inline-block;
   box-sizing: border-box;
-  padding: .2em;
 }
 .image {
   width: 100%;
@@ -55,6 +54,7 @@ export default {
   right: .2em;
   bottom: .2em;
   padding: 0 .2em;
+  font-size: 1.2em;
   color: #fff;
   background-color: color(#000 a(.6));
 }

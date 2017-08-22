@@ -1,12 +1,14 @@
 <script>
 import AppHeader from 'components/AppHeader'
 import Thumbnail from 'components/Thumbnail'
+import CardInfoTable from 'components/CardInfoTable'
 import Localize from 'js/Localize'
 
 export default {
   components: {
     AppHeader,
     Thumbnail,
+    CardInfoTable,
   },
   computed: {
     pid: {
@@ -33,72 +35,8 @@ export default {
     name() {
       return Localize.cardName(this.card)
     },
-    type() {
-      return Localize(this.card.cardType)
-    },
-    color() {
-      return Localize(this.card.color)
-    },
     limiting() {
       return Localize.limiting(this.card)
-    },
-    cardEffect() {
-      return Localize.effectTexts(this.card)
-    },
-    lifeBurst() {
-      return Localize.burstEffectTexts(this.card)
-    },
-    rows() {
-      let card = this.card
-      let level = {
-        key: Localize('level'),
-        value: card.level,
-      }
-      let power = {
-        key: Localize('power'),
-        value: card.power,
-      }
-      let limit = {
-        key: Localize('limit'),
-        value: (card.limit < 1024) ? card.limit : '∞',
-      }
-      let cost = {
-        key: Localize('cost'),
-        value: Localize.cost(card),
-      }
-      let timing = {
-        key: Localize('timings'),
-        value: Localize.timings(card),
-      }
-      let classes = {
-        key: Localize('classes'),
-        value: Localize.classes(card),
-      }
-      let guard = {
-        key: Localize('guard'),
-        value: Localize.guard(card),
-      }
-      return {
-        'RESONA': [
-          [level, classes],
-          [power, guard],
-        ],
-        'SIGNI': [
-          [level, classes],
-          [power, guard],
-        ],
-        'SPELL': [
-          [cost],
-        ],
-        'LRIG': [
-          [level, classes],
-          [limit, cost],
-        ],
-        'ARTS': [
-          [cost],
-          [timing],
-        ],
-      }[card.cardType] || []
     },
   },
   methods: {
@@ -123,34 +61,18 @@ export default {
         <thumbnail :class="[$style.thumbnail, $color[card.color]]" :pid="pid" @click.native="goGallery"></thumbnail>
         <div :class="$style.main">
           <div>
-            <div>
+            <div style="display: flex;">
               <span>{{ card.wxid }}</span>
-              <span :class="$style.right">{{ card.rarity }}</span>
+              <span style="margin-left: auto;">{{ card.rarity }}</span>
             </div>
-            <div :class="$style.title">{{ name }}</div>
+            <div style="font-size: 1.5em;">{{ name }}</div>
           </div>
-          <div>
-            <span>{{ type }}</span>
-            <span :class="$style.right">{{ limiting }}</span>
+          <div style="display: flex;">
+            <span style="margin-left: auto;">{{ limiting }}</span>
           </div>
         </div>
       </div>
-      <table :class="$style.table">
-        <tbody>
-          <tr v-for="row in rows" :class="$style.rows">
-          	<template v-for="meta in row">
-              <td :class="$style.key">{{ meta.key }}</td>
-              <td :colspan="row.length === 1 ? 3 : 1">{{ meta.value }}</td>
-            </template>
-          </tr>
-          <tr>
-            <td colspan="4">{{ cardEffect }}</td>
-          </tr>
-          <tr>
-            <td colspan="4">{{ lifeBurst }}</td>
-          </tr>
-        </tbody>
-      </table>
+      <card-info-table :card="card"/>
     </div>
   </div>
 </template>
@@ -165,24 +87,6 @@ export default {
   display: flex;
   margin-bottom: 0.5em;
 }
-.title {
-  font-size: 1.5em;
-}
-.table {
-  width: 100%;
-  line-height: 1.5;
-  white-space: pre-line;
-  table-layout: fixed;
-  border-collapse: collapse;
-}
-td {
-  border: 1px solid #cbcbcb;
-  padding: .5em .2em;
-}
-.key {
-  width: 15%;
-  text-align: center;
-}
 .thumbnail {
   width: 11em; 
   height: 11em; 
@@ -195,8 +99,5 @@ td {
   flex: 1;
   overflow: hidden;
   padding: .5em;
-}
-.right {
-  float: right;
 }
 </style>

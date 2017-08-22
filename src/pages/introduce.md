@@ -7,3 +7,4 @@
 * GitHub: [webxoss-deckeditor2](https://github.com/Deardrops/webxoss-deckeditor2)
 
 ## [👉 Try our new DeckEditor](#/deck)
+## [DeckEditor | desktop view | WIP](#/deckeditor)

@@ -29,6 +29,11 @@ confirm_delete: Вы точно хотите удалить %s ?
 // cell component
 no_cost: нет цены
 
+// action button bar
+card_selected: %s selected
+add_to_deck: add to deck
+finished: finished
+
 // prop
 cardType: Тип
 classes: Класс
