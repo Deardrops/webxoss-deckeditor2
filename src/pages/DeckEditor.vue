@@ -148,7 +148,7 @@ export default {
 <template>
   <div>
     <app-header  :class="$style.appHeader">
-      <div slot="right"></div>
+      <div :class="$style.title">WEBXOSS</div>
       <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
       </select>
@@ -216,6 +216,9 @@ export default {
 }
 .appHeader>header {
   padding: 0 calc(0.5 * (100% - 18 * var(--card-width)));
+}
+.title {
+  width: 12rem;
 }
 .select {
   flex: 1;
