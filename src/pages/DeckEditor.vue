@@ -212,13 +212,12 @@ export default {
 @import 'css/vars.css';
 :root {
   --card-width: 3.5rem;
-  --card-height: 4.886rem;
 }
 .appHeader>header {
-  padding: 0 calc(0.5 * (100% - 18 * var(--card-width)));
+  padding: 0 calc(0.5 * (100% - calc(17 * var(--card-width) + 2rem)))
 }
 .title {
-  width: 12rem;
+  width: 11rem;
 }
 .select {
   flex: 1;

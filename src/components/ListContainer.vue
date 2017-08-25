@@ -25,15 +25,13 @@ export default {
         See `updateIndex` for details.
     */
     index: 0,
+    itemHeight: 8,
   }),
   computed: {
     ...mapState([
       'windowWidth',
       'fontSize',
     ]),
-    itemHeight() {
-      return this.desktopView ? 4.886 : 8
-    },
     colunms() {
       if (this.desktopView) {
         return 1
@@ -82,6 +80,9 @@ export default {
       if (this.desktopView) {
         if (this.$parent.$refs.result) {
           scrollPosition = this.$parent.$refs.result.scrollTop
+        }
+        if (this.$children.length) {
+          this.itemHeight = this.$children[0].$el.clientHeight / this.fontSize
         }
       } else {
         scrollPosition = window.scrollY
