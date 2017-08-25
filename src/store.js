@@ -40,6 +40,9 @@ const state = {
 
   shownPid: 1,
 
+  // recently the pid deleted card
+  undoPid: 0,
+
   windowWidth: 0,
   fontSize: 14,
 }
@@ -199,6 +202,11 @@ const mutations = {
   setShownPid(state, pid) {
     if (0 < pid && pid < Object.keys(CardInfo).length) {
       state.shownPid = pid
+    }
+  },
+  setUndoPid(state, pid) {
+    if (pid < Object.keys(CardInfo).length) {
+      state.undoPid = pid
     }
   },
 }

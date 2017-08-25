@@ -1,5 +1,5 @@
 <script>
-import { mapGetters } from 'vuex'
+import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import ListContainer from 'components/ListContainer'
 import Block from 'components/Block'
@@ -29,6 +29,9 @@ export default {
     blocking: false,
   }),
   computed: {
+    ...mapState([
+      'undoPid',
+    ]),
     ...mapGetters([
       'deckPids',
       'mainDeck',
@@ -119,6 +122,7 @@ export default {
   methods: {
     delCard(pid) {
       this.$store.commit('delCard', pid)
+      this.$store.commit('setUndoPid', pid)
     },
     addCard(pid) {
       this.$store.dispatch('addCard', pid).then((successed) => {
@@ -126,6 +130,13 @@ export default {
           console.log('already full') // show toast here
         }
       })
+      this.$store.commit('setUndoPid', 0)
+    },
+    undoAction() {
+      if (this.undoPid) {
+        this.$store.commit('addCard', this.undoPid)
+        this.$store.commit('setUndoPid', 0)
+      }
     },
     scrollToTop() {
       if (this.$refs.scrollDiv) {
@@ -152,6 +163,7 @@ export default {
       <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
       </select>
+      <header-icon v-show="undoPid" slot="right" name="undo" @click.native="undoAction" />
       <header-icon
         v-for="item in actionItems"
         slot="right"
