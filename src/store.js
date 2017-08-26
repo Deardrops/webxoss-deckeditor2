@@ -36,7 +36,7 @@ const state = {
 
   windowWidth: 0,
 
-  importedDeck: {
+  tempDeck: {
     name: '',
     pids: [],
   },

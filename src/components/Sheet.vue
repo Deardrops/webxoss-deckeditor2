@@ -1,12 +1,14 @@
 <script>
 import Icon from 'components/Icon'
-
 export default {
   props: {
     sheetConfigs: {
       type: Object,
       require: true,
     },
+  },
+  components: {
+    Icon,
   },
   data: () => ({
     configs: [],
@@ -15,9 +17,6 @@ export default {
     opened() {
       return !!this.$route.query.sheet
     },
-  },
-  components: {
-    Icon,
   },
   methods: {
     close() {
@@ -53,22 +52,24 @@ export default {
     tabindex="0"
     :class="[$style.wrapper, opened ? $style.opened : '']"
     @touchmove.stop
-    @keyup.esc="cancel"
-    @click.self="cancel">
-    <div :class="$style.sheet">
-      <div :class="$style.head">
-        {{ sheetConfigs.head }}
+    @keyup.esc="close"
+    @click.self="close">
+    <transition name="fade">
+      <div :class="$style.sheet" v-show="opened">
+        <div :class="$style.head">
+          {{ sheetConfigs.head }}
+        </div>
+        <a
+          v-for="option in sheetConfigs.options"
+          :class="$style.option"
+          @click="option.click">
+          <span :class="$style.icon">
+            <icon :name="option.icon" />
+          </span>
+          <span>{{ option.text }}</span>
+        </a>
       </div>
-      <a
-        v-for="option in sheetConfigs.options"
-        :class="$style.option"
-        @click="option.click">
-        <span :class="$style.icon">
-          <icon :name="option.icon" />
-        </span>
-        <span>{{ option.text }}</span>
-      </a>
-    </div>
+    </transition>
   </div>
 </template>
 
@@ -105,6 +106,12 @@ export default {
   font-size: 1.5em;
   cursor: pointer;
   text-transform: capitalize;
+}
+.icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding-right: .7em;
 }
 .sheet:global(.fade-enter-active),
 .sheet:global(.fade-leave-active) {  
