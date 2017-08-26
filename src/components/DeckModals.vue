@@ -1,5 +1,6 @@
 <script>
 import { mapGetters, mapState } from 'vuex'
+import { parseDeckJson } from 'js/parseDeck'
 import Modal from 'components/Modal'
 import L from 'js/Localize'
 
@@ -10,10 +11,12 @@ export default {
   computed: {
     ...mapState([
       'deckName',
+      'tempDeck',
     ]),
     ...mapGetters([
       'deckPids',
       'deckNames',
+      'deckFileJson',
     ]),
     shown() {
       return !!this.config.type
@@ -68,6 +71,46 @@ export default {
           },
           cancelText: L('reserve'),
         },
+        'nameDeck': {
+          type: 'prompt',
+          content: L('input_new_deck_name'),
+          defaultInput: this.tempDeck.name,
+          validate: name => name && !this.deckNames.includes(name),
+          okText: L('add'),
+          ok: name => {
+            this.$store.commit('putDeckFile', {
+              name,
+              pids: this.tempDeck.pids,
+            })
+            this.$store.commit('switchDeck', name)
+          },
+        },
+        'pasteDeck': {
+          type: 'prompt',
+          content: L('paste_deck_here'),
+          validate: json => {
+            return json && parseDeckJson(json)
+          },
+          okText: L('ok'),
+          ok: json => {
+            let name = ''
+            let pids = parseDeckJson(json)
+            this.$store.commit('setTempDeck', {name, pids})
+            this.open('nameDeck')
+
+            // clearup input box
+            this.$refs.modal.setInputValue()
+            // avoid closing Modal
+            return false
+          },
+        },
+        'showDeck': {
+          type: 'prompt',
+          content: L('copy_deck_here'),
+          defaultInput: this.deckFileJson,
+          okText: L('ok'),
+          ok: () => {},
+        },
       }[this.$route.query.modal] || {}
     },
   },
@@ -76,6 +119,7 @@ export default {
       this.$router.replace({
         path: this.$route.path,
         query: Object.assign({}, this.$route.query, {
+          sheet: '',
           modal: type,
         }),
       })

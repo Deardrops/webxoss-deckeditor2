@@ -25,6 +25,14 @@ export: exportar
 // modal content text
 input_new_deck_name: New deck name:
 confirm_delete: ¿Seguro que deseas borrar "%s"?
+paste_deck_here: Paste deck here:
+copy_deck_here: Copy deck here:
+
+// sheet content text
+file: file
+text: text
+clipboard: clipboard
+parsing_error: Error while parsing deck file.
 
 // cell component
 no_cost: no cost
