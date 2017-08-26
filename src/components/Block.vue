@@ -29,7 +29,6 @@ export default {
       this.$emit('click', this.card.pid)
     },
     hover() {
-      // 节流
       this.$store.commit('setShownPid', this.card.pid)
     },
   },

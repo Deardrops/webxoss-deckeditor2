@@ -40,7 +40,7 @@ const state = {
 
   shownPid: 1,
 
-  // recently the pid deleted card
+  // last deleted card
   undoPid: 0,
 
   windowWidth: 0,
