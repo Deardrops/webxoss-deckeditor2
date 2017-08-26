@@ -2,8 +2,8 @@
 import { mapState, mapGetters } from 'vuex'
 import parseDeckFile from 'js/parseDeck'
 import Sheet from 'components/Sheet'
+import L from 'js/Localize'
 
-// import L from 'js/Localize'
 export default {
   components: {
     Sheet,
@@ -30,13 +30,13 @@ export default {
         'import': {
           head: 'import from',
           options: [{
-            text: 'file',
+            text: L('file'),
             icon: 'file',
             click: () => {
               this.$refs.input.click()
             },
           }, {
-            text: 'text',
+            text: L('text'),
             icon: 'text',
             click: () => {
               this.$emit('openModal', 'pasteDeck')
@@ -46,13 +46,13 @@ export default {
         'export': {
           head: 'export to',
           options: [{
-            text: 'file',
+            text: L('file'),
             icon: 'file',
             click: () => {
               this.$refs.download.click()
             },
           }, {
-            text: 'clipboard',
+            text: L('clipboard'),
             icon: 'paste',
             click: () => {
               if (!this.copy()) {
@@ -86,7 +86,7 @@ export default {
         this.$store.commit('setTempDeck', { name, pids })
         this.$emit('openModal', 'nameDeck')
       }).catch(() => {
-        alert('error while parsing deck file.') // TODO: Localize
+        alert(L('parsing_error'))
       })
     },
     open(type) {

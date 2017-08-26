@@ -25,6 +25,14 @@ export: 导出
 // modal content text
 input_new_deck_name: 新的卡组名字：
 confirm_delete: 确定删除卡组 %s ？
+paste_deck_here: 在这里粘贴卡组：
+copy_deck_here: 复制这里的卡组：
+
+// sheet content text
+file: 本地文件
+text: 文本
+clipboard: 剪贴板
+parsing_error: 读取卡组数据时出现错误。
 
 // cell component
 no_cost: 无费用
