@@ -28,7 +28,7 @@ export default {
     sheetConfigs() {
       let configs = {
         'import': {
-          head: 'import from',
+          head: L('import_from'),
           options: [{
             text: L('file'),
             icon: 'file',
@@ -44,7 +44,7 @@ export default {
           }],
         },
         'export': {
-          head: 'export to',
+          head: L('export_to'),
           options: [{
             text: L('file'),
             icon: 'file',
@@ -86,7 +86,7 @@ export default {
         this.$store.commit('setTempDeck', { name, pids })
         this.$emit('openModal', 'nameDeck')
       }).catch(() => {
-        alert(L('parsing_error'))
+        this.showToast(L('parse_error'))
       })
     },
     open(type) {
@@ -104,11 +104,18 @@ export default {
         this.$refs.copyArea.select()
         let successed = document.execCommand('copy')
         if (successed) {
-          // TODO: toast successed info here
+          this.showToast(L('copied'))
           return true
         }
       }
       return false
+    },
+    close() {
+      this.$refs.sheet.close()
+    },
+    showToast(text) {
+      this.close()
+      this.$parent.$refs.toast.show(text)
     },
   },
 }

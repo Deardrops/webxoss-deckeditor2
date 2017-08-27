@@ -32,7 +32,13 @@ copy_deck_here: Copy deck here:
 file: file
 text: text
 clipboard: clipboard
-parsing_error: Error while parsing deck file.
+import_from: import from
+export_to: export to
+
+// toast
+deck_limit_exceeded: Deck limit exceeded.
+copied: Copied
+parse_error: Error while parsing deck file.
 
 // cell component
 no_cost: no cost

@@ -8,6 +8,7 @@ import CellContainer from 'components/CellContainer'
 import Block from 'components/Block'
 import DeckHead from 'components/DeckHead'
 import Icon from 'components/Icon'
+import Toast from 'components/Toast'
 import { defaultSort, isLrigCard } from 'js/util'
 import _ from 'lodash'
 import L from 'js/Localize'
@@ -24,6 +25,7 @@ export default {
     Block,
     DeckHead,
     Icon,
+    Toast,
   },
   data: () => ({
     request: -1,
@@ -206,6 +208,7 @@ export default {
     <header-menu ref="menu" :items="menuItems"/>
     <deck-modals ref="modals"/>
     <deck-sheets ref="sheets" @openModal="openModal"/>
+    <toast ref="toast"/>
   </div>
 </template>
 
