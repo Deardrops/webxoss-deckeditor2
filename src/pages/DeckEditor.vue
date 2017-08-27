@@ -30,6 +30,8 @@ export default {
     queryString: '',
     timer: -1,
     blocking: false,
+    mouseInResultZone: false,
+    scrollEvent: {},
   }),
   computed: {
     ...mapState([
@@ -153,6 +155,31 @@ export default {
       this.$refs.sheet.open(type)
     },
   },
+  created() {
+    this.scrollEvent = window.addEventListener('wheel', (event) => {
+      if (!this.mouseInResultZone) {
+        if (this.$refs.info) {
+          this.$refs.info.scrollTop += event.deltaY
+        }
+      }
+    })
+  },
+  mounted() {
+    this.$nextTick(() => {
+      let resultZone = this.$refs.result
+      if (resultZone) {
+        resultZone.addEventListener('mouseenter', () => {
+          this.mouseInResultZone = true
+        })
+        resultZone.addEventListener('mouseleave', () => {
+          this.mouseInResultZone = false
+        })
+      }
+    })
+  },
+  destoryed() {
+    window.removeEventListener(this.scrollEvent)
+  },
 }
 </script>
 
@@ -171,7 +198,7 @@ export default {
         @click.native="item.action" />
     </app-header>
     <div :class="$style.container">
-      <div :class="$style.infoZone">
+      <div :class="$style.infoZone" ref="info">
         <card-info />
       </div>
       <div :class="$style.deckZone">
