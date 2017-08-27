@@ -135,7 +135,7 @@ export default {
 
       this.$store.dispatch('addCard', pid).then((successed) => {
         if (!successed) {
-          this.$parent.$parent.$refs.toast.show(Localize('deck_limit_exceeded'))
+          this.$root.showToast(Localize('deck_limit_exceeded'))
         }
       })
     },

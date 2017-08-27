@@ -1,7 +1,6 @@
 <script>
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
 import CellContainer from 'components/CellContainer'
-import Toast from 'components/Toast'
 import Searcher from 'js/Searcher.js'
 import marked from 'marked'
 
@@ -10,7 +9,6 @@ export default {
     AppHeader,
     HeaderIcon,
     CellContainer,
-    Toast,
   },
   data: () => ({
     // To improve performance when user typing,
@@ -100,7 +98,6 @@ export default {
     <section :class="$style.tips" v-if="query && !matchedCards.length">
       <div v-html="marked(emptyTips)"></div>
     </section>
-    <toast ref="toast"/>
   </div>
 </template>
 

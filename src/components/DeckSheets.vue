@@ -115,7 +115,7 @@ export default {
     },
     showToast(text) {
       this.close()
-      this.$parent.$refs.toast.show(text)
+      this.$root.showToast(text)
     },
   },
 }
