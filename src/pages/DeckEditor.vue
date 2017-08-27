@@ -1,30 +1,33 @@
 <script>
 import { mapState, mapGetters } from 'vuex'
 import { AppHeader, HeaderIcon } from 'components/AppHeader'
+import CardInfo from 'components/CardInfo'
+import CardImage from 'components/CardImage'
+import DeckHead from 'components/DeckHead'
 import ListContainer from 'components/ListContainer'
 import Block from 'components/Block'
-import CardImage from 'components/CardImage'
+import DeckModals from 'components/DeckModals'
+import DeckSheets from 'components/DeckSheets'
+import Icon from 'components/Icon'
 import Searcher from 'js/Searcher.js'
 import { defaultSort } from 'js/util'
-import Icon from 'components/Icon'
-import CardInfo from 'components/CardInfo'
-import DeckHead from 'components/DeckHead'
-import DeckModals from 'components/DeckModals'
+import Localize from 'js/Localize'
 
 export default {
   components: {
     AppHeader,
     HeaderIcon,
+    CardInfo,
+    CardImage,
+    DeckHead,
     ListContainer,
     Block,
-    CardImage,
-    Icon,
-    CardInfo,
-    DeckHead,
     DeckModals,
+    DeckSheets,
+    Icon,
   },
   data: () => ({
-    queryString: 's',
+    queryString: '',
     timer: -1,
     blocking: false,
   }),
@@ -67,13 +70,13 @@ export default {
         {
           icon: 'download',
           action: () => {
-            alert('Not yet implemented.')
+            this.openSteet('export')
           },
         },
         {
           icon: 'upload',
           action: () => {
-            alert('Not yet implemented.')
+            this.openSteet('import')
           },
         },
       ]
@@ -127,7 +130,7 @@ export default {
     addCard(pid) {
       this.$store.dispatch('addCard', pid).then((successed) => {
         if (!successed) {
-          console.log('already full') // show toast here
+          this.$root.showToast(Localize('deck_limit_exceeded'))
         }
       })
       this.$store.commit('setUndoPid', 0)
@@ -146,19 +149,16 @@ export default {
     openModal(type) {
       this.$refs.modals.open(type)
     },
-    closeModal() {
-      this.$refs.modals.close()
+    openSteet(type) {
+      this.$refs.sheet.open(type)
     },
-  },
-  mounted() {
-    this.query = ''
   },
 }
 </script>
 
 <template>
   <div>
-    <app-header  :class="$style.appHeader">
+    <app-header :class="$style.appHeader">
       <div :class="$style.title">WEBXOSS</div>
       <select :class="$style.select" v-model="deckName">
         <option v-for="name in deckNames" :value="name">{{ name }}</option>
@@ -217,6 +217,7 @@ export default {
       </div>
     </div>
     <deck-modals ref="modals"/>
+    <deck-sheets ref="sheet" @openModal="openModal"/>
   </div>
 </template>
 
@@ -226,7 +227,7 @@ export default {
   --card-width: 3.5rem;
 }
 .appHeader>header {
-  padding: 0 calc(0.5 * (100% - calc(17 * var(--card-width) + 2rem)))
+  padding: 0 calc(0.5 * (100% - calc(17 * var(--card-width) + 2rem)));
 }
 .title {
   width: 11rem;

@@ -1,10 +1,5 @@
 <script>
 export default {
-  props: {
-    desktopView: {
-      require: false,
-    },
-  },
   data: () => ({
     visable: false,
     text: '',
@@ -33,7 +28,7 @@ export default {
   <div>
     <transition name="slide">
       <div :class="$style.wrapper" v-show="visable">
-        <div :class="[$style.toast, desktopView ? $style.center : $style.full]" >
+        <div :class="$style.toast">
           <span :class="$style.text">{{ text }}</span>
         </div>
       </div>
@@ -55,13 +50,12 @@ export default {
 .toast {
   padding: .75rem 3rem;
   background-color: #323232;
-}
-.full {
   width: 100%;
-}
-.center {
-  min-width: 30%;
-  max-width: 70%;
+  @media (width > 1024px) {
+    width: auto;
+    min-width: 30%;
+    max-width: 70%;
+  }
 }
 .text {
   color: #eee;

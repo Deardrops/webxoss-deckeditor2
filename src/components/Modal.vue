@@ -112,7 +112,7 @@ export default {
   background-color: #fff;
   border-radius: 2px;
   @apply --shadow-24dp;
-  @media (min-width: 1281px) {
+  @media (width > 1024px) {
     width: 30%;
   }
 }
