@@ -29,17 +29,22 @@ const state = {
 
   // current selected deck name
   deckName: '',
-
   localization: {
     lang: 'en',
   },
-
-  windowWidth: 0,
 
   tempDeck: {
     name: '',
     pids: [],
   },
+
+  shownPid: 1,
+
+  // last deleted card
+  undoPid: 0,
+
+  windowWidth: 0,
+  fontSize: 14,
 }
 
 Localize.config = state.localization
@@ -189,8 +194,20 @@ const mutations = {
     state.localization.lang = lang
     setLanguegeCardInfo(lang)
   },
-  changeWindowWidth(state, width) {
-    state.windowWidth = width
+  setWindowData(state) {
+    state.windowWidth = window.innerWidth
+    state.fontSize = +window.getComputedStyle(window.document.body)
+        .fontSize.slice(0, -2)
+  },
+  setShownPid(state, pid) {
+    if (0 < pid && pid < Object.keys(CardInfo).length) {
+      state.shownPid = pid
+    }
+  },
+  setUndoPid(state, pid) {
+    if (pid < Object.keys(CardInfo).length) {
+      state.undoPid = pid
+    }
   },
 }
 
@@ -236,8 +253,6 @@ store.watch((state, getters) => {
   localStorage.setItem(deckName, JSON.stringify(file))
 })
 
-window.addEventListener('resize', () => {
-  store.commit('changeWindowWidth', window.innerWidth)
-}, false)
+window.addEventListener('resize', store.setWindowData, false)
 
 export default store

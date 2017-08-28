@@ -1,35 +1,40 @@
+@custom-media --mobile-s (width <= 320px);
+@custom-media --mobile-m (width > 320px) and (width <= 375px);
+@custom-media --mobile-l (width > 375px) and (width <= 425px);
+@custom-media --tablet (width > 425px) and (width <= 768px);
+@custom-media --tablet-l (width > 768px) and (width <= 1024px);
+@custom-media --laptop (width > 1024px) and (width <= 1366px);
+@custom-media --laptop-l (width > 1366px) and (width <= 1440px);
+@custom-media --laptop-h (width > 1440px);
+
 :root {
   font-size: 14px;
   font-family: PingFangSC-Regular, 'Helvetica Neue', Tahoma, Arial, 'Hiragino Sans GB', 'Microsoft Yahei', sans-serif;
   color: #333;
 
-  /* small mobile (iPhone5) */
-  @media (width <= 320px) {
+  @media (--mobile-s) {
     font-size: 12px;
   }
-
-  /* middle mobile (iPhone6) */
-  @media (width > 375px) {
+  @media (--mobile-m) {
+    font-size: 14px;
+  }
+  @media (--mobile-l) {
     font-size: 16px;
   }
-
-  /* large mobile (iPhone6 Plus) */
-  @media (width > 425px) {
+  @media (--tablet) {
     font-size: 18px;
   }
-
-  /* larger mobile */
-  @media (width >= 667px) {
+  @media (--tablet-l) {
     font-size: 20px;
   }
-
-  /* tablet */
-  @media (width >= 768px) and (width < 1024px) {
-    font-size: 24px;
+  @media (--laptop) {
+    font-size: 14px;
   }
-
-  @media (width >= 1280px){
-    font-size: 24px;
+  @media (--laptop-l) {
+    font-size: 16px;
+  }
+  @media (--laptop-h) {
+    font-size: 20px;
   }
 }
 

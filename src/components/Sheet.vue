@@ -81,8 +81,10 @@ export default {
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #0006;
   z-index: var(--z-sheet);
+  display: flex;
+  justify-content: center;
+  background-color: #0006;
 }
 .sheet {
   position: fixed;
@@ -90,6 +92,9 @@ export default {
   width: 100%;
   padding: .5em 1em;
   background-color: #fff;
+  @media (width > 1024px) {
+    width: 40%;
+  }
 }
 .head {
   font-size: 1.3em;
