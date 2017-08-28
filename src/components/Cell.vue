@@ -135,7 +135,7 @@ export default {
 
       this.$store.dispatch('addCard', pid).then((successed) => {
         if (!successed) {
-          console.log('already full') // show toast here
+          this.$root.showToast(Localize('deck_limit_exceeded'))
         }
       })
     },

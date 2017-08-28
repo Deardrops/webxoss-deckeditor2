@@ -1,6 +1,17 @@
 <script>
+import Toast from 'components/Toast'
+
 let scrollTopMap = {}
+
 export default {
+  components: {
+    Toast,
+  },
+  methods: {
+    showToast(text) {
+      this.$refs.toast.show(text)
+    },
+  },
   created() {
     let deckFileNames = localStorage.getItem('deck_filenames')
     let fileNames = JSON.parse(deckFileNames)
@@ -49,6 +60,7 @@ export default {
 <template>
   <div id="app">
     <router-view></router-view>
+    <toast ref="toast"/>
   </div>
 </template>
 
