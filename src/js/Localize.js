@@ -164,3 +164,11 @@ Localize.classes = info => {
     return Localize(cls)
   }).join(separator) || '-'
 }
+
+Localize.color = info => {
+  if (info.color.indexOf('/')) {
+    let colors = info.color.split('/')
+    let separator = '/'
+    return colors.map(color => Localize(color)).join(separator)
+  }
+}
